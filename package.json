@@ -1,0 +1,37 @@
+{
+  "name": "d3-scale",
+  "version": "0.0.1",
+  "description": "",
+  "keywords": [
+    "d3",
+    "scale",
+    "visualization"
+  ],
+  "homepage": "https://github.com/d3/d3-scale",
+  "license": "BSD-3-Clause",
+  "author": {
+    "name": "Mike Bostock",
+    "url": "http://bost.ocks.org/mike"
+  },
+  "main": "build/scale",
+  "jsnext:main": "index",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/d3/d3-scale.git"
+  },
+  "scripts": {
+    "pretest": "mkdir -p build && d3-bundler --polyfill-map --format=umd --name=scale -- index.js > build/scale.js",
+    "test": "faucet `find test -name '*-test.js'`",
+    "prepublish": "npm run test && uglifyjs build/scale.js -c -m -o build/scale.min.js && rm -f build/scale.zip && zip -j build/scale.zip -- LICENSE README.md build/scale.js build/scale.min.js"
+  },
+  "devDependencies": {
+    "d3-arrays": "~0.0.4",
+    "d3-bundler": "~0.2.5",
+    "d3-color": "~0.2.1",
+    "d3-format": "~0.2.1",
+    "d3-interpolate": "~0.1.1",
+    "faucet": "0.0",
+    "tape": "4",
+    "uglifyjs": "2"
+  }
+}
