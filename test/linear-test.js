@@ -27,6 +27,17 @@ tape("linear.ticks(count) returns the expected ticks", function(test) {
   test.deepEqual(s.ticks(3),  [0.0,                     0.5,                     1.0]);
   test.deepEqual(s.ticks(2),  [0.0,                     0.5,                     1.0]);
   test.deepEqual(s.ticks(1),  [0.0,                                              1.0]);
+  s.domain([-100, 100]);
+  test.deepEqual(s.ticks(10), [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
+  test.deepEqual(s.ticks(9),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
+  test.deepEqual(s.ticks(8),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
+  test.deepEqual(s.ticks(7),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
+  test.deepEqual(s.ticks(6),  [-100,           -50,           0,         50,         100]);
+  test.deepEqual(s.ticks(5),  [-100,           -50,           0,         50,         100]);
+  test.deepEqual(s.ticks(4),  [-100,           -50,           0,         50,         100]);
+  test.deepEqual(s.ticks(3),  [-100,           -50,           0,         50,         100]);
+  test.deepEqual(s.ticks(2),  [-100,                          0,                     100]);
+  test.deepEqual(s.ticks(1),  [                               0                         ]);
   test.end();
 });
 
@@ -42,5 +53,19 @@ tape("linear.ticks(count) returns the empty array if count is not a positive int
 tape("linear.ticks() is an alias for linear.ticks(10)", function(test) {
   var s = d3.scale.linear();
   test.deepEqual(s.ticks(), s.ticks(10));
+  test.end();
+});
+
+tape("linear.tickFormat(count) returns a format suitable for the ticks", function(test) {
+  var s = d3.scale.linear();
+  test.deepEqual(s.domain([0, 1]).ticks(10).map(s.tickFormat(10)), ["0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"]);
+  test.deepEqual(s.domain([0, 1]).ticks(3).map(s.tickFormat(20)), ["0.00", "0.50", "1.00"]);
+  test.deepEqual(s.domain([-100, 100]).ticks(10).map(s.tickFormat(10)), ["-100", "-80", "-60", "-40", "-20", "0", "20", "40", "60", "80", "100"]);
+  test.end();
+});
+
+tape("linear.tickFormat() is an alias for linear.tickFormat(10)", function(test) {
+  var s = d3.scale.linear();
+  test.deepEqual(s.domain([0, 1]).ticks().map(s.tickFormat()), ["0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"]);
   test.end();
 });

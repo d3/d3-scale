@@ -8,6 +8,11 @@ import {
   interpolateRound
 } from "d3-interpolate";
 
+import {
+  format,
+  precisionFixed
+} from "d3-format";
+
 import extent from "./extent";
 import bilinear from "./bilinear";
 import polylinear from "./polylinear";
@@ -63,17 +68,16 @@ function newLinear(domain, range, interpolate, clamp) {
     return rescale();
   };
 
-  scale.ticks = function(m) {
-    return linearTicks(domain, m);
+  scale.ticks = function(count) {
+    return linearTicks(domain, count);
   };
 
-  // TODO
-  // scale.tickFormat = function(m, format) {
-  //   return tickFormat(domain, m, format);
-  // };
+  scale.tickFormat = function(count, specifier) {
+    return linearTickFormat(domain, count, specifier);
+  };
 
-  scale.nice = function(m) {
-    linearNice(domain, m);
+  scale.nice = function(count) {
+    linearNice(domain, count);
     return rescale();
   };
 
@@ -84,25 +88,25 @@ function newLinear(domain, range, interpolate, clamp) {
   return rescale();
 }
 
-function linearNice(domain, m) {
-  return nice(domain, niceStep(linearTickRange(domain, m)[2]));
+function linearNice(domain, count) {
+  return nice(domain, niceStep(linearTickRange(domain, count)[2]));
 }
 
-function linearTicks(domain, m) {
-  return range.apply(null, linearTickRange(domain, m));
+function linearTicks(domain, count) {
+  return range.apply(null, linearTickRange(domain, count));
 }
 
 var e10 = Math.sqrt(50),
     e5 = Math.sqrt(10),
     e2 = Math.sqrt(2);
 
-function linearTickRange(domain, m) {
-  if (m == null) m = 10;
+function linearTickRange(domain, count) {
+  if (count == null) count = 10;
   domain = extent(domain);
 
   var span = domain[1] - domain[0],
-      step = Math.pow(10, Math.floor(Math.log(span / m) / Math.LN10)),
-      error = span / m / step;
+      step = Math.pow(10, Math.floor(Math.log(span / count) / Math.LN10)),
+      error = span / count / step;
 
   // Filter ticks to get closer to the desired count.
   if (error >= e10) step *= 10;
@@ -115,6 +119,11 @@ function linearTickRange(domain, m) {
   domain[1] = Math.floor(domain[1] / step) * step + step * .5; // inclusive
   domain[2] = step;
   return domain;
+}
+
+// TODO allow specifier
+function linearTickFormat(domain, count, specifier) {
+  return format(",." + precisionFixed(linearTickRange(domain, count)[2]) + "f");
 }
 
 // function linearTickFormat(domain, m, format) {
