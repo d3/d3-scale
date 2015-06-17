@@ -10,6 +10,8 @@ import {
 
 import {
   format,
+  formatPrefix,
+  formatSpecifier,
   precisionFixed
 } from "d3-format";
 
@@ -121,9 +123,32 @@ function linearTickRange(domain, count) {
   return domain;
 }
 
-// TODO allow specifier
 function linearTickFormat(domain, count, specifier) {
-  return format(",." + precisionFixed(linearTickRange(domain, count)[2]) + "f");
+  var range = linearTickRange(domain, count);
+  if (specifier == null) {
+    specifier = ",." + precisionFixed(range[2]) + "f";
+  } else {
+    specifier = formatSpecifier(specifier);
+    switch (specifier.type) {
+      case "s": {
+        var value = Math.max(Math.abs(range[0]), Math.abs(range[1]));
+        if (specifier.precision == null) specifier.precision = precisionRound(range[2], value);
+        return formatPrefix(specifier, value);
+      }
+      case "":
+      case "g":
+      case "p":
+      case "r": {
+        if (specifier.precision == null) specifier.precision = precisionRound(range[2], Math.max(Math.abs(range[0]), Math.abs(range[1])));
+        break;
+      }
+      default: {
+        if (specifier.precision == null) specifier.precision = precisionFixed(range[2]);
+        break;
+      }
+    }
+  }
+  return format(specifier);
 }
 
 // function linearTickFormat(domain, m, format) {
