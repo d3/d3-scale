@@ -25,7 +25,7 @@ tape("linear.ticks(count) returns the expected ticks", function(test) {
   test.deepEqual(s.ticks(5),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
   test.deepEqual(s.ticks(4),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
   test.deepEqual(s.ticks(3),  [0.0,                     0.5,                     1.0]);
-  test.deepEqual(s.ticks(3),  [0.0,                     0.5,                     1.0]);
+  test.deepEqual(s.ticks(2),  [0.0,                     0.5,                     1.0]);
   test.deepEqual(s.ticks(1),  [0.0,                                              1.0]);
   test.end();
 });

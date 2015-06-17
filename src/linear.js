@@ -92,25 +92,29 @@ function linearTicks(domain, m) {
   return range.apply(null, linearTickRange(domain, m));
 }
 
+var e10 = Math.sqrt(50),
+    e5 = Math.sqrt(10),
+    e2 = Math.sqrt(2);
+
 function linearTickRange(domain, m) {
   if (m == null) m = 10;
+  domain = extent(domain);
 
-  var range = extent(domain),
-      span = range[1] - range[0],
+  var span = domain[1] - domain[0],
       step = Math.pow(10, Math.floor(Math.log(span / m) / Math.LN10)),
-      error = m / span * step;
+      error = span / m / step;
 
   // Filter ticks to get closer to the desired count.
-  if (error <= .15) step *= 10;
-  else if (error <= .35) step *= 5;
-  else if (error <= .75) step *= 2;
+  if (error >= e10) step *= 10;
+  else if (error >= e5) step *= 5;
+  else if (error >= e2) step *= 2;
 
   // Round start and stop values to step interval.
   // TODO This rounding duplicates code with nice. Sort of.
-  range[0] = Math.ceil(range[0] / step) * step;
-  range[1] = Math.floor(range[1] / step) * step + step * .5; // inclusive
-  range[2] = step;
-  return range;
+  domain[0] = Math.ceil(domain[0] / step) * step;
+  domain[1] = Math.floor(domain[1] / step) * step + step * .5; // inclusive
+  domain[2] = step;
+  return domain;
 }
 
 // function linearTickFormat(domain, m, format) {
