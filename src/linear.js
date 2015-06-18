@@ -3,8 +3,20 @@ import {interpolate, interpolateNumber, interpolateRound} from "d3-interpolate";
 import nice from "./nice";
 import tickFormat from "./tickFormat";
 import ticks from "./ticks";
-import uninterpolateClamp from "./uninterpolateClamp";
-import uninterpolateNumber from "./uninterpolateNumber";
+
+function uninterpolateClamp(a, b) {
+  b = (b -= a = +a) || 1 / b;
+  return function(x) {
+    return Math.max(0, Math.min(1, (x - a) / b));
+  };
+}
+
+function uninterpolateNumber(a, b) {
+  b = (b -= a = +a) || 1 / b;
+  return function(x) {
+    return (x - a) / b;
+  };
+}
 
 function bilinear(domain, range, uninterpolate, interpolate) {
   var u = uninterpolate(domain[0], domain[1]),
