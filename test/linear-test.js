@@ -15,6 +15,68 @@ tape("linear() has the expected defaults", function(test) {
   test.end();
 });
 
+tape("linear.domain(domain) coerces domain values to numbers", function(test) {
+  test.deepEqual(d3.scale.linear().domain([new Date(1990, 0, 1), new Date(1991, 0, 1)]).domain(), [631180800000, 662716800000]);
+  test.deepEqual(d3.scale.linear().domain(["0.0", "1.0"]).domain(), [0, 1]);
+  test.deepEqual(d3.scale.linear().domain([new Number(0), new Number(1)]).domain(), [0, 1]);
+  test.end();
+});
+
+tape("linear.domain(domain) can specify a polylinear domain with more than two values", function(test) {
+  var s = d3.scale.linear().domain([-10, 0, 100]).range(["red", "white", "green"]);
+  test.equal(s(-5), "#ff8080");
+  test.equal(s(50), "#80c080");
+  test.equal(s(75), "#40a040");
+  test.end();
+});
+
+tape("linear.domain(domain) ignores extra values if the domain and range have different sizes", function(test) {
+  var s = d3.scale.linear().domain([-10, 0]).range(["red", "white", "green"]).clamp(true);
+  test.equal(s(-5), "#ff8080");
+  test.equal(s(50), "#ffffff");
+  var s = d3.scale.linear().domain([-10, 0, 100]).range(["red", "white"]).clamp(true);
+  test.equal(s(-5), "#ff8080");
+  test.equal(s(50), "#ffffff");
+  test.end();
+});
+
+tape("linear.domain(domain) maps an empty domain to the range start", function(test) {
+  var s = d3.scale.linear().domain([0, 0]).range(["red", "green"]);
+  test.equal(s(0), "#ff0000");
+  test.equal(s(-1), "#ff0000");
+  test.equal(s(1), "#ff0000");
+  test.end();
+});
+
+tape("linear.range(range) does not coerce range to numbers", function(test) {
+  var s = d3.scale.linear().range(["0", "2"]);
+  test.equal(typeof s.range()[0], "string");
+  test.equal(typeof s.range()[1], "string");
+  test.end();
+});
+
+tape("linear.range(range) can accept range values as colors", function(test) {
+  var s = d3.scale.linear().range(["red", "blue"]);
+  test.equal(s(.5), "#800080");
+  var s = d3.scale.linear().range(["#ff0000", "#0000ff"]);
+  test.equal(s(.5), "#800080");
+  var s = d3.scale.linear().range(["#f00", "#00f"]);
+  test.equal(s(.5), "#800080");
+  var s = d3.scale.linear().range([d3.rgb(255, 0, 0), d3.hsl(240, 1, .5)]);
+  test.equal(s(.5), "#800080");
+  var s = d3.scale.linear().range(["hsl(0,100%,50%)", "hsl(240,100%,50%)"]);
+  test.equal(s(.5), "#800080");
+  test.end();
+});
+
+tape("linear.range(range) can accept range values as arrays or objects", function(test) {
+  var s = d3.scale.linear().range([{color: "red"}, {color: "blue"}]);
+  test.deepEqual(s(.5), {color: "#800080"});
+  var s = d3.scale.linear().range([["red"], ["blue"]]);
+  test.deepEqual(s(.5), ["#800080"]);
+  test.end();
+});
+
 tape("linear.nice() is an alias for linear.nice(10)", function(test) {
   test.deepEqual(d3.scale.linear().domain([0, .96]).nice().domain(), [0, 1]);
   test.deepEqual(d3.scale.linear().domain([0, 96]).nice().domain(), [0, 100]);

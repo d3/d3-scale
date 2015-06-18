@@ -28,6 +28,25 @@ import {
 } from "d3-arrays";
 
 import {
+  color,
+  rgb,
+  hsl,
+  lab,
+  hcl,
+  cubehelix,
+  interpolateRgb,
+  interpolateHsl,
+  interpolateHslLong,
+  interpolateLab,
+  interpolateHcl,
+  interpolateHclLong,
+  interpolateCubehelix,
+  interpolateCubehelixLong
+} from "d3-color";
+
+import "d3-color"; // Fix Color prototype.
+
+import {
   interpolate,
   interpolateArray,
   interpolateNumber,
@@ -49,20 +68,33 @@ export default {
   bisectLeft: bisectLeft,
   bisector: bisector,
   bisectRight: bisectRight,
+  color: color,
+  cubehelix: cubehelix,
   descending: descending,
   deviation: deviation,
   entries: entries,
   extent: extent,
+  hcl: hcl,
+  hsl: hsl,
   interpolate: interpolate,
   interpolateArray: interpolateArray,
+  interpolateCubehelix: interpolateCubehelix,
+  interpolateCubehelixLong: interpolateCubehelixLong,
+  interpolateHcl: interpolateHcl,
+  interpolateHclLong: interpolateHclLong,
+  interpolateHsl: interpolateHsl,
+  interpolateHslLong: interpolateHslLong,
+  interpolateLab: interpolateLab,
   interpolateNumber: interpolateNumber,
   interpolateObject: interpolateObject,
+  interpolateRgb: interpolateRgb,
   interpolateRound: interpolateRound,
   interpolateString: interpolateString,
   interpolateTransform: interpolateTransform,
   interpolateZoom: interpolateZoom,
   interpolators: interpolators,
   keys: keys,
+  lab: lab,
   max: max,
   mean: mean,
   median: median,
@@ -73,9 +105,8 @@ export default {
   permute: permute,
   quantile: quantile,
   range: range,
-  scale: {
-    linear: linear
-  },
+  rgb: rgb,
+  scale: {linear: linear},
   shuffle: shuffle,
   sum: sum,
   transpose: transpose,
