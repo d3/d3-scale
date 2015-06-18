@@ -12,7 +12,9 @@ import {
   format,
   formatPrefix,
   formatSpecifier,
-  precisionFixed
+  precisionFixed,
+  precisionPrefix,
+  precisionRound
 } from "d3-format";
 
 import extent from "./extent";
@@ -128,70 +130,29 @@ function linearTickFormat(domain, count, specifier) {
   if (specifier == null) {
     specifier = ",." + precisionFixed(range[2]) + "f";
   } else {
-    specifier = formatSpecifier(specifier);
-    switch (specifier.type) {
+    switch (specifier = formatSpecifier(specifier), specifier.type) {
       case "s": {
         var value = Math.max(Math.abs(range[0]), Math.abs(range[1]));
-        if (specifier.precision == null) specifier.precision = precisionRound(range[2], value);
+        if (specifier.precision == null) specifier.precision = precisionPrefix(range[2], value);
         return formatPrefix(specifier, value);
       }
       case "":
+      case "e":
       case "g":
       case "p":
       case "r": {
-        if (specifier.precision == null) specifier.precision = precisionRound(range[2], Math.max(Math.abs(range[0]), Math.abs(range[1])));
+        if (specifier.precision == null) specifier.precision = precisionRound(range[2], Math.max(Math.abs(range[0]), Math.abs(range[1]))) - (specifier.type === "e");
         break;
       }
-      default: {
-        if (specifier.precision == null) specifier.precision = precisionFixed(range[2]);
+      case "f":
+      case "%": {
+        if (specifier.precision == null) specifier.precision = precisionFixed(range[2]) - (specifier.type === "%") * 2;
         break;
       }
     }
   }
   return format(specifier);
 }
-
-// function linearTickFormat(domain, m, format) {
-//   var range = linearTickRange(domain, m);
-//   if (format) {
-//     var match = d3_format_re.exec(format);
-//     match.shift();
-//     if (match[8] === "s") {
-//       var prefix = d3.formatPrefix(Math.max(abs(range[0]), abs(range[1])));
-//       if (!match[7]) match[7] = "." + linearPrecision(prefix.scale(range[2]));
-//       match[8] = "f";
-//       format = d3.format(match.join(""));
-//       return function(d) {
-//         return format(prefix.scale(d)) + prefix.symbol;
-//       };
-//     }
-//     if (!match[7]) match[7] = "." + linearFormatPrecision(match[8], range);
-//     format = match.join("");
-//   } else {
-//     format = ",." + linearPrecision(range[2]) + "f";
-//   }
-//   return d3.format(format);
-// }
-
-// var linearFormatSignificant = {s: 1, g: 1, p: 1, r: 1, e: 1};
-
-// // Returns the number of significant digits after the decimal point.
-// function linearPrecision(value) {
-//   return -Math.floor(Math.log(value) / Math.LN10 + .01);
-// }
-
-// // For some format types, the precision specifies the number of significant
-// // digits; for others, it specifies the number of digits after the decimal
-// // point. For significant format types, the desired precision equals one plus
-// // the difference between the decimal precision of the range’s maximum absolute
-// // value and the tick step’s decimal precision. For format "e", the digit before
-// // the decimal point counts as one.
-// function linearFormatPrecision(type, range) {
-//   var p = linearPrecision(range[2]);
-//   return type in linearFormatSignificant
-//       ? Math.abs(p - linearPrecision(Math.max(abs(range[0]), abs(range[1])))) + +(type !== "e")
-//       : p - (type === "%") * 2;
-// }
 
 export default function() {
   return newLinear([0, 1], [0, 1], interpolate, false);
