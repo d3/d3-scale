@@ -1,16 +1,41 @@
-import {
-  interpolate,
-  interpolateNumber,
-  interpolateRound
-} from "d3-interpolate";
-
-import bilinear from "./bilinear";
+import {bisect} from "d3-arrays";
+import {interpolate, interpolateNumber, interpolateRound} from "d3-interpolate";
 import nice from "./nice";
-import polylinear from "./polylinear";
 import tickFormat from "./tickFormat";
 import ticks from "./ticks";
 import uninterpolateClamp from "./uninterpolateClamp";
 import uninterpolateNumber from "./uninterpolateNumber";
+
+function bilinear(domain, range, uninterpolate, interpolate) {
+  var u = uninterpolate(domain[0], domain[1]),
+      i = interpolate(range[0], range[1]);
+  return function(x) {
+    return i(u(x));
+  };
+}
+
+function polylinear(domain, range, uninterpolate, interpolate) {
+  var k = Math.min(domain.length, range.length) - 1,
+      u = new Array(k),
+      i = new Array(k),
+      j = -1;
+
+  // Handle descending domains.
+  if (domain[k] < domain[0]) {
+    domain = domain.slice().reverse();
+    range = range.slice().reverse();
+  }
+
+  while (++j < k) {
+    u[j] = uninterpolate(domain[j], domain[j + 1]);
+    i[j] = interpolate(range[j], range[j + 1]);
+  }
+
+  return function(x) {
+    var j = bisect(domain, x, 1, k) - 1;
+    return i[j](u[j](x));
+  };
+}
 
 function newLinear(domain, range, interpolate, clamp) {
   var output,
