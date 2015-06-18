@@ -106,6 +106,18 @@ tape("linear.clamp(clamp) coerces the specified clamp value to a boolean", funct
   test.end();
 });
 
+tape("linear.interpolate(interpolate) takes a custom interpolator factory", function(test) {
+  function interpolate(a, b) {
+    return function(t) {
+      return [a, b, t];
+    };
+  }
+  var s = d3.scale.linear().domain([10, 20]).range(["a", "b"]).interpolate(interpolate);
+  test.equal(s.interpolate(), interpolate);
+  test.deepEqual(s(15), ["a", "b", .5]);
+  test.end();
+});
+
 tape("linear.nice() is an alias for linear.nice(10)", function(test) {
   test.deepEqual(d3.scale.linear().domain([0, .96]).nice().domain(), [0, 1]);
   test.deepEqual(d3.scale.linear().domain([0, 96]).nice().domain(), [0, 100]);
