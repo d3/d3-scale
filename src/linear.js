@@ -1,26 +1,14 @@
 import {
-  range
-} from "d3-arrays";
-
-import {
   interpolate,
   interpolateNumber,
   interpolateRound
 } from "d3-interpolate";
 
-import {
-  format,
-  formatPrefix,
-  formatSpecifier,
-  precisionFixed,
-  precisionPrefix,
-  precisionRound
-} from "d3-format";
-
 import bilinear from "./bilinear";
-import extent from "./extent";
 import nice from "./nice";
 import polylinear from "./polylinear";
+import tickFormat from "./tickFormat";
+import ticks from "./ticks";
 import uninterpolateClamp from "./uninterpolateClamp";
 import uninterpolateNumber from "./uninterpolateNumber";
 
@@ -40,14 +28,14 @@ function newLinear(domain, range, interpolate, clamp) {
     return output(x);
   }
 
-  // Note: requires range is coercible to number!
   scale.invert = function(y) {
     return input(y);
   };
 
   scale.domain = function(x) {
     if (!arguments.length) return domain;
-    domain = x.map(Number);
+    for (var i = 0, n = x.length; i < n; ++i) x[i] = +x[i];
+    domain = x;
     return rescale();
   };
 
@@ -63,7 +51,7 @@ function newLinear(domain, range, interpolate, clamp) {
 
   scale.clamp = function(x) {
     if (!arguments.length) return clamp;
-    clamp = x;
+    clamp = !!x;
     return rescale();
   };
 
@@ -74,18 +62,15 @@ function newLinear(domain, range, interpolate, clamp) {
   };
 
   scale.ticks = function(count) {
-    return linearTicks(domain, count);
+    return ticks(domain, count);
   };
 
   scale.tickFormat = function(count, specifier) {
-    return linearTickFormat(domain, count, specifier);
+    return tickFormat(domain, count, specifier);
   };
 
   scale.nice = function(count) {
-    var step = linearTickRange(domain, count)[2];
-    nice(domain,
-        function(x) { return Math.floor(x / step) * step; },
-        function(x) { return Math.ceil(x / step) * step; });
+    nice(domain, count);
     return rescale();
   };
 
@@ -94,63 +79,6 @@ function newLinear(domain, range, interpolate, clamp) {
   };
 
   return rescale();
-}
-
-function linearTicks(domain, count) {
-  return range.apply(null, linearTickRange(domain, count));
-}
-
-var e10 = Math.sqrt(50),
-    e5 = Math.sqrt(10),
-    e2 = Math.sqrt(2);
-
-function linearTickRange(domain, count) {
-  if (count == null) count = 10;
-  domain = extent(domain);
-
-  var span = domain[1] - domain[0],
-      step = Math.pow(10, Math.floor(Math.log(span / count) / Math.LN10)),
-      error = span / count / step;
-
-  // Filter ticks to get closer to the desired count.
-  if (error >= e10) step *= 10;
-  else if (error >= e5) step *= 5;
-  else if (error >= e2) step *= 2;
-
-  // Round start and stop values to step interval.
-  domain[0] = Math.ceil(domain[0] / step) * step;
-  domain[1] = Math.floor(domain[1] / step) * step + step * .5; // inclusive
-  domain[2] = step;
-  return domain;
-}
-
-function linearTickFormat(domain, count, specifier) {
-  var range = linearTickRange(domain, count);
-  if (specifier == null) {
-    specifier = ",." + precisionFixed(range[2]) + "f";
-  } else {
-    switch (specifier = formatSpecifier(specifier), specifier.type) {
-      case "s": {
-        var value = Math.max(Math.abs(range[0]), Math.abs(range[1]));
-        if (specifier.precision == null) specifier.precision = precisionPrefix(range[2], value);
-        return formatPrefix(specifier, value);
-      }
-      case "":
-      case "e":
-      case "g":
-      case "p":
-      case "r": {
-        if (specifier.precision == null) specifier.precision = precisionRound(range[2], Math.max(Math.abs(range[0]), Math.abs(range[1]))) - (specifier.type === "e");
-        break;
-      }
-      case "f":
-      case "%": {
-        if (specifier.precision == null) specifier.precision = precisionFixed(range[2]) - (specifier.type === "%") * 2;
-        break;
-      }
-    }
-  }
-  return format(specifier);
 }
 
 export default function() {

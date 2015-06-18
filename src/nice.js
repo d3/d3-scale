@@ -1,5 +1,8 @@
-export default function(domain, start, stop) {
-  var i0 = 0,
+import {tickRange} from "./ticks";
+
+export default function(domain, count) {
+  var step = tickRange(domain, count)[2],
+      i0 = 0,
       i1 = domain.length - 1,
       x0 = domain[i0],
       x1 = domain[i1],
@@ -10,7 +13,7 @@ export default function(domain, start, stop) {
     dx = x0, x0 = x1, x1 = dx;
   }
 
-  domain[i0] = start(x0);
-  domain[i1] = stop(x1);
+  domain[i0] = Math.floor(x0 / step) * step;
+  domain[i1] = Math.ceil(x1 / step) * step;
   return domain;
 };
