@@ -77,6 +77,35 @@ tape("linear.range(range) can accept range values as arrays or objects", functio
   test.end();
 });
 
+tape("linear.clamp() is false by default", function(test) {
+  test.equal(d3.scale.linear().clamp(), false);
+  test.equal(d3.scale.linear().range([10, 20])(2), 30);
+  test.equal(d3.scale.linear().range([10, 20])(-1), 0);
+  test.equal(d3.scale.linear().range([10, 20]).invert(30), 2);
+  test.equal(d3.scale.linear().range([10, 20]).invert(0), -1);
+  test.end();
+});
+
+tape("linear.clamp(true) restricts output values to the range", function(test) {
+  test.equal(d3.scale.linear().clamp(true).range([10, 20])(2), 20);
+  test.equal(d3.scale.linear().clamp(true).range([10, 20])(-1), 10);
+  test.end();
+});
+
+tape("linear.clamp(true) restricts input values to the domain", function(test) {
+  test.equal(d3.scale.linear().clamp(true).range([10, 20]).invert(30), 1);
+  test.equal(d3.scale.linear().clamp(true).range([10, 20]).invert(0), 0);
+  test.end();
+});
+
+tape("linear.clamp(clamp) coerces the specified clamp value to a boolean", function(test) {
+  test.equal(d3.scale.linear().clamp("true").clamp(), true);
+  test.equal(d3.scale.linear().clamp(1).clamp(), true);
+  test.equal(d3.scale.linear().clamp("").clamp(), false);
+  test.equal(d3.scale.linear().clamp(0).clamp(), false);
+  test.end();
+});
+
 tape("linear.nice() is an alias for linear.nice(10)", function(test) {
   test.deepEqual(d3.scale.linear().domain([0, .96]).nice().domain(), [0, 1]);
   test.deepEqual(d3.scale.linear().domain([0, 96]).nice().domain(), [0, 100]);
