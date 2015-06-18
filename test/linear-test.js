@@ -15,6 +15,24 @@ tape("linear() has the expected defaults", function(test) {
   test.end();
 });
 
+tape("linear.nice() is an alias for linear.nice(10)", function(test) {
+  test.deepEqual(d3.scale.linear().domain([0, .96]).nice().domain(), [0, 1]);
+  test.deepEqual(d3.scale.linear().domain([0, 96]).nice().domain(), [0, 100]);
+  test.end();
+});
+
+tape("linear.nice(count) extends the domain to match the desired ticks", function(test) {
+  test.deepEqual(d3.scale.linear().domain([0, .96]).nice(10).domain(), [0, 1]);
+  test.deepEqual(d3.scale.linear().domain([0, 96]).nice(10).domain(), [0, 100]);
+  test.deepEqual(d3.scale.linear().domain([.96, 0]).nice(10).domain(), [1, 0]);
+  test.deepEqual(d3.scale.linear().domain([96, 0]).nice(10).domain(), [100, 0]);
+  test.deepEqual(d3.scale.linear().domain([0, -.96]).nice(10).domain(), [0, -1]);
+  test.deepEqual(d3.scale.linear().domain([0, -96]).nice(10).domain(), [0, -100]);
+  test.deepEqual(d3.scale.linear().domain([-.96, 0]).nice(10).domain(), [-1, 0]);
+  test.deepEqual(d3.scale.linear().domain([-96, 0]).nice(10).domain(), [-100, 0]);
+  test.end();
+});
+
 tape("linear.ticks(count) returns the expected ticks", function(test) {
   var s = d3.scale.linear();
   test.deepEqual(s.ticks(10), [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);

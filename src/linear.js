@@ -17,8 +17,9 @@ import {
   precisionRound
 } from "d3-format";
 
-import extent from "./extent";
 import bilinear from "./bilinear";
+import extent from "./extent";
+import nice from "./nice";
 import polylinear from "./polylinear";
 import uninterpolateClamp from "./uninterpolateClamp";
 import uninterpolateNumber from "./uninterpolateNumber";
@@ -81,7 +82,10 @@ function newLinear(domain, range, interpolate, clamp) {
   };
 
   scale.nice = function(count) {
-    linearNice(domain, count);
+    var step = linearTickRange(domain, count)[2];
+    nice(domain,
+        function(x) { return Math.floor(x / step) * step; },
+        function(x) { return Math.ceil(x / step) * step; });
     return rescale();
   };
 
@@ -90,10 +94,6 @@ function newLinear(domain, range, interpolate, clamp) {
   };
 
   return rescale();
-}
-
-function linearNice(domain, count) {
-  return nice(domain, niceStep(linearTickRange(domain, count)[2]));
 }
 
 function linearTicks(domain, count) {
@@ -118,7 +118,6 @@ function linearTickRange(domain, count) {
   else if (error >= e2) step *= 2;
 
   // Round start and stop values to step interval.
-  // TODO This rounding duplicates code with nice. Sort of.
   domain[0] = Math.ceil(domain[0] / step) * step;
   domain[1] = Math.floor(domain[1] / step) * step + step * .5; // inclusive
   domain[2] = step;
