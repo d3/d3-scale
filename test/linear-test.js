@@ -16,31 +16,27 @@ tape("linear(x) maps a domain value x to a range value y", function(test) {
   test.end();
 });
 
-tape("linear.invert(y) maps a range value y to a domain value x", function(test) {
-  test.equal(linear().range([1, 2]).invert(1.5), .5);
+tape("linear(x) ignores extra range values if the domain is smaller than the range", function(test) {
+  test.equal(linear().domain([-10, 0]).range(["red", "white", "green"]).clamp(true)(-5), "#ff8080");
+  test.equal(linear().domain([-10, 0]).range(["red", "white", "green"]).clamp(true)(50), "#ffffff");
   test.end();
 });
 
-tape("linear.invert(y) coerces range values to numbers", function(test) {
-  test.equal(d3.scale.linear().range(["0", "2"]).invert("1"), .5);
-  test.equal(d3.scale.linear().range([new Date(1990, 0, 1), new Date(1991, 0, 1)]).invert(new Date(1990, 6, 2, 13)), .5);
+tape("linear(x) ignores extra domain values if the range is smaller than the domain", function(test) {
+  test.equal(linear().domain([-10, 0, 100]).range(["red", "white"]).clamp(true)(-5), "#ff8080");
+  test.equal(linear().domain([-10, 0, 100]).range(["red", "white"]).clamp(true)(50), "#ffffff");
   test.end();
 });
 
-tape("linear.invert(y) returns NaN if the range is not coercible to number", function(test) {
-  test.ok(isNaN(d3.scale.linear().range(["#000", "#fff"]).invert("#999")));
-  test.ok(isNaN(d3.scale.linear().range([0, "#fff"]).invert("#999")));
+tape("linear(x) maps an empty domain to the range start", function(test) {
+  var s = linear().domain([0, 0]).range(["red", "green"]);
+  test.equal(s(0), "#ff0000");
+  test.equal(s(-1), "#ff0000");
+  test.equal(s(1), "#ff0000");
   test.end();
 });
 
-tape("linear.domain(domain) coerces domain values to numbers", function(test) {
-  test.deepEqual(linear().domain([new Date(1990, 0, 1), new Date(1991, 0, 1)]).domain(), [631180800000, 662716800000]);
-  test.deepEqual(linear().domain(["0.0", "1.0"]).domain(), [0, 1]);
-  test.deepEqual(linear().domain([new Number(0), new Number(1)]).domain(), [0, 1]);
-  test.end();
-});
-
-tape("linear.domain(domain) can specify a bilinear domain with two values", function(test) {
+tape("linear(x) can map a bilinear domain with two values to the corresponding range", function(test) {
   var s = linear().domain([1, 2]);
   test.deepEqual(s.domain(), [1, 2]);
   test.equal(s(0.5), -0.5);
@@ -48,10 +44,15 @@ tape("linear.domain(domain) can specify a bilinear domain with two values", func
   test.equal(s(1.5),  0.5);
   test.equal(s(2.0),  1.0);
   test.equal(s(2.5),  1.5);
+  test.equal(s.invert(-0.5), 0.5);
+  test.equal(s.invert( 0.0), 1.0);
+  test.equal(s.invert( 0.5), 1.5);
+  test.equal(s.invert( 1.0), 2.0);
+  test.equal(s.invert( 1.5), 2.5);
   test.end();
 });
 
-tape("linear.domain(domain) can specify a polylinear domain with more than two values", function(test) {
+tape("linear(x) can map a polylinear domain with more than two values to the corresponding range", function(test) {
   var s = linear().domain([-10, 0, 100]).range(["red", "white", "green"]);
   test.deepEqual(s.domain(), [-10, 0, 100]);
   test.equal(s(-5), "#ff8080");
@@ -70,21 +71,34 @@ tape("linear.domain(domain) can specify a polylinear domain with more than two v
   test.end();
 });
 
-tape("linear.domain(domain) ignores extra values if the domain and range have different sizes", function(test) {
-  var s = linear().domain([-10, 0]).range(["red", "white", "green"]).clamp(true);
-  test.equal(s(-5), "#ff8080");
-  test.equal(s(50), "#ffffff");
-  var s = linear().domain([-10, 0, 100]).range(["red", "white"]).clamp(true);
-  test.equal(s(-5), "#ff8080");
-  test.equal(s(50), "#ffffff");
+tape("linear.invert(y) maps a range value y to a domain value x", function(test) {
+  test.equal(linear().range([1, 2]).invert(1.5), .5);
   test.end();
 });
 
-tape("linear.domain(domain) maps an empty domain to the range start", function(test) {
-  var s = linear().domain([0, 0]).range(["red", "green"]);
-  test.equal(s(0), "#ff0000");
-  test.equal(s(-1), "#ff0000");
-  test.equal(s(1), "#ff0000");
+tape("linear.invert(y) coerces range values to numbers", function(test) {
+  test.equal(d3.scale.linear().range(["0", "2"]).invert("1"), .5);
+  test.equal(d3.scale.linear().range([new Date(1990, 0, 1), new Date(1991, 0, 1)]).invert(new Date(1990, 6, 2, 13)), .5);
+  test.end();
+});
+
+tape("linear.invert(y) returns NaN if the range is not coercible to number", function(test) {
+  test.ok(isNaN(d3.scale.linear().range(["#000", "#fff"]).invert("#999")));
+  test.ok(isNaN(d3.scale.linear().range([0, "#fff"]).invert("#999")));
+  test.end();
+});
+
+tape("linear.domain(domain) accepts an array of numbers", function(test) {
+  test.deepEqual(linear().domain([]).domain(), []);
+  test.deepEqual(linear().domain([1, 0]).domain(), [1, 0]);
+  test.deepEqual(linear().domain([1, 2, 3]).domain(), [1, 2, 3]);
+  test.end();
+});
+
+tape("linear.domain(domain) coerces domain values to numbers", function(test) {
+  test.deepEqual(linear().domain([new Date(1990, 0, 1), new Date(1991, 0, 1)]).domain(), [631180800000, 662716800000]);
+  test.deepEqual(linear().domain(["0.0", "1.0"]).domain(), [0, 1]);
+  test.deepEqual(linear().domain([new Number(0), new Number(1)]).domain(), [0, 1]);
   test.end();
 });
 
