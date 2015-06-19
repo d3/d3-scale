@@ -1,6 +1,10 @@
 import {range} from "d3-arrays";
+import {format} from "d3-format";
 import {default as linear, rebind} from "./linear";
 import nice from "./nice";
+
+var tickFormat10 = format(".0e"),
+    tickFormatOther = format(",");
 
 function newLog(linear, base, domain) {
 
@@ -66,8 +70,16 @@ function newLog(linear, base, domain) {
     return ticks;
   };
 
-  scale.tickFormat = function() {
-    throw new Error("not yet implemented");
+  scale.tickFormat = function(count, specifier) {
+    if (specifier == null) specifier = base === 10 ? tickFormat10 : tickFormatOther;
+    else if (typeof specifier !== "function") specifier = format(specifier);
+    if (count == null) return specifier;
+    var k = Math.min(base, scale.ticks().length / count),
+        f = domain[0] > 0 ? (e = 1e-12, Math.ceil) : (e = -1e-12, Math.floor),
+        e;
+    return function(d) {
+      return pow(f(log(d) + e)) / d >= k ? specifier(d) : "";
+    };
   };
 
   scale.copy = function() {
