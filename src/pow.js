@@ -13,7 +13,7 @@ function newPow(linear, exponent, domain) {
     return x < 0 ? -Math.pow(-x, exponent) : Math.pow(x, exponent);
   }
 
-  function powb(e) {
+  function powb(x) {
     return x < 0 ? -Math.pow(-x, 1 / exponent) : Math.pow(x, 1 / exponent);
   }
 
