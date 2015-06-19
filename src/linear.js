@@ -2,7 +2,7 @@ import {bisect} from "d3-arrays";
 import {interpolate, interpolateNumber, interpolateRound} from "d3-interpolate";
 import nice from "./nice";
 import tickFormat from "./tickFormat";
-import ticks from "./ticks";
+import {default as ticks, tickRange} from "./ticks";
 
 function uninterpolateClamp(a, b) {
   b = (b -= a = +a) || 1 / b;
@@ -106,7 +106,7 @@ function newLinear(domain, range, interpolate, clamp) {
   };
 
   scale.nice = function(count) {
-    domain = nice(domain, count);
+    domain = nice(domain, tickRange(domain, count)[2]);
     return rescale();
   };
 
@@ -116,6 +116,30 @@ function newLinear(domain, range, interpolate, clamp) {
 
   return rescale();
 }
+
+export function rebind(scale, linear) {
+  scale.range = function() {
+    var x = linear.range.apply(linear, arguments);
+    return x === linear ? scale : x;
+  };
+
+  scale.rangeRound = function() {
+    var x = linear.rangeRound.apply(linear, arguments);
+    return x === linear ? scale : x;
+  };
+
+  scale.clamp = function() {
+    var x = linear.clamp.apply(linear, arguments);
+    return x === linear ? scale : x;
+  };
+
+  scale.interpolate = function() {
+    var x = linear.interpolate.apply(linear, arguments);
+    return x === linear ? scale : x;
+  };
+
+  return scale;
+};
 
 export default function() {
   return newLinear([0, 1], [0, 1], interpolate, false);

@@ -1,9 +1,8 @@
-import {tickRange} from "./ticks";
+export default function(domain, step) {
+  domain = domain.slice();
+  if (!step) return domain;
 
-export default function(domain, count) {
-  if (!(step = tickRange(domain = domain.slice(), count)[2])) return domain;
-  var step,
-      i0 = 0,
+  var i0 = 0,
       i1 = domain.length - 1,
       x0 = domain[i0],
       x1 = domain[i1],

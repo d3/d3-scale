@@ -1,13 +1,9 @@
-import linear from "./linear";
+import {default as linear, rebind} from "./linear";
 import nice from "./nice";
 import tickFormat from "./tickFormat";
-import ticks from "./ticks";
+import {default as ticks, tickRange} from "./ticks";
 
 function newPow(linear, exponent, domain) {
-
-  function scale(x) {
-    return linear(powp(x));
-  }
 
   function powp(x) {
     return x < 0 ? -Math.pow(-x, exponent) : Math.pow(x, exponent);
@@ -17,8 +13,18 @@ function newPow(linear, exponent, domain) {
     return x < 0 ? -Math.pow(-x, 1 / exponent) : Math.pow(x, 1 / exponent);
   }
 
+  function scale(x) {
+    return linear(powp(x));
+  }
+
   scale.invert = function(x) {
     return powb(linear.invert(x));
+  };
+
+  scale.exponent = function(x) {
+    if (!arguments.length) return exponent;
+    exponent = +x;
+    return scale.domain(domain);
   };
 
   scale.domain = function(x) {
@@ -26,26 +32,6 @@ function newPow(linear, exponent, domain) {
     domain = x.map(Number);
     linear.domain(domain.map(powp));
     return scale;
-  };
-
-  scale.range = function() {
-    var x = linear.range.apply(linear, arguments);
-    return x === linear ? scale : x;
-  };
-
-  scale.rangeRound = function() {
-    var x = linear.rangeRound.apply(linear, arguments);
-    return x === linear ? scale : x;
-  };
-
-  scale.clamp = function() {
-    var x = linear.clamp.apply(linear, arguments);
-    return x === linear ? scale : x;
-  };
-
-  scale.interpolate = function() {
-    var x = linear.interpolate.apply(linear, arguments);
-    return x === linear ? scale : x;
   };
 
   scale.ticks = function(count) {
@@ -57,20 +43,14 @@ function newPow(linear, exponent, domain) {
   };
 
   scale.nice = function(count) {
-    return scale.domain(nice(domain, count));
-  };
-
-  scale.exponent = function(x) {
-    if (!arguments.length) return exponent;
-    exponent = +x;
-    return scale.domain(domain);
+    return scale.domain(nice(domain, tickRange(domain, count)[2]));
   };
 
   scale.copy = function() {
     return newPow(linear.copy(), exponent, domain);
   };
 
-  return scale;
+  return rebind(scale, linear);
 }
 
 export function sqrt() {
