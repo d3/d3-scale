@@ -28,10 +28,8 @@ tape("linear(x) ignores extra domain values if the range is smaller than the dom
 });
 
 tape("linear(x) maps an empty domain to the range start", function(test) {
-  var s = scale.linear().domain([0, 0]).range(["red", "green"]);
-  test.equal(s(0), "#ff0000");
-  test.equal(s(-1), "#ff0000");
-  test.equal(s(1), "#ff0000");
+  test.equal(scale.linear().domain([0, 0]).range([1, 2])(0), 1);
+  test.equal(scale.linear().domain([0, 0]).range([2, 1])(1), 2);
   test.end();
 });
 
@@ -72,6 +70,12 @@ tape("linear(x) can map a polylinear domain with more than two values to the cor
 
 tape("linear.invert(y) maps a range value y to a domain value x", function(test) {
   test.equal(scale.linear().range([1, 2]).invert(1.5), .5);
+  test.end();
+});
+
+tape("linear.invert(y) maps an empty range to the domain start", function(test) {
+  test.equal(scale.linear().domain([1, 2]).range([0, 0]).invert(0), 1);
+  test.equal(scale.linear().domain([2, 1]).range([0, 0]).invert(1), 2);
   test.end();
 });
 
@@ -213,7 +217,35 @@ tape("linear.nice(count) extends the domain to match the desired ticks", functio
   test.end();
 });
 
-tape("linear.ticks(count) returns the expected ticks", function(test) {
+tape("linear.nice(count) nices the domain, extending it to round numbers", function(test) {
+  test.deepEqual(scale.linear().domain([1.1, 10.9]).nice(10).domain(), [1, 11]);
+  test.deepEqual(scale.linear().domain([10.9, 1.1]).nice(10).domain(), [11, 1]);
+  test.deepEqual(scale.linear().domain([.7, 11.001]).nice(10).domain(), [0, 12]);
+  test.deepEqual(scale.linear().domain([123.1, 6.7]).nice(10).domain(), [130, 0]);
+  test.deepEqual(scale.linear().domain([0, .49]).nice(10).domain(), [0, .5]);
+  test.end();
+});
+
+tape("linear.nice(count) has no effect on degenerate domains", function(test) {
+  test.deepEqual(scale.linear().domain([0, 0]).nice(10).domain(), [0, 0]);
+  test.deepEqual(scale.linear().domain([.5, .5]).nice(10).domain(), [.5, .5]);
+  test.end();
+});
+
+tape("linear.nice(count) nicing a polylinear domain only affects the extent", function(test) {
+  test.deepEqual(scale.linear().domain([1.1, 1, 2, 3, 10.9]).nice(10).domain(), [1, 1, 2, 3, 11]);
+  test.deepEqual(scale.linear().domain([123.1, 1, 2, 3, -.9]).nice(10).domain(), [130, 1, 2, 3, -10]);
+  test.end();
+});
+
+tape("linear.nice(count) accepts a tick count to control nicing step", function(test) {
+  test.deepEqual(scale.linear().domain([12, 87]).nice(5).domain(), [0, 100]);
+  test.deepEqual(scale.linear().domain([12, 87]).nice(10).domain(), [10, 90]);
+  test.deepEqual(scale.linear().domain([12, 87]).nice(100).domain(), [12, 87]);
+  test.end();
+});
+
+tape("linear.ticks(count) returns the expected ticks for an ascending domain", function(test) {
   var s = scale.linear();
   test.deepEqual(s.ticks(10), [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
   test.deepEqual(s.ticks(9),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
@@ -226,6 +258,58 @@ tape("linear.ticks(count) returns the expected ticks", function(test) {
   test.deepEqual(s.ticks(2),  [0.0,                     0.5,                     1.0]);
   test.deepEqual(s.ticks(1),  [0.0,                                              1.0]);
   s.domain([-100, 100]);
+  test.deepEqual(s.ticks(10), [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
+  test.deepEqual(s.ticks(9),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
+  test.deepEqual(s.ticks(8),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
+  test.deepEqual(s.ticks(7),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
+  test.deepEqual(s.ticks(6),  [-100,           -50,           0,         50,         100]);
+  test.deepEqual(s.ticks(5),  [-100,           -50,           0,         50,         100]);
+  test.deepEqual(s.ticks(4),  [-100,           -50,           0,         50,         100]);
+  test.deepEqual(s.ticks(3),  [-100,           -50,           0,         50,         100]);
+  test.deepEqual(s.ticks(2),  [-100,                          0,                     100]);
+  test.deepEqual(s.ticks(1),  [                               0                         ]);
+  test.end();
+});
+
+tape("linear.ticks(count) returns the expected ticks for a descending domain", function(test) {
+  var s = scale.linear().domain([1, 0]);
+  test.deepEqual(s.ticks(10), [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
+  test.deepEqual(s.ticks(9),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
+  test.deepEqual(s.ticks(8),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
+  test.deepEqual(s.ticks(7),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  test.deepEqual(s.ticks(6),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  test.deepEqual(s.ticks(5),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  test.deepEqual(s.ticks(4),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  test.deepEqual(s.ticks(3),  [0.0,                     0.5,                     1.0]);
+  test.deepEqual(s.ticks(2),  [0.0,                     0.5,                     1.0]);
+  test.deepEqual(s.ticks(1),  [0.0,                                              1.0]);
+  s.domain([100, -100]);
+  test.deepEqual(s.ticks(10), [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
+  test.deepEqual(s.ticks(9),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
+  test.deepEqual(s.ticks(8),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
+  test.deepEqual(s.ticks(7),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
+  test.deepEqual(s.ticks(6),  [-100,           -50,           0,         50,         100]);
+  test.deepEqual(s.ticks(5),  [-100,           -50,           0,         50,         100]);
+  test.deepEqual(s.ticks(4),  [-100,           -50,           0,         50,         100]);
+  test.deepEqual(s.ticks(3),  [-100,           -50,           0,         50,         100]);
+  test.deepEqual(s.ticks(2),  [-100,                          0,                     100]);
+  test.deepEqual(s.ticks(1),  [                               0                         ]);
+  test.end();
+});
+
+tape("linear.ticks(count) returns the expected ticks for a polylinear domain", function(test) {
+  var s = scale.linear().domain([0, 0.25, 0.9, 1]);
+  test.deepEqual(s.ticks(10), [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
+  test.deepEqual(s.ticks(9),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
+  test.deepEqual(s.ticks(8),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
+  test.deepEqual(s.ticks(7),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  test.deepEqual(s.ticks(6),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  test.deepEqual(s.ticks(5),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  test.deepEqual(s.ticks(4),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  test.deepEqual(s.ticks(3),  [0.0,                     0.5,                     1.0]);
+  test.deepEqual(s.ticks(2),  [0.0,                     0.5,                     1.0]);
+  test.deepEqual(s.ticks(1),  [0.0,                                              1.0]);
+  s.domain([100, 0, -100]);
   test.deepEqual(s.ticks(10), [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
   test.deepEqual(s.ticks(9),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
   test.deepEqual(s.ticks(8),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
