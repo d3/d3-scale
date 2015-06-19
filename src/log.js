@@ -53,11 +53,11 @@ function newLog(linear, base, domain) {
 
     if (isFinite(j - i)) {
       if (u > 0) {
-        for (k = 1, --j; k < n; ++k) if ((t = pow(i) * k) < u) continue; else ticks.push(t);
+        for (--j, k = 1; k < n; ++k) if ((t = pow(i) * k) < u) continue; else ticks.push(t);
         while (++i < j) for (k = 1; k < n; ++k) ticks.push(pow(i) * k);
         for (k = 1; k < n; ++k) if ((t = pow(i) * k) > v) break; else ticks.push(t);
       } else {
-        for (k = n - 1, ++i; k >= 1; --k) if ((t = pow(i) * k) < u) continue; else ticks.push(t);
+        for (++i, k = n - 1; k >= 1; --k) if ((t = pow(i) * k) < u) continue; else ticks.push(t);
         while (++i < j) for (k = n - 1; k >= 1; --k) ticks.push(pow(i) * k);
         for (k = n - 1; k >= 1; --k) if ((t = pow(i) * k) > v) break; else ticks.push(t);
       }
