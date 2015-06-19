@@ -198,6 +198,11 @@ tape("pow.range() returns a copy of range values", function(test) {
   test.end();
 });
 
+tape("pow.rangeRound(range) is an alias for pow.range(range).interpolate(interpolateRound)", function(test) {
+  test.equal(scale.pow().rangeRound([0, 10])(.59), 6);
+  test.end();
+});
+
 tape("pow.clamp() is false by default", function(test) {
   test.equal(scale.pow().clamp(), false);
   test.equal(scale.pow().range([10, 20])(2), 30);
@@ -473,5 +478,13 @@ tape("pow.copy() returns a copy with changes to clamping are isolated", function
   test.equal(x(2), 2);
   test.equal(y(2), 2);
   test.equal(x.clamp(), false);
+  test.end();
+});
+
+tape("sqrt() is an alias for pow().exponent(0.5)", function(test) {
+  var s = scale.sqrt();
+  test.equal(s.exponent(), 0.5);
+  test.inDelta(s(0.5), Math.SQRT1_2, 1e-6);
+  test.inDelta(s.invert(Math.SQRT1_2), 0.5, 1e-6);
   test.end();
 });

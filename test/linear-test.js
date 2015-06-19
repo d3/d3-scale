@@ -162,6 +162,11 @@ tape("linear.range() returns a copy of range values", function(test) {
   test.end();
 });
 
+tape("linear.rangeRound(range) is an alias for linear.range(range).interpolate(interpolateRound)", function(test) {
+  test.equal(scale.linear().rangeRound([0, 10])(.59), 6);
+  test.end();
+});
+
 tape("linear.clamp() is false by default", function(test) {
   test.equal(scale.linear().clamp(), false);
   test.equal(scale.linear().range([10, 20])(2), 30);

@@ -1,7 +1,8 @@
 import linear from "./src/linear";
-import pow from "./src/pow";
+import {default as pow, sqrt} from "./src/pow";
 
 export {
   linear,
-  pow
+  pow,
+  sqrt
 };

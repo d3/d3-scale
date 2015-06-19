@@ -33,8 +33,8 @@ function newPow(linear, exponent, domain) {
     return x === linear ? scale : x;
   };
 
-  scale.rangeRange = function() {
-    var x = linear.rangeRange.apply(linear, arguments);
+  scale.rangeRound = function() {
+    var x = linear.rangeRound.apply(linear, arguments);
     return x === linear ? scale : x;
   };
 
