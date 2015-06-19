@@ -382,3 +382,60 @@ tape("linear.tickFormat(count, specifier) sets the appropriate prefix precision 
   test.equal(scale.linear().domain([0, 1e6]).tickFormat(100, "$s")(0.501e6), "$0.50M");
   test.end();
 });
+
+tape("linear.copy() returns a copy with changes to the domain are isolated", function(test) {
+  var x = scale.linear(), y = x.copy();
+  x.domain([1, 2]);
+  test.deepEqual(y.domain(), [0, 1]);
+  test.equal(x(1), 0);
+  test.equal(y(1), 1);
+  y.domain([2, 3]);
+  test.equal(x(2), 1);
+  test.equal(y(2), 0);
+  test.deepEqual(x.domain(), [1, 2]);
+  test.deepEqual(y.domain(), [2, 3]);
+  y = x.domain([1, 1.9]).copy();
+  x.nice(5);
+  test.deepEqual(x.domain(), [1, 2]);
+  test.deepEqual(y.domain(), [1, 1.9]);
+  test.end();
+});
+
+tape("linear.copy() returns a copy with changes to the range are isolated", function(test) {
+  var x = scale.linear(), y = x.copy();
+  x.range([1, 2]);
+  test.equal(x.invert(1), 0);
+  test.equal(y.invert(1), 1);
+  test.deepEqual(y.range(), [0, 1]);
+  y.range([2, 3]);
+  test.equal(x.invert(2), 1);
+  test.equal(y.invert(2), 0);
+  test.deepEqual(x.range(), [1, 2]);
+  test.deepEqual(y.range(), [2, 3]);
+  test.end();
+});
+
+tape("linear.copy() returns a copy with changes to the interpolator are isolated", function(test) {
+  var x = scale.linear().range(["red", "blue"]),
+      y = x.copy(),
+      i0 = x.interpolate(),
+      i1 = function(a, b) { return function(t) { return b; }; };
+  x.interpolate(i1);
+  test.equal(y.interpolate(), i0);
+  test.equal(x(0.5), "blue");
+  test.equal(y(0.5), "#800080");
+  test.end();
+});
+
+tape("linear.copy() returns a copy with changes to clamping are isolated", function(test) {
+  var x = scale.linear().clamp(true), y = x.copy();
+  x.clamp(false);
+  test.equal(x(2), 2);
+  test.equal(y(2), 1);
+  test.equal(y.clamp(), true);
+  y.clamp(false);
+  test.equal(x(2), 2);
+  test.equal(y(2), 2);
+  test.equal(x.clamp(), false);
+  test.end();
+});
