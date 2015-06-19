@@ -101,6 +101,23 @@ tape("linear.domain(domain) coerces domain values to numbers", function(test) {
   test.end();
 });
 
+tape("linear.domain(domain) makes a copy of domain values", function(test) {
+  var d = [1, 2], s = scale.linear().domain(d);
+  test.deepEqual(s.domain(), [1, 2]);
+  d.push(3);
+  test.deepEqual(s.domain(), [1, 2]);
+  test.deepEqual(d, [1, 2, 3]);
+  test.end();
+});
+
+tape("linear.domain() returns a copy of domain values", function(test) {
+  var s = scale.linear(), d = s.domain();
+  test.deepEqual(d, [0, 1]);
+  d.push(3);
+  test.deepEqual(s.domain(), [0, 1]);
+  test.end();
+});
+
 tape("linear.range(range) does not coerce range to numbers", function(test) {
   var s = scale.linear().range(["0px", "2px"]);
   test.deepEqual(s.range(), ["0px", "2px"]);
@@ -121,6 +138,23 @@ tape("linear.range(range) can accept range values as colors", function(test) {
 tape("linear.range(range) can accept range values as arrays or objects", function(test) {
   test.deepEqual(scale.linear().range([{color: "red"}, {color: "blue"}])(.5), {color: "#800080"});
   test.deepEqual(scale.linear().range([["red"], ["blue"]])(.5), ["#800080"]);
+  test.end();
+});
+
+tape("linear.range(range) makes a copy of range values", function(test) {
+  var r = [1, 2], s = scale.linear().range(r);
+  test.deepEqual(s.range(), [1, 2]);
+  r.push(3);
+  test.deepEqual(s.range(), [1, 2]);
+  test.deepEqual(r, [1, 2, 3]);
+  test.end();
+});
+
+tape("linear.range() returns a copy of range values", function(test) {
+  var s = scale.linear(), r = s.range();
+  test.deepEqual(r, [0, 1]);
+  r.push(3);
+  test.deepEqual(s.range(), [0, 1]);
   test.end();
 });
 

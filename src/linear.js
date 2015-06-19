@@ -70,15 +70,14 @@ function newLinear(domain, range, interpolate, clamp) {
   };
 
   scale.domain = function(x) {
-    if (!arguments.length) return domain;
-    for (var i = 0, n = x.length; i < n; ++i) x[i] = +x[i];
-    domain = x;
+    if (!arguments.length) return domain.slice();
+    domain = x.map(Number);
     return rescale();
   };
 
   scale.range = function(x) {
-    if (!arguments.length) return range;
-    range = x;
+    if (!arguments.length) return range.slice();
+    range = x.slice();
     return rescale();
   };
 
@@ -107,7 +106,7 @@ function newLinear(domain, range, interpolate, clamp) {
   };
 
   scale.nice = function(count) {
-    nice(domain, count);
+    domain = nice(domain, count);
     return rescale();
   };
 

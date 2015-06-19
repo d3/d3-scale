@@ -1,7 +1,7 @@
 import {tickRange} from "./ticks";
 
 export default function(domain, count) {
-  var step = tickRange(domain, count)[2],
+  var step = tickRange(domain = domain.slice(), count)[2],
       i0 = 0,
       i1 = domain.length - 1,
       x0 = domain[i0],
