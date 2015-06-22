@@ -62,7 +62,7 @@ Returns the value in the input domain *x* for the corresponding value in the out
 
 For a valid value *y* in the output range, <i>linear</i>(<i>linear</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the input domain, <i>linear</i>.invert(<i>linear</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the input domain that corresponds to the pixel location under the mouse.
 
-Note: the invert method is only supported if the output range is numeric, and will return undefined if the output range is non-numeric (such as colors, strings or objects).
+Note: the invert method is only supported if the output [range](#linear_range) is numeric, and will return undefined if the output range is non-numeric (such as colors, strings or objects).
 
 <a name="linear_domain" href="#linear_domain">#</a> <i>linear</i>.<b>domain</b>([<i>domain</i>])
 
@@ -211,7 +211,7 @@ Returns the value in the input domain *x* for the corresponding value in the out
 
 For a valid value *y* in the output range, <i>pow</i>(<i>pow</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the input domain, <i>pow</i>.invert(<i>pow</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the input domain that corresponds to the pixel location under the mouse.
 
-Note: the invert method is only supported if the output range is numeric, and will return undefined if the output range is non-numeric (such as colors, strings or objects).
+Note: the invert method is only supported if the output [range](#pow_range) is numeric, and will return undefined if the output range is non-numeric (such as colors, strings or objects).
 
 <a name="pow_exponent" href="#pow_exponent">#</a> <i>pow</i>.<b>exponent</b>([<i>k</i>])
 
@@ -219,7 +219,7 @@ If *k* is specified, sets the current exponent to the given numeric value. If *k
 
 <a name="pow_domain" href="#pow_domain">#</a> <i>pow</i>.<b>domain</b>([<i>numbers</i>])
 
-If *numbers* is specified, sets the scale’s input domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. Thus, a power scale can be used to encode any type that can be converted to numbers. If *numbers* is not specified, returns the scale’s current input domain.
+If *numbers* is specified, sets the scale’s input domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. If *numbers* is not specified, returns the scale’s current input domain.
 
 As with [*linear*.domain](#linear_domain), this method can accept more than two values for the domain and range, thus resulting in a “polypower” scale.
 
@@ -301,7 +301,7 @@ Returns the value in the input domain *x* for the corresponding value in the out
 
 For a valid value *y* in the output range, <i>log</i>(<i>log</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the input domain, <i>log</i>.invert(<i>log</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the input domain that corresponds to the pixel location under the mouse.
 
-Note: the invert method is only supported if the output range is numeric, and will return undefined if the output range is non-numeric (such as colors, strings or objects).
+Note: the invert method is only supported if the output [range](#log_range) is numeric, and will return undefined if the output range is non-numeric (such as colors, strings or objects).
 
 <a name="log_base" href="#log_base">#</a> <i>log</i>.<b>base</b>([<i>base</i>])
 
@@ -309,7 +309,7 @@ If *base* is specified, sets the base for this logarithmic scale. If *base* is n
 
 <a name="log_domain" href="#log_domain">#</a> <i>log</i>.<b>domain</b>([<i>domain</i>])
 
-If *domain* is specified, sets the scale’s input domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. Thus, a log scale can be used to encode any type that can be converted to numbers. If *numbers* is not specified, returns the scale’s current input domain.
+If *domain* is specified, sets the scale’s input domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. If *numbers* is not specified, returns the scale’s current input domain.
 
 As with [*linear*.domain](#linear_domain), this method can accept more than two values for the domain and range, thus resulting in a “polylog” scale.
 
@@ -385,7 +385,7 @@ Returns the extent of values in the input domain [<i>x0</i>, <i>x1</i>] for the 
 
 <a name="quantize_domain" href="#quantize_domain">#</a> <i>quantize</i>.<b>domain</b>([<i>numbers</i>])
 
-If *numbers* is specified, sets the scale’s input domain to the specified two-element array of numbers. If the array contains more than two numbers, only the first and last number are used. If the elements in the given array are not numbers, they will be coerced to numbers. Thus, a quantize scale can be used to encode any type that can be converted to numbers. If *numbers* is not specified, returns the scale’s current input domain.
+If *numbers* is specified, sets the scale’s input domain to the specified two-element array of numbers. If the array contains more than two numbers, only the first and last number are used. If the elements in the given array are not numbers, they will be coerced to numbers. If *numbers* is not specified, returns the scale’s current input domain.
 
 <a name="quantize_range" href="#quantize_range">#</a> <i>quantize</i>.<b>range</b>([<i>values</i>])
 
@@ -413,7 +413,7 @@ Returns the extent of values in the input domain [<i>x0</i>, <i>x1</i>] for the 
 
 <a name="quantile_domain" href="#quantile_domain">#</a> <i>quantile</i>.<b>domain</b>([<i>numbers</i>])
 
-If *numbers* is specified, sets the input domain of the quantile scale to the specified set of discrete numeric values. The array must not be empty, and must contain at least one numeric value; NaN, null and undefined values are ignored and not considered part of the sample population. If the elements in the given array are not numbers, they will be coerced to numbers. A copy of the input array is sorted and stored internally. Thus, a quantile scale can be used to encode any type that can be converted to numbers. If *numbers* is not specified, returns the scale’s current input domain.
+If *numbers* is specified, sets the input domain of the quantile scale to the specified set of discrete numeric values. The array must not be empty, and must contain at least one numeric value; NaN, null and undefined values are ignored and not considered part of the sample population. If the elements in the given array are not numbers, they will be coerced to numbers. A copy of the input array is sorted and stored internally. If *numbers* is not specified, returns the scale’s current input domain.
 
 <a name="quantile_range" href="#quantile_range">#</a> <i>quantile</i>.<b>range</b>([<i>values</i>])
 
@@ -460,7 +460,7 @@ Returns the extent of values in the input domain [<i>x0</i>, <i>x1</i>] for the 
 
 <a name="threshold_domain" href="#threshold_domain">#</a> <i>threshold</i>.<b>domain</b>([<i>domain</i>])
 
-If *domain* is specified, sets the scale’s input domain to the specified array of values. The values must be in sorted ascending order, or the behavior of the scale is undefined. The values are typically numbers, but any naturally ordered values (such as strings) will work. Thus, a threshold scale can be used to encode any type that is ordered. If the number of values in the scale’s range is N+1, the number of values in the scale’s domain must be N. If there are fewer than N elements in the domain, the additional values in the range are ignored. If there are more than N elements in the domain, the scale may return undefined for some inputs. If *domain* is not specified, returns the scale’s current input domain.
+If *domain* is specified, sets the scale’s input domain to the specified array of values. The values must be in sorted ascending order, or the behavior of the scale is undefined. The values are typically numbers, but any naturally ordered values (such as strings) will work; a threshold scale can be used to encode any type that is ordered. If the number of values in the scale’s range is N+1, the number of values in the scale’s domain must be N. If there are fewer than N elements in the domain, the additional values in the range are ignored. If there are more than N elements in the domain, the scale may return undefined for some inputs. If *domain* is not specified, returns the scale’s current input domain.
 
 <a name="threshold_range" href="#threshold_range">#</a> <i>threshold</i>.<b>range</b>([<i>values</i>])
 
