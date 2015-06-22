@@ -14,17 +14,17 @@ If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release]
 
 ## API Reference
 
-* [Linear](#linear)
-* [Identity](#identity)
-* [Power](#power)
-* [Log](#log)
-* [Quantize](#quantize)
-* [Quantile](#quantile)
-* [Threshold](#threshold)
-* [Ordinal](#ordinal)
-* [Category](#category)
+* [Linear](#linear-scales)
+* [Identity](#identity-scales)
+* [Power](#power-scales)
+* [Log](#log-scales)
+* [Quantize](#quantize-scales)
+* [Quantile](#quantile-scales)
+* [Threshold](#threshold-scales)
+* [Ordinal](#ordinal-scales)
+* [Category](#category-scales)
 
-### Scales
+### Linear Scales
 
 Linear scales are the most common scale and a good default choice to map a continuous input domain to a continuous output range. With a *linear* scale, each output range value *y* can be expressed as a linear function of the input domain value *x*: *y* = *mx* + *b*. The input domain is typically a dimension of the data that you want to visualize, such as the height of students in meters in a sample population. The output range is typically a dimension of the desired output visualization, such as the height of bars in pixels in a histogram.
 
@@ -126,7 +126,7 @@ Likewise, if *format* uses the format type `s`, the scale will compute a SI-pref
 
 Returns an exact copy of this linear scale. Changes to this scale will not affect the returned scale, and vice versa.
 
-### Identity
+### Identity Scales
 
 Identity scales are a special case of linear scales where the domain and range are identical; the scale and its invert method are both the identity function. These scales are occasionally useful when working with pixel coordinates, say in conjunction with the axis and brush components.
 
@@ -158,7 +158,7 @@ The optional *format* argument allows a [format specifier](https://github.com/d3
 
 Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
 
-### Power
+### Power Scales
 
 Power scales are similar to linear scales, except an exponential transform is applied to the input domain value before the output range value is computed. The mapping to the output range value *y* can be expressed as a function of the input domain value *x*: *y* = *mx^k* + *b*, where *k* is the exponent value. Power scales also support negative values, in which case the input value is multiplied by -1, and the resulting output value is also multiplied by -1.
 
@@ -236,7 +236,7 @@ The optional *format* argument allows a [format specifier](https://github.com/d3
 
 Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
 
-### Log
+### Log Scales
 
 Log scales are similar to linear scales, except there’s a logarithmic transform that is applied to the input domain value before the output range value is computed. The mapping to the output range value *y* can be expressed as a function of the input domain value *x*: *y* = *m* log(<i>x</i>) + *b*.
 
@@ -308,7 +308,7 @@ If the format specifier doesn’t have a defined precision, the precision will b
 
 Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
 
-### Quantize
+### Quantize Scales
 
 Quantize scales are a variant of linear scales with a discrete rather than continuous range. The input domain is still continuous, and divided into uniform segments based on the number of values in (the cardinality of) the output range. The mapping is *linear* in that the output range value *y* can be expressed as a linear function of the input domain value *x*: *y* = *mx* + *b*. The input domain is typically a dimension of the data that you want to visualize, such as the height of students in meters in a sample population. The output range is typically a dimension of the desired output visualization, such as the height of bars in pixels in a histogram.
 
@@ -347,7 +347,7 @@ If *values* is specified, sets the scale’s output range to the specified array
 
 Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
 
-### Quantile
+### Quantile Scales
 
 Quantile scales map an input domain to a discrete range. Although the input domain is continuous and the scale will accept any reasonable input value, the input domain is specified as a discrete set of values. The number of values in (the cardinality of) the output range determines the number of quantiles that will be computed from the input domain. To compute the quantiles, the input domain is sorted, and treated as a [population of discrete values](https://en.wikipedia.org/wiki/Quantile#Quantiles_of_a_population). The input domain is typically a dimension of the data that you want to visualize, such as the daily change of the stock market. The output range is typically a dimension of the desired output visualization, such as a diverging color scale.
 
@@ -379,7 +379,7 @@ Returns the quantile thresholds. If the output range contains *n* discrete value
 
 Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
 
-### Threshold
+### Threshold Scales
 
 Threshold scales are similar to quantize scales, except they allow you to map arbitrary subsets of the domain to discrete values in the range. The input domain is still continuous, and divided into slices based on a set of threshold values. The input domain is typically a dimension of the data that you want to visualize, such as the height of students in meters in a sample population. The output range is typically a dimension of the desired output visualization, such as a set of colors.
 
@@ -421,7 +421,7 @@ If *values* is specified, sets the scale’s output range to the specified array
 
 Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
 
-### Ordinal
+### Ordinal Scales
 
 Unlike quantitative scales, ordinal scales have a discrete domain and range. For example, an ordinal scale might map a set of named categories to a set of colors, or determine the horizontal positions of columns in a column chart.
 
@@ -543,7 +543,7 @@ Returns a two-element array representing the extent of the scale's range, i.e., 
 
 Returns an exact copy of this ordinal scale. Changes to this scale will not affect the returned scale, and vice versa.
 
-### Category
+### Category Scales
 
 <a name="category10" href="#category10">#</a> <b>category10</b>()
 
