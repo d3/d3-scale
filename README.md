@@ -354,17 +354,17 @@ Threshold scales are similar to quantize scales, except they allow you to map ar
 Constructs a new threshold scale with the default domain [.5] and the default range [0,1]. Thus, the default threshold scale is equivalent to the [round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function for numbers; for example threshold(0.49) returns 0, and threshold(0.51) returns 1.
 
 ```js
-ar s = threshold()
+var s = threshold()
     .domain([0, 1])
     .range(["a", "b", "c"]);
-t(-1);   // "a"
-t(0);    // "b"
-t(0.5);  // "b"
-t(1);    // "c"
-t(1000); // "c"
-t.invertExtent("a"); // [undefined, 0]
-t.invertExtent("b"); // [0, 1]
-t.invertExtent("c"); // [1, undefined]
+s(-1);   // "a"
+s(0);    // "b"
+s(0.5);  // "b"
+s(1);    // "c"
+s(1000); // "c"
+s.invertExtent("a"); // [undefined, 0]
+s.invertExtent("b"); // [0, 1]
+s.invertExtent("c"); // [1, undefined]
 ```
 
 <a name="_threshold" href="#_threshold">#</a> <i>threshold</i>(<i>x</i>)
