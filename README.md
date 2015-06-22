@@ -98,8 +98,8 @@ Identity scales are a special case of linear scales where the domain and range a
 
 Constructs a new identity scale with the default domain [0,1] and the default range [0,1]. An identity scale is always equivalent to the identity function.
 
-<a name="_identity" href="#_identity">#</a> <b>identity</b>(<i>x</i>)<br>
-<a href="#_identity">#</a> <i>identity</i>.<b>invert</b>(<i>x</i>)
+<a name="_identity" href="#_identity">#</a> <i>identity</i>(<i>x</i>)<br>
+<a href="#_identity">#</a> <i>identity</i>.<i>invert</i>(<i>x</i>)
 
 Returns the given value *x*.
 
@@ -124,7 +124,7 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 ### Power Scales
 
-Power scales are similar to linear scales, except there’s an exponential transform that is applied to the input domain value before the output range value is computed. The mapping to the output range value *y* can be expressed as a function of the input domain value *x*: *y* = *mx^k* + *b*, where *k* is the exponent value. Power scales also support negative values, in which case the input value is multiplied by -1, and the resulting output value is also multiplied by -1.
+Power scales are similar to linear scales, except an exponential transform is applied to the input domain value before the output range value is computed. The mapping to the output range value *y* can be expressed as a function of the input domain value *x*: *y* = *mx^k* + *b*, where *k* is the exponent value. Power scales also support negative values, in which case the input value is multiplied by -1, and the resulting output value is also multiplied by -1.
 
 <a name="sqrt" href="#sqrt">#</a> <b>sqrt</b>()
 
@@ -140,7 +140,7 @@ The returned scale is a function that takes a single argument *x* representing a
 
 Constructs a new power scale with the default domain [0,1], the default range [0,1], and the default exponent 1. Thus, the default power scale is equivalent to the identity function for numbers; for example pow(0.5) returns 0.5.
 
-<a name="_pow" href="#_pow">#</a> <b>pow</b>(<i>x</i>)
+<a name="_pow" href="#_pow">#</a> <i>pow</i>(<i>x</i>)
 
 Given a value *x* in the input domain, returns the corresponding value in the output range.
 
@@ -315,7 +315,7 @@ Quantile scales map an input domain to a discrete range. Although the input doma
 
 Constructs a new quantile scale with an empty domain and an empty range. The quantile scale is invalid until both a domain and range are specified.
 
-<a name="_quantile" href="#_quantile">#</a> <b>quantile</b>(<i>x</i>)
+<a name="_quantile" href="#_quantile">#</a> <i>quantile</i>(<i>x</i>)
 
 Given a value *x* in the input domain, returns the corresponding value in the output range.
 
