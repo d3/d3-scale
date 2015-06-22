@@ -69,15 +69,18 @@ Note: the invert method is only supported if the output range is numeric, and wi
 
 If *numbers* is specified, sets the scale’s input domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. A linear scale can be used to encode types such as [dates](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date) that can be converted to numbers; however, it is often more convenient to use [time scale](https://github.com/d3/d3-scale-time) for dates. If *numbers* is not specified, returns the scale’s current input domain.
 
-Although linear scales typically have only two values in their domain, you can specify more than two values for a *polylinear* scale. In this case, there should be an equivalent number of values in the output [range](#linear_range). A polylinear scale represents multiple piecewise linear scales that divide a continuous domain and range. For example, to create a diverging color scale that interpolates between white and red for negative values, and white and green for positive values, say:
+Although linear scales typically have only two values in their domain, you can specify more than two values for a “polylinear” scale. In this case, there should be an equivalent number of values in the output [range](#linear_range). A polylinear scale represents multiple piecewise linear scales that divide a continuous domain and range. For example, to create a diverging color scale that interpolates between white and red for negative values, and white and green for positive values, say:
 
 ```js
-var color = linear()
+var s = linear()
     .domain([-1, 0, 1])
     .range(["red", "white", "green"]);
+
+s(-0.5); // "#ff8080"
+s(+0.5); // "#80c080"
 ```
 
-The resulting value of color(-0.5) is rgb(255, 128, 128), and the value of color(.5) is rgb(128, 192, 128). Internally, polylinear scales perform a binary search for the output interpolator corresponding to the given domain value. By repeating values in both the domain and range, you can also force a chunk of the input domain to map to a constant in the output range.
+Internally, polylinear scales perform a binary search for the output interpolator corresponding to the given domain value. By repeating values in both the domain and range, you can also force a chunk of the input domain to map to a constant in the output range.
 
 <a name="linear_range" href="#linear_range">#</a> <i>linear</i>.<b>range</b>([<i>values</i>])
 
@@ -114,9 +117,10 @@ Returns a [number format](https://github.com/d3/d3-format) function suitable for
 The optional *format* argument allows a [format specifier](https://github.com/d3/d3-format#locale_format) to be specified, where the precision of the format is automatically substituted by the scale to be appropriate for the tick interval. For example, to format percentage change, you might say:
 
 ```js
-var x = linear().domain([-1, 1]),
-    ticks = x.ticks(5),
-    format = x.tickFormat(5, "+%");
+var s = linear().domain([-1, 1]),
+    ticks = s.ticks(5),
+    format = s.tickFormat(5, "+%");
+
 console.log(ticks.map(format)); // ["-100%", "-50%", "+0%", "+50%", "+100%"]
 ```
 
@@ -317,14 +321,15 @@ Quantize scales are a variant of linear scales with a discrete rather than conti
 Constructs a new quantize scale with the default domain [0,1] and the default range [0,1]. Thus, the default quantize scale is equivalent to the [round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function for numbers; for example quantize(0.49) returns 0, and quantize(0.51) returns 1.
 
 ```js
-var q = quantize()
+var s = quantize()
     .domain([0, 1])
     .range(["a", "b", "c"]);
-q(0.3); // "a"
-q(0.4); // "b"
-q(0.6); // "b"
-q(0.7); // "c"
-q.invertExtent("a"); // [0, 0.3333333333333333]
+
+s(0.3); // "a"
+s(0.4); // "b"
+s(0.6); // "b"
+s(0.7); // "c"
+s.invertExtent("a"); // [0, 0.3333333333333333]
 ```
 
 <a name="_quantize" href="#_quantize">#</a> <i>quantize</i>(<i>x</i>)
@@ -391,6 +396,7 @@ Constructs a new threshold scale with the default domain [.5] and the default ra
 var s = threshold()
     .domain([0, 1])
     .range(["a", "b", "c"]);
+
 s(-1);   // "a"
 s(0);    // "b"
 s(0.5);  // "b"
