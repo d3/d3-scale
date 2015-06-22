@@ -53,7 +53,7 @@ Sets the scale’s output range to the specified array of values, while also set
 
 <a name="linear_interpolate" href="#linear_interpolate">#</a> <i>linear</i>.<b>interpolate</b>([<i>factory</i>])
 
-If *factory* is specified, sets the scale’s output interpolator using the specified *factory*. The interpolator factory defaults to [interpolate](https://github.com/d3/d3-interpolate#interpolate), and is used to map a normalized domain parameter *t* in [0,1] to the corresponding value in the output range. The interpolator factory will be used to construct interpolators for each adjacent pair of values from the output range. If *factory* is not specified, returns the scale’s interpolator factory.
+If *factory* is specified, sets the scale’s output interpolator using the specified *factory*. The interpolator factory is used to map a normalized domain parameter *t* in [0,1] to the corresponding value in the output range. The interpolator factory will be used to construct interpolators for each adjacent pair of values from the output range. If *factory* is not specified, returns the scale’s interpolator factory.
 
 Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator reuses the returned object and thus the scale always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
 
@@ -172,7 +172,7 @@ If *k* is specified, sets the current exponent to the given numeric value. If *k
 
 <a name="pow_interpolate" href="#pow_interpolate">#</a> <i>pow</i>.<b>interpolate</b>([<i>factory</i>])
 
-If *factory* is specified, sets the scale’s output interpolator using the specified *factory*. The interpolator factory defaults to [interpolate](https://github.com/d3/d3-interpolate#interpolate), and is used to map the normalized domain parameter *t* in [0,1] to the corresponding value in the output range. The interpolator factory will be used to construct interpolators for each adjacent pair of values from the output range. If *factory* is not specified, returns the scale’s interpolator factory.
+If *factory* is specified, sets the scale’s output interpolator using the specified *factory*. The interpolator factory is used to map the normalized domain parameter *t* in [0,1] to the corresponding value in the output range. The interpolator factory will be used to construct interpolators for each adjacent pair of values from the output range. If *factory* is not specified, returns the scale’s interpolator factory.
 
 <a name="pow_clamp" href="#pow_clamp">#</a> <i>pow</i>.<b>clamp</b>([<i>boolean</i>])
 
