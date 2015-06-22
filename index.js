@@ -6,6 +6,8 @@ import linear from "./src/linear";
 import log from "./src/log";
 import ordinal from "./src/ordinal";
 import {default as pow, sqrt} from "./src/pow";
+import quantile from "./src/quantile";
+import quantize from "./src/quantize";
 import threshold from "./src/threshold";
 
 export {
@@ -17,6 +19,8 @@ export {
   log,
   ordinal,
   pow,
+  quantile,
+  quantize,
   sqrt,
   threshold
 };
