@@ -31,7 +31,28 @@ Constructs a new linear scale with the default [domain](#linear_domain) [0,1] an
 
 <a name="_linear" href="#_linear">#</a> <i>linear</i>(<i>x</i>)
 
-Given a value *x* in the input domain, returns the corresponding value in the output range.
+Given a value *x* in the input domain, returns the corresponding value in the output range. For example, a color encoding:
+
+```js
+var s = linear()
+    .domain([-100, 100])
+    .range(["brown", "steelblue"]);
+
+s(-100); // "#a52a2a"
+s(0);    // "#76566f"
+s(100);  // "#4682b4"
+```
+
+Or, a position encoding:
+
+```js
+var s = linear()
+    .domain([10, 100])
+    .range([0, 960]);
+
+s(20); // 106.66666666666666
+s(50); // 426.66666666666663
+```
 
 <a name="linear_invert" href="#linear_invert">#</a> <i>linear</i>.<b>invert</b>(<i>y</i>)
 
