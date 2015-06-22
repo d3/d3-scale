@@ -23,7 +23,7 @@ If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release]
 
 ### Scales
 
-Linear scales are the most common scale, and a good default choice to map a continuous input domain to a continuous output range. In a *linear* mapping, each output range value *y* can be expressed as a linear function of the input domain value *x*: *y* = *mx* + *b*. The input domain is typically a dimension of the data that you want to visualize, such as the height of students in meters in a sample population. The output range is typically a dimension of the desired output visualization, such as the height of bars in pixels in a histogram.
+Linear scales are the most common scale and a good default choice to map a continuous input domain to a continuous output range. With a *linear* scale, each output range value *y* can be expressed as a linear function of the input domain value *x*: *y* = *mx* + *b*. The input domain is typically a dimension of the data that you want to visualize, such as the height of students in meters in a sample population. The output range is typically a dimension of the desired output visualization, such as the height of bars in pixels in a histogram.
 
 <a name="linear" href="#linear">#</a> <b>linear</b>()
 
