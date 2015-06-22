@@ -143,10 +143,10 @@ Constructs a new identity scale with the default domain [0,1] and the default ra
 
 Returns the given value *x*.
 
-<a name="identity_domain" href="#identity_domain">#</a> <i>identity</i>.<b>domain</b>([<i>numbers</i>])<br>
-<a href="#identity_domain">#</a> <i>identity</i>.<b>range</b>([<i>numbers</i>])
+<a name="identity_domain" href="#identity_domain">#</a> <i>identity</i>.<b>domain</b>([<i>domain</i>])<br>
+<a href="#identity_domain">#</a> <i>identity</i>.<b>range</b>([<i>domain</i>])
 
-If *numbers* is specified, sets the scale’s input domain and output range to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. If numbers is not specified, returns the scale’s current input domain (or equivalently, output range).
+If *domain* is specified, sets the scale’s input domain and output range to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. If numbers is not specified, returns the scale’s current input domain (or equivalently, output range).
 
 <a name="identity_ticks" href="#identity_ticks">#</a> <i>identity</i>.<b>ticks</b>([<i>count</i>])
 
