@@ -31,12 +31,12 @@ Note: the invert method is only supported if the output range is numeric, and wi
 
 <a name="linear_domain" href="#linear_domain">#</a> <i>linear</i>.<b>domain</b>([<i>numbers</i>])
 
-If *numbers* is specified, sets the scale’s input domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers; this coercion happens similarly when the scale is called. Thus, a linear scale can be used to encode types such as [dates](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date) that can be converted to numbers; however, it is often more convenient to use [time scale](https://github.com/d3/d3-scale-time) for dates. (You can implement your own convertible number objects using [*object*.valueOf](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object/valueOf].) If *numbers* is not specified, returns the scale’s current input domain.
+If *numbers* is specified, sets the scale’s input domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. A linear scale can be used to encode types such as [dates](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date) that can be converted to numbers; however, it is often more convenient to use [time scale](https://github.com/d3/d3-scale-time) for dates. If *numbers* is not specified, returns the scale’s current input domain.
 
-Although linear scales typically have only two values in their domain, you can specify more than two values for a *polylinear* scale. In this case, there must be an equivalent number of values in the output [range](#linear_range). A “polylinear” scale represents multiple piecewise linear scales that divide a continuous domain and range. This is particularly useful for defining diverging quantitative scales. For example, to interpolate between white and red for negative values, and white and green for positive values, say:
+Although linear scales typically have only two values in their domain, you can specify more than two values for a *polylinear* scale. In this case, there should be an equivalent number of values in the output [range](#linear_range). A polylinear scale represents multiple piecewise linear scales that divide a continuous domain and range. For example, to create a diverging color scale that interpolates between white and red for negative values, and white and green for positive values, say:
 
 ```javascript
-var color = d3.scale.linear()
+var color = linear()
     .domain([-1, 0, 1])
     .range(["red", "white", "green"]);
 ```
@@ -106,7 +106,7 @@ Returns the given value *x*.
 <a name="identity_domain" href="#identity_domain">#</a> <i>identity</i>.<b>domain</b>([<i>numbers</i>])<br>
 <a href="#identity_domain">#</a> <i>identity</i>.<b>range</b>([<i>numbers</i>])
 
-If *numbers* is specified, sets the scale’s input domain and output range to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers; this coercion happens similarly when the scale is called. If numbers is not specified, returns the scale’s current input domain (or equivalently, output range).
+If *numbers* is specified, sets the scale’s input domain and output range to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. If numbers is not specified, returns the scale’s current input domain (or equivalently, output range).
 
 <a name="identity_ticks" href="#identity_ticks">#</a> <i>identity</i>.<b>ticks</b>([<i>count</i>])
 
@@ -154,7 +154,7 @@ Note: the invert method is only supported if the output range is numeric, and wi
 
 <a name="pow_domain" href="#pow_domain">#</a> <i>pow</i>.<b>domain</b>([<i>numbers</i>])
 
-If *numbers* is specified, sets the scale’s input domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers; this coercion happens similarly when the scale is called. Thus, a power scale can be used to encode any type that can be converted to numbers. If *numbers* is not specified, returns the scale’s current input domain.
+If *numbers* is specified, sets the scale’s input domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. Thus, a power scale can be used to encode any type that can be converted to numbers. If *numbers* is not specified, returns the scale’s current input domain.
 
 As with linear scales (see [*linear*.domain](#linear_domain)), power scales can also accept more than two values for the domain and range, thus resulting in polypower scale.
 
@@ -222,7 +222,7 @@ Note: the invert method is only supported if the output range is numeric, and wi
 
 <a name="log_domain" href="#log_domain">#</a> <i>log</i>.<b>domain</b>([<i>numbers</i>])
 
-If *numbers* is specified, sets the scale’s input domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers; this coercion happens similarly when the scale is called. Thus, a log scale can be used to encode any type that can be converted to numbers. If *numbers* is not specified, returns the scale’s current input domain.
+If *numbers* is specified, sets the scale’s input domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. Thus, a log scale can be used to encode any type that can be converted to numbers. If *numbers* is not specified, returns the scale’s current input domain.
 
 As with linear scales (see [*linear*.domain](#linear_domain)), log scales can also accept more than two values for the domain and range, thus resulting in polylog scale.
 
@@ -277,7 +277,7 @@ Quantize scales are a variant of linear scales with a discrete rather than conti
 Constructs a new quantize scale with the default domain [0,1] and the default range [0,1]. Thus, the default quantize scale is equivalent to the [round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function for numbers; for example quantize(0.49) returns 0, and quantize(0.51) returns 1.
 
 ```javascript
- var q = d3.scale.quantize()
+ var q = quantize()
     .domain([0, 1])
     .range(["a", "b", "c"]);
 q(0.3); // "a"
@@ -297,7 +297,7 @@ Returns the extent of values in the input domain [<i>x0</i>, <i>x1</i>] for the 
 
 <a name="quantize_domain" href="#quantize_domain">#</a> <i>quantize</i>.<b>domain</b>([<i>numbers</i>])
 
-If *numbers* is specified, sets the scale’s input domain to the specified two-element array of numbers. If the array contains more than two numbers, only the first and last number are used. If the elements in the given array are not numbers, they will be coerced to numbers; this coercion happens similarly when the scale is called. Thus, a quantize scale can be used to encode any type that can be converted to numbers. If *numbers* is not specified, returns the scale’s current input domain.
+If *numbers* is specified, sets the scale’s input domain to the specified two-element array of numbers. If the array contains more than two numbers, only the first and last number are used. If the elements in the given array are not numbers, they will be coerced to numbers. Thus, a quantize scale can be used to encode any type that can be converted to numbers. If *numbers* is not specified, returns the scale’s current input domain.
 
 <a name="quantize_range" href="#quantize_range">#</a> <i>quantize</i>.<b>range</b>([<i>values</i>])
 
@@ -325,7 +325,7 @@ Returns the extent of values in the input domain [<i>x0</i>, <i>x1</i>] for the 
 
 <a name="quantile_domain" href="#quantile_domain">#</a> <i>quantile</i>.<b>domain</b>([<i>numbers</i>])
 
-If *numbers* is specified, sets the input domain of the quantile scale to the specified set of discrete numeric values. The array must not be empty, and must contain at least one numeric value; NaN, null and undefined values are ignored and not considered part of the sample population. If the elements in the given array are not numbers, they will be coerced to numbers; this coercion happens similarly when the scale is called. A copy of the input array is sorted and stored internally. Thus, a quantile scale can be used to encode any type that can be converted to numbers. If *numbers* is not specified, returns the scale’s current input domain.
+If *numbers* is specified, sets the input domain of the quantile scale to the specified set of discrete numeric values. The array must not be empty, and must contain at least one numeric value; NaN, null and undefined values are ignored and not considered part of the sample population. If the elements in the given array are not numbers, they will be coerced to numbers. A copy of the input array is sorted and stored internally. Thus, a quantile scale can be used to encode any type that can be converted to numbers. If *numbers* is not specified, returns the scale’s current input domain.
 
 <a name="quantile_range" href="#quantile_range">#</a> <i>quantile</i>.<b>range</b>([<i>values</i>])
 
@@ -348,7 +348,7 @@ Threshold scales are similar to quantize scales, except they allow you to map ar
 Constructs a new threshold scale with the default domain [.5] and the default range [0,1]. Thus, the default threshold scale is equivalent to the [[round|https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round]] function for numbers; for example threshold(0.49) returns 0, and threshold(0.51) returns 1.
 
 ```javascript
-var t = d3.scale.threshold().domain([0, 1]).range([’a’, ’b’, ’c’]);
+var t = threshold().domain([0, 1]).range([’a’, ’b’, ’c’]);
 t(-1) === ’a’;
 t(0) === ’b’;
 t(0.5) === ’b’;
