@@ -363,45 +363,52 @@ Quantize scales are a variant of linear scales with a discrete rather than conti
 
 <a name="quantize" href="#quantize">#</a> <b>quantize</b>()
 
-Constructs a new quantize scale with the default domain [0,1] and the default range [0,1]. Thus, the default quantize scale is equivalent to the [round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function for numbers:
+Constructs a new quantize scale with the default domain [0,1] and the default range [0,1]. Thus, the default quantize scale is equivalent to the [round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function for numbers.
 
+<a name="_quantize" href="#_quantize">#</a> <i>quantize</i>(<i>x</i>)
 
-```js
-var s = quantize();
-
-s(0.49); // 0
-s(0.51); // 1
-```
-
-Another example dividing the domain [0,1] into three equally-sized parts:
+Given a value *x* in the input domain, returns the corresponding value in the output range. For example, a color encoding:
 
 ```js
 var s = quantize()
     .domain([0, 1])
-    .range(["a", "b", "c"]);
+    .range(["brown", "steelblue"]);
 
-s(0.3); // "a"
-s(0.4); // "b"
-s(0.6); // "b"
-s(0.7); // "c"
-s.invertExtent("a"); // [0, 0.3333333333333333]
+s(0.49); // "brown"
+s(0.51); // "steelblue"
 ```
 
-<a name="_quantize" href="#_quantize">#</a> <i>quantize</i>(<i>x</i>)
+Dividing the domain into three equally-sized parts with different range values:
 
-Given a value *x* in the input domain, returns the corresponding value in the output range.
+```js
+var s = quantize()
+    .domain([10, 100])
+    .range([1, 2, 4]);
+
+s(20); // 1
+s(50); // 2
+s(80); // 4
+```
 
 <a name="quantize_invertExtent" href="#quantize_invertExtent">#</a> <i>quantize</i>.<b>invertExtent</b>(<i>y</i>)
 
 Returns the extent of values in the input domain [<i>x0</i>, <i>x1</i>] for the corresponding value in the output range *y*, representing the inverse mapping from range to domain. This method is useful for interaction, say to determine the value in the input domain that corresponds to the pixel location under the mouse.
 
-<a name="quantize_domain" href="#quantize_domain">#</a> <i>quantize</i>.<b>domain</b>([<i>numbers</i>])
+```js
+var s = quantize()
+    .domain([10, 100])
+    .range([1, 2, 4]);
 
-If *numbers* is specified, sets the scale’s input domain to the specified two-element array of numbers. If the array contains more than two numbers, only the first and last number are used. If the elements in the given array are not numbers, they will be coerced to numbers. If *numbers* is not specified, returns the scale’s current input domain.
+s.invertExtent(2); // [40, 70]
+```
 
-<a name="quantize_range" href="#quantize_range">#</a> <i>quantize</i>.<b>range</b>([<i>values</i>])
+<a name="quantize_domain" href="#quantize_domain">#</a> <i>quantize</i>.<b>domain</b>([<i>domain</i>])
 
-If *values* is specified, sets the scale’s output range to the specified array of values. The array may contain any number of discrete values. The elements in the given array need not be numbers; any value or type will work. If *values* is not specified, returns the scale’s current output range.
+If *domain* is specified, sets the scale’s input domain to the specified two-element array of numbers. If the array contains more than two numbers, only the first and last number are used. If the elements in the given array are not numbers, they will be coerced to numbers. If *numbers* is not specified, returns the scale’s current input domain.
+
+<a name="quantize_range" href="#quantize_range">#</a> <i>quantize</i>.<b>range</b>([<i>range</i>])
+
+If *range* is specified, sets the scale’s output range to the specified array of values. The array may contain any number of discrete values. The elements in the given array need not be numbers; any value or type will work. If *values* is not specified, returns the scale’s current output range.
 
 <a name="quantize_copy" href="#quantize_copy">#</a> <i>quantize</i>.<b>copy</b>()
 
