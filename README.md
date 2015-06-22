@@ -158,7 +158,7 @@ Note: the invert method is only supported if the output range is numeric, and wi
 
 If *numbers* is specified, sets the scale’s input domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. Thus, a power scale can be used to encode any type that can be converted to numbers. If *numbers* is not specified, returns the scale’s current input domain.
 
-As with linear scales (see [*linear*.domain](#linear_domain)), power scales can also accept more than two values for the domain and range, thus resulting in polypower scale.
+As with [*linear*.domain](#linear_domain), this method can accept more than two values for the domain and range, thus resulting in a “polypower” scale.
 
 <a name="pow_range" href="#pow_range">#</a> <i>pow</i>.<b>range</b>([<i>values</i>])
 
@@ -228,7 +228,7 @@ Note: the invert method is only supported if the output range is numeric, and wi
 
 If *numbers* is specified, sets the scale’s input domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. Thus, a log scale can be used to encode any type that can be converted to numbers. If *numbers* is not specified, returns the scale’s current input domain.
 
-As with linear scales (see [*linear*.domain](#linear_domain)), log scales can also accept more than two values for the domain and range, thus resulting in polylog scale.
+As with [*linear*.domain](#linear_domain), this method can accept more than two values for the domain and range, thus resulting in a “polylog” scale.
 
 <a name="log_range" href="#log_range">#</a> <i>log</i>.<b>range</b>([<i>values</i>])
 
