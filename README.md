@@ -37,7 +37,7 @@ If *numbers* is specified, sets the scale’s input domain to the specified arra
 
 Although linear scales typically have only two values in their domain, you can specify more than two values for a *polylinear* scale. In this case, there should be an equivalent number of values in the output [range](#linear_range). A polylinear scale represents multiple piecewise linear scales that divide a continuous domain and range. For example, to create a diverging color scale that interpolates between white and red for negative values, and white and green for positive values, say:
 
-```javascript
+```js
 var color = linear()
     .domain([-1, 0, 1])
     .range(["red", "white", "green"]);
@@ -132,7 +132,7 @@ Power scales are similar to linear scales, except an exponential transform is ap
 
 Constructs a new power scale with the default domain [0,1], the default range [0,1], and the exponent .5. This method is shorthand for:
 
-```javascript
+```js
 pow().exponent(.5)
 ```
 
@@ -282,7 +282,7 @@ Quantize scales are a variant of linear scales with a discrete rather than conti
 
 Constructs a new quantize scale with the default domain [0,1] and the default range [0,1]. Thus, the default quantize scale is equivalent to the [round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function for numbers; for example quantize(0.49) returns 0, and quantize(0.51) returns 1.
 
-```javascript
+```js
 var q = quantize()
     .domain([0, 1])
     .range(["a", "b", "c"]);
@@ -351,18 +351,20 @@ Threshold scales are similar to quantize scales, except they allow you to map ar
 
 <a name="threshold" href="#threshold">#</a> <b>threshold</b>()
 
-Constructs a new threshold scale with the default domain [.5] and the default range [0,1]. Thus, the default threshold scale is equivalent to the [[round|https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round]] function for numbers; for example threshold(0.49) returns 0, and threshold(0.51) returns 1.
+Constructs a new threshold scale with the default domain [.5] and the default range [0,1]. Thus, the default threshold scale is equivalent to the [round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function for numbers; for example threshold(0.49) returns 0, and threshold(0.51) returns 1.
 
-```javascript
-var t = threshold().domain([0, 1]).range([’a’, ’b’, ’c’]);
-t(-1) === ’a’;
-t(0) === ’b’;
-t(0.5) === ’b’;
-t(1) === ’c’;
-t(1000) === ’c’;
-t.invertExtent(’a’); //returns [undefined, 0]
-t.invertExtent(’b’); //returns [0, 1]
-t.invertExtent(’c’); //returns [1, undefined]
+```js
+ar s = threshold()
+    .domain([0, 1])
+    .range(["a", "b", "c"]);
+t(-1);   // "a"
+t(0);    // "b"
+t(0.5);  // "b"
+t(1);    // "c"
+t(1000); // "c"
+t.invertExtent("a"); // [undefined, 0]
+t.invertExtent("b"); // [0, 1]
+t.invertExtent("c"); // [1, undefined]
 ```
 
 <a name="_threshold" href="#_threshold">#</a> <i>threshold</i>(<i>x</i>)
