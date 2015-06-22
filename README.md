@@ -6,7 +6,7 @@ Want a longer introduction? See these recommended tutorials:
 
 * [Chapter 7](http://chimera.labs.oreilly.com/books/1230000000345/ch07.html) of *Interactive Data Visualization for the Web* by Scott Murray
 
-* [d3: scsales, and color.](http://www.jeromecukier.net/blog/2011/08/11/d3-scales-and-color/) by Jérôme Cukier
+* [d3: scales, and color.](http://www.jeromecukier.net/blog/2011/08/11/d3-scales-and-color/) by Jérôme Cukier
 
 This product includes color specifications and designs developed by Cynthia
 Brewer (http://colorbrewer.org/)
