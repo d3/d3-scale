@@ -38,15 +38,14 @@ Given a value *x* in the input domain, returns the corresponding value in the ou
 
 ```js
 var s = linear()
-    .domain([-100, 100])
+    .domain([10, 100])
     .range(["brown", "steelblue"]);
 
-s(-100); // "#a52a2a"
-s(0);    // "#76566f"
-s(100);  // "#4682b4"
+s(20); // "#9a3439"
+s(50); // "#7b5167"
 ```
 
-Or, a position encoding:
+A position encoding:
 
 ```js
 var s = linear()
@@ -182,7 +181,29 @@ Constructs a new power scale with the default domain [0,1], the default range [0
 
 <a name="_pow" href="#_pow">#</a> <i>pow</i>(<i>x</i>)
 
-Given a value *x* in the input domain, returns the corresponding value in the output range.
+Given a value *x* in the input domain, returns the corresponding value in the output range. For example, a color encoding:
+
+```js
+var s = pow()
+    .exponent(.5)
+    .domain([10, 100])
+    .range(["brown", "steelblue"]);
+
+s(20); // "#933b44"
+s(50); // "#6f5c79"
+```
+
+A position encoding:
+
+```js
+var s = pow()
+    .exponent(.5)
+    .domain([10, 100])
+    .range([0, 960]);
+
+s(20); // 183.90099810179152
+s(50); // 548.7848671143346
+```
 
 <a name="pow_invert" href="#pow_invert">#</a> <i>pow</i>.<b>invert</b>(<i>y</i>)
 
@@ -252,7 +273,27 @@ Constructs a new log scale with the default domain [1,10], the default range [0,
 
 <a name="_log" href="#_log">#</a> <i>log</i>(<i>x</i>)
 
-Given a value *x* in the input domain, returns the corresponding value in the output range.
+Given a value *x* in the input domain, returns the corresponding value in the output range. For example, a color encoding:
+
+```js
+var s = log()
+    .domain([10, 100])
+    .range(["brown", "steelblue"]);
+
+s(20); // "#884454"
+s(50); // "#63688a"
+```
+
+A position encoding:
+
+```js
+var s = log()
+    .domain([10, 100])
+    .range([0, 960]);
+
+s(20); // 288.9887958374218
+s(50); // 671.0112041625778
+```
 
 <a name="log_invert" href="#log_invert">#</a> <i>log</i>.<b>invert</b>(<i>y</i>)
 
