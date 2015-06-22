@@ -348,7 +348,7 @@ Returns a [number format](https://github.com/d3/d3-format) function suitable for
 When specifying a count, you may also override the *format* function; you can also specify a format specifier as a string, and it will automatically be converted to a function with [format](https://github.com/d3/d3-format#locale_format). For example, to get a tick formatter that will display 20 ticks of a currency:
 
 ```js
-s.tickFormat(20, "$,.2f")
+s.tickFormat(20, "$,f")
 ```
 
 If the format specifier doesn’t have a defined precision, the precision will be set automatically by the scale, returning the appropriate format. This provides a convenient, declarative way of specifying a format whose precision will be automatically set by the scale.
