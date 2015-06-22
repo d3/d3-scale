@@ -80,7 +80,7 @@ s(-0.5); // "#ff8080"
 s(+0.5); // "#80c080"
 ```
 
-Internally, polylinear scales perform a binary search for the output interpolator corresponding to the given domain value. By repeating values in both the domain and range, you can also force a chunk of the input domain to map to a constant in the output range.
+Internally, polylinear scales perform a [binary search](https://github.com/d3/d3-arrays#bisect) for the output interpolator corresponding to the given domain value. By repeating values in both the domain and range, you can also force a chunk of the input domain to map to a constant in the output range.
 
 <a name="linear_range" href="#linear_range">#</a> <i>linear</i>.<b>range</b>([<i>values</i>])
 
