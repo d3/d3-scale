@@ -121,7 +121,7 @@ var s = linear().domain([-1, 1]),
     ticks = s.ticks(5),
     format = s.tickFormat(5, "+%");
 
-console.log(ticks.map(format)); // ["-100%", "-50%", "+0%", "+50%", "+100%"]
+ticks.map(format); // ["-100%", "-50%", "+0%", "+50%", "+100%"]
 ```
 
 If *specifier* uses the format type `s`, the scale will return a [SI-prefix format](https://github.com/d3/d3-format#locale_formatPrefix) based on the largest value in the domain. If the *specifier* already specifies a precision, this method is equivalent to [format](https://github.com/d3/d3-format#locale_format).
