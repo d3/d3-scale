@@ -152,11 +152,11 @@ If *domain* is specified, sets the scale’s input domain and output range to th
 
 Returns approximately *count* representative values from the scale’s input domain (or equivalently, output range). If *count* is not specified, it defaults to 10. The returned tick values are uniformly spaced, have human-readable values (such as multiples of powers of 10), and are guaranteed to be within the extent of the input domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data. The specified *count* is only a hint; the scale may return more or fewer values depending on the input domain.
 
-<a name="identity_tickFormat" href="#identity_tickFormat">#</a> <i>identity</i>.<b>tickFormat</b>(<i>count</i>[, <i>format</i>])
+<a name="identity_tickFormat" href="#identity_tickFormat">#</a> <i>identity</i>.<b>tickFormat</b>(<i>count</i>[, <i>specifier</i>])
 
 Returns a [number format](https://github.com/d3/d3-format) function suitable for displaying a tick value. The specified *count* should have the same value as the count that is used to generate the tick values. You don’t have to use the scale’s built-in tick format, but it automatically computes the appropriate precision based on the fixed interval between tick values.
 
-The optional *format* argument allows a [format specifier](https://github.com/d3/d3-format#locale_format) to be specified. If the format specifier doesn’t have a defined precision, the precision will be set automatically by the scale, returning the appropriate format. This provides a convenient, declarative way of specifying a format whose precision will be automatically set by the scale.
+The optional *specifier* argument allows a [custom format](https://github.com/d3/d3-format#locale_format) to be specified. If the format specifier doesn’t have a defined precision, the precision will be set automatically by the scale, returning the appropriate format. This provides a convenient, declarative way of specifying a format whose precision will be automatically set by the scale.
 
 <a name="identity_copy" href="#identity_copy">#</a> <i>identity</i>.<b>copy</b>()
 
