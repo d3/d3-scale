@@ -1,6 +1,4 @@
-import {
-  range
-} from "d3-arrays";
+import {range} from "d3-arrays";
 
 var e10 = Math.sqrt(50),
     e5 = Math.sqrt(10),
