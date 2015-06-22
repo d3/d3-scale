@@ -13,7 +13,7 @@ If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release]
 
 ### Linear Scales
 
-Linear scales are the most common scale, and a good default choice to map a continuous input domain to a continuous output range. In a *linear* mapping, each output range value *y* can be expressed as a linear function of the input domain value *x*: *y* = *mx* + *b*. The input domain is typically a dimension of the data that you want to visualize, such as the height of students (in meters) in a sample population. The output range is typically a dimension of the desired output visualization, such as the height of bars (in pixels) in a histogram.
+Linear scales are the most common scale, and a good default choice to map a continuous input domain to a continuous output range. In a *linear* mapping, each output range value *y* can be expressed as a linear function of the input domain value *x*: *y* = *mx* + *b*. The input domain is typically a dimension of the data that you want to visualize, such as the height of students in meters in a sample population. The output range is typically a dimension of the desired output visualization, such as the height of bars in pixels in a histogram.
 
 <a name="linear" href="#linear">#</a> <b>linear</b>()
 
@@ -270,7 +270,7 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 ### Quantize Scales
 
-Quantize scales are a variant of linear scales with a discrete rather than continuous range. The input domain is still continuous, and divided into uniform segments based on the number of values in (the cardinality of) the output range. The mapping is *linear* in that the output range value *y* can be expressed as a linear function of the input domain value *x*: *y* = *mx* + *b*. The input domain is typically a dimension of the data that you want to visualize, such as the height of students (measured in meters) in a sample population. The output range is typically a dimension of the desired output visualization, such as the height of bars (measured in pixels) in a histogram.
+Quantize scales are a variant of linear scales with a discrete rather than continuous range. The input domain is still continuous, and divided into uniform segments based on the number of values in (the cardinality of) the output range. The mapping is *linear* in that the output range value *y* can be expressed as a linear function of the input domain value *x*: *y* = *mx* + *b*. The input domain is typically a dimension of the data that you want to visualize, such as the height of students in meters in a sample population. The output range is typically a dimension of the desired output visualization, such as the height of bars in pixels in a histogram.
 
 <a name="quantize" href="#quantize">#</a> <b>quantize</b>()
 
@@ -341,7 +341,7 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 ### Threshold Scales
 
-Threshold scales are similar to quantize scales, except they allow you to map arbitrary subsets of the domain to discrete values in the range. The input domain is still continuous, and divided into slices based on a set of threshold values. The input domain is typically a dimension of the data that you want to visualize, such as the height of students (measured in meters) in a sample population. The output range is typically a dimension of the desired output visualization, such as a set of colors (represented as strings).
+Threshold scales are similar to quantize scales, except they allow you to map arbitrary subsets of the domain to discrete values in the range. The input domain is still continuous, and divided into slices based on a set of threshold values. The input domain is typically a dimension of the data that you want to visualize, such as the height of students in meters in a sample population. The output range is typically a dimension of the desired output visualization, such as a set of colors.
 
 <a name="threshold" href="#threshold">#</a> <b>threshold</b>()
 
