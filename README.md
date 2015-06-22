@@ -65,9 +65,9 @@ For a valid value *y* in the output range, <i>linear</i>(<i>linear</i>.invert(<i
 
 Note: the invert method is only supported if the output range is numeric, and will return undefined if the output range is non-numeric (such as colors, strings or objects).
 
-<a name="linear_domain" href="#linear_domain">#</a> <i>linear</i>.<b>domain</b>([<i>numbers</i>])
+<a name="linear_domain" href="#linear_domain">#</a> <i>linear</i>.<b>domain</b>([<i>domain</i>])
 
-If *numbers* is specified, sets the scale’s input domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. A linear scale can be used to encode types such as [dates](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date) that can be converted to numbers; however, it is often more convenient to use [time scale](https://github.com/d3/d3-scale-time) for dates. If *numbers* is not specified, returns the scale’s current input domain.
+If *domain* is specified, sets the scale’s input domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. A linear scale can be used to encode types such as [dates](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date) that can be converted to numbers; however, it is often more convenient to use [time scale](https://github.com/d3/d3-scale-time) for dates. If *numbers* is not specified, returns the scale’s current input domain.
 
 Although linear scales typically have only two values in their domain, you can specify more than two values for a “polylinear” scale. In this case, there should be an equivalent number of values in the output [range](#linear_range). A polylinear scale represents multiple piecewise linear scales that divide a continuous domain and range. For example, to create a diverging color scale that interpolates between white and red for negative values, and white and green for positive values, say:
 
@@ -82,23 +82,23 @@ s(+0.5); // "#80c080"
 
 Internally, polylinear scales perform a [binary search](https://github.com/d3/d3-arrays#bisect) for the output interpolator corresponding to the given domain value.
 
-<a name="linear_range" href="#linear_range">#</a> <i>linear</i>.<b>range</b>([<i>values</i>])
+<a name="linear_range" href="#linear_range">#</a> <i>linear</i>.<b>range</b>([<i>range</i>])
 
-If *values* is specified, sets the scale’s output range to the specified array of values. The array must contain two or more values, matching the cardinality of the input domain; otherwise, the longer of the two is truncated to match the other. The elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#linear_interpolate) will work; however, numeric ranges are required for [invert](#linear_invert). If *values* is not specified, returns the scale’s current output range.
+If *range* is specified, sets the scale’s output range to the specified array of values. The array must contain two or more values, matching the cardinality of the input domain; otherwise, the longer of the two is truncated to match the other. The elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#linear_interpolate) will work; however, numeric ranges are required for [invert](#linear_invert). If *values* is not specified, returns the scale’s current output range.
 
-<a name="linear_rangeRound" href="#linear_rangeRound">#</a> <i>linear</i>.<b>rangeRound</b>(<i>values</i>)
+<a name="linear_rangeRound" href="#linear_rangeRound">#</a> <i>linear</i>.<b>rangeRound</b>(<i>range</i>)
 
-Sets the scale’s output range to the specified array of *values* while also setting the scale’s interpolator to [interpolateRound](https://github.com/d3/d3-interpolate#interpolateRound). This is a convenience routine for when the values output by the scale should be exact integers, such as to avoid antialiasing artifacts. Note that this interpolator can only be used with numeric [ranges](#linear_range).
+Sets the scale’s output *range* to the specified array of values while also setting the scale’s [interpolator](#linear_interpolate) to [interpolateRound](https://github.com/d3/d3-interpolate#interpolateRound). This is a convenience routine for when the values output by the scale should be exact integers, such as to avoid antialiasing artifacts. Note that this interpolator can only be used with numeric [ranges](#linear_range).
 
-<a name="linear_interpolate" href="#linear_interpolate">#</a> <i>linear</i>.<b>interpolate</b>([<i>factory</i>])
+<a name="linear_interpolate" href="#linear_interpolate">#</a> <i>linear</i>.<b>interpolate</b>([<i>interpolate</i>])
 
-If *factory* is specified, sets the scale’s output interpolator factory. This interpolator factory is used to construct interpolators for each adjacent pair of values from the output [range](#linear_range); these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the output range. If *factory* is not specified, returns the scale’s interpolator factory.
+If *interpolate* is specified, sets the scale’s output interpolator factory. This interpolator factory is used to construct interpolators for each adjacent pair of values from the output [range](#linear_range); these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the output range. If *factory* is not specified, returns the scale’s interpolator factory.
 
 Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
 
-<a name="linear_clamp" href="#linear_clamp">#</a> <i>linear</i>.<b>clamp</b>([<i>boolean</i>])
+<a name="linear_clamp" href="#linear_clamp">#</a> <i>linear</i>.<b>clamp</b>([<i>clamp</i>])
 
-If *boolean* is specified, enables or disables clamping accordingly. By default, clamping is disabled, such that if a value outside the input domain is passed to the scale, the scale may return a value outside the output range through linear extrapolation. For example, with the default domain and range of [0,1], an input value of 2 will return an output value of 2. If clamping is enabled, the normalized domain parameter *t* is clamped to the range [0,1], such that the return value of the scale is always within the scale’s output range. If *boolean* is not specified, returns whether or not the scale currently clamps values to within the output range.
+If *clamp* is specified, enables or disables clamping accordingly. By default, clamping is disabled, such that if a value outside the input domain is passed to the scale, the scale may return a value outside the output range through linear extrapolation. For example, with the default domain and range of [0,1], an input value of 2 will return an output value of 2. If clamping is enabled, the normalized domain parameter *t* is clamped to the range [0,1], such that the return value of the scale is always within the scale’s output range. If *boolean* is not specified, returns whether or not the scale currently clamps values to within the output range.
 
 <a name="linear_nice" href="#linear_nice">#</a> <i>linear</i>.<b>nice</b>([<i>count</i>])
 
@@ -110,11 +110,11 @@ The optional tick *count* argument allows greater control over the step size use
 
 Returns approximately *count* representative values from the scale’s input domain. If *count* is not specified, it defaults to 10. The returned tick values are uniformly spaced, have human-readable values (such as multiples of powers of 10), and are guaranteed to be within the extent of the input domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data. The specified *count* is only a hint; the scale may return more or fewer values depending on the input domain.
 
-<a name="linear_tickFormat" href="#linear_tickFormat">#</a> <i>linear</i>.<b>tickFormat</b>(<i>count</i>[, <i>format</i>])
+<a name="linear_tickFormat" href="#linear_tickFormat">#</a> <i>linear</i>.<b>tickFormat</b>(<i>count</i>[, <i>specifier</i>])
 
 Returns a [number format](https://github.com/d3/d3-format) function suitable for displaying a tick value. The specified *count* should have the same value as the count that is used to generate the tick values. You don’t have to use the scale’s built-in tick format, but it automatically computes the appropriate precision based on the fixed interval between tick values.
 
-The optional *format* argument allows a [format specifier](https://github.com/d3/d3-format#locale_format) to be specified, where the precision of the format is automatically substituted by the scale to be appropriate for the tick interval. For example, to format percentage change, you might say:
+The optional *specifier* argument allows a [custom format](https://github.com/d3/d3-format#locale_format) where the precision of the format is automatically substituted by the scale to be appropriate for the tick interval. For example, to format percentage change, you might say:
 
 ```js
 var s = linear().domain([-1, 1]),
@@ -124,7 +124,7 @@ var s = linear().domain([-1, 1]),
 console.log(ticks.map(format)); // ["-100%", "-50%", "+0%", "+50%", "+100%"]
 ```
 
-Likewise, if *format* uses the format type `s`, the scale will compute a SI-prefix based on the largest value in the domain, and use that SI-prefix for [all tick values](http://bl.ocks.org/mbostock/9764126). If the *format* already specifies a precision, this method is equivalent to [format](https://github.com/d3/d3-format#locale_format).
+If *specifier* uses the format type `s`, the scale will return a [SI-prefix format](https://github.com/d3/d3-format#locale_formatPrefix) based on the largest value in the domain. If the *specifier* already specifies a precision, this method is equivalent to [format](https://github.com/d3/d3-format#locale_format).
 
 <a name="linear_copy" href="#linear_copy">#</a> <i>linear</i>.<b>copy</b>()
 
