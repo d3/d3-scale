@@ -5,6 +5,7 @@ tape("ordinal() has the expected defaults", function(test) {
   var s = scale.ordinal();
   test.deepEqual(s.domain(), []);
   test.deepEqual(s.range(), []);
+  test.equal(s.rangeBand(), 0);
   test.equal(s(0), undefined);
   test.end();
 });
