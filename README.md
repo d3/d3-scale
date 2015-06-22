@@ -378,7 +378,7 @@ s(0.49); // "brown"
 s(0.51); // "steelblue"
 ```
 
-Dividing the domain into three equally-sized parts with different range values:
+Dividing the domain into three equally-sized parts with different range values, say to compute an appropriate stroke width:
 
 ```js
 var s = quantize()
