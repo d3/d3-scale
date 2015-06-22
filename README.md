@@ -565,51 +565,51 @@ Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical co
 
 Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical colors:
 
-![393b79](393b79.png) #393b79<br>
-![5254a3](5254a3.png) #5254a3<br>
-![6b6ecf](6b6ecf.png) #6b6ecf<br>
-![9c9ede](9c9ede.png) #9c9ede<br>
-![637939](637939.png) #637939<br>
-![8ca252](8ca252.png) #8ca252<br>
-![b5cf6b](b5cf6b.png) #b5cf6b<br>
-![cedb9c](cedb9c.png) #cedb9c<br>
-![8c6d31](8c6d31.png) #8c6d31<br>
-![bd9e39](bd9e39.png) #bd9e39<br>
-![e7ba52](e7ba52.png) #e7ba52<br>
-![e7cb94](e7cb94.png) #e7cb94<br>
-![843c39](843c39.png) #843c39<br>
-![ad494a](ad494a.png) #ad494a<br>
-![d6616b](d6616b.png) #d6616b<br>
-![e7969c](e7969c.png) #e7969c<br>
-![7b4173](7b4173.png) #7b4173<br>
-![a55194](a55194.png) #a55194<br>
-![ce6dbd](ce6dbd.png) #ce6dbd<br>
-![de9ed6](de9ed6.png) #de9ed6<br>
+![393b79](https://cloud.githubusercontent.com/assets/230541/8294519/0565d19a-18f2-11e5-8626-08531146a382.png) #393b79<br>
+![5254a3](https://cloud.githubusercontent.com/assets/230541/8294523/057054c6-18f2-11e5-9921-3e4763ce32ae.png) #5254a3<br>
+![6b6ecf](https://cloud.githubusercontent.com/assets/230541/8294505/052e8320-18f2-11e5-91eb-b22ab5d74aa6.png) #6b6ecf<br>
+![9c9ede](https://cloud.githubusercontent.com/assets/230541/8294511/0543b3d0-18f2-11e5-9c41-7b63ec7d4e5b.png) #9c9ede<br>
+![637939](https://cloud.githubusercontent.com/assets/230541/8294526/057b6014-18f2-11e5-92a9-ebabc51c8587.png) #637939<br>
+![8ca252](https://cloud.githubusercontent.com/assets/230541/8294510/054208dc-18f2-11e5-9f24-676b4b350f72.png) #8ca252<br>
+![b5cf6b](https://cloud.githubusercontent.com/assets/230541/8294531/058b5e2e-18f2-11e5-923f-2cf857af6060.png) #b5cf6b<br>
+![cedb9c](https://cloud.githubusercontent.com/assets/230541/8294538/05a2ae76-18f2-11e5-940a-5109e8310f27.png) #cedb9c<br>
+![8c6d31](https://cloud.githubusercontent.com/assets/230541/8294508/053fbc44-18f2-11e5-9984-2a233483ce06.png) #8c6d31<br>
+![bd9e39](https://cloud.githubusercontent.com/assets/230541/8294534/0591c250-18f2-11e5-8d18-b1cf77245d9f.png) #bd9e39<br>
+![e7ba52](https://cloud.githubusercontent.com/assets/230541/8294547/05b787a6-18f2-11e5-8cbf-97fadded7e8b.png) #e7ba52<br>
+![e7cb94](https://cloud.githubusercontent.com/assets/230541/8294545/05b69bac-18f2-11e5-9253-6f0922ebb88d.png) #e7cb94<br>
+![843c39](https://cloud.githubusercontent.com/assets/230541/8294522/056d4466-18f2-11e5-8dea-e72e0668bcb9.png) #843c39<br>
+![ad494a](https://cloud.githubusercontent.com/assets/230541/8294529/05832b50-18f2-11e5-8811-a01316c48447.png) #ad494a<br>
+![d6616b](https://cloud.githubusercontent.com/assets/230541/8294539/05a48a5c-18f2-11e5-9891-84c242808d25.png) #d6616b<br>
+![e7969c](https://cloud.githubusercontent.com/assets/230541/8294553/05c9f832-18f2-11e5-9571-58955d5307de.png) #e7969c<br>
+![7b4173](https://cloud.githubusercontent.com/assets/230541/8294507/05344634-18f2-11e5-9132-4bde5cd9046c.png) #7b4173<br>
+![a55194](https://cloud.githubusercontent.com/assets/230541/8294528/0580d972-18f2-11e5-81d6-67a71edf3687.png) #a55194<br>
+![ce6dbd](https://cloud.githubusercontent.com/assets/230541/8294541/05a61f2a-18f2-11e5-8ba5-7976b2bb58f8.png) #ce6dbd<br>
+![de9ed6](https://cloud.githubusercontent.com/assets/230541/8294543/05b51354-18f2-11e5-9ab5-3acfdfb55902.png) #de9ed6<br>
 
 <a name="category20c" href="#category20c">#</a> <b>category20c</b>()
 
 Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical colors:
 
-![3182bd](3182bd.png) #3182bd<br>
-![6baed6](6baed6.png) #6baed6<br>
-![9ecae1](9ecae1.png) #9ecae1<br>
-![c6dbef](c6dbef.png) #c6dbef<br>
-![e6550d](e6550d.png) #e6550d<br>
-![fd8d3c](fd8d3c.png) #fd8d3c<br>
-![fdae6b](fdae6b.png) #fdae6b<br>
-![fdd0a2](fdd0a2.png) #fdd0a2<br>
-![31a354](31a354.png) #31a354<br>
-![74c476](74c476.png) #74c476<br>
-![a1d99b](a1d99b.png) #a1d99b<br>
-![c7e9c0](c7e9c0.png) #c7e9c0<br>
-![756bb1](756bb1.png) #756bb1<br>
-![9e9ac8](9e9ac8.png) #9e9ac8<br>
-![bcbddc](bcbddc.png) #bcbddc<br>
-![dadaeb](dadaeb.png) #dadaeb<br>
-![636363](636363.png) #636363<br>
-![969696](969696.png) #969696<br>
-![bdbdbd](bdbdbd.png) #bdbdbd<br>
-![d9d9d9](d9d9d9.png) #d9d9d9<br>
+![3182bd](https://cloud.githubusercontent.com/assets/230541/8294524/05733826-18f2-11e5-93da-468df888f34e.png) #3182bd<br>
+![6baed6](https://cloud.githubusercontent.com/assets/230541/8294506/05320036-18f2-11e5-9897-64b7a60fc1f9.png) #6baed6<br>
+![9ecae1](https://cloud.githubusercontent.com/assets/230541/8294514/05540a14-18f2-11e5-92e1-6fe4e77a32f5.png) #9ecae1<br>
+![c6dbef](https://cloud.githubusercontent.com/assets/230541/8294536/0595f00a-18f2-11e5-96da-bd6a07a6c07b.png) #c6dbef<br>
+![e6550d](https://cloud.githubusercontent.com/assets/230541/8294551/05c89082-18f2-11e5-825c-39fcd1568018.png) #e6550d<br>
+![fd8d3c](https://cloud.githubusercontent.com/assets/230541/8294550/05c71a7c-18f2-11e5-950e-ba1124961d0a.png) #fd8d3c<br>
+![fdae6b](https://cloud.githubusercontent.com/assets/230541/8294552/05ca1164-18f2-11e5-80ac-8e4c8da9a52f.png) #fdae6b<br>
+![fdd0a2](https://cloud.githubusercontent.com/assets/230541/8294554/05cc4920-18f2-11e5-9a5e-3237f59b81e7.png) #fdd0a2<br>
+![31a354](https://cloud.githubusercontent.com/assets/230541/8294515/0556cc40-18f2-11e5-9960-1615d9c8907c.png) #31a354<br>
+![74c476](https://cloud.githubusercontent.com/assets/230541/8294516/055a1922-18f2-11e5-9005-21977889c9cf.png) #74c476<br>
+![a1d99b](https://cloud.githubusercontent.com/assets/230541/8294527/057ed708-18f2-11e5-983d-9a423278f2ea.png) #a1d99b<br>
+![c7e9c0](https://cloud.githubusercontent.com/assets/230541/8294540/05a4c864-18f2-11e5-9eb2-23eb61c5641e.png) #c7e9c0<br>
+![756bb1](https://cloud.githubusercontent.com/assets/230541/8294521/056acad8-18f2-11e5-905b-aa6c8817f402.png) #756bb1<br>
+![9e9ac8](https://cloud.githubusercontent.com/assets/230541/8294512/0547342e-18f2-11e5-9334-12c7f9400d3c.png) #9e9ac8<br>
+![bcbddc](https://cloud.githubusercontent.com/assets/230541/8294533/059195e6-18f2-11e5-844d-a5ae45346e4b.png) #bcbddc<br>
+![dadaeb](https://cloud.githubusercontent.com/assets/230541/8294544/05b529b6-18f2-11e5-8841-55f543b23c76.png) #dadaeb<br>
+![636363](https://cloud.githubusercontent.com/assets/230541/8294501/051e1076-18f2-11e5-9c4d-b7233e33c09a.png) #636363<br>
+![969696](https://cloud.githubusercontent.com/assets/230541/8294498/051bceba-18f2-11e5-9732-ad2b95b72ea3.png) #969696<br>
+![bdbdbd](https://cloud.githubusercontent.com/assets/230541/8294502/051f981a-18f2-11e5-8c4c-5f9fa4e36833.png) #bdbdbd<br>
+![d9d9d9](https://cloud.githubusercontent.com/assets/230541/8294518/05601516-18f2-11e5-848c-291939213e5d.png) #d9d9d9<br>
 
 ## Changes from D3 3.x:
 
