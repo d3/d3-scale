@@ -547,7 +547,7 @@ Returns an exact copy of this ordinal scale. Changes to this scale will not affe
 
 <a name="category10" href="#category10">#</a> <b>category10</b>()
 
-Constructs a new [ordinal scale](#ordinal) with a range of ten categorical colors:
+Constructs a new [ordinal scale](#ordinal) with a range of ten categorical colors.
 
 ![1f77b4](https://cloud.githubusercontent.com/assets/230541/8294503/052c3462-18f2-11e5-8532-8e6f95a0a2fa.png) #1f77b4<br>
 ![ff7f0e](https://cloud.githubusercontent.com/assets/230541/8294556/05d92a0a-18f2-11e5-8954-cd7e28d8e265.png) #ff7f0e<br>
@@ -562,7 +562,7 @@ Constructs a new [ordinal scale](#ordinal) with a range of ten categorical color
 
 <a name="category20" href="#category20">#</a> <b>category20</b>()
 
-Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical colors:
+Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical colors.
 
 ![1f77b4](https://cloud.githubusercontent.com/assets/230541/8294503/052c3462-18f2-11e5-8532-8e6f95a0a2fa.png) #1f77b4<br>
 ![aec7e8](https://cloud.githubusercontent.com/assets/230541/8294530/0583af58-18f2-11e5-8ad1-e06b75439900.png) #aec7e8<br>
@@ -587,7 +587,7 @@ Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical co
 
 <a name="category20b" href="#category20b">#</a> <b>category20b</b>()
 
-Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical colors:
+Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical colors.
 
 ![393b79](https://cloud.githubusercontent.com/assets/230541/8294519/0565d19a-18f2-11e5-8626-08531146a382.png) #393b79<br>
 ![5254a3](https://cloud.githubusercontent.com/assets/230541/8294523/057054c6-18f2-11e5-9921-3e4763ce32ae.png) #5254a3<br>
@@ -612,7 +612,7 @@ Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical co
 
 <a name="category20c" href="#category20c">#</a> <b>category20c</b>()
 
-Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical colors:
+Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical colors. This color scale includes color specifications and designs developed by Cynthia Brewer ([colorbrewer.org](http://colorbrewer.org/)).
 
 ![3182bd](https://cloud.githubusercontent.com/assets/230541/8294524/05733826-18f2-11e5-93da-468df888f34e.png) #3182bd<br>
 ![6baed6](https://cloud.githubusercontent.com/assets/230541/8294506/05320036-18f2-11e5-9897-64b7a60fc1f9.png) #6baed6<br>
@@ -634,8 +634,6 @@ Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical co
 ![969696](https://cloud.githubusercontent.com/assets/230541/8294498/051bceba-18f2-11e5-9732-ad2b95b72ea3.png) #969696<br>
 ![bdbdbd](https://cloud.githubusercontent.com/assets/230541/8294502/051f981a-18f2-11e5-8c4c-5f9fa4e36833.png) #bdbdbd<br>
 ![d9d9d9](https://cloud.githubusercontent.com/assets/230541/8294518/05601516-18f2-11e5-848c-291939213e5d.png) #d9d9d9<br>
-
-This color scale includes color specifications and designs developed by Cynthia Brewer ([colorbrewer.org](http://colorbrewer.org/)).
 
 ## Changes from D3 3.x:
 
