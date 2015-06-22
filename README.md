@@ -9,7 +9,7 @@ Want a longer introduction? See these recommended tutorials:
 * [d3: scales, and color.](http://www.jeromecukier.net/blog/2011/08/11/d3-scales-and-color/) by Jérôme Cukier
 
 This product includes color specifications and designs developed by Cynthia
-Brewer (http://colorbrewer.org/)
+Brewer ([colorbrewer.org](http://colorbrewer.org/)).
 
 ## Installing
 
