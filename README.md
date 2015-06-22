@@ -265,7 +265,7 @@ Returns representative values from the scale’s input domain. The returned tick
 Returns a [number format](https://github.com/d3/d3-format) function suitable for displaying a tick value. If a *count* is specified, then some of the tick labels may not be displayed; this is useful if there is not enough room to fit all of the tick labels. However, note that the tick marks will still be displayed (so that the log scale distortion remains visible). When specifying a count, you may also override the *format* function; you can also specify a format specifier as a string, and it will automatically be wrapped with [format](https://github.com/d3/d3-format#locale_format). For example, to get a tick formatter that will display 20 ticks of a currency:
 
 ```js
-scale.tickFormat(20, "$,.2f");
+scale.tickFormat(20, "$,.2f")
 ```
 
 If the format specifier doesn’t have a defined precision, the precision will be set automatically by the scale, returning the appropriate format. This provides a convenient, declarative way of specifying a format whose precision will be automatically set by the scale.
