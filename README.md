@@ -47,7 +47,7 @@ The resulting value of color(-0.5) is rgb(255, 128, 128), and the value of color
 
 <a name="linear_range" href="#linear_range">#</a> <i>linear</i>.<b>range</b>([<i>values</i>])
 
-If *values* is specified, sets the scale’s output range to the specified array of values. The array must contain two or more values, matching the cardinality of the input domain; otherwise, the longer of the two is truncated to match the other. The elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#linear_interpolate) will work; however, numeric ranges are required for the invert method. If *values* is not specified, returns the scale’s current output range.
+If *values* is specified, sets the scale’s output range to the specified array of values. The array must contain two or more values, matching the cardinality of the input domain; otherwise, the longer of the two is truncated to match the other. The elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#linear_interpolate) will work; however, numeric ranges are required for [invert](#linear_invert). If *values* is not specified, returns the scale’s current output range.
 
 <a name="linear_rangeRound" href="#linear_rangeRound">#</a> <i>linear</i>.<b>rangeRound</b>(<i>values</i>)
 
@@ -162,7 +162,7 @@ As with [*linear*.domain](#linear_domain), this method can accept more than two 
 
 <a name="pow_range" href="#pow_range">#</a> <i>pow</i>.<b>range</b>([<i>values</i>])
 
-If *values* is specified, sets the scale’s output range to the specified array of values. The array must contain two or more values, matching the cardinality of the input domain; otherwise, the longer of the two is truncated to match the other. The elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#pow_interpolate) will work; however, numeric ranges are required for the invert method. If *values* is not specified, returns the scale’s current output range.
+If *values* is specified, sets the scale’s output range to the specified array of values. The array must contain two or more values, matching the cardinality of the input domain; otherwise, the longer of the two is truncated to match the other. The elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#pow_interpolate) will work; however, numeric ranges are required for [invert](#pow_invert). If *values* is not specified, returns the scale’s current output range.
 
 <a name="pow_rangeRound" href="#pow_rangeRound">#</a> <i>pow</i>.<b>rangeRound</b>(<i>values</i>)
 
@@ -232,7 +232,7 @@ As with [*linear*.domain](#linear_domain), this method can accept more than two 
 
 <a name="log_range" href="#log_range">#</a> <i>log</i>.<b>range</b>([<i>values</i>])
 
-If *values* is specified, sets the scale’s output range to the specified array of values. The array must contain two or more values, matching the cardinality of the input domain; otherwise, the longer of the two is truncated to match the other. The elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#log_interpolate) will work; however, numeric ranges are required for the invert method. If *values* is not specified, returns the scale’s current output range.
+If *values* is specified, sets the scale’s output range to the specified array of values. The array must contain two or more values, matching the cardinality of the input domain; otherwise, the longer of the two is truncated to match the other. The elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#log_interpolate) will work; however, numeric ranges are required for [invert](#log_invert). If *values* is not specified, returns the scale’s current output range.
 
 <a name="log_rangeRound" href="#log_rangeRound">#</a> <i>log</i>.<b>rangeRound</b>(<i>values</i>)
 
