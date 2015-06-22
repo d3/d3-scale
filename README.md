@@ -99,7 +99,7 @@ Identity scales are a special case of linear scales where the domain and range a
 Constructs a new identity scale with the default domain [0,1] and the default range [0,1]. An identity scale is always equivalent to the identity function.
 
 <a name="_identity" href="#_identity">#</a> <i>identity</i>(<i>x</i>)<br>
-<a href="#_identity">#</a> <i>identity</i>.<i>invert</i>(<i>x</i>)
+<a href="#_identity">#</a> <i>identity</i>.<b>invert</b>(<i>x</i>)
 
 Returns the given value *x*.
 
