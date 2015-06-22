@@ -27,11 +27,11 @@ Given a value *x* in the input domain, returns the corresponding value in the ou
 
 Returns the value in the input domain *x* for the corresponding value in the output range *y*. This represents the inverse mapping from range to domain. For a valid value *y* in the output range, <i>linear</i>(<i>linear</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the input domain, <i>linear</i>.invert(<i>linear</i>(<i>x</i>)) equals *x*. Conceptually, the invert method is similar to constructing a new scale with the domain and range swapped. The invert method is particularly useful for interaction, say to determine the value in the input domain that corresponds to the pixel location under the mouse.
 
-Note: the invert method is only supported if the output range is numeric! The output range to be any type: colors, strings, or even arbitrary objects. As there is no facility to “uninterpolate” arbitrary types, the invert method is currently supported only on numeric ranges.
+Note: the invert method is only supported if the output range is numeric, and will return undefined if the output range is non-numeric (such as colors, strings or objects).
 
 <a name="linear_domain" href="#linear_domain">#</a> <i>linear</i>.<b>domain</b>([<i>numbers</i>])
 
-If *numbers* is specified, sets the scale’s input domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers; this coercion happens similarly when the scale is called. Thus, a linear scale can be used to encode types such as [dates](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date] that can be converted to numbers; however, it is often more convenient to use [time scale](https://github.com/d3/d3-scale-time) for dates. (You can implement your own convertible number objects using [*object*.valueOf](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object/valueOf].) If *numbers* is not specified, returns the scale’s current input domain.
+If *numbers* is specified, sets the scale’s input domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers; this coercion happens similarly when the scale is called. Thus, a linear scale can be used to encode types such as [dates](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date) that can be converted to numbers; however, it is often more convenient to use [time scale](https://github.com/d3/d3-scale-time) for dates. (You can implement your own convertible number objects using [*object*.valueOf](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object/valueOf].) If *numbers* is not specified, returns the scale’s current input domain.
 
 Although linear scales typically have only two values in their domain, you can specify more than two values for a *polylinear* scale. In this case, there must be an equivalent number of values in the output [range](#linear_range). A “polylinear” scale represents multiple piecewise linear scales that divide a continuous domain and range. This is particularly useful for defining diverging quantitative scales. For example, to interpolate between white and red for negative values, and white and green for positive values, say:
 
@@ -150,7 +150,7 @@ Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolat
 
 Returns the value in the input domain *x* for the corresponding value in the output range *y*. This represents the inverse mapping from range to domain. For a valid value *y* in the output range, <i>pow</i>(<i>pow</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the input domain, <i>pow</i>.invert(<i>pow</i>(<i>x</i>)) equals *x*. Equivalently, you can construct the invert method by building a new scale while swapping the domain and range. The invert method is particularly useful for interaction, say to determine the value in the input domain that corresponds to the pixel location under the mouse.
 
-Note: the invert method is only supported if the output range is numeric! The output range to be any type: colors, strings, or even arbitrary objects. As there is no facility to “uninterpolate” arbitrary types, the invert method is currently supported only on numeric ranges.
+Note: the invert method is only supported if the output range is numeric, and will return undefined if the output range is non-numeric (such as colors, strings or objects).
 
 <a name="pow_domain" href="#pow_domain">#</a> <i>pow</i>.<b>domain</b>([<i>numbers</i>])
 
@@ -218,7 +218,7 @@ Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolat
 
 Returns the value in the input domain *x* for the corresponding value in the output range *y*. This represents the inverse mapping from range to domain. For a valid value *y* in the output range, <i>log</i>(<i>log</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the input domain, <i>log</i>.invert(<i>log</i>(<i>x</i>)) equals *x*. Equivalently, you can construct the invert method by building a new scale while swapping the domain and range. The invert method is particularly useful for interaction, say to determine the value in the input domain that corresponds to the pixel location under the mouse.
 
-Note: the invert method is only supported if the output range is numeric! The output range to be any type: colors, strings, or even arbitrary objects. As there is no facility to “uninterpolate” arbitrary types, the invert method is currently supported only on numeric ranges.
+Note: the invert method is only supported if the output range is numeric, and will return undefined if the output range is non-numeric (such as colors, strings or objects).
 
 <a name="log_domain" href="#log_domain">#</a> <i>log</i>.<b>domain</b>([<i>numbers</i>])
 
