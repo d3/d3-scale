@@ -94,7 +94,7 @@ Sets the scale’s output range to the specified array of *values* while also se
 
 If *factory* is specified, sets the scale’s output interpolator factory. This interpolator factory is used to construct interpolators for each adjacent pair of values from the output [range](#linear_range); these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the output range. If *factory* is not specified, returns the scale’s interpolator factory.
 
-Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator reuses the returned object and thus the scale always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
+Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
 
 <a name="linear_clamp" href="#linear_clamp">#</a> <i>linear</i>.<b>clamp</b>([<i>boolean</i>])
 
@@ -214,7 +214,7 @@ If *k* is specified, sets the current exponent to the given numeric value. If *k
 
 If *factory* is specified, sets the scale’s output interpolator factory. This interpolator factory is used to construct interpolators for each adjacent pair of values from the output [range](#pow_range); these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the output range. If *factory* is not specified, returns the scale’s interpolator factory.
 
-Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator reuses the returned object and thus the scale always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
+Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
 
 <a name="pow_clamp" href="#pow_clamp">#</a> <i>pow</i>.<b>clamp</b>([<i>boolean</i>])
 
@@ -284,7 +284,7 @@ If *base* is specified, sets the base for this logarithmic scale. If *base* is n
 
 If *factory* is specified, sets the scale’s output interpolator factory. This interpolator factory is used to construct interpolators for each adjacent pair of values from the output [range](#log_range); these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the output range. If *factory* is not specified, returns the scale’s interpolator factory.
 
-Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator reuses the returned object and thus the scale always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
+Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
 
 <a name="log_clamp" href="#log_clamp">#</a> <i>log</i>.<b>clamp</b>([<i>boolean</i>])
 
