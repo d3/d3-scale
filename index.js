@@ -2,6 +2,7 @@ import category10 from "./src/category10";
 import category20 from "./src/category20";
 import category20b from "./src/category20b";
 import category20c from "./src/category20c";
+import identity from "./src/identity";
 import linear from "./src/linear";
 import log from "./src/log";
 import ordinal from "./src/ordinal";
@@ -15,6 +16,7 @@ export {
   category20,
   category20b,
   category20c,
+  identity,
   linear,
   log,
   ordinal,
