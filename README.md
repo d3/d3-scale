@@ -25,7 +25,9 @@ Given a value *x* in the input domain, returns the corresponding value in the ou
 
 <a name="linear_invert" href="#linear_invert">#</a> <i>linear</i>.<b>invert</b>(<i>y</i>)
 
-Returns the value in the input domain *x* for the corresponding value in the output range *y*. This represents the inverse mapping from range to domain. For a valid value *y* in the output range, <i>linear</i>(<i>linear</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the input domain, <i>linear</i>.invert(<i>linear</i>(<i>x</i>)) equals *x*. Conceptually, the invert method is similar to constructing a new scale with the domain and range swapped. The invert method is particularly useful for interaction, say to determine the value in the input domain that corresponds to the pixel location under the mouse.
+Returns the value in the input domain *x* for the corresponding value in the output range *y*. This represents the inverse mapping from range to domain.
+
+For a valid value *y* in the output range, <i>linear</i>(<i>linear</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the input domain, <i>linear</i>.invert(<i>linear</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the input domain that corresponds to the pixel location under the mouse.
 
 Note: the invert method is only supported if the output range is numeric, and will return undefined if the output range is non-numeric (such as colors, strings or objects).
 
@@ -146,7 +148,9 @@ Given a value *x* in the input domain, returns the corresponding value in the ou
 
 <a name="pow_invert" href="#pow_invert">#</a> <i>pow</i>.<b>invert</b>(<i>y</i>)
 
-Returns the value in the input domain *x* for the corresponding value in the output range *y*. This represents the inverse mapping from range to domain. For a valid value *y* in the output range, <i>pow</i>(<i>pow</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the input domain, <i>pow</i>.invert(<i>pow</i>(<i>x</i>)) equals *x*. Equivalently, you can construct the invert method by building a new scale while swapping the domain and range. The invert method is particularly useful for interaction, say to determine the value in the input domain that corresponds to the pixel location under the mouse.
+Returns the value in the input domain *x* for the corresponding value in the output range *y*. This represents the inverse mapping from range to domain.
+
+For a valid value *y* in the output range, <i>pow</i>(<i>pow</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the input domain, <i>pow</i>.invert(<i>pow</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the input domain that corresponds to the pixel location under the mouse.
 
 Note: the invert method is only supported if the output range is numeric, and will return undefined if the output range is non-numeric (such as colors, strings or objects).
 
@@ -170,7 +174,7 @@ If *k* is specified, sets the current exponent to the given numeric value. If *k
 
 <a name="pow_interpolate" href="#pow_interpolate">#</a> <i>pow</i>.<b>interpolate</b>([<i>factory</i>])
 
-If *factory* is specified, sets the scale’s output interpolator using the specified *factory*. The interpolator factory is used to map the normalized domain parameter *t* in [0,1] to the corresponding value in the output range. The interpolator factory will be used to construct interpolators for each adjacent pair of values from the output range. If *factory* is not specified, returns the scale’s interpolator factory.
+If *factory* is specified, sets the scale’s output interpolator using the specified *factory*. The interpolator factory will be used to construct interpolators for each adjacent pair of values from the output range; these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the output range. If *factory* is not specified, returns the scale’s interpolator factory.
 
 Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator reuses the returned object and thus the scale always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
 
@@ -214,7 +218,9 @@ Given a value *x* in the input domain, returns the corresponding value in the ou
 
 <a name="log_invert" href="#log_invert">#</a> <i>log</i>.<b>invert</b>(<i>y</i>)
 
-Returns the value in the input domain *x* for the corresponding value in the output range *y*. This represents the inverse mapping from range to domain. For a valid value *y* in the output range, <i>log</i>(<i>log</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the input domain, <i>log</i>.invert(<i>log</i>(<i>x</i>)) equals *x*. Equivalently, you can construct the invert method by building a new scale while swapping the domain and range. The invert method is particularly useful for interaction, say to determine the value in the input domain that corresponds to the pixel location under the mouse.
+Returns the value in the input domain *x* for the corresponding value in the output range *y*. This represents the inverse mapping from range to domain.
+
+For a valid value *y* in the output range, <i>log</i>(<i>log</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the input domain, <i>log</i>.invert(<i>log</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the input domain that corresponds to the pixel location under the mouse.
 
 Note: the invert method is only supported if the output range is numeric, and will return undefined if the output range is non-numeric (such as colors, strings or objects).
 
@@ -238,7 +244,7 @@ If *base* is specified, sets the base for this logarithmic scale. If *base* is n
 
 <a name="log_interpolate" href="#log_interpolate">#</a> <i>log</i>.<b>interpolate</b>([<i>factory</i>])
 
-If *factory* is specified, sets the scale’s output interpolator using the specified *factory*. The interpolator factory defaults to [[d3.interpolate|Transitions#d3_interpolate]], and is used to map the normalized domain parameter *t* in [0,1] to the corresponding value in the output range. The interpolator factory will be used to construct interpolators for each adjacent pair of values from the output range. If *factory* is not specified, returns the scale’s interpolator factory.
+If *factory* is specified, sets the scale’s output interpolator using the specified *factory*. The interpolator factory will be used to construct interpolators for each adjacent pair of values from the output range; these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the output range. If *factory* is not specified, returns the scale’s interpolator factory.
 
 Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator reuses the returned object and thus the scale always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
 
