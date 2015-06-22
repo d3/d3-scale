@@ -363,7 +363,17 @@ Quantize scales are a variant of linear scales with a discrete rather than conti
 
 <a name="quantize" href="#quantize">#</a> <b>quantize</b>()
 
-Constructs a new quantize scale with the default domain [0,1] and the default range [0,1]. Thus, the default quantize scale is equivalent to the [round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function for numbers; for example quantize(0.49) returns 0, and quantize(0.51) returns 1.
+Constructs a new quantize scale with the default domain [0,1] and the default range [0,1]. Thus, the default quantize scale is equivalent to the [round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function for numbers:
+
+
+```js
+var s = quantize();
+
+s(0.49); // 0
+s(0.51); // 1
+```
+
+Another example dividing the domain [0,1] into three equally-sized parts:
 
 ```js
 var s = quantize()
