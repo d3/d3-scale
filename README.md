@@ -525,41 +525,41 @@ Returns an exact copy of this ordinal scale. Changes to this scale will not affe
 
 Constructs a new [ordinal scale](#ordinal) with a range of ten categorical colors:
 
-![1f77b4](1f77b4.png) #1f77b4<br>
-![ff7f0e](ff7f0e.png) #ff7f0e<br>
-![2ca02c](2ca02c.png) #2ca02c<br>
-![d62728](d62728.png) #d62728<br>
-![9467bd](9467bd.png) #9467bd<br>
-![8c564b](8c564b.png) #8c564b<br>
-![e377c2](e377c2.png) #e377c2<br>
-![7f7f7f](7f7f7f.png) #7f7f7f<br>
-![bcbd22](bcbd22.png) #bcbd22<br>
-![17becf](17becf.png) #17becf<br>
+![1f77b4](https://cloud.githubusercontent.com/assets/230541/8294503/052c3462-18f2-11e5-8532-8e6f95a0a2fa.png) #1f77b4<br>
+![ff7f0e](https://cloud.githubusercontent.com/assets/230541/8294556/05d92a0a-18f2-11e5-8954-cd7e28d8e265.png) #ff7f0e<br>
+![2ca02c](https://cloud.githubusercontent.com/assets/230541/8294504/052cedda-18f2-11e5-903f-4bc4d1e489ce.png) #2ca02c<br>
+![d62728](https://cloud.githubusercontent.com/assets/230541/8294542/05a966d0-18f2-11e5-8902-ae194b562d57.png) #d62728<br>
+![9467bd](https://cloud.githubusercontent.com/assets/230541/8294525/05775078-18f2-11e5-90c2-cd604dc0eb69.png) #9467bd<br>
+![8c564b](https://cloud.githubusercontent.com/assets/230541/8294509/05416ab2-18f2-11e5-9093-81b592d6a40b.png) #8c564b<br>
+![e377c2](https://cloud.githubusercontent.com/assets/230541/8294548/05ba04ae-18f2-11e5-8f7c-e4ca8eabe655.png) #e377c2<br>
+![7f7f7f](https://cloud.githubusercontent.com/assets/230541/8294500/051d70e4-18f2-11e5-83df-c45e7bc20803.png) #7f7f7f<br>
+![bcbd22](https://cloud.githubusercontent.com/assets/230541/8294532/058e2aa0-18f2-11e5-8c42-b93f8d6f210d.png) #bcbd22<br>
+![17becf](https://cloud.githubusercontent.com/assets/230541/8294517/055eeac4-18f2-11e5-9bed-3ecdd0d7a87b.png) #17becf<br>
 
 <a name="category20" href="#category20">#</a> <b>category20</b>()
 
 Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical colors:
 
-![1f77b4](1f77b4.png) #1f77b4<br>
-![aec7e8](aec7e8.png) #aec7e8<br>
-![ff7f0e](ff7f0e.png) #ff7f0e<br>
-![ffbb78](ffbb78.png) #ffbb78<br>
-![2ca02c](2ca02c.png) #2ca02c<br>
-![98df8a](98df8a.png) #98df8a<br>
-![d62728](d62728.png) #d62728<br>
-![ff9896](ff9896.png) #ff9896<br>
-![9467bd](9467bd.png) #9467bd<br>
-![c5b0d5](c5b0d5.png) #c5b0d5<br>
-![8c564b](8c564b.png) #8c564b<br>
-![c49c94](c49c94.png) #c49c94<br>
-![e377c2](e377c2.png) #e377c2<br>
-![f7b6d2](f7b6d2.png) #f7b6d2<br>
-![7f7f7f](7f7f7f.png) #7f7f7f<br>
-![c7c7c7](c7c7c7.png) #c7c7c7<br>
-![bcbd22](bcbd22.png) #bcbd22<br>
-![dbdb8d](dbdb8d.png) #dbdb8d<br>
-![17becf](17becf.png) #17becf<br>
-![9edae5](9edae5.png) #9edae5<br>
+![1f77b4](https://cloud.githubusercontent.com/assets/230541/8294503/052c3462-18f2-11e5-8532-8e6f95a0a2fa.png) #1f77b4<br>
+![aec7e8](https://cloud.githubusercontent.com/assets/230541/8294530/0583af58-18f2-11e5-8ad1-e06b75439900.png) #aec7e8<br>
+![ff7f0e](https://cloud.githubusercontent.com/assets/230541/8294556/05d92a0a-18f2-11e5-8954-cd7e28d8e265.png) #ff7f0e<br>
+![ffbb78](https://cloud.githubusercontent.com/assets/230541/8294555/05d890ea-18f2-11e5-8aef-f618983c741f.png) #ffbb78<br>
+![2ca02c](https://cloud.githubusercontent.com/assets/230541/8294504/052cedda-18f2-11e5-903f-4bc4d1e489ce.png) #2ca02c<br>
+![98df8a](https://cloud.githubusercontent.com/assets/230541/8294520/05670682-18f2-11e5-8d54-5685d3fa096d.png) #98df8a<br>
+![d62728](https://cloud.githubusercontent.com/assets/230541/8294542/05a966d0-18f2-11e5-8902-ae194b562d57.png) #d62728<br>
+![ff9896](https://cloud.githubusercontent.com/assets/230541/8294557/05db90ba-18f2-11e5-9a48-cfdd6fe0cd81.png) #ff9896<br>
+![9467bd](https://cloud.githubusercontent.com/assets/230541/8294525/05775078-18f2-11e5-90c2-cd604dc0eb69.png) #9467bd<br>
+![c5b0d5](https://cloud.githubusercontent.com/assets/230541/8294535/05947f86-18f2-11e5-8325-336478038a2b.png) #c5b0d5<br>
+![8c564b](https://cloud.githubusercontent.com/assets/230541/8294509/05416ab2-18f2-11e5-9093-81b592d6a40b.png) #8c564b<br>
+![c49c94](https://cloud.githubusercontent.com/assets/230541/8294537/05a1bb1a-18f2-11e5-8f9d-0638b5444d5b.png) #c49c94<br>
+![e377c2](https://cloud.githubusercontent.com/assets/230541/8294548/05ba04ae-18f2-11e5-8f7c-e4ca8eabe655.png) #e377c2<br>
+![f7b6d2](https://cloud.githubusercontent.com/assets/230541/8294549/05c6985e-18f2-11e5-8fe1-555b340e5c1b.png) #f7b6d2<br>
+![7f7f7f](https://cloud.githubusercontent.com/assets/230541/8294500/051d70e4-18f2-11e5-83df-c45e7bc20803.png) #7f7f7f<br>
+![c7c7c7](https://cloud.githubusercontent.com/assets/230541/8294499/051c446c-18f2-11e5-8230-497286d225dc.png) #c7c7c7<br>
+![bcbd22](https://cloud.githubusercontent.com/assets/230541/8294532/058e2aa0-18f2-11e5-8c42-b93f8d6f210d.png) #bcbd22<br>
+![dbdb8d](https://cloud.githubusercontent.com/assets/230541/8294546/05b707cc-18f2-11e5-8189-fd060071b0cc.png) #dbdb8d<br>
+![17becf](https://cloud.githubusercontent.com/assets/230541/8294517/055eeac4-18f2-11e5-9bed-3ecdd0d7a87b.png) #17becf<br>
+![9edae5](https://cloud.githubusercontent.com/assets/230541/8294513/0552f584-18f2-11e5-93fa-823f2dec5a84.png) #9edae5<br>
 
 <a name="category20b" href="#category20b">#</a> <b>category20b</b>()
 
