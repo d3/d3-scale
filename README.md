@@ -8,9 +8,6 @@ Want a longer introduction? See these recommended tutorials:
 
 * [d3: scales, and color.](http://www.jeromecukier.net/blog/2011/08/11/d3-scales-and-color/) by Jérôme Cukier
 
-This product includes color specifications and designs developed by Cynthia
-Brewer ([colorbrewer.org](http://colorbrewer.org/)).
-
 ## Installing
 
 If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release](https://github.com/d3/d3-scale/releases/latest).
@@ -637,6 +634,8 @@ Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical co
 ![969696](https://cloud.githubusercontent.com/assets/230541/8294498/051bceba-18f2-11e5-9732-ad2b95b72ea3.png) #969696<br>
 ![bdbdbd](https://cloud.githubusercontent.com/assets/230541/8294502/051f981a-18f2-11e5-8c4c-5f9fa4e36833.png) #bdbdbd<br>
 ![d9d9d9](https://cloud.githubusercontent.com/assets/230541/8294518/05601516-18f2-11e5-848c-291939213e5d.png) #d9d9d9<br>
+
+This color scale includes color specifications and designs developed by Cynthia Brewer ([colorbrewer.org](http://colorbrewer.org/)).
 
 ## Changes from D3 3.x:
 
