@@ -51,7 +51,7 @@ If *values* is specified, sets the scale’s output range to the specified array
 
 <a name="linear_rangeRound" href="#linear_rangeRound">#</a> <i>linear</i>.<b>rangeRound</b>(<i>values</i>)
 
-Sets the scale’s output range to the specified array of values, while also setting the scale’s interpolator to [interpolateRound](https://github.com/d3/d3-interpolate#interpolateRound). This is a convenience routine for when the values output by the scale should be exact integers, such as to avoid antialiasing artifacts. It is also possible to round the output values manually after the scale is applied.
+Sets the scale’s output range to the specified array of *values* while also setting the scale’s interpolator to [interpolateRound](https://github.com/d3/d3-interpolate#interpolateRound). This is a convenience routine for when the values output by the scale should be exact integers, such as to avoid antialiasing artifacts. It is also possible to round the output values manually after the scale is applied.
 
 <a name="linear_interpolate" href="#linear_interpolate">#</a> <i>linear</i>.<b>interpolate</b>([<i>factory</i>])
 
@@ -166,7 +166,7 @@ If *values* is specified, sets the scale’s output range to the specified array
 
 <a name="pow_rangeRound" href="#pow_rangeRound">#</a> <i>pow</i>.<b>rangeRound</b>(<i>values</i>)
 
-Sets the scale’s output range to the specified array of values, while also setting the scale’s interpolator to [interpolateRound](https://github.com/d3/d3-interpolate#interpolateRound). This is a convenience routine for when the values output by the scale should be exact integers, such as to avoid antialiasing artifacts. It is also possible to round the output values manually after the scale is applied.
+Sets the scale’s output range to the specified array of *values* while also setting the scale’s interpolator to [interpolateRound](https://github.com/d3/d3-interpolate#interpolateRound). This is a convenience routine for when the values output by the scale should be exact integers, such as to avoid antialiasing artifacts. It is also possible to round the output values manually after the scale is applied.
 
 <a name="pow_exponent" href="#pow_exponent">#</a> <i>pow</i>.<b>exponent</b>([<i>k</i>])
 
@@ -236,7 +236,7 @@ If *values* is specified, sets the scale’s output range to the specified array
 
 <a name="log_rangeRound" href="#log_rangeRound">#</a> <i>log</i>.<b>rangeRound</b>(<i>values</i>)
 
-Sets the scale’s output range to the specified array of values, while also setting the scale’s interpolator to [[d3.interpolateRound|Transitions#d3_interpolateRound]]. This is a convenience routine for when the values output by the scale should be exact integers, such as to avoid antialiasing artifacts. It is also possible to round the output values manually after the scale is applied.
+Sets the scale’s output range to the specified array of *values* while also setting the scale’s interpolator to [[d3.interpolateRound|Transitions#d3_interpolateRound]]. This is a convenience routine for when the values output by the scale should be exact integers, such as to avoid antialiasing artifacts. It is also possible to round the output values manually after the scale is applied.
 
 <a name="log_base" href="#log_base">#</a> <i>log</i>.<b>base</b>([<i>base</i>])
 
@@ -339,7 +339,7 @@ If *values* is specified, sets the discrete values in the output range. The arra
 
 <a name="quantile_quantiles" href="#quantile_quantiles">#</a> <i>quantile</i>.<b>quantiles</b>()
 
-Returns the quantile thresholds. If the output range contains *n* discrete values, the returned threshold array will contain *n* - 1 values. Values less than the first element in the thresholds array, quantiles()[0], are considered in the first quantile; greater values less than the second threshold are in the second quantile, and so on. Internally, the thresholds array is used with [[d3.bisect|Arrays#d3_bisect]] to find the output quantile associated with the given input value.
+Returns the quantile thresholds. If the output range contains *n* discrete values, the returned threshold array will contain *n* - 1 values. Values less than the first element in the thresholds array, quantiles()[0], are considered in the first quantile; greater values less than the second threshold are in the second quantile, and so on. Internally, the thresholds array is used with [bisect](https://github.com/d3/d3-arrays#bisect) to find the output quantile associated with the given input value.
 
 <a name="quantile_copy" href="#quantile_copy">#</a> <i>quantile</i>.<b>copy</b>()
 
