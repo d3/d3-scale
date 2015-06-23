@@ -60,7 +60,7 @@ s.invert(106.66666666666667); // 20
 s.invert(426.66666666666667); // 50
 ```
 
-This method is only supported if the range is numeric, and may return undefined if the range is non-numeric (such as colors or objects). For a valid value *y* in the range, <i>linear</i>(<i>linear</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the domain, <i>linear</i>.invert(<i>linear</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
+This method is only supported if the range is numeric, and may return undefined if the range is non-numeric (such as colors). For a valid value *y* in the range, <i>linear</i>(<i>linear</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the domain, <i>linear</i>.invert(<i>linear</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
 
 <a name="linear_domain" href="#linear_domain">#</a> <i>linear</i>.<b>domain</b>([<i>domain</i>])
 
