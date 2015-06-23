@@ -4,7 +4,7 @@ Scales are a convenient abstraction for a fundamental task in visualization: map
 
 For continuous quantitative data, you often want a [linear scale](#linear-scales). If the distribution calls for it, you may transform data using a [power scale](#power-scales) or [log scale](#log-scales). To aid differentiation, consider a [quantize scale](#quantize-scales), which rounds continuous data to a fixed set of discrete values; similarly, a [quantile scale](#quantile-scales) computes quantiles from a sample population, and a [threshold scale](#threshold-scales) allows you to specify arbitrary thresholds to specify discrete breaks in continuous data.
 
-For ordinal or categorical data, use an [ordinal scale](#ordinal-scales). Ordinal scales can be used to specify an explicit mapping from a discrete set of data values to a discrete set of visual attributes (such as colors), but they are also convenient for computing the position of ordinal data, such as bars in a bar chart or dots in an ordinal scatterplot. Several built-in [categorical color scales](#category-scales) are also provided; if you don’t like these palettes, try [ColorBrewer](http://colorbrewer2.org/).
+For ordinal or categorical data, use an [ordinal scale](#ordinal-scales). Ordinal scales can specify an explicit mapping from a discrete set of data values to a discrete set of visual attributes (such as colors), but they are also convenient for position-encoding ordinal data, such as bars in a bar chart or dots in an categorical scatterplot. Several built-in [categorical color scales](#category-scales) are also provided; if you don’t like these palettes, try [ColorBrewer](http://colorbrewer2.org/).
 
 Want a longer introduction? See these recommended tutorials:
 
