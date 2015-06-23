@@ -34,7 +34,7 @@ Constructs a new linear scale with the default [domain](#linear_domain) [0,1], t
 
 <a name="_linear" href="#_linear">#</a> <i>linear</i>(<i>x</i>)
 
-Given a value *x* in the [domain](#linear_domain), returns the corresponding value *y* in the [range](#linear_range). If the domain and range have different lengths *N* and *M*, only the first *min(N,M)* elements in each are observed. For example, a color encoding:
+Given a value *x* in the [domain](#linear_domain), returns the corresponding value *y* in the [range](#linear_range). For example, a color encoding:
 
 ```js
 var s = linear().domain([10, 100]).range(["brown", "steelblue"]);
@@ -53,7 +53,7 @@ s(50); // 426.66666666666663
 
 <a name="linear_invert" href="#linear_invert">#</a> <i>linear</i>.<b>invert</b>(<i>y</i>)
 
-Given a value *y* in the [range](#linear_range), returns the corresponding value *x* in the [domain](#linear_domain): the inverse of [*linear*](#_linear). If the domain and range have different lengths *N* and *M*, only the first *min(N,M)* elements in each are observed. For example, a position encoding:
+Given a value *y* in the [range](#linear_range), returns the corresponding value *x* in the [domain](#linear_domain): the inverse of [*linear*](#_linear). For example, a position encoding:
 
 ```js
 var s = linear().domain([10, 100]).range([0, 960]);
@@ -76,7 +76,7 @@ s(-0.5); // "#ff8080"
 s(+0.5); // "#80c080"
 ```
 
-Internally, a polylinear scale performs a [binary search](https://github.com/d3/d3-arrays#bisect) for the range interpolator corresponding to the given domain value. Thus, the domain must be in ascending or descending order.
+Internally, a polylinear scale performs a [binary search](https://github.com/d3/d3-arrays#bisect) for the range interpolator corresponding to the given domain value. Thus, the domain must be in ascending or descending order. If the domain and range have different lengths *N* and *M*, only the first *min(N,M)* elements in each are observed.
 
 <a name="linear_range" href="#linear_range">#</a> <i>linear</i>.<b>range</b>([<i>range</i>])
 
