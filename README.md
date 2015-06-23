@@ -6,6 +6,8 @@ For continuous quantitative data, you often want a [linear scale](#linear-scales
 
 For ordinal or categorical data, use an [ordinal scale](#ordinal-scales). Ordinal scales can specify an explicit mapping from a discrete set of data values to a discrete set of visual attributes (such as colors), but they are also useful for position-encoding ordinal data, such as bars in a bar chart or dots in an categorical scatterplot. Several built-in [categorical color scales](#category-scales) are also provided; if you don’t like these palettes, try [ColorBrewer](http://colorbrewer2.org/).
 
+Scales have no intrinsic visual representation; for that, consider an [axis](https://github.com/mbostock/d3/wiki/SVG-Axes). However, scales typically provide a ticks method (such as [*linear*.ticks](#linear_ticks)) that can be used to render reference marks.
+
 Want a longer introduction? See these recommended tutorials:
 
 * [Chapter 7. Scales](http://chimera.labs.oreilly.com/books/1230000000345/ch07.html) of *Interactive Data Visualization for the Web* by Scott Murray
@@ -70,7 +72,7 @@ This method is only supported if the range is numeric, and may return undefined 
 
 <a name="linear_domain" href="#linear_domain">#</a> <i>linear</i>.<b>domain</b>([<i>domain</i>])
 
-If *domain* is specified, sets the scale’s domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. (A linear scale may thus be used to encode [dates](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date); however, a [time scale](https://github.com/d3/d3-scale-time) is recommended for calendar-based ticks.) If *domain* is not specified, returns the scale’s current domain.
+If *domain* is specified, sets the scale’s domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. (A linear scale may thus be used to encode [dates](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date); however, a [time scale](https://github.com/mbostock/d3/wiki/Time-Scales) is recommended for calendar-based ticks.) If *domain* is not specified, returns the scale’s current domain.
 
 Although linear scales typically have two values each in their domain and range, specifying more than two values produces a “polylinear” scale. A polylinear scale represents multiple piecewise linear scales that divide a continuous domain and range. For example, to create a diverging color scale that interpolates between white and red for negative values, and white and green for positive values, say:
 
