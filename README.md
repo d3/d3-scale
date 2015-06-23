@@ -52,7 +52,7 @@ s(50); // 426.66666666666663
 
 <a name="linear_invert" href="#linear_invert">#</a> <i>linear</i>.<b>invert</b>(<i>y</i>)
 
-Given a value *y* in the [range](#linear_range), returns the corresponding value *x* in the [domain](#linear_domain); the inverse of [*linear*](#_linear). For example:
+Given a value *y* in the [range](#linear_range), returns the corresponding value *x* in the [domain](#linear_domain): the inverse of [*linear*](#_linear). For example, a position encoding:
 
 ```js
 var s = linear().domain([10, 100]).range([0, 960]);
@@ -60,7 +60,7 @@ s.invert(106.66666666666667); // 20
 s.invert(426.66666666666667); // 50
 ```
 
-This method is only supported if the range is numeric, and will return undefined if the range is non-numeric (such as colors, strings or objects). For a valid value *y* in the range, <i>linear</i>(<i>linear</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the domain, <i>linear</i>.invert(<i>linear</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
+This method is only supported if the range is numeric, and may return undefined if the range is non-numeric (such as colors, strings or objects). For a valid value *y* in the range, <i>linear</i>(<i>linear</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the domain, <i>linear</i>.invert(<i>linear</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
 
 <a name="linear_domain" href="#linear_domain">#</a> <i>linear</i>.<b>domain</b>([<i>domain</i>])
 
@@ -78,15 +78,42 @@ Internally, polylinear scales perform a [binary search](https://github.com/d3/d3
 
 <a name="linear_range" href="#linear_range">#</a> <i>linear</i>.<b>range</b>([<i>range</i>])
 
-If a *range* is specified, sets the scale’s range to the specified array of values. The array must contain two or more values, matching the cardinality of the [domain](#linear_domain); otherwise, the longer of the two is truncated to match the other. The elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#linear_interpolate) will work; however, numeric ranges are required for [invert](#linear_invert). If *values* is not specified, returns the scale’s current range.
+If a *range* is specified, sets the scale’s range to the specified array of values. The array must contain two or more values, matching the cardinality of the [domain](#linear_domain); otherwise, the longer of the two is truncated to match the other.
+
+The elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#linear_interpolate) will work; however, numeric ranges are required for [invert](#linear_invert). If *values* is not specified, returns the scale’s current range.
 
 <a name="linear_rangeRound" href="#linear_rangeRound">#</a> <i>linear</i>.<b>rangeRound</b>(<i>range</i>)
 
-Sets the scale’s *range* to the specified array of values while also setting the scale’s [interpolator](#linear_interpolate) to [interpolateRound](https://github.com/d3/d3-interpolate#interpolateRound). This is a convenience routine for when the values output by the scale should be exact integers, such as to avoid antialiasing artifacts. Note that this interpolator can only be used with numeric [ranges](#linear_range).
+Sets the scale’s [*range*](#linear_range) to the specified array of values while also setting the scale’s [interpolator](#linear_interpolate) to [interpolateRound](https://github.com/d3/d3-interpolate#interpolateRound). This is a convenience method equivalent to:
+
+```js
+s.range(range).interpolate(interpolateRound);
+```
+
+The rounding interpolator is sometimes useful for avoiding antialiasing artifacts, though also consider [shape-rendering](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering): crispEdges. Note that this interpolator can only be used with numeric ranges.
 
 <a name="linear_interpolate" href="#linear_interpolate">#</a> <i>linear</i>.<b>interpolate</b>([<i>interpolate</i>])
 
-If *interpolate* is specified, sets the scale’s range interpolator factory. This interpolator factory is used to construct interpolators for each adjacent pair of values from the [range](#linear_range); these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory.
+If *interpolate* is specified, sets the scale’s [range](#linear_range) interpolator factory. This interpolator factory is used to construct interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory.
+
+For example, when you create a diverging color scale with three colors in the range, two interpolators are created internally by the scale, equivalent to:
+
+```js
+var s = scale.linear().domain([-100, 0, +100]).range(["red", "white", "green"]),
+    i0 = interpolate("red", "white"),
+    i1 = interpolate("white", "green");
+```
+
+Perhaps the most common reason to specify a custom interpolator is to change the color space of interpolation. For example, to use the [HCL color space](https://github.com/d3/d3-color#interpolateHcl):
+
+```js
+var s = scale.linear()
+    .domain([10, 100])
+    .range(["brown", "steelblue"])
+    .interpolate(interpolateHcl);
+```
+
+See [d3-color](https://github.com/d3/d3-color) for more color interpolators.
 
 Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
 
