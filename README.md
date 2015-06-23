@@ -50,6 +50,8 @@ s(20); // 106.66666666666666
 s(50); // 426.66666666666663
 ```
 
+If the domain and range have different lengths *N* and *M*, only the first *min(N,M)* elements in each are observed.
+
 <a name="linear_invert" href="#linear_invert">#</a> <i>linear</i>.<b>invert</b>(<i>y</i>)
 
 Given a value *y* in the [range](#linear_range), returns the corresponding value *x* in the [domain](#linear_domain): the inverse of [*linear*](#_linear). For example, a position encoding:
@@ -61,6 +63,8 @@ s.invert(426.66666666666667); // 50
 ```
 
 This method is only supported if the range is numeric, and may return undefined if the range is non-numeric (such as colors). For a valid value *y* in the range, <i>linear</i>(<i>linear</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the domain, <i>linear</i>.invert(<i>linear</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
+
+If the domain and range have different lengths *N* and *M*, only the first *min(N,M)* elements in each are observed.
 
 <a name="linear_domain" href="#linear_domain">#</a> <i>linear</i>.<b>domain</b>([<i>domain</i>])
 
@@ -79,8 +83,6 @@ Internally, a polylinear scale performs a [binary search](https://github.com/d3/
 <a name="linear_range" href="#linear_range">#</a> <i>linear</i>.<b>range</b>([<i>range</i>])
 
 If *range* is specified, sets the scale’s range to the specified array of values. The array must contain two or more values. Unlike the [domain](#linear_domain), elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#linear_interpolate) will work; however, numeric ranges are required for [invert](#linear_invert). If *range* is not specified, returns the scale’s current range.
-
-If the domain and range have different lengths *N* and *M*, only the first *min(N,M)* elements in each array are used for [*linear*](#_linear) and [*linear*.invert](#linear_invert).
 
 <a name="linear_rangeRound" href="#linear_rangeRound">#</a> <i>linear</i>.<b>rangeRound</b>(<i>range</i>)
 
