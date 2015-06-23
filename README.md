@@ -74,7 +74,7 @@ s(-0.5); // "#ff8080"
 s(+0.5); // "#80c080"
 ```
 
-Internally, polylinear scales perform a [binary search](https://github.com/d3/d3-arrays#bisect) for the range interpolator corresponding to the given domain value. Thus, the domain must be in ascending or descending order.
+Internally, a polylinear scale performs a [binary search](https://github.com/d3/d3-arrays#bisect) for the range interpolator corresponding to the given domain value. Thus, the domain must be in ascending or descending order.
 
 <a name="linear_range" href="#linear_range">#</a> <i>linear</i>.<b>range</b>([<i>range</i>])
 
