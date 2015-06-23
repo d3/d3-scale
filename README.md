@@ -64,9 +64,9 @@ This method is only supported if the range is numeric, and may return undefined 
 
 <a name="linear_domain" href="#linear_domain">#</a> <i>linear</i>.<b>domain</b>([<i>domain</i>])
 
-If *domain* is specified, sets the scale’s domain to the specified array of numbers. The array must contain two or more numbers; if the elements in the given array are not numbers, they will be coerced to numbers. (A linear scale may be used to encode [dates](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date); however, a [time scale](https://github.com/d3/d3-scale-time) is recommended for calendar-based ticks.) If *domain* is not specified, returns the scale’s current domain.
+If *domain* is specified, sets the scale’s domain to the specified array of numbers. The array must contain two or more numbers; if the elements in the given array are not numbers, they will be coerced to numbers. (A linear scale may thus be used to encode [dates](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date); however, a [time scale](https://github.com/d3/d3-scale-time) is recommended for calendar-based ticks.) If *domain* is not specified, returns the scale’s current domain.
 
-Although linear scales typically have only two values in their domain, you may specify more than two values to produce a “polylinear” scale. (There should be an equivalent number of values in the [range](#linear_range).) A polylinear scale represents multiple piecewise linear scales that divide a continuous domain and range. For example, to create a diverging color scale that interpolates between white and red for negative values, and white and green for positive values, say:
+Although linear scales typically have only two values in their domain, specifying more than two values produces a “polylinear” scale. (There should be an equivalent number of values in the [range](#linear_range).) A polylinear scale represents multiple piecewise linear scales that divide a continuous domain and range. For example, to create a diverging color scale that interpolates between white and red for negative values, and white and green for positive values, say:
 
 ```js
 var s = linear().domain([-1, 0, 1]).range(["red", "white", "green"]);
