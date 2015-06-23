@@ -1,6 +1,6 @@
 # d3-scale
 
-…
+Scales are a convenient abstraction for a fundamental task in visualization: mapping a dimension of abstract data to a visual representation. Although most often used for position-encoding quantitative data, such as mapping the height in meters of a sample population to the height in pixels of bars in a bar chart, scales can represent virtually any visual encoding, such as diverging colors, stroke widths, or symbol size. Scales can also be used with virtually any type of data, such as named categorical data or discrete data that requires sensible breaks.
 
 Want a longer introduction? See these recommended tutorials:
 
@@ -26,7 +26,7 @@ If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release]
 
 ### Linear Scales
 
-Linear scales are the most common and a good default choice to map a continuous input [domain](#linear_domain) to a continuous output [range](#linear_range). With a linear scale, each range value *y* can be expressed as a linear function of the domain value *x*: *y* = *mx* + *b*. The domain is typically a dimension of data you want to visualize, such as the height of students in meters. The range is typically a dimension of the desired output visualization, such as the height of bars in pixels in a histogram.
+Linear scales are the most common and a good default choice to map a continuous input [domain](#linear_domain) to a continuous output [range](#linear_range). With a linear scale, each range value *y* can be expressed as a linear function of the domain value *x*: *y* = *mx* + *b*. The domain is typically a dimension of data you want to visualize, such as the height in meters of people in a sample population. The range is typically a dimension of the desired output visualization, such as the height in pixels of bars in a bar chart.
 
 <a name="linear" href="#linear">#</a> <b>linear</b>()
 
