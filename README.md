@@ -26,7 +26,7 @@ If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release]
 
 ### Linear Scales
 
-Linear scales are the most common and a good default choice to map a continuous input domain to a continuous output range. With a linear scale, each [range](#linear_range) value *y* can be expressed as a linear function of the [domain](#linear_domain) value *x*: *y* = *mx* + *b*. The domain is typically a dimension of data you want to visualize, such as the height of students in meters. The range is typically a dimension of the desired output visualization, such as the height of bars in pixels in a histogram.
+Linear scales are the most common and a good default choice to map a continuous input [domain](#linear_domain) to a continuous output [range](#linear_range). With a linear scale, each range value *y* can be expressed as a linear function of the domain value *x*: *y* = *mx* + *b*. The domain is typically a dimension of data you want to visualize, such as the height of students in meters. The range is typically a dimension of the desired output visualization, such as the height of bars in pixels in a histogram.
 
 <a name="linear" href="#linear">#</a> <b>linear</b>()
 
@@ -60,11 +60,11 @@ s.invert(106.66666666666667); // 20
 s.invert(426.66666666666667); // 50
 ```
 
-The invert method is only supported if the [range](#linear_range) is numeric, and will return undefined if the range is non-numeric (such as colors, strings or objects). For a valid value *y* in the range, <i>linear</i>(<i>linear</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the domain, <i>linear</i>.invert(<i>linear</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
+This method is only supported if the [range](#linear_range) is numeric, and will return undefined if the range is non-numeric (such as colors, strings or objects). For a valid value *y* in the range, <i>linear</i>(<i>linear</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the domain, <i>linear</i>.invert(<i>linear</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
 
 <a name="linear_domain" href="#linear_domain">#</a> <i>linear</i>.<b>domain</b>([<i>domain</i>])
 
-If *domain* is specified, sets the scale’s domain to the specified array of numbers. The array must contain two or more numbers; if the elements in the given array are not numbers, they will be coerced to numbers. A linear scale can be used to encode types such as [dates](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date) that can be converted to numbers; however, it is often more convenient to use [time scale](https://github.com/d3/d3-scale-time) for dates. If *domain* is not specified, returns the scale’s current domain.
+If *domain* is specified, sets the scale’s domain to the specified array of numbers. The array must contain two or more numbers; if the elements in the given array are not numbers, they will be coerced to numbers. (A linear scale may be used to encode [dates](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date); however, a [time scale](https://github.com/d3/d3-scale-time) is recommended for calendar-based ticks.) If *domain* is not specified, returns the scale’s current domain.
 
 Although linear scales typically have only two values in their domain, you may specify more than two values to produce a “polylinear” scale. (There should be an equivalent number of values in the [range](#linear_range).) A polylinear scale represents multiple piecewise linear scales that divide a continuous domain and range. For example, to create a diverging color scale that interpolates between white and red for negative values, and white and green for positive values, say:
 
@@ -92,7 +92,7 @@ Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolat
 
 <a name="linear_clamp" href="#linear_clamp">#</a> <i>linear</i>.<b>clamp</b>([<i>clamp</i>])
 
-If *clamp* is specified, enables or disables clamping accordingly. By default, clamping is disabled, such that if a value outside the domain is passed to the scale, the scale may return a value outside the range through linear extrapolation. For example, with the default domain and range of [0,1], an input value of 2 will return an output value of 2. If clamping is enabled, the normalized domain parameter *t* is clamped to the range [0,1], such that the return value of the scale is always within the scale’s range. If *clamp* is not specified, returns whether or not the scale currently clamps values to within the range.
+If *clamp* is specified, enables or disables clamping accordingly. If clamping is disabled and the scale is passed a value outside the domain, the scale may return a value outside the range through linear extrapolation. For example, with the default domain and range of [0,1], an input value of 2 will return an output value of 2. If clamping is enabled, the normalized domain parameter *t* is clamped to the range [0,1], such that the return value of the scale is always within the scale’s range. If *clamp* is not specified, returns whether or not the scale currently clamps values to within the range.
 
 <a name="linear_nice" href="#linear_nice">#</a> <i>linear</i>.<b>nice</b>([<i>count</i>])
 
