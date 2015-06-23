@@ -26,15 +26,15 @@ If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release]
 
 ### Linear Scales
 
-Linear scales are the most common scale and a good default choice to map a continuous input domain to a continuous output range. With a *linear* scale, each output range value *y* can be expressed as a linear function of the input domain value *x*: *y* = *mx* + *b*. The input domain is typically a dimension of the data that you want to visualize, such as the height of students in meters in a sample population. The output range is typically a dimension of the desired output visualization, such as the height of bars in pixels in a histogram.
+Linear scales are the most common scale and a good default choice to map a continuous input domain to a continuous output range. With a linear scale, each output [range](#linear_range) value *y* can be expressed as a linear function of the input [domain](#linear_domain) value *x*: *y* = *mx* + *b*. The domain is typically a dimension of data you want to visualize, such as the height of students in meters. The range is typically a dimension of the desired output visualization, such as the height of bars in pixels in a histogram.
 
 <a name="linear" href="#linear">#</a> <b>linear</b>()
 
-Constructs a new linear scale with the default [domain](#linear_domain) [0,1] and the default [range](#linear_range) [0,1].
+Constructs a new linear scale with the default [domain](#linear_domain) [0,1], the default [range](#linear_range) [0,1], the default [interpolator](#linear_interpolate) and [clamping](#linear_clamp) disabled.
 
 <a name="_linear" href="#_linear">#</a> <i>linear</i>(<i>x</i>)
 
-Given a value *x* in the input domain, returns the corresponding value in the output range. For example, a color encoding:
+Given a value *x* in the [domain](#linear_domain), returns the corresponding value in the [range](#linear_range). For example, a color encoding:
 
 ```js
 var s = linear()
@@ -58,11 +58,9 @@ s(50); // 426.66666666666663
 
 <a name="linear_invert" href="#linear_invert">#</a> <i>linear</i>.<b>invert</b>(<i>y</i>)
 
-Returns the value in the input domain *x* for the corresponding value in the output range *y*. This represents the inverse mapping from range to domain.
+Given a value *y* in the [range](#linear_range), returns the corresponding value in the [domain](#linear_domain). This is the inverse of [*linear*](#_linear). The invert method is only supported if the output [range](#linear_range) is numeric, and will return undefined if the output range is non-numeric (such as colors, strings or objects).
 
 For a valid value *y* in the output range, <i>linear</i>(<i>linear</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the input domain, <i>linear</i>.invert(<i>linear</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the input domain that corresponds to the pixel location under the mouse.
-
-Note: the invert method is only supported if the output [range](#linear_range) is numeric, and will return undefined if the output range is non-numeric (such as colors, strings or objects).
 
 <a name="linear_domain" href="#linear_domain">#</a> <i>linear</i>.<b>domain</b>([<i>domain</i>])
 
