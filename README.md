@@ -60,13 +60,13 @@ s.invert(106.66666666666667); // 20
 s.invert(426.66666666666667); // 50
 ```
 
-The invert method is only supported if the output [range](#linear_range) is numeric, and will return undefined if the range is non-numeric (such as colors, strings or objects). For a valid value *y* in the range, <i>linear</i>(<i>linear</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the domain, <i>linear</i>.invert(<i>linear</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
+The invert method is only supported if the [range](#linear_range) is numeric, and will return undefined if the range is non-numeric (such as colors, strings or objects). For a valid value *y* in the range, <i>linear</i>(<i>linear</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the domain, <i>linear</i>.invert(<i>linear</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
 
 <a name="linear_domain" href="#linear_domain">#</a> <i>linear</i>.<b>domain</b>([<i>domain</i>])
 
 If *domain* is specified, sets the scale’s domain to the specified array of numbers. The array must contain two or more numbers; if the elements in the given array are not numbers, they will be coerced to numbers. A linear scale can be used to encode types such as [dates](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date) that can be converted to numbers; however, it is often more convenient to use [time scale](https://github.com/d3/d3-scale-time) for dates. If *domain* is not specified, returns the scale’s current domain.
 
-Although linear scales typically have only two values in their domain, you can specify more than two values for a “polylinear” scale. In this case, there should be an equivalent number of values in the output [range](#linear_range). A polylinear scale represents multiple piecewise linear scales that divide a continuous domain and range. For example, to create a diverging color scale that interpolates between white and red for negative values, and white and green for positive values, say:
+Although linear scales typically have only two values in their domain, you can specify more than two values for a “polylinear” scale. In this case, there should be an equivalent number of values in the [range](#linear_range). A polylinear scale represents multiple piecewise linear scales that divide a continuous domain and range. For example, to create a diverging color scale that interpolates between white and red for negative values, and white and green for positive values, say:
 
 ```js
 var s = linear().domain([-1, 0, 1]).range(["red", "white", "green"]);
@@ -74,7 +74,7 @@ s(-0.5); // "#ff8080"
 s(+0.5); // "#80c080"
 ```
 
-Internally, polylinear scales perform a [binary search](https://github.com/d3/d3-arrays#bisect) for the output interpolator corresponding to the given domain value.
+Internally, polylinear scales perform a [binary search](https://github.com/d3/d3-arrays#bisect) for the range interpolator corresponding to the given domain value.
 
 <a name="linear_range" href="#linear_range">#</a> <i>linear</i>.<b>range</b>([<i>range</i>])
 
@@ -82,11 +82,11 @@ If *range* is specified, sets the scale’s range to the specified array of valu
 
 <a name="linear_rangeRound" href="#linear_rangeRound">#</a> <i>linear</i>.<b>rangeRound</b>(<i>range</i>)
 
-Sets the scale’s output *range* to the specified array of values while also setting the scale’s [interpolator](#linear_interpolate) to [interpolateRound](https://github.com/d3/d3-interpolate#interpolateRound). This is a convenience routine for when the values output by the scale should be exact integers, such as to avoid antialiasing artifacts. Note that this interpolator can only be used with numeric [ranges](#linear_range).
+Sets the scale’s *range* to the specified array of values while also setting the scale’s [interpolator](#linear_interpolate) to [interpolateRound](https://github.com/d3/d3-interpolate#interpolateRound). This is a convenience routine for when the values output by the scale should be exact integers, such as to avoid antialiasing artifacts. Note that this interpolator can only be used with numeric [ranges](#linear_range).
 
 <a name="linear_interpolate" href="#linear_interpolate">#</a> <i>linear</i>.<b>interpolate</b>([<i>interpolate</i>])
 
-If *interpolate* is specified, sets the scale’s output interpolator factory. This interpolator factory is used to construct interpolators for each adjacent pair of values from the output [range](#linear_range); these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory.
+If *interpolate* is specified, sets the scale’s range interpolator factory. This interpolator factory is used to construct interpolators for each adjacent pair of values from the [range](#linear_range); these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory.
 
 Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
 
@@ -140,11 +140,11 @@ Returns the given value *x*.
 <a name="identity_domain" href="#identity_domain">#</a> <i>identity</i>.<b>domain</b>([<i>domain</i>])<br>
 <a href="#identity_domain">#</a> <i>identity</i>.<b>range</b>([<i>domain</i>])
 
-If *domain* is specified, sets the scale’s input domain and output range to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. If numbers is not specified, returns the scale’s current input domain (or equivalently, output range).
+If *domain* is specified, sets the scale’s domain and range to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. If numbers is not specified, returns the scale’s current domain (or equivalently, range).
 
 <a name="identity_ticks" href="#identity_ticks">#</a> <i>identity</i>.<b>ticks</b>([<i>count</i>])
 
-Returns approximately *count* representative values from the scale’s input domain (or equivalently, output range). If *count* is not specified, it defaults to 10. The returned tick values are uniformly spaced, have human-readable values (such as multiples of powers of 10), and are guaranteed to be within the extent of the input domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data. The specified *count* is only a hint; the scale may return more or fewer values depending on the input domain.
+Returns approximately *count* representative values from the scale’s domain (or equivalently, range). If *count* is not specified, it defaults to 10. The returned tick values are uniformly spaced, have human-readable values (such as multiples of powers of 10), and are guaranteed to be within the extent of the domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data. The specified *count* is only a hint; the scale may return more or fewer values depending on the domain.
 
 <a name="identity_tickFormat" href="#identity_tickFormat">#</a> <i>identity</i>.<b>tickFormat</b>(<i>count</i>[, <i>specifier</i>])
 
