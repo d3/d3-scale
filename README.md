@@ -94,7 +94,7 @@ The rounding interpolator is sometimes useful for avoiding antialiasing artifact
 
 <a name="linear_interpolate" href="#linear_interpolate">#</a> <i>linear</i>.<b>interpolate</b>([<i>interpolate</i>])
 
-If *interpolate* is specified, sets the scale’s [range](#linear_range) interpolator factory. This interpolator factory is used to construct interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory.
+If *interpolate* is specified, sets the scale’s [range](#linear_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory.
 
 For example, when you create a diverging color scale with three colors in the range, two interpolators are created internally by the scale, equivalent to:
 
