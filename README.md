@@ -96,7 +96,7 @@ The rounding interpolator is sometimes useful for avoiding antialiasing artifact
 
 If *interpolate* is specified, sets the scale’s [range](#linear_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory.
 
-For example, when you create a diverging color scale with three colors in the range, two interpolators are created internally by the scale, equivalent to:
+For example, if you create a diverging color scale with three colors in the range, two interpolators are created internally by the scale, equivalent to:
 
 ```js
 var s = scale.linear().domain([-100, 0, +100]).range(["red", "white", "green"]),
