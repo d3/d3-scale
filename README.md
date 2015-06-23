@@ -258,7 +258,7 @@ The rounding interpolator is sometimes useful for avoiding antialiasing artifact
 
 <a name="pow_interpolate" href="#pow_interpolate">#</a> <i>pow</i>.<b>interpolate</b>([<i>interpolate</i>])
 
-If *interpolate* is specified, sets the scale’s [range](#pow_range) interpolator factory. This interpolator factory is used to construct interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory. See [*linear*.interpolate](#linear_interpolate) for examples.
+If *interpolate* is specified, sets the scale’s [range](#pow_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory. See [*linear*.interpolate](#linear_interpolate) for examples.
 
 Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
 
@@ -362,7 +362,7 @@ The rounding interpolator is sometimes useful for avoiding antialiasing artifact
 
 <a name="log_interpolate" href="#log_interpolate">#</a> <i>log</i>.<b>interpolate</b>([<i>interpolate</i>])
 
-If *interpolate* is specified, sets the scale’s [range](#log_range) interpolator factory. This interpolator factory is used to construct interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory. See [*linear*.interpolate](#linear_interpolate) for examples.
+If *interpolate* is specified, sets the scale’s [range](#log_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory. See [*linear*.interpolate](#linear_interpolate) for examples.
 
 Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
 
