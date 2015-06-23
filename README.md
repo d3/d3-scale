@@ -26,7 +26,7 @@ If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release]
 
 ### Linear Scales
 
-Linear scales are the most common scale and a good default choice to map a continuous input domain to a continuous output range. With a linear scale, each output [range](#linear_range) value *y* can be expressed as a linear function of the input [domain](#linear_domain) value *x*: *y* = *mx* + *b*. The domain is typically a dimension of data you want to visualize, such as the height of students in meters. The range is typically a dimension of the desired output visualization, such as the height of bars in pixels in a histogram.
+Linear scales are the most common and a good default choice to map a continuous input domain to a continuous output range. With a linear scale, each [range](#linear_range) value *y* can be expressed as a linear function of the [domain](#linear_domain) value *x*: *y* = *mx* + *b*. The domain is typically a dimension of data you want to visualize, such as the height of students in meters. The range is typically a dimension of the desired output visualization, such as the height of bars in pixels in a histogram.
 
 <a name="linear" href="#linear">#</a> <b>linear</b>()
 
@@ -34,7 +34,7 @@ Constructs a new linear scale with the default [domain](#linear_domain) [0,1], t
 
 <a name="_linear" href="#_linear">#</a> <i>linear</i>(<i>x</i>)
 
-Given a value *x* in the [domain](#linear_domain), returns the corresponding value in the [range](#linear_range). For example, a color encoding:
+Given a value *x* in the [domain](#linear_domain), returns the corresponding value *y* in the [range](#linear_range). For example, a color encoding:
 
 ```js
 var s = linear().domain([10, 100]).range(["brown", "steelblue"]);
@@ -42,7 +42,7 @@ s(20); // "#9a3439"
 s(50); // "#7b5167"
 ```
 
-A position encoding:
+Or a position encoding:
 
 ```js
 var s = linear().domain([10, 100]).range([0, 960]);
@@ -52,7 +52,7 @@ s(50); // 426.66666666666663
 
 <a name="linear_invert" href="#linear_invert">#</a> <i>linear</i>.<b>invert</b>(<i>y</i>)
 
-Given a value *y* in the [range](#linear_range), returns the corresponding value in the [domain](#linear_domain). This is the inverse of [*linear*](#_linear). For example:
+Given a value *y* in the [range](#linear_range), returns the corresponding value *x* in the [domain](#linear_domain); the inverse of [*linear*](#_linear). For example:
 
 ```js
 var s = linear().domain([10, 100]).range([0, 960]);
@@ -66,7 +66,7 @@ The invert method is only supported if the [range](#linear_range) is numeric, an
 
 If *domain* is specified, sets the scale’s domain to the specified array of numbers. The array must contain two or more numbers; if the elements in the given array are not numbers, they will be coerced to numbers. A linear scale can be used to encode types such as [dates](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date) that can be converted to numbers; however, it is often more convenient to use [time scale](https://github.com/d3/d3-scale-time) for dates. If *domain* is not specified, returns the scale’s current domain.
 
-Although linear scales typically have only two values in their domain, you can specify more than two values for a “polylinear” scale. In this case, there should be an equivalent number of values in the [range](#linear_range). A polylinear scale represents multiple piecewise linear scales that divide a continuous domain and range. For example, to create a diverging color scale that interpolates between white and red for negative values, and white and green for positive values, say:
+Although linear scales typically have only two values in their domain, you may specify more than two values to produce a “polylinear” scale. (There should be an equivalent number of values in the [range](#linear_range).) A polylinear scale represents multiple piecewise linear scales that divide a continuous domain and range. For example, to create a diverging color scale that interpolates between white and red for negative values, and white and green for positive values, say:
 
 ```js
 var s = linear().domain([-1, 0, 1]).range(["red", "white", "green"]);
@@ -74,11 +74,11 @@ s(-0.5); // "#ff8080"
 s(+0.5); // "#80c080"
 ```
 
-Internally, polylinear scales perform a [binary search](https://github.com/d3/d3-arrays#bisect) for the range interpolator corresponding to the given domain value.
+Internally, polylinear scales perform a [binary search](https://github.com/d3/d3-arrays#bisect) for the range interpolator corresponding to the given domain value. Thus, the domain must be in ascending or descending order.
 
 <a name="linear_range" href="#linear_range">#</a> <i>linear</i>.<b>range</b>([<i>range</i>])
 
-If *range* is specified, sets the scale’s range to the specified array of values. The array must contain two or more values, matching the cardinality of the domain; otherwise, the longer of the two is truncated to match the other. The elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#linear_interpolate) will work; however, numeric ranges are required for [invert](#linear_invert). If *values* is not specified, returns the scale’s current range.
+If a *range* is specified, sets the scale’s range to the specified array of values. The array must contain two or more values, matching the cardinality of the [domain](#linear_domain); otherwise, the longer of the two is truncated to match the other. The elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#linear_interpolate) will work; however, numeric ranges are required for [invert](#linear_invert). If *values* is not specified, returns the scale’s current range.
 
 <a name="linear_rangeRound" href="#linear_rangeRound">#</a> <i>linear</i>.<b>rangeRound</b>(<i>range</i>)
 
@@ -158,7 +158,7 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 ### Power Scales
 
-Power scales are similar to linear scales, except an exponential transform is applied to the input domain value before the output range value is computed. The mapping to the output range value *y* can be expressed as a function of the input domain value *x*: *y* = *mx^k* + *b*, where *k* is the exponent value. Power scales also support negative values, in which case the input value is multiplied by -1, and the resulting output value is also multiplied by -1.
+Power scales are similar to linear scales, except an exponential transform is applied to the domain value before the range value is computed. Each [range](#pow_range) value *y* can be expressed as a function of the [domain](#pow_domain) value *x*: *y* = *mx^k* + *b*, where *k* is the [exponent](#pow_exponent) value. Power scales also support negative domain values, in which case the input value and the resulting output value are multiplied by -1.
 
 <a name="sqrt" href="#sqrt">#</a> <b>sqrt</b>()
 
@@ -168,15 +168,15 @@ Constructs a new power scale with the default domain [0,1], the default range [0
 pow().exponent(.5)
 ```
 
-The returned scale is a function that takes a single argument *x* representing a value in the input domain; the return value is the corresponding value in the output range. Thus, the returned scale is equivalent to the [sqrt](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/sqrt) function for numbers; for example sqrt(0.25) returns 0.5.
+The returned scale is a function that takes a single argument *x* representing a value in the domain; the return value is the corresponding value in the output range. Thus, the returned scale is equivalent to the [sqrt](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/sqrt) function for numbers; for example sqrt(0.25) returns 0.5.
 
 <a name="pow" href="#pow">#</a> <b>pow</b>()
 
-Constructs a new power scale with the default domain [0,1], the default range [0,1], and the default exponent 1. Thus, the default power scale is equivalent to the identity function for numbers; for example pow(0.5) returns 0.5.
+Constructs a new power scale with the default [domain](#pow_domain) [0,1], the default [range](#pow_range) [0,1], and the default [exponent](#pow_exponent) 1. (Note that this is effectively a [linear](#linear) scale until you set a different exponent.)
 
 <a name="_pow" href="#_pow">#</a> <i>pow</i>(<i>x</i>)
 
-Given a value *x* in the input domain, returns the corresponding value in the output range. For example, a color encoding:
+Given a value *x* in the domain, returns the corresponding value in the output range. For example, a color encoding:
 
 ```js
 var s = pow().exponent(.5).domain([10, 100]).range(["brown", "steelblue"]);
