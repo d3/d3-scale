@@ -515,7 +515,7 @@ s.range(); // [1, 34, 67, 100]
 Note that rounding necessarily introduces additional outer padding which is, on average, proportional to the length of the domain. For example, for a domain of size 50, an additional 25px of outer padding on either side may be required. Modifying the range extent to be closer to a multiple of the domain length may reduce the additional padding.
 
 ```js
-var s = ordinal().domain(d3.range(50)).rangeRoundPoints([0, 95]);
+var s = ordinal().domain(range(50)).rangeRoundPoints([0, 95]);
 s.range(); // [23, 24, 25, …, 70, 71, 72]
 s.rangeRoundPoints([0, 100]);
 s.range(); // [1, 3, 5, …, 95, 97, 98]
