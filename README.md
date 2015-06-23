@@ -162,7 +162,7 @@ Returns an exact copy of this linear scale. Changes to this scale will not affec
 
 ### Identity Scales
 
-Identity scales are a special case of linear scales where the [domain](#identity_domain) and [range](#identity_range) are identical; the scale and its invert method are both the identity function. These scales are occasionally useful when working with pixel coordinates, say in conjunction with an axis or brush.
+Identity scales are a special case of [linear scales](#linear-scales) where the [domain](#identity_domain) and [range](#identity_range) are identical; the scale and its invert method are both the identity function. These scales are occasionally useful when working with pixel coordinates, say in conjunction with an axis or brush.
 
 <a name="identity" href="#identity">#</a> <b>identity</b>()
 
@@ -194,7 +194,7 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 ### Power Scales
 
-Power scales are similar to linear scales, except an exponential transform is applied to the input [domain](#pow_domain) value before the output [range](#pow_range) value is computed. Each range value *y* can be expressed as a function of the domain value *x*: *y* = *mx^k* + *b*, where *k* is the [exponent](#pow_exponent) value. Power scales also support negative domain values, in which case the input value and the resulting output value are multiplied by -1.
+Power scales are similar to [linear scales](#linear-scales), except an exponential transform is applied to the input [domain](#pow_domain) value before the output [range](#pow_range) value is computed. Each range value *y* can be expressed as a function of the domain value *x*: *y* = *mx^k* + *b*, where *k* is the [exponent](#pow_exponent) value. Power scales also support negative domain values, in which case the input value and the resulting output value are multiplied by -1.
 
 <a name="pow" href="#pow">#</a> <b>pow</b>()
 
@@ -296,7 +296,7 @@ The returned scale is a function that takes a single argument *x* representing a
 
 ### Log Scales
 
-Log scales are similar to linear scales, except a logarithmic transform is applied to the input domain value before the output range value is computed. The mapping to the range value *y* can be expressed as a function of the domain value *x*: *y* = *m* log(<i>x</i>) + *b*.
+Log scales are similar to [linear scales](#linear-scales), except a logarithmic transform is applied to the input domain value before the output range value is computed. The mapping to the range value *y* can be expressed as a function of the domain value *x*: *y* = *m* log(<i>x</i>) + *b*.
 
 As log(0) = -∞, a log scale domain must be **strictly-positive or strictly-negative**; the domain must not include or cross zero. A log scale with a positive domain has a well-defined behavior for positive values, and a log scale with a negative domain has a well-defined behavior for negative values. (For a negative domain, input and output values are implicitly multiplied by -1.) The behavior of the scale is undefined if you pass a negative value to a log scale with a positive domain or vice versa.
 
@@ -332,7 +332,7 @@ s.invert(288.9887958374218); // 20
 s.invert(671.0112041625778); // 50
 ```
 
-This method is only supported if the range is numeric, and will return undefined if the range is non-numeric (such as colors, strings or objects). For a valid value *y* in the range, <i>log</i>(<i>log</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the domain, <i>log</i>.invert(<i>log</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
+This method is only supported if the range is numeric, and may return undefined if the range is non-numeric (such as colors). For a valid value *y* in the range, <i>log</i>(<i>log</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the domain, <i>log</i>.invert(<i>log</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
 
 <a name="log_base" href="#log_base">#</a> <i>log</i>.<b>base</b>([<i>base</i>])
 
@@ -346,27 +346,33 @@ As with [*linear*.domain](#linear_domain), this method can accept more than two 
 
 <a name="log_range" href="#log_range">#</a> <i>log</i>.<b>range</b>([<i>range</i>])
 
-If *range* is specified, sets the scale’s range to the specified array of values. The array must contain two or more values, matching the cardinality of the domain; otherwise, the longer of the two is truncated to match the other. The elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#log_interpolate) will work; however, numeric ranges are required for [invert](#log_invert). If *values* is not specified, returns the scale’s current range.
+If *range* is specified, sets the scale’s range to the specified array of values. The array must contain two or more values, matching the cardinality of the [domain](#log_domain); otherwise, the longer of the two is truncated to match the other. The elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#log_interpolate) will work; however, numeric ranges are required for [invert](#log_invert). If *range* is not specified, returns the scale’s current range.
 
 <a name="log_rangeRound" href="#log_rangeRound">#</a> <i>log</i>.<b>rangeRound</b>(<i>range</i>)
 
-Sets the scale’s *range* to the specified array of values while also setting the scale’s [interpolator](#log_interpolate) to [interpolateRound](https://github.com/d3/d3-interpolate#interpolateRound). This is a convenience routine for when the values output by the scale should be exact integers, such as to avoid antialiasing artifacts. Note that this interpolator can only be used with numeric [ranges](#log_range).
+Sets the scale’s [*range*](#log_range) to the specified array of values while also setting the scale’s [interpolator](#log_interpolate) to [interpolateRound](https://github.com/d3/d3-interpolate#interpolateRound). This is a convenience method equivalent to:
+
+```js
+s.range(range).interpolate(interpolateRound);
+```
+
+The rounding interpolator is sometimes useful for avoiding antialiasing artifacts, though also consider [shape-rendering](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering): crispEdges. Note that this interpolator can only be used with numeric ranges.
 
 <a name="log_interpolate" href="#log_interpolate">#</a> <i>log</i>.<b>interpolate</b>([<i>interpolate</i>])
 
-If *interpolate* is specified, sets the scale’s range interpolator factory. This interpolator factory is used to construct interpolators for each adjacent pair of values from the [range](#log_range); these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory.
+If *interpolate* is specified, sets the scale’s [range](#log_range) interpolator factory. This interpolator factory is used to construct interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory. See [*linear*.interpolate](#linear_interpolate) for examples.
 
 Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
 
 <a name="log_clamp" href="#log_clamp">#</a> <i>log</i>.<b>clamp</b>([<i>clamp</i>])
 
-If *clamp* is specified, enables or disables clamping accordingly. By default, clamping is disabled, such that if a value outside the domain is passed to the scale, the scale may return a value outside the range through linear extrapolation. For example, with the default domain of [1,10], default range of [0,1] and default base of 10, an value of 20 will return an output value of ~1.3010. If clamping is enabled, the normalized domain parameter *t* is clamped to the range [0,1], such that the return value of the scale is always within the scale’s range. If *clamp* is not specified, returns whether or not the scale currently clamps values to within the range.
+If *clamp* is specified, enables or disables clamping accordingly. If clamping is disabled and the scale is passed a value outside the [domain](#log_domain), the scale may return a value outside the [range](#log_range) through extrapolation. If clamping is enabled, the return value of the scale is always within the scale’s range. Clamping similarly applies to [*log*.invert](#log_invert). See [*linear*.clamp](#linear_clamp) for examples. If *clamp* is not specified, returns whether or not the scale currently clamps values to within the range.
 
 <a name="log_nice" href="#log_nice">#</a> <i>log</i>.<b>nice</b>()
 
 Extends the domain so that it starts and ends on nice round values. This method typically modifies the scale’s domain, and may only extend the bounds to the nearest round value. The nearest round value is based on integer powers of the scale’s [base](#log_base).
 
-Nicing is useful if the domain is computed from data and may be irregular. For example, for a domain of [0.20147987687960267, 0.996679553296417], the nice domain is [0.1, 1]. If the domain has more than two values, nicing the domain only affects the first and last value.
+Nicing is useful if the domain is computed from data, say using [extent](https://github.com/d3/d3-arrays#extent), and may be irregular. For example, for a domain of [0.20147987687960267, 0.996679553296417], the nice domain is [0.1, 1]. If the domain has more than two values, nicing the domain only affects the first and last value.
 
 <a name="log_ticks" href="#log_ticks">#</a> <i>log</i>.<b>ticks</b>()
 
@@ -390,15 +396,15 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 ### Quantize Scales
 
-Quantize scales are a variant of linear scales with a discrete rather than continuous range. The input domain is still continuous, and divided into uniform segments based on the number of values in (the cardinality of) the output range. The mapping is *linear* in that the range value *y* can be expressed as a linear function of the domain value *x*: *y* = *mx* + *b*. The domain is typically a dimension of the data that you want to visualize, such as the height of students in meters in a sample population. The range is typically a dimension of the desired output visualization, such as the height of bars in pixels in a histogram. See [bl.ocks.org/4060606](http://bl.ocks.org/mbostock/4060606) for an example.
+Quantize scales are a variant of [linear scales](#linear-scales) with a discrete rather than continuous range. The input domain is still continuous, and divided into uniform segments based on the number of values in (the cardinality of) the output range. Each range value *y* can be expressed as a quantized linear function of the domain value *x*: *y* = *m round(x)* + *b*. See [bl.ocks.org/4060606](http://bl.ocks.org/mbostock/4060606) for an example.
 
 <a name="quantize" href="#quantize">#</a> <b>quantize</b>()
 
-Constructs a new quantize scale with the default domain [0,1] and the default range [0,1]. Thus, the default quantize scale is equivalent to the [round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function for numbers.
+Constructs a new quantize scale with the default [domain](#quantize_domain) [0,1] and the default [range](#quantize_range) [0,1]. Thus, the default quantize scale is equivalent to the [Math.round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function.
 
 <a name="_quantize" href="#_quantize">#</a> <i>quantize</i>(<i>x</i>)
 
-Given a value *x* in the input domain, returns the corresponding value *y* in the output range. For example, a color encoding:
+Given a value *x* in the input [domain](#quantize_domain), returns the corresponding value *y* in the output [range](#quantize_rangE). For example, a color encoding:
 
 ```js
 var s = quantize().domain([0, 1]).range(["brown", "steelblue"]);
@@ -417,7 +423,7 @@ s(80); // 4
 
 <a name="quantize_invertExtent" href="#quantize_invertExtent">#</a> <i>quantize</i>.<b>invertExtent</b>(<i>y</i>)
 
-Returns the extent of values in the domain [<i>x0</i>, <i>x1</i>] for the corresponding value in the range *y*, representing the inverse mapping from range to domain. This method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
+Returns the extent of values in the [domain](#quantize_domain) [<i>x0</i>, <i>x1</i>] for the corresponding value in the [range](#quantize_range) *y*: the inverse of [*quantize*](#_quantize). This method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
 
 ```js
 var s = quantize().domain([10, 100]).range([1, 2, 4]);
@@ -426,11 +432,11 @@ s.invertExtent(2); // [40, 70]
 
 <a name="quantize_domain" href="#quantize_domain">#</a> <i>quantize</i>.<b>domain</b>([<i>domain</i>])
 
-If *domain* is specified, sets the scale’s domain to the specified two-element array of numbers. If the array contains more than two numbers, only the first and last number are used. If the elements in the given array are not numbers, they will be coerced to numbers. If *numbers* is not specified, returns the scale’s current domain.
+If *domain* is specified, sets the scale’s domain to the specified two-element array of numbers. If the array contains more than two numbers, only the first and last number are used; if the elements in the given array are not numbers, they will be coerced to numbers. If *domain* is not specified, returns the scale’s current domain.
 
 <a name="quantize_range" href="#quantize_range">#</a> <i>quantize</i>.<b>range</b>([<i>range</i>])
 
-If *range* is specified, sets the scale’s range to the specified array of values. The array may contain any number of discrete values. The elements in the given array need not be numbers; any value or type will work. If *values* is not specified, returns the scale’s current range.
+If *range* is specified, sets the scale’s range to the specified array of values. The array may contain any number of discrete values. The elements in the given array need not be numbers; any value or type will work. If *range* is not specified, returns the scale’s current range.
 
 <a name="quantize_copy" href="#quantize_copy">#</a> <i>quantize</i>.<b>copy</b>()
 
@@ -442,27 +448,27 @@ Quantile scales map an input domain to a discrete range. Although the domain is 
 
 <a name="quantile" href="#quantile">#</a> <b>quantile</b>()
 
-Constructs a new quantile scale with an empty domain and an empty range. The quantile scale is invalid until both a domain and range are specified.
+Constructs a new quantile scale with an empty [domain](#quantile_domain) and an empty [range](#quantile_range). The quantile scale is invalid until both a domain and range are specified.
 
 <a name="_quantile" href="#_quantile">#</a> <i>quantile</i>(<i>x</i>)
 
-Given a value *x* in the input domain, returns the corresponding value *y* in the output range.
+Given a value *x* in the input [domain](#quantile_domain), returns the corresponding value *y* in the output [range](#quantile_range).
 
 <a name="quantile_invertExtent" href="#quantile_invertExtent">#</a> <i>quantile</i>.<b>invertExtent</b>(<i>y</i>)
 
-Returns the extent of values in the domain [<i>x0</i>, <i>x1</i>] for the corresponding value in the range *y*, representing the inverse mapping from range to domain. This method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
+Returns the extent of values in the [domain](#quantile_domain) [<i>x0</i>, <i>x1</i>] for the corresponding value in the [range](#quantile_range) *y*: the inverse of [*quantile*](#_quantile). This method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
 
-<a name="quantile_domain" href="#quantile_domain">#</a> <i>quantile</i>.<b>domain</b>([<i>numbers</i>])
+<a name="quantile_domain" href="#quantile_domain">#</a> <i>quantile</i>.<b>domain</b>([<i>domain</i>])
 
-If *numbers* is specified, sets the domain of the quantile scale to the specified set of discrete numeric values. The array must not be empty, and must contain at least one numeric value; NaN, null and undefined values are ignored and not considered part of the sample population. If the elements in the given array are not numbers, they will be coerced to numbers. A copy of the input array is sorted and stored internally. If *numbers* is not specified, returns the scale’s current domain.
+If *domain* is specified, sets the domain of the quantile scale to the specified set of discrete numeric values. The array must not be empty, and must contain at least one numeric value; NaN, null and undefined values are ignored and not considered part of the sample population. If the elements in the given array are not numbers, they will be coerced to numbers. A copy of the input array is sorted and stored internally. If *domain* is not specified, returns the scale’s current domain.
 
-<a name="quantile_range" href="#quantile_range">#</a> <i>quantile</i>.<b>range</b>([<i>values</i>])
+<a name="quantile_range" href="#quantile_range">#</a> <i>quantile</i>.<b>range</b>([<i>range</i>])
 
-If *values* is specified, sets the discrete values in the range. The array must not be empty, and may contain any type of value. The number of values in (the cardinality, or length, of) the *values* array determines the number of quantiles that are computed. For example, to compute quartiles, *values* must be an array of four elements such as [0, 1, 2, 3]. If *values* is not specified, returns the current range.
+If *range* is specified, sets the discrete values in the range. The array must not be empty, and may contain any type of value. The number of values in (the cardinality, or length, of) the *range* array determines the number of quantiles that are computed. For example, to compute quartiles, *range* must be an array of four elements such as [0, 1, 2, 3]. If *range* is not specified, returns the current range.
 
 <a name="quantile_quantiles" href="#quantile_quantiles">#</a> <i>quantile</i>.<b>quantiles</b>()
 
-Returns the quantile thresholds. If the range contains *n* discrete values, the returned threshold array will contain *n* - 1 values. Values less than the first element in the thresholds array, quantiles()[0], are considered in the first quantile; greater values less than the second threshold are in the second quantile, and so on. Internally, the thresholds array is used with [bisect](https://github.com/d3/d3-arrays#bisect) to find the output quantile associated with the given input value.
+Returns the quantile thresholds. If the [range](#quantile_range) contains *n* discrete values, the returned threshold array will contain *n* - 1 values. Values less than the first element in the thresholds array, quantiles()[0], are considered in the first quantile; greater values less than the second threshold are in the second quantile, and so on. Internally, the thresholds array is used with [bisect](https://github.com/d3/d3-arrays#bisect) to find the output quantile associated with the given input value.
 
 <a name="quantile_copy" href="#quantile_copy">#</a> <i>quantile</i>.<b>copy</b>()
 
@@ -470,11 +476,15 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 ### Threshold Scales
 
-Threshold scales are similar to quantize scales, except they allow you to map arbitrary subsets of the domain to discrete values in the range. The input domain is still continuous, and divided into slices based on a set of threshold values. The domain is typically a dimension of the data that you want to visualize, such as the height of students in meters in a sample population. The range is typically a dimension of the desired output visualization, such as a set of colors. See [bl.ocks.org/3306362](http://bl.ocks.org/mbostock/3306362) for an example.
+Threshold scales are similar to [quantize scales](#quantize-scales), except they allow you to map arbitrary subsets of the domain to discrete values in the range. The input domain is still continuous, and divided into slices based on a set of threshold values. The domain is typically a dimension of the data that you want to visualize, such as the height of students in meters in a sample population. The range is typically a dimension of the desired output visualization, such as a set of colors. See [bl.ocks.org/3306362](http://bl.ocks.org/mbostock/3306362) for an example.
 
 <a name="threshold" href="#threshold">#</a> <b>threshold</b>()
 
-Constructs a new threshold scale with the default domain [.5] and the default range [0,1]. Thus, the default threshold scale is equivalent to the [round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function for numbers; for example threshold(0.49) returns 0, and threshold(0.51) returns 1.
+Constructs a new threshold scale with the default [domain](#threshold_domain) [.5] and the default [range](#threshold_range) [0,1]. Thus, the default threshold scale is equivalent to the [Math.round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function for numbers; for example threshold(0.49) returns 0, and threshold(0.51) returns 1.
+
+<a name="_threshold" href="#_threshold">#</a> <i>threshold</i>(<i>x</i>)
+
+Given a value *x* in the input [domain](#threshold_domain), returns the corresponding value *y* in the output [range](#threshold_range). For example:
 
 ```js
 var s = threshold().domain([0, 1]).range(["a", "b", "c"]);
@@ -483,26 +493,26 @@ s(0);    // "b"
 s(0.5);  // "b"
 s(1);    // "c"
 s(1000); // "c"
+```
+
+<a name="threshold_invertExtent" href="#threshold_invertExtent">#</a> <i>threshold</i>.<b>invertExtent</b>(<i>y</i>)
+
+Returns the extent of values in the [domain](#threshold_domain) [<i>x0</i>, <i>x1</i>] for the corresponding value in the [range](#threshold_range) *y*, representing the inverse mapping from range to domain. This method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse. For example:
+
+```js
+var s = threshold().domain([0, 1]).range(["a", "b", "c"]);
 s.invertExtent("a"); // [undefined, 0]
 s.invertExtent("b"); // [0, 1]
 s.invertExtent("c"); // [1, undefined]
 ```
 
-<a name="_threshold" href="#_threshold">#</a> <i>threshold</i>(<i>x</i>)
-
-Given a value *x* in the input domain, returns the corresponding value *y* in the output range.
-
-<a name="threshold_invertExtent" href="#threshold_invertExtent">#</a> <i>threshold</i>.<b>invertExtent</b>(<i>y</i>)
-
-Returns the extent of values in the domain [<i>x0</i>, <i>x1</i>] for the corresponding value in the range *y*, representing the inverse mapping from range to domain. This method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
-
 <a name="threshold_domain" href="#threshold_domain">#</a> <i>threshold</i>.<b>domain</b>([<i>domain</i>])
 
 If *domain* is specified, sets the scale’s domain to the specified array of values. The values must be in sorted ascending order, or the behavior of the scale is undefined. The values are typically numbers, but any naturally ordered values (such as strings) will work; a threshold scale can be used to encode any type that is ordered. If the number of values in the scale’s range is N+1, the number of values in the scale’s domain must be N. If there are fewer than N elements in the domain, the additional values in the range are ignored. If there are more than N elements in the domain, the scale may return undefined for some inputs. If *domain* is not specified, returns the scale’s current domain.
 
-<a name="threshold_range" href="#threshold_range">#</a> <i>threshold</i>.<b>range</b>([<i>values</i>])
+<a name="threshold_range" href="#threshold_range">#</a> <i>threshold</i>.<b>range</b>([<i>range</i>])
 
-If *values* is specified, sets the scale’s range to the specified array of values. If the number of values in the scale’s domain is N, the number of values in the scale’s range must be N+1. If there are fewer than N+1 elements in the range, the scale may return undefined for some inputs. If there are more than N+1 elements in the range, the additional values are ignored. The elements in the given array need not be numbers; any value or type will work. If *values* is not specified, returns the scale’s current range.
+If *range* is specified, sets the scale’s range to the specified array of values. If the number of values in the scale’s domain is N, the number of values in the scale’s range must be N+1. If there are fewer than N+1 elements in the range, the scale may return undefined for some inputs. If there are more than N+1 elements in the range, the additional values are ignored. The elements in the given array need not be numbers; any value or type will work. If *range* is not specified, returns the scale’s current range.
 
 <a name="threshold_copy" href="#threshold_copy">#</a> <i>threshold</i>.<b>copy</b>()
 
@@ -510,27 +520,27 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 ### Ordinal Scales
 
-Unlike quantitative scales, ordinal scales have a discrete domain and range. For example, an ordinal scale might map a set of named categories to a set of colors, or determine the horizontal positions of columns in a column chart.
+Unlike [linear](#linear-scales) and other quantitative scales, ordinal scales have a discrete domain and range. For example, an ordinal scale might map a set of named categories to a set of colors, or determine the horizontal positions of columns in a column chart.
 
 <a name="ordinal" href="#ordinal">#</a> <b>ordinal</b>()
 
-Constructs a new ordinal scale with an empty domain and an empty range. The ordinal scale is invalid (always returning undefined) until a range is specified.
+Constructs a new ordinal scale with an empty [domain](#ordinal_domain) and an empty [range](#ordinal_range). The ordinal scale is invalid (always returning undefined) until a range is specified.
 
 <a name="_ordinal" href="#_ordinal">#</a> <i>ordinal</i>(<i>x</i>)
 
-Given a value *x* in the input domain, returns the corresponding value *y* in the output range.
+Given a value *x* in the input [domain](#ordinal_domain), returns the corresponding value *y* in the output [range](#ordinal_range).
 
-If the range was specified explicitly (as by [range](#ordinal_range), but not [rangeBands](#ordinal_rangeBands), [rangeRoundBands](#ordinal_rangeRoundBands) or [rangePoints](#ordinal_rangePoints)), _and_ the given value *x* is not in the scale’s [domain](#ordinal_domain), then *x* is implicitly added to the domain; subsequent invocations of the scale given the same value *x* will return the same value *y* from the range.
+If the given value *x* is not in the scale’s [domain](#ordinal_domain), and the range was specified explicitly (as by [range](#ordinal_range) but not [rangeBands](#ordinal_rangeBands), [rangeRoundBands](#ordinal_rangeRoundBands) or [rangePoints](#ordinal_rangePoints)), then *x* is implicitly added to the domain and the next-available value *y* in the range is assigned to *x*, such that this and subsequent invocations of the scale given the same *x* return the same *y*.
 
-<a name="ordinal_domain" href="#ordinal_domain">#</a> <i>ordinal</i>.<b>domain</b>([<i>values</i>])
+<a name="ordinal_domain" href="#ordinal_domain">#</a> <i>ordinal</i>.<b>domain</b>([<i>domain</i>])
 
-If *values* is specified, sets the domain of the ordinal scale to the specified array of values. The first element in *values* will be mapped to the first element in the range, the second domain value to the second range value, and so on. Domain values are stored internally in an associative array as a mapping from value to index; the resulting index is then used to retrieve a value from the range. Thus, an ordinal scale's values must be coercible to a string, and the stringified version of the domain value uniquely identifies the corresponding range value. If *values* is not specified, this method returns the current domain.
+If *domain* is specified, sets the domain of the ordinal scale to the specified array of values. The first element in *domain* will be mapped to the first element in the range, the second domain value to the second range value, and so on. Domain values are stored internally in an associative array as a mapping from value to index; the resulting index is then used to retrieve a value from the range. Thus, an ordinal scale's values must be coercible to a string, and the stringified version of the domain value uniquely identifies the corresponding range value. If *domain* is not specified, this method returns the current domain.
 
 Setting the domain on an ordinal scale is optional. If no domain is set, a [range](#ordinal_range) must be set explicitly. Then, each unique value that is passed to the scale function will be assigned a new value from the range; in other words, the domain will be inferred implicitly from usage. Although domains may thus be constructed implicitly, it is still a good idea to assign the ordinal scale's domain explicitly to ensure deterministic behavior, as inferring the domain from usage will be dependent on ordering.
 
-<a name="ordinal_range" href="#ordinal_range">#</a> <i>ordinal</i>.<b>range</b>([<i>values</i>])
+<a name="ordinal_range" href="#ordinal_range">#</a> <i>ordinal</i>.<b>range</b>([<i>range</i>])
 
-If *values* is specified, sets the range of the ordinal scale to the specified array of values. The first element in the domain will be mapped to the first element in *values*, the second domain value to the second range value, and so on. If there are fewer elements in the range than in the domain, the scale will recycle values from the start of the range. If *values* is not specified, this method returns the current range.
+If *range* is specified, sets the range of the ordinal scale to the specified array of values. The first element in the domain will be mapped to the first element in *range*, the second domain value to the second range value, and so on. If there are fewer elements in the range than in the domain, the scale will recycle values from the start of the range. If *range* is not specified, this method returns the current range.
 
 This method is intended for when the set of discrete output values is computed explicitly, such as a set of categorical colors. In other cases, such as determining the layout of an ordinal scatterplot or bar chart, you may find the [rangePoints](#ordinal_rangePoints) or [rangeBands](#ordinal_rangeBands) operators more convenient.
 
