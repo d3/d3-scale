@@ -71,10 +71,7 @@ If *domain* is specified, sets the scale’s input domain to the specified array
 Although linear scales typically have only two values in their domain, you can specify more than two values for a “polylinear” scale. In this case, there should be an equivalent number of values in the output [range](#linear_range). A polylinear scale represents multiple piecewise linear scales that divide a continuous domain and range. For example, to create a diverging color scale that interpolates between white and red for negative values, and white and green for positive values, say:
 
 ```js
-var s = linear()
-    .domain([-1, 0, 1])
-    .range(["red", "white", "green"]);
-
+var s = linear().domain([-1, 0, 1]).range(["red", "white", "green"]);
 s(-0.5); // "#ff8080"
 s(+0.5); // "#80c080"
 ```
@@ -184,11 +181,7 @@ Constructs a new power scale with the default domain [0,1], the default range [0
 Given a value *x* in the input domain, returns the corresponding value in the output range. For example, a color encoding:
 
 ```js
-var s = pow()
-    .exponent(.5)
-    .domain([10, 100])
-    .range(["brown", "steelblue"]);
-
+var s = pow().exponent(.5).domain([10, 100]).range(["brown", "steelblue"]);
 s(20); // "#933b44"
 s(50); // "#6f5c79"
 ```
@@ -196,11 +189,7 @@ s(50); // "#6f5c79"
 A position encoding:
 
 ```js
-var s = pow()
-    .exponent(.5)
-    .domain([10, 100])
-    .range([0, 960]);
-
+var s = pow().exponent(.5).domain([10, 100]).range([0, 960]);
 s(20); // 183.90099810179152
 s(50); // 548.7848671143346
 ```
@@ -276,10 +265,7 @@ Constructs a new log scale with the default domain [1,10], the default range [0,
 Given a value *x* in the input domain, returns the corresponding value in the output range. For example, a color encoding:
 
 ```js
-var s = log()
-    .domain([10, 100])
-    .range(["brown", "steelblue"]);
-
+var s = log().domain([10, 100]).range(["brown", "steelblue"]);
 s(20); // "#884454"
 s(50); // "#63688a"
 ```
@@ -287,10 +273,7 @@ s(50); // "#63688a"
 A position encoding:
 
 ```js
-var s = log()
-    .domain([10, 100])
-    .range([0, 960]);
-
+var s = log().domain([10, 100]).range([0, 960]);
 s(20); // 288.9887958374218
 s(50); // 671.0112041625778
 ```
@@ -370,10 +353,7 @@ Constructs a new quantize scale with the default domain [0,1] and the default ra
 Given a value *x* in the input domain, returns the corresponding value in the output range. For example, a color encoding:
 
 ```js
-var s = quantize()
-    .domain([0, 1])
-    .range(["brown", "steelblue"]);
-
+var s = quantize().domain([0, 1]).range(["brown", "steelblue"]);
 s(0.49); // "brown"
 s(0.51); // "steelblue"
 ```
@@ -381,10 +361,7 @@ s(0.51); // "steelblue"
 Dividing the domain into three equally-sized parts with different range values, say to compute an appropriate stroke width:
 
 ```js
-var s = quantize()
-    .domain([10, 100])
-    .range([1, 2, 4]);
-
+var s = quantize().domain([10, 100]).range([1, 2, 4]);
 s(20); // 1
 s(50); // 2
 s(80); // 4
@@ -395,10 +372,7 @@ s(80); // 4
 Returns the extent of values in the input domain [<i>x0</i>, <i>x1</i>] for the corresponding value in the output range *y*, representing the inverse mapping from range to domain. This method is useful for interaction, say to determine the value in the input domain that corresponds to the pixel location under the mouse.
 
 ```js
-var s = quantize()
-    .domain([10, 100])
-    .range([1, 2, 4]);
-
+var s = quantize().domain([10, 100]).range([1, 2, 4]);
 s.invertExtent(2); // [40, 70]
 ```
 
@@ -455,10 +429,7 @@ Threshold scales are similar to quantize scales, except they allow you to map ar
 Constructs a new threshold scale with the default domain [.5] and the default range [0,1]. Thus, the default threshold scale is equivalent to the [round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function for numbers; for example threshold(0.49) returns 0, and threshold(0.51) returns 1.
 
 ```js
-var s = threshold()
-    .domain([0, 1])
-    .range(["a", "b", "c"]);
-
+var s = threshold().domain([0, 1]).range(["a", "b", "c"]);
 s(-1);   // "a"
 s(0);    // "b"
 s(0.5);  // "b"
@@ -522,10 +493,7 @@ Sets the output range from the specified continuous *interval*. The array *inter
 ![rangepoints](https://f.cloud.github.com/assets/230541/538689/46d87118-c193-11e2-83ab-2008df7c36aa.png)
 
 ```js
-var s = ordinal()
-    .domain([1, 2, 3, 4])
-    .rangePoints([0, 100]);
-
+var s = ordinal().domain([1, 2, 3, 4]).rangePoints([0, 100]);
 s.range(); // [0, 33.333333333333336, 66.66666666666667, 100]
 ```
 
@@ -534,20 +502,14 @@ s.range(); // [0, 33.333333333333336, 66.66666666666667, 100]
 Like [rangePoints](#ordinal_rangePoints), except guarantees that the range values are integers so as to avoid antialiasing artifacts.
 
 ```js
-var s = ordinal()
-    .domain([1, 2, 3, 4])
-    .rangeRoundPoints([0, 100]);
-
+var s = ordinal().domain([1, 2, 3, 4]).rangeRoundPoints([0, 100]);
 s.range(); // [1, 34, 67, 100]
 ```
 
 Note that rounding necessarily introduces additional outer padding which is, on average, proportional to the length of the domain. For example, for a domain of size 50, an additional 25px of outer padding on either side may be required. Modifying the range extent to be closer to a multiple of the domain length may reduce the additional padding.
 
 ```js
-var s = ordinal()
-    .domain(d3.range(50))
-    .rangeRoundPoints([0, 95]);
-
+var s = ordinal().domain(d3.range(50)).rangeRoundPoints([0, 95]);
 s.range(); // [23, 24, 25, …, 70, 71, 72]
 s.rangeRoundPoints([0, 100]);
 s.range(); // [1, 3, 5, …, 95, 97, 98]
@@ -562,10 +524,7 @@ Sets the output range from the specified continuous *interval*. The array *inter
 ![rangebands](https://f.cloud.github.com/assets/230541/538688/46c298c0-c193-11e2-9a7e-15d9abcfab9b.png)
 
 ```js
-var s = ordinal()
-    .domain([1, 2, 3])
-    .rangeBands([0, 100]);
-
+var s = ordinal().domain([1, 2, 3]).rangeBands([0, 100]);
 s.rangeBand(); // 33.333333333333336
 s.range(); // [0, 33.333333333333336, 66.66666666666667]
 s.rangeExtent(); // [0, 100]
@@ -576,10 +535,7 @@ s.rangeExtent(); // [0, 100]
 Like [rangeBands](#ordinal_rangeBands), except guarantees that range values and band width are integers so as to avoid antialiasing artifacts.
 
 ```js
-var s = ordinal()
-    .domain([1, 2, 3])
-    .rangeRoundBands([0, 100]);
-
+var s = ordinal().domain([1, 2, 3]).rangeRoundBands([0, 100]);
 s.range(); // [1, 34, 67]
 s.rangeBand(); // 33
 s.rangeExtent(); // [0, 100]
@@ -588,10 +544,7 @@ s.rangeExtent(); // [0, 100]
 Note that rounding necessarily introduces additional outer padding which is, on average, proportional to the length of the domain. For example, for a domain of size 50, an additional 25px of outer padding on either side may be required. Modifying the range extent to be closer to a multiple of the domain length may reduce the additional padding.
 
 ```js
-var s = ordinal()
-    .domain(d3.range(50))
-    .rangeRoundBands([0, 95]);
-
+var s = ordinal().domain(range(50)).rangeRoundBands([0, 95]);
 s.range(); // [23, 24, 25, …, 70, 71, 72]
 s.rangeRoundBands([0, 100]);
 s.range(); // [0, 2, 4, …, 94, 96, 98]
