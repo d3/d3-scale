@@ -78,7 +78,7 @@ Internally, polylinear scales perform a [binary search](https://github.com/d3/d3
 
 <a name="linear_range" href="#linear_range">#</a> <i>linear</i>.<b>range</b>([<i>range</i>])
 
-If a *range* is specified, sets the scale’s range to the specified array of values. The array must contain two or more values, matching the cardinality of the [domain](#linear_domain); otherwise, the longer of the two is truncated to match the other. Unlike the domain, elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#linear_interpolate) will work; however, numeric ranges are required for [invert](#linear_invert). If *values* is not specified, returns the scale’s current range.
+If *range* is specified, sets the scale’s range to the specified array of values. The array must contain two or more values, matching the cardinality of the [domain](#linear_domain); otherwise, the longer of the two is truncated to match the other. Unlike the domain, elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#linear_interpolate) will work; however, numeric ranges are required for [invert](#linear_invert). If *range* is not specified, returns the scale’s current range.
 
 <a name="linear_rangeRound" href="#linear_rangeRound">#</a> <i>linear</i>.<b>rangeRound</b>(<i>range</i>)
 
@@ -117,7 +117,7 @@ Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolat
 
 <a name="linear_clamp" href="#linear_clamp">#</a> <i>linear</i>.<b>clamp</b>([<i>clamp</i>])
 
-If *clamp* is specified, enables or disables clamping accordingly. If clamping is disabled and the scale is passed a value outside the [domain](#linear_domain), the scale may return a value outside the [range](#linear_range) through linear extrapolation. If clamping is enabled, the return value of the scale is always within the scale’s range. Clamping similarly applies to [*linear*.invert](#linear_invert) For example:
+If *clamp* is specified, enables or disables clamping accordingly. If clamping is disabled and the scale is passed a value outside the [domain](#linear_domain), the scale may return a value outside the [range](#linear_range) through linear extrapolation. If clamping is enabled, the return value of the scale is always within the scale’s range. Clamping similarly applies to [*linear*.invert](#linear_invert). For example:
 
 ```js
 var s = linear().domain([10, 100]).range([0, 960]);
@@ -198,7 +198,7 @@ Power scales are similar to linear scales, except an exponential transform is ap
 
 <a name="pow" href="#pow">#</a> <b>pow</b>()
 
-Constructs a new power scale with the default [domain](#pow_domain) [0,1], the default [range](#pow_range) [0,1], and the default [exponent](#pow_exponent) 1. (Note that this is effectively a [linear](#linear) scale until you set a different exponent.)
+Constructs a new power scale with the default [domain](#pow_domain) [0,1], the default [range](#pow_range) [0,1], the default [exponent](#pow_exponent) 1, the default [interpolator](#pow_interpolate) and [clamping](#pow_clamp) disabled. (Note that this is effectively a [linear](#linear) scale until you set a different exponent.)
 
 <a name="_pow" href="#_pow">#</a> <i>pow</i>(<i>x</i>)
 
@@ -220,7 +220,7 @@ s(50); // 548.7848671143346
 
 <a name="pow_invert" href="#pow_invert">#</a> <i>pow</i>.<b>invert</b>(<i>y</i>)
 
-Given a value *y* in the [range](#pow_range), returns the corresponding value *x* in the [domain](#pow_domain); the inverse of [*pow*](#_pow). For example:
+Given a value *y* in the [range](#pow_range), returns the corresponding value *x* in the [domain](#pow_domain): the inverse of [*pow*](#_pow). For example, a position encoding:
 
 ```js
 var s = pow().exponent(.5).domain([10, 100]).range([0, 960]);
@@ -228,41 +228,47 @@ s.invert(183.90099810179152); // 20
 s.invert(548.7848671143346); // 50
 ```
 
-This method is only supported if the range is numeric, and will return undefined if the range is non-numeric (such as colors or objects). For a valid value *y* in the range, <i>pow</i>(<i>pow</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the domain, <i>pow</i>.invert(<i>pow</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
+This method is only supported if the range is numeric, and may return undefined if the range is non-numeric (such as colors). For a valid value *y* in the range, <i>pow</i>(<i>pow</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the domain, <i>pow</i>.invert(<i>pow</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
 
 <a name="pow_exponent" href="#pow_exponent">#</a> <i>pow</i>.<b>exponent</b>([<i>k</i>])
 
-If *k* is specified, sets the current exponent to the given numeric value. If *k* is not specified, returns the current exponent. The default value is 1.
+If *k* is specified, sets the current exponent to the given numeric value. If *k* is not specified, returns the current exponent. The default value is 1. (Note that this is effectively a [linear](#linear) scale until you set a different exponent.)
 
 <a name="pow_domain" href="#pow_domain">#</a> <i>pow</i>.<b>domain</b>([<i>domain</i>])
 
-If *domain* is specified, sets the scale’s domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. If *numbers* is not specified, returns the scale’s current domain.
+If *domain* is specified, sets the scale’s domain to the specified array of numbers. The array must contain two or more numbers; if the elements in the given array are not numbers, they will be coerced to numbers. If *numbers* is not specified, returns the scale’s current domain.
 
 As with [*linear*.domain](#linear_domain), this method can accept more than two values for the domain and range, thus resulting in a “polypower” scale.
 
-<a name="pow_range" href="#pow_range">#</a> <i>pow</i>.<b>range</b>([<i>values</i>])
+<a name="pow_range" href="#pow_range">#</a> <i>pow</i>.<b>range</b>([<i>range</i>])
 
-If *values* is specified, sets the scale’s range to the specified array of values. The array must contain two or more values, matching the cardinality of the domain; otherwise, the longer of the two is truncated to match the other. The elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#pow_interpolate) will work; however, numeric ranges are required for [invert](#pow_invert). If *values* is not specified, returns the scale’s current range.
+If *range* is specified, sets the scale’s range to the specified array of values. The array must contain two or more values, matching the cardinality of the [domain](#pow_domain); otherwise, the longer of the two is truncated to match the other. The elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#pow_interpolate) will work; however, numeric ranges are required for [invert](#pow_invert). If *range* is not specified, returns the scale’s current range.
 
 <a name="pow_rangeRound" href="#pow_rangeRound">#</a> <i>pow</i>.<b>rangeRound</b>(<i>range</i>)
 
-Sets the scale’s *range* to the specified array of values while also setting the scale’s [interpolator](#pow_interpolate) to [interpolateRound](https://github.com/d3/d3-interpolate#interpolateRound). This is a convenience routine for when the values output by the scale should be exact integers, such as to avoid antialiasing artifacts. Note that this interpolator can only be used with numeric [ranges](#pow_range).
+Sets the scale’s [*range*](#pow_range) to the specified array of values while also setting the scale’s [interpolator](#pow_interpolate) to [interpolateRound](https://github.com/d3/d3-interpolate#interpolateRound). This is a convenience method equivalent to:
+
+```js
+s.range(range).interpolate(interpolateRound);
+```
+
+The rounding interpolator is sometimes useful for avoiding antialiasing artifacts, though also consider [shape-rendering](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering): crispEdges. Note that this interpolator can only be used with numeric ranges.
 
 <a name="pow_interpolate" href="#pow_interpolate">#</a> <i>pow</i>.<b>interpolate</b>([<i>interpolate</i>])
 
-If *interpolate* is specified, sets the scale’s range interpolator factory. This interpolator factory is used to construct interpolators for each adjacent pair of values from the [range](#pow_range); these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory.
+If *interpolate* is specified, sets the scale’s [range](#pow_range) interpolator factory. This interpolator factory is used to construct interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory. See [*linear*.interpolate](#linear_interpolate) for examples.
 
 Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
 
 <a name="pow_clamp" href="#pow_clamp">#</a> <i>pow</i>.<b>clamp</b>([<i>clamp</i>])
 
-If *clamp* is specified, enables or disables clamping accordingly. By default, clamping is disabled, such that if a value outside the domain is passed to the scale, the scale may return a value outside the range through linear extrapolation. For example, with the default domain and range of [0,1] and an exponent of 0.5, an input value of 2 will return an output value of ~1.4142. If clamping is enabled, the normalized domain parameter *t* is clamped to the range [0,1], such that the return value of the scale is always within the scale’s range. If *clamp* is not specified, returns whether or not the scale currently clamps values to within the range.
+If *clamp* is specified, enables or disables clamping accordingly. If clamping is disabled and the scale is passed a value outside the [domain](#pow_domain), the scale may return a value outside the [range](#pow_range) through extrapolation. If clamping is enabled, the return value of the scale is always within the scale’s range. Clamping similarly applies to [*pow*.invert](#pow_invert). See [*linear*.clamp](#linear_clamp) for examples. If *clamp* is not specified, returns whether or not the scale currently clamps values to within the range.
 
 <a name="pow_nice" href="#pow_nice">#</a> <i>pow</i>.<b>nice</b>([<i>count</i>])
 
 Extends the domain so that it starts and ends on nice round values. This method typically modifies the scale’s domain, and may only extend the bounds to the nearest round value. An optional tick *count* argument allows greater control over the step size used to extend the bounds, guaranteeing that the returned [ticks](#pow_ticks) will exactly cover the domain.
 
-Nicing is useful if the domain is computed from data and may be irregular. For example, for a domain of [0.20147987687960267, 0.996679553296417], the nice domain is [0.2, 1]. If the domain has more than two values, nicing the domain only affects the first and last value.
+Nicing is useful if the domain is computed from data, say using [extent](https://github.com/d3/d3-arrays#extent), and may be irregular. For example, for a domain of [0.20147987687960267, 0.996679553296417], the nice domain is [0.2, 1]. If the domain has more than two values, nicing the domain only affects the first and last value.
 
 <a name="pow_ticks" href="#pow_ticks">#</a> <i>pow</i>.<b>ticks</b>([<i>count</i>])
 
@@ -270,7 +276,7 @@ Returns approximately *count* representative values from the scale’s domain. I
 
 <a name="pow_tickFormat" href="#pow_tickFormat">#</a> <i>pow</i>.<b>tickFormat</b>([<i>count</i>[, <i>specifier</i>]])
 
-Returns a [number format](https://github.com/d3/d3-format) function suitable for displaying a tick value. The specified *count* should have the same value as the count that is used to generate the tick values. You don’t have to use the scale’s built-in tick format, but it automatically computes the appropriate precision based on the fixed interval between tick values.
+Returns a [number format](https://github.com/d3/d3-format) function suitable for displaying a tick value. The specified *count* should have the same value as the count that is used to generate the tick values. You don’t have to use the scale’s built-in tick format, but it automatically computes the appropriate precision based on the fixed interval between tick values. See [*linear*.tickFormat](#linear_tickFormat) for examples.
 
 The optional *specifier* argument allows a [custom format](https://github.com/d3/d3-format#locale_format) to be specified. If the format specifier doesn’t have a defined precision, the precision will be set automatically by the scale, returning the appropriate format. This provides a convenient, declarative way of specifying a format whose precision will be automatically set by the scale.
 
@@ -280,7 +286,7 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 <a name="sqrt" href="#sqrt">#</a> <b>sqrt</b>()
 
-Constructs a new power scale with the default [domain](#pow_domain) [0,1], the default [range](#pow_range) [0,1], and the [exponent](#pow_exponent) 0.5. This method is shorthand for:
+Constructs a new power scale with the default [domain](#pow_domain) [0,1], the default [range](#pow_range) [0,1], and the [exponent](#pow_exponent) 0.5. This is a convenience method equivalent to:
 
 ```js
 pow().exponent(0.5)
@@ -292,7 +298,7 @@ The returned scale is a function that takes a single argument *x* representing a
 
 Log scales are similar to linear scales, except a logarithmic transform is applied to the input domain value before the output range value is computed. The mapping to the range value *y* can be expressed as a function of the domain value *x*: *y* = *m* log(<i>x</i>) + *b*.
 
-As log(0) = -∞, a log scale must have either an exclusively-positive or exclusively-negative domain; the domain must not include or cross zero. A log scale with a positive domain has a well-defined behavior for positive values, and a log scale with a negative domain has a well-defined behavior for negative values. (For a negative domain, input and output values are implicitly multiplied by -1.) The behavior of the scale is undefined if you pass a negative value to a log scale with a positive domain or vice versa.
+As log(0) = -∞, a log scale domain **must be either exclusively-positive or exclusively-negative**; the domain must not include or cross zero. A log scale with a positive domain has a well-defined behavior for positive values, and a log scale with a negative domain has a well-defined behavior for negative values. (For a negative domain, input and output values are implicitly multiplied by -1.) The behavior of the scale is undefined if you pass a negative value to a log scale with a positive domain or vice versa.
 
 <a name="log" href="#log">#</a> <b>log</b>()
 
