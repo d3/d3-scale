@@ -78,7 +78,9 @@ Internally, a polylinear scale performs a [binary search](https://github.com/d3/
 
 <a name="linear_range" href="#linear_range">#</a> <i>linear</i>.<b>range</b>([<i>range</i>])
 
-If *range* is specified, sets the scale’s range to the specified array of values. The array should have the same length as the [domain](#linear_domain); otherwise, the longer of the two is truncated to match the other. Unlike the domain, elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#linear_interpolate) will work; however, numeric ranges are required for [invert](#linear_invert). If *range* is not specified, returns the scale’s current range.
+If *range* is specified, sets the scale’s range to the specified array of values. The array must contain two or more values. Unlike the domain, elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#linear_interpolate) will work; however, numeric ranges are required for [invert](#linear_invert). If *range* is not specified, returns the scale’s current range.
+
+If the [domain](#linear_domain) and range have different lengths *N* and *M*, only the first *min(N,M)* elements in each array are used for [*linear*](#_linear) and [*linear*.invert](#linear_invert).
 
 <a name="linear_rangeRound" href="#linear_rangeRound">#</a> <i>linear</i>.<b>rangeRound</b>(<i>range</i>)
 
