@@ -34,7 +34,7 @@ Constructs a new linear scale with the default [domain](#linear_domain) [0,1], t
 
 <a name="_linear" href="#_linear">#</a> <i>linear</i>(<i>x</i>)
 
-Given a value *x* in the [domain](#linear_domain), returns the corresponding value *y* in the [range](#linear_range). For example, a color encoding:
+Given a value *x* in the [domain](#linear_domain), returns the corresponding value *y* in the [range](#linear_range). If the domain and range have different lengths *N* and *M*, only the first *min(N,M)* elements in each are observed. For example, a color encoding:
 
 ```js
 var s = linear().domain([10, 100]).range(["brown", "steelblue"]);
@@ -50,11 +50,10 @@ s(20); // 106.66666666666666
 s(50); // 426.66666666666663
 ```
 
-If the domain and range have different lengths *N* and *M*, only the first *min(N,M)* elements in each are observed.
 
 <a name="linear_invert" href="#linear_invert">#</a> <i>linear</i>.<b>invert</b>(<i>y</i>)
 
-Given a value *y* in the [range](#linear_range), returns the corresponding value *x* in the [domain](#linear_domain): the inverse of [*linear*](#_linear). For example, a position encoding:
+Given a value *y* in the [range](#linear_range), returns the corresponding value *x* in the [domain](#linear_domain): the inverse of [*linear*](#_linear). If the domain and range have different lengths *N* and *M*, only the first *min(N,M)* elements in each are observed. For example, a position encoding:
 
 ```js
 var s = linear().domain([10, 100]).range([0, 960]);
@@ -64,7 +63,6 @@ s.invert(426.66666666666667); // 50
 
 This method is only supported if the range is numeric, and may return undefined if the range is non-numeric (such as colors). For a valid value *y* in the range, <i>linear</i>(<i>linear</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the domain, <i>linear</i>.invert(<i>linear</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
 
-If the domain and range have different lengths *N* and *M*, only the first *min(N,M)* elements in each are observed.
 
 <a name="linear_domain" href="#linear_domain">#</a> <i>linear</i>.<b>domain</b>([<i>domain</i>])
 
