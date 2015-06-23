@@ -140,7 +140,7 @@ Returns the given value *x*.
 <a name="identity_domain" href="#identity_domain">#</a> <i>identity</i>.<b>domain</b>([<i>domain</i>])<br>
 <a href="#identity_domain">#</a> <i>identity</i>.<b>range</b>([<i>domain</i>])
 
-If *domain* is specified, sets the scale’s domain and range to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. If numbers is not specified, returns the scale’s current domain (or equivalently, range).
+If *domain* is specified, sets the scale’s domain and range to the specified array of numbers. The array must contain two or more numbers; if the elements in the given array are not numbers, they will be coerced to numbers. If *domain* is not specified, returns the scale’s current domain (or equivalently, range).
 
 <a name="identity_ticks" href="#identity_ticks">#</a> <i>identity</i>.<b>ticks</b>([<i>count</i>])
 
@@ -184,7 +184,7 @@ s(20); // "#933b44"
 s(50); // "#6f5c79"
 ```
 
-A position encoding:
+Or a position encoding:
 
 ```js
 var s = pow().exponent(.5).domain([10, 100]).range([0, 960]);
@@ -272,7 +272,7 @@ s(20); // "#884454"
 s(50); // "#63688a"
 ```
 
-A position encoding:
+Or a position encoding:
 
 ```js
 var s = log().domain([10, 100]).range([0, 960]);
@@ -282,11 +282,15 @@ s(50); // 671.0112041625778
 
 <a name="log_invert" href="#log_invert">#</a> <i>log</i>.<b>invert</b>(<i>y</i>)
 
-Returns the value in the input domain *x* for the corresponding value in the output range *y*. This represents the inverse mapping from range to domain.
+Given a value *y* in the [range](#log_range), returns the corresponding value *x* in the [domain](#log_domain); the inverse of [*log*](#_log). For example:
 
-For a valid value *y* in the range, <i>log</i>(<i>log</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the domain, <i>log</i>.invert(<i>log</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
+```js
+var s = log().domain([10, 100]).range([0, 960]);
+s.invert(288.9887958374218); // 20
+s.invert(671.0112041625778); // 50
+```
 
-Note: the invert method is only supported if the [range](#log_range) is numeric, and will return undefined if the range is non-numeric (such as colors, strings or objects).
+This method is only supported if the range is numeric, and will return undefined if the range is non-numeric (such as colors, strings or objects). For a valid value *y* in the range, <i>log</i>(<i>log</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the domain, <i>log</i>.invert(<i>log</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
 
 <a name="log_base" href="#log_base">#</a> <i>log</i>.<b>base</b>([<i>base</i>])
 
