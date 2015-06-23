@@ -119,7 +119,18 @@ Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolat
 
 <a name="linear_clamp" href="#linear_clamp">#</a> <i>linear</i>.<b>clamp</b>([<i>clamp</i>])
 
-If *clamp* is specified, enables or disables clamping accordingly. If clamping is disabled and the scale is passed a value outside the domain, the scale may return a value outside the range through linear extrapolation. For example, with the default domain and range of [0,1], an input value of 2 will return an output value of 2. If clamping is enabled, the normalized domain parameter *t* is clamped to the range [0,1], such that the return value of the scale is always within the scale’s range. If *clamp* is not specified, returns whether or not the scale currently clamps values to within the range.
+If *clamp* is specified, enables or disables clamping accordingly. If clamping is disabled and the scale is passed a value outside the [domain](#linear_domain), the scale may return a value outside the [range](#linear_range) through linear extrapolation. If clamping is enabled, the normalized domain parameter *t* is clamped to the range [0,1], such that the return value of the scale is always within the scale’s range. Clamping similarly applies to [*linear*.invert](#linear_invert) For example:
+
+```js
+var s = linear().domain([10, 100]).range([0, 960]);
+s(-10); // -213.33333333333331
+s.invert(-213.33333333333331); // -10
+s.clamp(true);
+s(-10); // 0
+s.invert(-213.33333333333331); // 10
+```
+
+If *clamp* is not specified, returns whether or not the scale currently clamps values to within the range.
 
 <a name="linear_nice" href="#linear_nice">#</a> <i>linear</i>.<b>nice</b>([<i>count</i>])
 
