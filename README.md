@@ -160,16 +160,6 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 Power scales are similar to linear scales, except an exponential transform is applied to the input [domain](#pow_domain) value before the output [range](#pow_range) value is computed. Each range value *y* can be expressed as a function of the domain value *x*: *y* = *mx^k* + *b*, where *k* is the [exponent](#pow_exponent) value. Power scales also support negative domain values, in which case the input value and the resulting output value are multiplied by -1.
 
-<a name="sqrt" href="#sqrt">#</a> <b>sqrt</b>()
-
-Constructs a new power scale with the default [domain](#pow_domain) [0,1], the default [range](#pow_range) [0,1], and the [exponent](#pow_exponent) 0.5. This method is shorthand for:
-
-```js
-pow().exponent(0.5)
-```
-
-The returned scale is a function that takes a single argument *x* representing a value in the domain; the return value is the corresponding value in the range. Thus, the returned scale is equivalent to the [sqrt](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/sqrt) function for numbers; for example sqrt(0.25) returns 0.5.
-
 <a name="pow" href="#pow">#</a> <b>pow</b>()
 
 Constructs a new power scale with the default [domain](#pow_domain) [0,1], the default [range](#pow_range) [0,1], and the default [exponent](#pow_exponent) 1. (Note that this is effectively a [linear](#linear) scale until you set a different exponent.)
@@ -251,6 +241,16 @@ The optional *specifier* argument allows a [custom format](https://github.com/d3
 <a name="pow_copy" href="#pow_copy">#</a> <i>pow</i>.<b>copy</b>()
 
 Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
+
+<a name="sqrt" href="#sqrt">#</a> <b>sqrt</b>()
+
+Constructs a new power scale with the default [domain](#pow_domain) [0,1], the default [range](#pow_range) [0,1], and the [exponent](#pow_exponent) 0.5. This method is shorthand for:
+
+```js
+pow().exponent(0.5)
+```
+
+The returned scale is a function that takes a single argument *x* representing a value in the domain; the return value is the corresponding value in the range. Thus, the returned scale is equivalent to the [sqrt](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/sqrt) function for numbers; for example sqrt(0.25) returns 0.5.
 
 ### Log Scales
 
