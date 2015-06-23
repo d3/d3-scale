@@ -58,9 +58,20 @@ s(50); // 426.66666666666663
 
 <a name="linear_invert" href="#linear_invert">#</a> <i>linear</i>.<b>invert</b>(<i>y</i>)
 
-Given a value *y* in the [range](#linear_range), returns the corresponding value in the [domain](#linear_domain). This is the inverse of [*linear*](#_linear). The invert method is only supported if the output [range](#linear_range) is numeric, and will return undefined if the output range is non-numeric (such as colors, strings or objects).
+Given a value *y* in the [range](#linear_range), returns the corresponding value in the [domain](#linear_domain). This is the inverse of [*linear*](#_linear). For example:
+
+```js
+var s = linear()
+    .domain([10, 100])
+    .range([0, 960]);
+
+s.invert(106.66666666666666); // 20
+s.invert(426.66666666666663); // 50
+```
 
 For a valid value *y* in the output range, <i>linear</i>(<i>linear</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the input domain, <i>linear</i>.invert(<i>linear</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the input domain that corresponds to the pixel location under the mouse.
+
+The invert method is only supported if the output [range](#linear_range) is numeric, and will return undefined if the output range is non-numeric (such as colors, strings or objects).
 
 <a name="linear_domain" href="#linear_domain">#</a> <i>linear</i>.<b>domain</b>([<i>domain</i>])
 
