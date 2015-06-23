@@ -37,10 +37,7 @@ Constructs a new linear scale with the default [domain](#linear_domain) [0,1], t
 Given a value *x* in the [domain](#linear_domain), returns the corresponding value in the [range](#linear_range). For example, a color encoding:
 
 ```js
-var s = linear()
-    .domain([10, 100])
-    .range(["brown", "steelblue"]);
-
+var s = linear().domain([10, 100]).range(["brown", "steelblue"]);
 s(20); // "#9a3439"
 s(50); // "#7b5167"
 ```
@@ -48,10 +45,7 @@ s(50); // "#7b5167"
 A position encoding:
 
 ```js
-var s = linear()
-    .domain([10, 100])
-    .range([0, 960]);
-
+var s = linear().domain([10, 100]).range([0, 960]);
 s(20); // 106.66666666666666
 s(50); // 426.66666666666663
 ```
@@ -61,12 +55,9 @@ s(50); // 426.66666666666663
 Given a value *y* in the [range](#linear_range), returns the corresponding value in the [domain](#linear_domain). This is the inverse of [*linear*](#_linear). For example:
 
 ```js
-var s = linear()
-    .domain([10, 100])
-    .range([0, 960]);
-
-s.invert(106.66666666666666); // 20
-s.invert(426.66666666666663); // 50
+var s = linear().domain([10, 100]).range([0, 960]);
+s.invert(106.66666666666667); // 20
+s.invert(426.66666666666667); // 50
 ```
 
 For a valid value *y* in the output range, <i>linear</i>(<i>linear</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the input domain, <i>linear</i>.invert(<i>linear</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the input domain that corresponds to the pixel location under the mouse.
