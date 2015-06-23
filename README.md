@@ -136,7 +136,7 @@ If *clamp* is not specified, returns whether or not the scale currently clamps v
 
 Extends the domain so that it starts and ends on nice round values. This method typically modifies the scale’s domain, and may only extend the bounds to the nearest round value. An optional tick *count* argument allows greater control over the step size used to extend the bounds, guaranteeing that the returned [ticks](#linear_ticks) will exactly cover the domain.
 
-Nicing is useful if the domain is computed from data and may be irregular. For example, for a domain of [0.20147987687960267, 0.996679553296417], the nice domain is [0.2, 1]. If the domain has more than two values, nicing the domain only affects the first and last value.
+Nicing is useful if the domain is computed from data, say using [extent](https://github.com/d3/d3-arrays#extent), and may be irregular. For example, for a domain of [0.20147987687960267, 0.996679553296417], the nice domain is [0.2, 1]. If the domain has more than two values, nicing the domain only affects the first and last value.
 
 <a name="linear_ticks" href="#linear_ticks">#</a> <i>linear</i>.<b>ticks</b>([<i>count</i>])
 
