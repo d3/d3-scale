@@ -724,4 +724,6 @@ Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical co
 
 ## Changes from D3 3.x:
 
-…
+* More precise tick thresholds for linear scales.
+* Better ticks for log scales that are not base-10.
+* Make defensive copies of domains and ranges.
