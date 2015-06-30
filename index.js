@@ -10,6 +10,7 @@ import {default as pow, sqrt} from "./src/pow";
 import quantile from "./src/quantile";
 import quantize from "./src/quantize";
 import threshold from "./src/threshold";
+import time from "./src/time";
 
 export {
   category10,
@@ -24,5 +25,6 @@ export {
   quantile,
   quantize,
   sqrt,
-  threshold
+  threshold,
+  time
 };

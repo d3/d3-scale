@@ -30,6 +30,8 @@
     "d3-color": "~0.2.1",
     "d3-format": "~0.2.1",
     "d3-interpolate": "~0.1.1",
+    "d3-time": "~0.0.2",
+    "d3-time-format": "~0.0.1",
     "faucet": "0.0",
     "tape": "4",
     "uglifyjs": "2"
