@@ -56,7 +56,6 @@ s(20); // 106.66666666666666
 s(50); // 426.66666666666663
 ```
 
-
 <a name="linear_invert" href="#linear_invert">#</a> <i>linear</i>.<b>invert</b>(<i>y</i>)
 
 Given a value *y* in the [range](#linear_range), returns the corresponding value *x* in the [domain](#linear_domain): the inverse of [*linear*](#_linear). For example, a position encoding:
@@ -730,7 +729,7 @@ Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical co
 
 * *scale*.domain and *scale*.range make defensive copies.
 
-* *time*.ticks and *utcTime*.ticks no longer takes an [time interval](https://github.com/d3/d3-time) as an argument but instead takes an optional internal name, such as `"seconds"`. For a UTC time scale, this will use the corresponding UTC time interval.
+* *time*.ticks, *time*.nice, *utcTime*.ticks and *utcTime*.nice no longer takes an [time interval](https://github.com/d3/d3-time) as an argument but instead takes an optional internal name, such as `"seconds"`. For a UTC time scale, this will use the corresponding UTC time interval.
 
 * *time*.tickFormat and *utcTime*.tickFormat now accept an optional specifier as an alias for d3-time-format’s format and utcFormat functions.
 
