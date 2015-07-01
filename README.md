@@ -440,9 +440,7 @@ If *clamp* is specified, enables or disables clamping accordingly. If clamping i
 
 Extends the [domain](#time_domain) so that it starts and ends on nice round values. This method typically modifies the scale’s domain, and may only extend the bounds to the nearest round value.
 
-An optional tick *count* argument allows greater control over the step size used to extend the bounds, guaranteeing that the returned [ticks](#time_ticks) will exactly cover the domain.
-
-Alternatively, the name of a time *interval* may be specified to explicitly set the ticks. If an *interval* name is specified, an optional *step* may also be specified to skip some ticks. For example, `nice("seconds", 10)` will extend the domain to an even ten seconds (0, 10, 20, <i>etc.</i>). See [*time*.ticks](#time_ticks) for further detail.
+An optional tick *count* argument allows greater control over the step size used to extend the bounds, guaranteeing that the returned [ticks](#time_ticks) will exactly cover the domain. Alternatively, the name of a time *interval* may be specified to explicitly set the ticks. If an *interval* name is specified, an optional *step* may also be specified to skip some ticks. For example, `nice("seconds", 10)` will extend the domain to an even ten seconds (0, 10, 20, <i>etc.</i>). See [*time*.ticks](#time_ticks) for further detail.
 
 Nicing is useful if the domain is computed from data, say using [extent](https://github.com/d3/d3-arrays#extent), and may be irregular. For example, for a domain of [2009-07-13T00:02, 2009-07-13T23:48], the nice domain is [2009-07-13, 2009-07-14]. If the domain has more than two values, nicing the domain only affects the first and last value.
 
