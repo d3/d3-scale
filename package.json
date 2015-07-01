@@ -34,6 +34,6 @@
     "d3-time-format": "~0.0.1",
     "faucet": "0.0",
     "tape": "4",
-    "uglifyjs": "2"
+    "uglify-js": "2"
   }
 }
