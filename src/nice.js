@@ -6,11 +6,11 @@ export default function(domain, step) {
       i1 = domain.length - 1,
       x0 = domain[i0],
       x1 = domain[i1],
-      dx;
+      t;
 
   if (x1 < x0) {
-    dx = i0, i0 = i1, i1 = dx;
-    dx = x0, x0 = x1, x1 = dx;
+    t = i0, i0 = i1, i1 = t;
+    t = x0, x0 = x1, x1 = t;
   }
 
   domain[i0] = Math.floor(x0 / step) * step;

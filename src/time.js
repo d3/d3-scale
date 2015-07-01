@@ -1,143 +1,138 @@
-import {bisect} from "d3-arrays";
+import {bisector, range} from "d3-arrays";
 import {default as linear, rebind} from "./linear";
 import {format} from "d3-time-format";
 import {second, minute, hour, day, month, week, year} from "d3-time";
 import {tickRange} from "./ticks";
 
-// import "../arrays/bisect";
-// import "../arrays/range";
-// import "../core/identity";
-// import "../core/true";
-// import "../scale/linear";
-// import "../scale/nice";
+function newDate(t) {
+  return new Date(t);
+}
 
-function newTime(linear, tickIntervals, tickFormat) {
+function newTime(linear, timeInterval, tickFormat) {
 
   function scale(x) {
     return linear(x);
   }
 
   scale.invert = function(x) {
-    return new Date(linear.invert(x));
+    return newDate(linear.invert(x));
   };
 
   scale.domain = function(x) {
-    if (!arguments.length) return linear.domain().map(function(t) { return new Date(t); });
+    if (!arguments.length) return linear.domain().map(newDate);
     linear.domain(x);
     return scale;
   };
 
-  function tickInterval(span, count) {
-    var target = span / count,
-        i = bisect(tickSteps, target);
-    return i === tickSteps.length ? tickIntervals.year // TODO filter, tickRange(extent.map(function(d) { return d / 31536e6; }), count)[2]]
-        : !i ? milliseconds // TODO filter , tickRange(extent, count)[2]]
-        : tickIntervals[target / tickSteps[i - 1] < tickSteps[i] / target ? i - 1 : i];
+  function tickInterval(interval, start, stop, step) {
+    if (interval == null) interval = 10;
+
+    // If a desired tick count is specified, pick a reasonable tick interval
+    // based on the extent of the domain and a rough estimate of tick size.
+    if (typeof interval === "number") {
+      interval = chooseTickInterval(start, stop, interval);
+      step = interval[1], interval = interval[0];
+    }
+
+    // Otherwise, a named interval such as "seconds" was specified.
+    // If a step is also specified, then skip some ticks.
+    else {
+      step = step == null ? 1 : Math.floor(step), interval += "";
+    }
+
+    return isFinite(step) && step > 0 ? timeInterval(interval, step) : null;
   }
 
-  // scale.nice = function(interval, skip) {
-  //   var domain = scale.domain(),
-  //       extent = d3_scaleExtent(domain),
-  //       method = interval == null ? tickInterval(extent, 10)
-  //         : typeof interval === "number" && tickInterval(extent, interval);
+  // ticks() - generate about ten ticks
+  // ticks(10) - generate about ten ticks
+  // ticks("seconds") - generate a tick every second
+  // ticks("seconds", 10) - generate a tick every ten seconds
+  scale.ticks = function(interval, step) {
+    var domain = linear.domain(),
+        t0 = domain[0],
+        t1 = domain[domain.length - 1],
+        t;
 
-  //   if (method) interval = method[0], skip = method[1];
+    if (t1 < t0) t = t0, t0 = t1, t1 = t;
 
-  //   function skipped(date) {
-  //     return !isNaN(date) && !interval.range(date, new Date(+date + 1), skip).length;
-  //   }
-
-  //   return scale.domain(d3_scale_nice(domain, skip > 1 ? {
-  //     floor: function(date) {
-  //       while (skipped(date = interval.floor(date))) date = new Date(date - 1);
-  //       return date;
-  //     },
-  //     ceil: function(date) {
-  //       while (skipped(date = interval.ceil(date))) date = new Date(+date + 1);
-  //       return date;
-  //     }
-  //   } : interval));
-  // };
-
-  // TODO step?
-  scale.ticks = function(interval) {
-    var domain = scale.domain(),
-        start = domain[0],
-        stop = domain[domain.length - 1];
-
-        // extent = (stop < start && (extent = start, start = stop, stop = extent), [start, stop]),
-
-    if (stop < start) range = start, start = stop, stop = range;
-
-    var range = interval == null ? tickInterval(stop - start, 10).range
-          : typeof interval === "number" ? tickInterval(stop - start, interval).range
-          : interval.range || interval; // assume deprecated range function
-
-    // if (method) range = method.range;
-
-    return range(start, new Date(+stop + 1)); // inclusive upper bound
+    return (interval = tickInterval(interval, t0, t1, step))
+        ? interval.range(t0, t1 + 1) // inclusive stop
+        : [];
   };
 
   scale.tickFormat = function() {
     return tickFormat;
   };
 
+  scale.nice = function(interval, step) {
+    var domain = linear.domain(),
+        i0 = 0,
+        i1 = domain.length - 1,
+        t0 = domain[i0],
+        t1 = domain[i1],
+        t;
+
+    if (t1 < t0) {
+      t = i0, i0 = i1, i1 = t;
+      t = t0, t0 = t1, t1 = t;
+    }
+
+    if (interval = tickInterval(interval, t0, t1, step)) {
+      domain[i0] = +interval.floor(t0);
+      domain[i1] = +interval.ceil(t1);
+      linear.domain(domain);
+    }
+
+    return scale;
+  };
+
   scale.copy = function() {
-    return newTime(linear.copy(), tickMethods, tickFormat);
+    return newTime(linear.copy(), timeInterval, tickFormat);
   };
 
   return rebind(scale, linear);
 }
 
-var tickSteps = [
-  1e3,    // 1-second
-  5e3,    // 5-second
-  15e3,   // 15-second
-  3e4,    // 30-second
-  6e4,    // 1-minute
-  3e5,    // 5-minute
-  9e5,    // 15-minute
-  18e5,   // 30-minute
-  36e5,   // 1-hour
-  108e5,  // 3-hour
-  216e5,  // 6-hour
-  432e5,  // 12-hour
-  864e5,  // 1-day
-  1728e5, // 2-day
-  6048e5, // 1-week
-  2592e6, // 1-month
-  7776e6, // 3-month
-  31536e6 // 1-year
-];
+var millisecondsPerSecond = 1000,
+    millisecondsPerMinute = millisecondsPerSecond * 60,
+    millisecondsPerHour = millisecondsPerMinute * 60,
+    millisecondsPerDay = millisecondsPerHour * 24,
+    millisecondsPerWeek = millisecondsPerDay * 7,
+    millisecondsPerMonth = millisecondsPerDay * 30,
+    millisecondsPerYear = millisecondsPerDay * 365;
 
 var tickIntervals = [
-  second,
-  second.filter(function(d) { return d.getSeconds() % 5 === 0; }),
-  second.filter(function(d) { return d.getSeconds() % 15 === 0; }),
-  second.filter(function(d) { return d.getSeconds() % 30 === 0; }),
-  minute,
-  minute.filter(function(d) { return d.getSeconds() % 5 === 0; }),
-  minute.filter(function(d) { return d.getSeconds() % 15 === 0; }),
-  minute.filter(function(d) { return d.getSeconds() % 30 === 0; }),
-  hour,
-  hour.filter(function(d) { return d.getHours() % 3 === 0; }),
-  hour.filter(function(d) { return d.getHours() % 6 === 0; }),
-  hour.filter(function(d) { return d.getHours() % 12 === 0; }),
-  day,
-  day.filter(function(d) { return d.getDate() % 2 === 1; }),
-  week,
-  month,
-  month.filter(function(d) { return d.getMonth() % 3 === 0; }),
-  year
+  ["seconds",  1,      millisecondsPerSecond],
+  ["seconds",  5,  5 * millisecondsPerSecond],
+  ["seconds", 15, 15 * millisecondsPerSecond],
+  ["seconds", 30, 30 * millisecondsPerSecond],
+  ["minutes",  1,      millisecondsPerMinute],
+  ["minutes",  5,  5 * millisecondsPerMinute],
+  ["minutes", 15, 15 * millisecondsPerMinute],
+  ["minutes", 30, 30 * millisecondsPerMinute],
+  [  "hours",  1,      millisecondsPerHour  ],
+  [  "hours",  3,  3 * millisecondsPerHour  ],
+  [  "hours",  6,  6 * millisecondsPerHour  ],
+  [  "hours", 12, 12 * millisecondsPerHour  ],
+  [   "days",  1,      millisecondsPerDay   ],
+  [   "days",  2,  2 * millisecondsPerDay   ],
+  [  "weeks",  1,      millisecondsPerWeek  ],
+  [ "months",  1,      millisecondsPerMonth ],
+  [ "months",  3,  3 * millisecondsPerMonth ],
+  [  "years",  1,      millisecondsPerYear  ]
 ];
 
-var milliseconds = {
-  range: function(start, stop, step) { return range(Math.ceil(start / step) * step, +stop, step).map(function(t) { return new Date(t); }); },
-  floor: function(d) { return new Date(+d); },
-  ceil: function(d) { return new Date(+d); }
-};
+var bisectTickIntervals = bisector(function(method) {
+  return method[2];
+}).right;
 
-tickIntervals.year = year;
+function chooseTickInterval(start, stop, count) {
+  var target = Math.abs(stop - start) / count,
+      i = bisectTickIntervals(tickIntervals, target);
+  return i === tickIntervals.length ? ["years", tickRange([start / millisecondsPerYear, stop / millisecondsPerYear], count)[2]]
+      : i ? tickIntervals[target / tickIntervals[i - 1][2] < tickIntervals[i][2] / target ? i - 1 : i]
+      : ["milliseconds", tickRange([start, stop], count)[2]];
+}
 
 var formatMillisecond = format(".%L"),
     formatSecond = format(":%S"),
@@ -148,7 +143,7 @@ var formatMillisecond = format(".%L"),
     formatMonth = format("%B"),
     formatYear = format("%Y");
 
-function tickFormat(date) {
+function formatTime(date) {
   return (second(date) < date ? formatMillisecond
       : minute(date) < date ? formatSecond
       : hour(date) < date ? formatMinute
@@ -158,6 +153,27 @@ function tickFormat(date) {
       : formatYear)(date);
 }
 
+function filterMillisecond(step) {
+  return {
+    range: function(start, stop) { return range(Math.ceil(start / step) * step, stop, step).map(newDate); },
+    floor: function(date) { return newDate(Math.floor(date / step) * step); },
+    ceil: function(date) { return newDate(Math.ceil(date / step) * step); }
+  };
+}
+
+function timeInterval(interval, step) {
+  switch (interval) {
+    case "milliseconds": return filterMillisecond(step);
+    case "seconds": return step > 1 ? second.filter(function(d) { return d.getSeconds() % step === 0; }) : second;
+    case "minutes": return step > 1 ? minute.filter(function(d) { return d.getMinutes() % step === 0; }) : minute;
+    case "hours": return step > 1 ? hour.filter(function(d) { return d.getHours() % step === 0; }) : hour;
+    case "days": return step > 1 ? day.filter(function(d) { return (d.getDate() - 1) % step === 0; }) : day;
+    case "weeks": return step > 1 ? week.filter(function(d) { return week.count(0, d) % step === 0; }) : week;
+    case "months": return step > 1 ? month.filter(function(d) { return d.getMonth() % step === 0; }) : month;
+    case "years": return step > 1 ? year.filter(function(d) { return d.getFullYear() % step === 0; }) : year;
+  }
+}
+
 export default function() {
-  return newTime(linear(), tickIntervals, tickFormat).domain([new Date(2000, 0, 1), new Date(2001, 0, 1)]);
+  return newTime(linear(), timeInterval, formatTime).domain([new Date(2000, 0, 1), new Date(2001, 0, 1)]);
 };
