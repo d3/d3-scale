@@ -21,12 +21,13 @@ If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release]
 ## API Reference
 
 * [Linear](#linear-scales)
-* [Identity](#identity-scales)
 * [Power](#power-scales)
 * [Log](#log-scales)
+* [Time](#time-scales)
 * [Quantize](#quantize-scales)
 * [Quantile](#quantile-scales)
 * [Threshold](#threshold-scales)
+* [Identity](#identity-scales)
 * [Ordinal](#ordinal-scales)
 * [Category](#category-scales)
 
@@ -67,7 +68,6 @@ s.invert(426.66666666666667); // 50
 ```
 
 This method is only supported if the range is numeric, and may return undefined if the range is non-numeric (such as colors). For a valid value *y* in the range, <i>linear</i>(<i>linear</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the domain, <i>linear</i>.invert(<i>linear</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
-
 
 <a name="linear_domain" href="#linear_domain">#</a> <i>linear</i>.<b>domain</b>([<i>domain</i>])
 
@@ -139,13 +139,13 @@ If *clamp* is not specified, returns whether or not the scale currently clamps v
 
 <a name="linear_nice" href="#linear_nice">#</a> <i>linear</i>.<b>nice</b>([<i>count</i>])
 
-Extends the domain so that it starts and ends on nice round values. This method typically modifies the scale’s domain, and may only extend the bounds to the nearest round value. An optional tick *count* argument allows greater control over the step size used to extend the bounds, guaranteeing that the returned [ticks](#linear_ticks) will exactly cover the domain.
+Extends the [domain](#linear_domain) so that it starts and ends on nice round values. This method typically modifies the scale’s domain, and may only extend the bounds to the nearest round value. An optional tick *count* argument allows greater control over the step size used to extend the bounds, guaranteeing that the returned [ticks](#linear_ticks) will exactly cover the domain.
 
 Nicing is useful if the domain is computed from data, say using [extent](https://github.com/d3/d3-arrays#extent), and may be irregular. For example, for a domain of [0.20147987687960267, 0.996679553296417], a nice domain might be [0.2, 1.0]. If the domain has more than two values, nicing the domain only affects the first and last value.
 
 <a name="linear_ticks" href="#linear_ticks">#</a> <i>linear</i>.<b>ticks</b>([<i>count</i>])
 
-Returns approximately *count* representative values from the scale’s domain. If *count* is not specified, it defaults to 10. The returned tick values are uniformly spaced, have human-readable values (such as multiples of powers of 10), and are guaranteed to be within the extent of the domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data. The specified *count* is only a hint; the scale may return more or fewer values depending on the domain.
+Returns approximately *count* representative values from the scale’s [domain](#linear_domain). If *count* is not specified, it defaults to 10. The returned tick values are uniformly spaced, have human-readable values (such as multiples of powers of 10), and are guaranteed to be within the extent of the domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data. The specified *count* is only a hint; the scale may return more or fewer values depending on the domain.
 
 <a name="linear_tickFormat" href="#linear_tickFormat">#</a> <i>linear</i>.<b>tickFormat</b>(<i>count</i>[, <i>specifier</i>])
 
@@ -166,38 +166,6 @@ If *specifier* uses the format type `s`, the scale will return a [SI-prefix form
 <a name="linear_copy" href="#linear_copy">#</a> <i>linear</i>.<b>copy</b>()
 
 Returns an exact copy of this linear scale. Changes to this scale will not affect the returned scale, and vice versa.
-
-### Identity Scales
-
-Identity scales are a special case of [linear scales](#linear-scales) where the [domain](#identity_domain) and [range](#identity_range) are identical; the scale and its invert method are both the identity function. These scales are occasionally useful when working with pixel coordinates, say in conjunction with an axis or brush.
-
-<a name="identity" href="#identity">#</a> <b>identity</b>()
-
-Constructs a new identity scale with the default [domain](#identity_domain) [0,1] and the default [range](#identity_range) [0,1]. An identity scale is always equivalent to the identity function.
-
-<a name="_identity" href="#_identity">#</a> <i>identity</i>(<i>x</i>)<br>
-<a href="#_identity">#</a> <i>identity</i>.<b>invert</b>(<i>x</i>)
-
-Returns the given value *x*.
-
-<a name="identity_domain" href="#identity_domain">#</a> <i>identity</i>.<b>domain</b>([<i>domain</i>])<br>
-<a href="#identity_domain">#</a> <i>identity</i>.<b>range</b>([<i>domain</i>])
-
-If *domain* is specified, sets the scale’s domain and range to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. If *domain* is not specified, returns the scale’s current domain (or equivalently, range).
-
-<a name="identity_ticks" href="#identity_ticks">#</a> <i>identity</i>.<b>ticks</b>([<i>count</i>])
-
-Returns approximately *count* representative values from the scale’s domain (or equivalently, range). If *count* is not specified, it defaults to 10. The returned tick values are uniformly spaced, have human-readable values (such as multiples of powers of 10), and are guaranteed to be within the extent of the domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data. The specified *count* is only a hint; the scale may return more or fewer values depending on the domain.
-
-<a name="identity_tickFormat" href="#identity_tickFormat">#</a> <i>identity</i>.<b>tickFormat</b>(<i>count</i>[, <i>specifier</i>])
-
-Returns a [number format](https://github.com/d3/d3-format) function suitable for displaying a tick value. The specified *count* should have the same value as the count that is used to generate the tick values. You don’t have to use the scale’s built-in tick format, but it automatically computes the appropriate precision based on the fixed interval between tick values.
-
-The optional *specifier* argument allows a [custom format](https://github.com/d3/d3-format#locale_format) to be specified. If the format specifier doesn’t have a defined precision, the precision will be set automatically by the scale, returning the appropriate format. This provides a convenient, declarative way of specifying a format whose precision will be automatically set by the scale.
-
-<a name="identity_copy" href="#identity_copy">#</a> <i>identity</i>.<b>copy</b>()
-
-Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
 
 ### Power Scales
 
@@ -243,7 +211,7 @@ If *k* is specified, sets the current exponent to the given numeric value. If *k
 
 <a name="pow_domain" href="#pow_domain">#</a> <i>pow</i>.<b>domain</b>([<i>domain</i>])
 
-If *domain* is specified, sets the scale’s domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. If *numbers* is not specified, returns the scale’s current domain.
+If *domain* is specified, sets the scale’s domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. If *domain* is not specified, returns the scale’s current domain.
 
 As with [*linear*.domain](#linear_domain), this method can accept more than two values for the domain and range, thus resulting in a “polypower” scale.
 
@@ -273,13 +241,13 @@ If *clamp* is specified, enables or disables clamping accordingly. If clamping i
 
 <a name="pow_nice" href="#pow_nice">#</a> <i>pow</i>.<b>nice</b>([<i>count</i>])
 
-Extends the domain so that it starts and ends on nice round values. This method typically modifies the scale’s domain, and may only extend the bounds to the nearest round value. An optional tick *count* argument allows greater control over the step size used to extend the bounds, guaranteeing that the returned [ticks](#pow_ticks) will exactly cover the domain.
+Extends the [domain](#pow_domain) so that it starts and ends on nice round values. This method typically modifies the scale’s domain, and may only extend the bounds to the nearest round value. An optional tick *count* argument allows greater control over the step size used to extend the bounds, guaranteeing that the returned [ticks](#pow_ticks) will exactly cover the domain.
 
 Nicing is useful if the domain is computed from data, say using [extent](https://github.com/d3/d3-arrays#extent), and may be irregular. For example, for a domain of [0.20147987687960267, 0.996679553296417], the nice domain is [0.2, 1]. If the domain has more than two values, nicing the domain only affects the first and last value.
 
 <a name="pow_ticks" href="#pow_ticks">#</a> <i>pow</i>.<b>ticks</b>([<i>count</i>])
 
-Returns approximately *count* representative values from the scale’s domain. If *count* is not specified, it defaults to 10. The returned tick values are uniformly spaced, have human-readable values (such as multiples of powers of 10), and are guaranteed to be within the extent of the domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data. The specified *count* is only a hint; the scale may return more or fewer values depending on the domain.
+Returns approximately *count* representative values from the scale’s [domain](#pow_ticks). If *count* is not specified, it defaults to 10. The returned tick values are uniformly spaced, have human-readable values (such as multiples of powers of 10), and are guaranteed to be within the extent of the domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data. The specified *count* is only a hint; the scale may return more or fewer values depending on the domain.
 
 <a name="pow_tickFormat" href="#pow_tickFormat">#</a> <i>pow</i>.<b>tickFormat</b>([<i>count</i>[, <i>specifier</i>]])
 
@@ -347,7 +315,7 @@ If *base* is specified, sets the base for this logarithmic scale. If *base* is n
 
 <a name="log_domain" href="#log_domain">#</a> <i>log</i>.<b>domain</b>([<i>domain</i>])
 
-If *domain* is specified, sets the scale’s domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. If *numbers* is not specified, returns the scale’s current domain.
+If *domain* is specified, sets the scale’s domain to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. If *domain* is not specified, returns the scale’s current domain.
 
 As with [*linear*.domain](#linear_domain), this method can accept more than two values for the domain and range, thus resulting in a “polylog” scale.
 
@@ -377,13 +345,13 @@ If *clamp* is specified, enables or disables clamping accordingly. If clamping i
 
 <a name="log_nice" href="#log_nice">#</a> <i>log</i>.<b>nice</b>()
 
-Extends the domain so that it starts and ends on nice round values. This method typically modifies the scale’s domain, and may only extend the bounds to the nearest round value. The nearest round value is based on integer powers of the scale’s [base](#log_base).
+Extends the [domain](#log_domain) so that it starts and ends on nice round values. This method typically modifies the scale’s domain, and may only extend the bounds to the nearest round value. The nearest round value is based on integer powers of the scale’s [base](#log_base).
 
 Nicing is useful if the domain is computed from data, say using [extent](https://github.com/d3/d3-arrays#extent), and may be irregular. For example, for a domain of [0.20147987687960267, 0.996679553296417], the nice domain is [0.1, 1]. If the domain has more than two values, nicing the domain only affects the first and last value.
 
 <a name="log_ticks" href="#log_ticks">#</a> <i>log</i>.<b>ticks</b>()
 
-Returns representative values from the scale’s domain. The returned tick values are uniformly spaced within each power of ten, and are guaranteed to be within the extent of the domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data. Note that the number of ticks cannot be customized (due to the nature of log scales); however, you can filter the returned array of values if you want to reduce the number of ticks.
+Returns representative values from the scale’s [domain](#log_domain). The returned tick values are uniformly spaced within each power of ten, and are guaranteed to be within the extent of the domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data. Note that the number of ticks cannot be customized (due to the nature of log scales); however, you can filter the returned array of values if you want to reduce the number of ticks.
 
 <a name="log_tickFormat" href="#log_tickFormat">#</a> <i>log</i>.<b>tickFormat</b>([<i>count</i>[, <i>format</i>]])
 
@@ -400,6 +368,168 @@ If the format specifier doesn’t have a defined precision, the precision will b
 <a name="log_copy" href="#log_copy">#</a> <i>log</i>.<b>copy</b>()
 
 Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
+
+### Time Scales
+
+Time scales are a variant of [linear scales](#linear-scales) that use a [date](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date) domain: domain values are coerced to dates rather than numbers, and [*time*.invert](#time_invert) returns a date. Most conveniently, time scales implement suitable [ticks](#time_ticks) based on [time intervals](https://github.com/d3/d3-time), taking the pain out of generating axes for time-based domains.
+
+<a name="time" href="#time">#</a> <b>time</b>()
+
+Constructs a new time scale with the default [domain](#time_domain) [2000-01-01,2000-01-02], the default [range](#time_range) [0,1], the default [interpolator](#time_interpolate) and [clamping](#time_clamp) disabled.
+
+<a name="_time" href="#_time">#</a> <i>time</i>(<i>date</i>)
+
+Given a *date* in the [domain](#time_domain), returns the corresponding value in the [range](#time_range). For example, a position encoding:
+
+```js
+var s = time()
+    .domain([new Date(2000, 0, 1), new Date(2000, 0, 2)])
+    .range([0, 960]);
+
+s(new Date(2000, 0, 1,  5)); // 200
+s(new Date(2000, 0, 1, 16)); // 640
+```
+
+<a name="time_invert" href="#time_invert">#</a> <i>time</i>.<b>invert</b>(<i>y</i>)
+
+Given a value *y* in the [range](#time_range), returns the corresponding date in the [domain](#time_domain): the inverse of [*time*](#_time). For example, a position encoding:
+
+```js
+var s = time()
+    .domain([new Date(2000, 0, 1), new Date(2000, 0, 2)])
+    .range([0, 960]);
+
+s.invert(200); // Sat Jan 01 2000 05:00:00 GMT-0800 (PST)
+s.invert(640); // Sat Jan 01 2000 16:00:00 GMT-0800 (PST)
+```
+
+This method is only supported if the range is numeric, and may return undefined if the range is non-numeric (such as colors). For a valid value *y* in the range, <i>time</i>(<i>time</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the domain, <i>time</i>.invert(<i>time</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
+
+<a name="time_domain" href="#time_domain">#</a> <i>time</i>.<b>domain</b>([<i>dates</i>])
+
+If *domain* is specified, sets the scale’s domain to the specified array of dates. The array must contain two or more dates. If the elements in the given array are not dates, they will be coerced to dates. If *domain* is not specified, returns the scale’s current domain.
+
+As with [*linear*.domain](#linear_domain), this method can accept more than two values for the domain and range, thus resulting in a “polylinear” scale.
+
+<a name="time_range" href="#time_range">#</a> <i>time</i>.<b>range</b>([<i>range</i>])
+
+If *range* is specified, sets the scale’s range to the specified array of values. The array must contain two or more values, matching the cardinality of the [domain](#range_domain); otherwise, the longer of the two is truncated to match the other. The elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#range_interpolate) will work; however, numeric ranges are required for [invert](#range_invert). If *range* is not specified, returns the scale’s current range.
+
+<a name="time_rangeRound" href="#time_rangeRound">#</a> <i>time</i>.<b>rangeRound</b>([<i>range</i>])
+
+Sets the scale’s [*range*](#time_range) to the specified array of values while also setting the scale’s [interpolator](#time_interpolate) to [interpolateRound](https://github.com/d3/d3-interpolate#interpolateRound). This is a convenience method equivalent to:
+
+```js
+s.range(range).interpolate(interpolateRound);
+```
+
+The rounding interpolator is sometimes useful for avoiding antialiasing artifacts, though also consider [shape-rendering](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering): crispEdges. Note that this interpolator can only be used with numeric ranges.
+
+<a name="time_interpolate" href="#time_interpolate">#</a> <i>time</i>.<b>interpolate</b>([<i>interpolate</i>])
+
+If *interpolate* is specified, sets the scale’s [range](#time_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory. See [*linear*.interpolate](#linear_interpolate) for examples.
+
+Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
+
+<a name="time_clamp" href="#time_clamp">#</a> <i>time</i>.<b>clamp</b>([<i>clamp</i>])
+
+If *clamp* is specified, enables or disables clamping accordingly. If clamping is disabled and the scale is passed a value outside the [domain](#time_domain), the scale may return a value outside the [range](#time_range) through extrapolation. If clamping is enabled, the return value of the scale is always within the scale’s range. Clamping similarly applies to [*time*.invert](#time_invert). See [*linear*.clamp](#linear_clamp) for examples. If *clamp* is not specified, returns whether or not the scale currently clamps values to within the range.
+
+<a name="time_nice" href="#time_nice">#</a> <i>time</i>.<b>nice</b>([<i>count</i>])
+<br><a name="time_nice" href="#time_nice">#</a> <i>time</i>.<b>nice</b>([<i>interval</i>[, <i>step</i>]])
+
+Extends the [domain](#time_domain) so that it starts and ends on nice round values. This method typically modifies the scale’s domain, and may only extend the bounds to the nearest round value.
+
+An optional tick *count* argument allows greater control over the step size used to extend the bounds, guaranteeing that the returned [ticks](#time_ticks) will exactly cover the domain.
+
+Alternatively, the name of a time *interval* may be specified to explicitly set the ticks. If an *interval* name is specified, an optional *step* may also be specified to skip some ticks. For example, `nice("seconds", 10)` will extend the domain to an even ten seconds (0, 10, 20, <i>etc.</i>). See [*time*.ticks](#time_ticks) for further detail.
+
+Nicing is useful if the domain is computed from data, say using [extent](https://github.com/d3/d3-arrays#extent), and may be irregular. For example, for a domain of [2009-07-13T00:02, 2009-07-13T23:48], the nice domain is [2009-07-13, 2009-07-14]. If the domain has more than two values, nicing the domain only affects the first and last value.
+
+<a name="time_ticks" href="#time_ticks">#</a> <i>time</i>.<b>ticks</b>([<i>count</i>])
+<br><a name="time_ticks" href="#time_ticks">#</a> <i>time</i>.<b>ticks</b>([<i>interval</i>[, <i>step</i>]])
+
+Returns representative dates from the scale’s [domain](#time_domain). The returned tick values are (mostly) regularly-spaced, have sensible values (such every day at midnight), and are guaranteed to be within the extent of the domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data.
+
+An optional *count* may be specified to affect how many ticks are generated. If *count* is not specified, it defaults to 10. The specified *count* is only a hint; the scale may return more or fewer values depending on the domain. For example, to create ten default ticks, say:
+
+```js
+var s = time();
+s.ticks(10);
+// [Sat Jan 01 2000 00:00:00 GMT-0800 (PST),
+//  Sat Jan 01 2000 03:00:00 GMT-0800 (PST),
+//  Sat Jan 01 2000 06:00:00 GMT-0800 (PST),
+//  Sat Jan 01 2000 09:00:00 GMT-0800 (PST),
+//  Sat Jan 01 2000 12:00:00 GMT-0800 (PST),
+//  Sat Jan 01 2000 15:00:00 GMT-0800 (PST),
+//  Sat Jan 01 2000 18:00:00 GMT-0800 (PST),
+//  Sat Jan 01 2000 21:00:00 GMT-0800 (PST),
+//  Sun Jan 02 2000 00:00:00 GMT-0800 (PST)]
+```
+
+The following time intervals are considered for automatic ticks:
+
+* 1-, 5-, 15- and 30-second.
+* 1-, 5-, 15- and 30-minute.
+* 1-, 3-, 6- and 12-hour.
+* 1- and 2-day.
+* 1-week.
+* 1- and 3-month.
+* 1-year.
+
+In lieu of a *count*, the name of a time *interval* may be explicitly specified. The following interval names are supported:
+
+* `milliseconds`
+* `seconds`
+* `minutes`
+* `hours`
+* `days`
+* `weeks`
+* `months`
+* `years`
+
+If an *interval* name is specified, an optional *step* may also be specified to prune generated ticks. For example, `ticks("minutes", 15)` will generate ticks at 15-minute intervals:
+
+```js
+var s = time().domain([new Date(2000, 0, 1, 0), new Date(2000, 0, 1, 2)]);
+s.ticks("minutes", 15);
+// [Sat Jan 01 2000 00:00:00 GMT-0800 (PST),
+//  Sat Jan 01 2000 00:15:00 GMT-0800 (PST),
+//  Sat Jan 01 2000 00:30:00 GMT-0800 (PST),
+//  Sat Jan 01 2000 00:45:00 GMT-0800 (PST),
+//  Sat Jan 01 2000 01:00:00 GMT-0800 (PST),
+//  Sat Jan 01 2000 01:15:00 GMT-0800 (PST),
+//  Sat Jan 01 2000 01:30:00 GMT-0800 (PST),
+//  Sat Jan 01 2000 01:45:00 GMT-0800 (PST),
+//  Sat Jan 01 2000 02:00:00 GMT-0800 (PST)]
+```
+
+Note: in some cases, such as with day ticks, specifying a *step* can result in irregular spacing of ticks because months have varying length.
+
+<a name="time_tickFormat" href="#time_tickFormat">#</a> <i>time</i>.<b>tickFormat</b>([<i>specifier</i>])
+
+Returns a time format function suitable for displaying [tick](#time_ticks) values. If a format *specifier* is specified, this method is equivalent to [format](https://github.com/d3/d3-time-format#format). If *specifier* is not specified, the default time format is returned.
+
+The default multi-scale time format chooses a human-readable time format based on the specified date being formatted, as follows:
+
+* `%Y` - for year boundaries, such as `2011`.
+* `%B` - for month boundaries, such as `February`.
+* `%b %d` - for week boundaries, such as `Feb 06`.
+* `%a %d` - for day boundaries, such as `Mon 07`.
+* `%I %p` - for hour boundaries, such as `01 AM`.
+* `%I:%M` - for minute boundaries, such as `01:23`.
+* `:%S` - for second boundaries, such as `:45`.
+* `.%L` - milliseconds for all other times, such as `.012`.
+
+Although somewhat unusual, this default behavior has the benefit of providing both local and global context: for example, formatting a sequence of ticks as [11 PM, Mon 07, 01 AM] reveals information about hours, dates, and day simultaneously, rather than just the hours [11 PM, 12 AM, 01 AM]. See [d3-time-format](https://github.com/d3/d3-time-format) if you’d like to roll your own conditional time format.
+
+<a name="time_copy" href="#time_copy">#</a> <i>time</i>.<b>copy</b>()
+
+Returns an exact copy of this time scale. Changes to this scale will not affect the returned scale, and vice versa.
+
+<a name="utcTime" href="#utcTime">#</a> <b>utcTime</b>()
+
+Equivalent to [time](#time), but the returned time scale operates in [Coordinated Universal Time](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) rather than local time.
 
 ### Quantize Scales
 
@@ -522,6 +652,38 @@ If *domain* is specified, sets the scale’s domain to the specified array of va
 If *range* is specified, sets the scale’s range to the specified array of values. If the number of values in the scale’s domain is N, the number of values in the scale’s range must be N+1. If there are fewer than N+1 elements in the range, the scale may return undefined for some inputs. If there are more than N+1 elements in the range, the additional values are ignored. The elements in the given array need not be numbers; any value or type will work. If *range* is not specified, returns the scale’s current range.
 
 <a name="threshold_copy" href="#threshold_copy">#</a> <i>threshold</i>.<b>copy</b>()
+
+Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
+
+### Identity Scales
+
+Identity scales are a special case of [linear scales](#linear-scales) where the [domain](#identity_domain) and [range](#identity_range) are identical; the scale and its invert method are both the identity function. These scales are occasionally useful when working with pixel coordinates, say in conjunction with an axis or brush.
+
+<a name="identity" href="#identity">#</a> <b>identity</b>()
+
+Constructs a new identity scale with the default [domain](#identity_domain) [0,1] and the default [range](#identity_range) [0,1]. An identity scale is always equivalent to the identity function.
+
+<a name="_identity" href="#_identity">#</a> <i>identity</i>(<i>x</i>)<br>
+<a href="#_identity">#</a> <i>identity</i>.<b>invert</b>(<i>x</i>)
+
+Returns the given value *x*.
+
+<a name="identity_domain" href="#identity_domain">#</a> <i>identity</i>.<b>domain</b>([<i>domain</i>])<br>
+<a href="#identity_domain">#</a> <i>identity</i>.<b>range</b>([<i>domain</i>])
+
+If *domain* is specified, sets the scale’s domain and range to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. If *domain* is not specified, returns the scale’s current domain (or equivalently, range).
+
+<a name="identity_ticks" href="#identity_ticks">#</a> <i>identity</i>.<b>ticks</b>([<i>count</i>])
+
+Returns approximately *count* representative values from the scale’s [domain](#identity_domain) (or equivalently, range). If *count* is not specified, it defaults to 10. The returned tick values are uniformly spaced, have human-readable values (such as multiples of powers of 10), and are guaranteed to be within the extent of the domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data. The specified *count* is only a hint; the scale may return more or fewer values depending on the domain.
+
+<a name="identity_tickFormat" href="#identity_tickFormat">#</a> <i>identity</i>.<b>tickFormat</b>(<i>count</i>[, <i>specifier</i>])
+
+Returns a [number format](https://github.com/d3/d3-format) function suitable for displaying a tick value. The specified *count* should have the same value as the count that is used to generate the tick values. You don’t have to use the scale’s built-in tick format, but it automatically computes the appropriate precision based on the fixed interval between tick values.
+
+The optional *specifier* argument allows a [custom format](https://github.com/d3/d3-format#locale_format) to be specified. If the format specifier doesn’t have a defined precision, the precision will be set automatically by the scale, returning the appropriate format. This provides a convenient, declarative way of specifying a format whose precision will be automatically set by the scale.
+
+<a name="identity_copy" href="#identity_copy">#</a> <i>identity</i>.<b>copy</b>()
 
 Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
 
