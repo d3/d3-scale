@@ -371,7 +371,7 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 ### Time Scales
 
-Time scales are a variant of [linear scales](#linear-scales) that use a [date](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date) domain: domain values are coerced to dates rather than numbers, and [*time*.invert](#time_invert) returns a date. Most conveniently, time scales implement suitable [ticks](#time_ticks) based on [time intervals](https://github.com/d3/d3-time), taking the pain out of generating axes for time-based domains.
+Time scales are a variant of [linear scales](#linear-scales) that have a time domain: domain values are coerced to [dates ](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date) rather than numbers, and [*time*.invert](#time_invert) likewise returns a date. More importantly, time scales implement [ticks](#time_ticks) based on [conventional time intervals](https://github.com/d3/d3-time), taking the pain out of generating axes for temporal domains.
 
 <a name="time" href="#time">#</a> <b>time</b>()
 
