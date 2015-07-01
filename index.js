@@ -11,6 +11,7 @@ import quantile from "./src/quantile";
 import quantize from "./src/quantize";
 import threshold from "./src/threshold";
 import time from "./src/time";
+import utcTime from "./src/utcTime";
 
 export {
   category10,
@@ -26,5 +27,6 @@ export {
   quantize,
   sqrt,
   threshold,
-  time
+  time,
+  utcTime
 };

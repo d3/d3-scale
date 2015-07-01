@@ -8,7 +8,7 @@ function newDate(t) {
   return new Date(t);
 }
 
-function newTime(linear, timeInterval, tickFormat) {
+export function newTime(linear, timeInterval, tickFormat) {
 
   function scale(x) {
     return linear(x);
@@ -91,7 +91,7 @@ function newTime(linear, timeInterval, tickFormat) {
   };
 
   return rebind(scale, linear);
-}
+};
 
 var millisecondsPerSecond = 1000,
     millisecondsPerMinute = millisecondsPerSecond * 60,
@@ -153,13 +153,13 @@ function formatTime(date) {
       : formatYear)(date);
 }
 
-function filterMillisecond(step) {
+export function filterMillisecond(step) {
   return {
     range: function(start, stop) { return range(Math.ceil(start / step) * step, stop, step).map(newDate); },
     floor: function(date) { return newDate(Math.floor(date / step) * step); },
     ceil: function(date) { return newDate(Math.ceil(date / step) * step); }
   };
-}
+};
 
 function timeInterval(interval, step) {
   switch (interval) {
@@ -175,5 +175,5 @@ function timeInterval(interval, step) {
 }
 
 export default function() {
-  return newTime(linear(), timeInterval, formatTime).domain([new Date(2000, 0, 1), new Date(2001, 0, 1)]);
+  return newTime(linear(), timeInterval, formatTime).domain([new Date(2000, 0, 1), new Date(2000, 0, 2)]);
 };
