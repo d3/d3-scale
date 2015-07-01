@@ -8,7 +8,7 @@ function newDate(t) {
   return new Date(t);
 }
 
-export function newTime(linear, timeInterval, tickFormat) {
+export function newTime(linear, timeInterval, tickFormat, format) {
 
   function scale(x) {
     return linear(x);
@@ -60,8 +60,8 @@ export function newTime(linear, timeInterval, tickFormat) {
         : [];
   };
 
-  scale.tickFormat = function() {
-    return tickFormat;
+  scale.tickFormat = function(specifier) {
+    return specifier == null ? tickFormat : format(specifier);
   };
 
   scale.nice = function(interval, step) {
@@ -87,7 +87,7 @@ export function newTime(linear, timeInterval, tickFormat) {
   };
 
   scale.copy = function() {
-    return newTime(linear.copy(), timeInterval, tickFormat);
+    return newTime(linear.copy(), timeInterval, tickFormat, format);
   };
 
   return rebind(scale, linear);
@@ -143,7 +143,7 @@ var formatMillisecond = format(".%L"),
     formatMonth = format("%B"),
     formatYear = format("%Y");
 
-function formatTime(date) {
+function tickFormat(date) {
   return (second(date) < date ? formatMillisecond
       : minute(date) < date ? formatSecond
       : hour(date) < date ? formatMinute
@@ -153,7 +153,7 @@ function formatTime(date) {
       : formatYear)(date);
 }
 
-export function filterMillisecond(step) {
+export function millisecond(step) {
   return {
     range: function(start, stop) { return range(Math.ceil(start / step) * step, stop, step).map(newDate); },
     floor: function(date) { return newDate(Math.floor(date / step) * step); },
@@ -163,7 +163,7 @@ export function filterMillisecond(step) {
 
 function timeInterval(interval, step) {
   switch (interval) {
-    case "milliseconds": return filterMillisecond(step);
+    case "milliseconds": return millisecond(step);
     case "seconds": return step > 1 ? second.filter(function(d) { return d.getSeconds() % step === 0; }) : second;
     case "minutes": return step > 1 ? minute.filter(function(d) { return d.getMinutes() % step === 0; }) : minute;
     case "hours": return step > 1 ? hour.filter(function(d) { return d.getHours() % step === 0; }) : hour;
@@ -175,5 +175,5 @@ function timeInterval(interval, step) {
 }
 
 export default function() {
-  return newTime(linear(), timeInterval, formatTime).domain([new Date(2000, 0, 1), new Date(2000, 0, 2)]);
+  return newTime(linear(), timeInterval, tickFormat, format).domain([new Date(2000, 0, 1), new Date(2000, 0, 2)]);
 };

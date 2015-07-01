@@ -724,6 +724,14 @@ Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical co
 
 ## Changes from D3 3.x:
 
-* More precise tick thresholds for linear scales.
-* Better ticks for log scales that are not base-10.
-* Make defensive copies of domains and ranges.
+* *linear*.ticks more often returns the right number of ticks.
+
+* *log*.ticks returns better ticks scales that are not base-10.
+
+* *scale*.domain and *scale*.range make defensive copies.
+
+* *time*.ticks and *utcTime*.ticks no longer takes an [time interval](https://github.com/d3/d3-time) as an argument but instead takes an optional internal name, such as `"seconds"`. For a UTC time scale, this will use the corresponding UTC time interval.
+
+* *time*.tickFormat and *utcTime*.tickFormat now accept an optional specifier as an alias for d3-time-format’s format and utcFormat functions.
+
+* time.utc has been renamed utcTime.

@@ -1,31 +1,31 @@
 import {default as linear} from "./linear";
-import {filterMillisecond, newTime} from "./time";
+import {millisecond, newTime} from "./time";
 import {range} from "d3-arrays";
 import {utcFormat} from "d3-time-format";
 import {utcSecond, utcMinute, utcHour, utcDay, utcMonth, utcWeek, utcYear} from "d3-time";
 
-var formatMillisecond = utcFormat(".%L"),
-    formatSecond = utcFormat(":%S"),
-    formatMinute = utcFormat("%I:%M"),
-    formatHour = utcFormat("%I %p"),
-    formatDay = utcFormat("%a %d"),
-    formatWeek = utcFormat("%b %d"),
-    formatMonth = utcFormat("%B"),
-    formatYear = utcFormat("%Y");
+var formatUTCMillisecond = utcFormat(".%L"),
+    formatUTCSecond = utcFormat(":%S"),
+    formatUTCMinute = utcFormat("%I:%M"),
+    formatUTCHour = utcFormat("%I %p"),
+    formatUTCDay = utcFormat("%a %d"),
+    formatUTCWeek = utcFormat("%b %d"),
+    formatUTCMonth = utcFormat("%B"),
+    formatUTCYear = utcFormat("%Y");
 
-function formatTime(date) {
-  return (utcSecond(date) < date ? formatMillisecond
-      : utcMinute(date) < date ? formatSecond
-      : utcHour(date) < date ? formatMinute
-      : utcDay(date) < date ? formatHour
-      : utcMonth(date) < date ? (utcWeek(date) < date ? formatDay : formatWeek)
-      : utcYear(date) < date ? formatMonth
-      : formatYear)(date);
+function tickFormat(date) {
+  return (utcSecond(date) < date ? formatUTCMillisecond
+      : utcMinute(date) < date ? formatUTCSecond
+      : utcHour(date) < date ? formatUTCMinute
+      : utcDay(date) < date ? formatUTCHour
+      : utcMonth(date) < date ? (utcWeek(date) < date ? formatUTCDay : formatUTCWeek)
+      : utcYear(date) < date ? formatUTCMonth
+      : formatUTCYear)(date);
 }
 
 function timeInterval(interval, step) {
   switch (interval) {
-    case "milliseconds": return filterMillisecond(step);
+    case "milliseconds": return millisecond(step);
     case "seconds": return step > 1 ? utcSecond.filter(function(d) { return d.getUTCSeconds() % step === 0; }) : utcSecond;
     case "minutes": return step > 1 ? utcMinute.filter(function(d) { return d.getUTCMinutes() % step === 0; }) : utcMinute;
     case "hours": return step > 1 ? utcHour.filter(function(d) { return d.getUTCHours() % step === 0; }) : utcHour;
@@ -37,5 +37,5 @@ function timeInterval(interval, step) {
 }
 
 export default function() {
-  return newTime(linear(), timeInterval, formatTime).domain([Date.UTC(2000, 0, 1), Date.UTC(2000, 0, 2)]);
+  return newTime(linear(), timeInterval, tickFormat, utcFormat).domain([Date.UTC(2000, 0, 1), Date.UTC(2000, 0, 2)]);
 };
