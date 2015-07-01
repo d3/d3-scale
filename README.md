@@ -506,9 +506,7 @@ Note: in some cases, such as with day ticks, specifying a *step* can result in i
 
 <a name="time_tickFormat" href="#time_tickFormat">#</a> <i>time</i>.<b>tickFormat</b>([<i>specifier</i>])
 
-Returns a time format function suitable for displaying [tick](#time_ticks) values. If a format *specifier* is specified, this method is equivalent to [format](https://github.com/d3/d3-time-format#format). If *specifier* is not specified, the default time format is returned.
-
-The default multi-scale time format chooses a human-readable time format based on the specified date being formatted, as follows:
+Returns a time format function suitable for displaying [tick](#time_ticks) values. If a format *specifier* is specified, this method is equivalent to [format](https://github.com/d3/d3-time-format#format). If *specifier* is not specified, the default time format is returned. The default multi-scale time format chooses a human-readable representation based on the specified date as follows:
 
 * `%Y` - for year boundaries, such as `2011`.
 * `%B` - for month boundaries, such as `February`.
