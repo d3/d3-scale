@@ -504,10 +504,9 @@ s.ticks("minutes", 15);
 //  Sat Jan 01 2000 02:00:00 GMT-0800 (PST)]
 ```
 
-This is equivalent to [minute](https://github.com/d3/d3-time#minute).[filter](https://github.com/d3/d3-time#interval_filter) as follows:
+This is equivalent to using [minute](https://github.com/d3/d3-time#minute).[filter](https://github.com/d3/d3-time#interval_filter):
 
 ```js
-var s = time().domain([new Date(2000, 0, 1, 0), new Date(2000, 0, 1, 2)]);
 s.ticks(minute.filter(function(d) { return d.getMinutes() % 15 === 0; }));
 ```
 
