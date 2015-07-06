@@ -1,5 +1,6 @@
 var tape = require("tape"),
     color = require("d3-color"),
+    time = require("d3-time"),
     scale = require("../"),
     date = require("./date");
 
@@ -36,6 +37,15 @@ tape("utcTime.nice(count) nices using the specified tick count", function(test) 
 
 tape("utcTime.nice(interval) nices using the specified time interval", function(test) {
   var x = scale.utcTime().domain([date.utc(2009, 0, 1, 0, 12), date.utc(2009, 0, 1, 23, 48)]);
+  test.deepEqual(x.nice(time.utcDay).domain(), [date.utc(2009, 0, 1), date.utc(2009, 0, 2)]);
+  test.deepEqual(x.nice(time.utcWeek).domain(), [date.utc(2008, 11, 28), date.utc(2009, 0, 4)]);
+  test.deepEqual(x.nice(time.utcMonth).domain(), [date.utc(2008, 11, 1), date.utc(2009, 1, 1)]);
+  test.deepEqual(x.nice(time.utcYear).domain(), [date.utc(2008, 0, 1), date.utc(2010, 0, 1)]);
+  test.end();
+});
+
+tape("utcTime.nice(intervalName) nices using the specified named time interval", function(test) {
+  var x = scale.utcTime().domain([date.utc(2009, 0, 1, 0, 12), date.utc(2009, 0, 1, 23, 48)]);
   test.deepEqual(x.nice("days").domain(), [date.utc(2009, 0, 1), date.utc(2009, 0, 2)]);
   test.deepEqual(x.nice("weeks").domain(), [date.utc(2008, 11, 28), date.utc(2009, 0, 4)]);
   test.deepEqual(x.nice("months").domain(), [date.utc(2008, 11, 1), date.utc(2009, 1, 1)]);
@@ -43,19 +53,19 @@ tape("utcTime.nice(interval) nices using the specified time interval", function(
   test.end();
 });
 
-tape("utcTime.nice(interval) can nice empty domains", function(test) {
+tape("utcTime.nice(intervalName) can nice empty domains", function(test) {
   var x = scale.utcTime().domain([date.utc(2009, 0, 1, 0, 12), date.utc(2009, 0, 1, 0, 12)]);
   test.deepEqual(x.nice("days").domain(), [date.utc(2009, 0, 1), date.utc(2009, 0, 2)]);
   test.end();
 });
 
-tape("utcTime.nice(interval) can nice a polylinear domain, only affecting its extent", function(test) {
+tape("utcTime.nice(intervalName) can nice a polylinear domain, only affecting its extent", function(test) {
   var x = scale.utcTime().domain([date.utc(2009, 0, 1, 0, 12), date.utc(2009, 0, 1, 23, 48), date.utc(2009, 0, 2, 23, 48)]).nice("days");
   test.deepEqual(x.domain(), [date.utc(2009, 0, 1), date.utc(2009, 0, 1, 23, 48), date.utc(2009, 0, 3)]);
   test.end();
 });
 
-tape("utcTime.nice(interval, step) nices using the specified time interval and step", function(test) {
+tape("utcTime.nice(intervalName, step) nices using the specified time interval and step", function(test) {
   var x = scale.utcTime().domain([date.utc(2009, 0, 1, 0, 12), date.utc(2009, 0, 1, 23, 48)]);
   test.deepEqual(x.nice("days", 3).domain(), [date.utc(2009, 0, 1), date.utc(2009, 0, 4)]);
   test.deepEqual(x.nice("weeks", 2).domain(), [date.utc(2008, 11, 21), date.utc(2009, 0, 4)]);
@@ -118,6 +128,17 @@ tape("utcTime.copy() isolates changes to clamping", function(test) {
 
 tape("utcTime.ticks(interval) observes the specified tick interval", function(test) {
   var x = scale.utcTime().domain([date.utc(2011, 0, 1, 12, 1, 0), date.utc(2011, 0, 1, 12, 4, 4)]);
+  test.deepEqual(x.ticks(time.utcMinute), [
+    date.utc(2011, 0, 1, 12, 1),
+    date.utc(2011, 0, 1, 12, 2),
+    date.utc(2011, 0, 1, 12, 3),
+    date.utc(2011, 0, 1, 12, 4)
+  ]);
+  test.end();
+});
+
+tape("utcTime.ticks(intervalName) observes the specified named tick interval", function(test) {
+  var x = scale.utcTime().domain([date.utc(2011, 0, 1, 12, 1, 0), date.utc(2011, 0, 1, 12, 4, 4)]);
   test.deepEqual(x.ticks("minutes"), [
     date.utc(2011, 0, 1, 12, 1),
     date.utc(2011, 0, 1, 12, 2),
@@ -127,7 +148,7 @@ tape("utcTime.ticks(interval) observes the specified tick interval", function(te
   test.end();
 });
 
-tape("utcTime.ticks(interval, step) observes the specified tick interval and step", function(test) {
+tape("utcTime.ticks(intervalName, step) observes the specified tick interval and step", function(test) {
   var x = scale.utcTime().domain([date.utc(2011, 0, 1, 12, 0, 0), date.utc(2011, 0, 1, 12, 33, 4)]);
   test.deepEqual(x.ticks("minutes", 10), [
     date.utc(2011, 0, 1, 12, 0),

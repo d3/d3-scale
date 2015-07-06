@@ -29,24 +29,18 @@ export function newTime(linear, timeInterval, tickFormat, format) {
 
     // If a desired tick count is specified, pick a reasonable tick interval
     // based on the extent of the domain and a rough estimate of tick size.
-    if (typeof interval === "number") {
-      interval = chooseTickInterval(start, stop, interval);
-      step = interval[1], interval = interval[0];
-    }
-
-    // Otherwise, a named interval such as "seconds" was specified.
-    // If a step is also specified, then skip some ticks.
-    else {
-      step = step == null ? 1 : Math.floor(step), interval += "";
+    // If a named interval such as "seconds" was specified, convert to the
+    // corresponding time interval and optionally filter using the step.
+    // Otherwise, assume interval is already a time interval and use it.
+    switch (typeof interval) {
+      case "number": interval = chooseTickInterval(start, stop, interval), step = interval[1], interval = interval[0]; break;
+      case "string": step = step == null ? 1 : Math.floor(step); break;
+      default: return interval;
     }
 
     return isFinite(step) && step > 0 ? timeInterval(interval, step) : null;
   }
 
-  // ticks() - generate about ten ticks
-  // ticks(10) - generate about ten ticks
-  // ticks("seconds") - generate a tick every second
-  // ticks("seconds", 10) - generate a tick every ten seconds
   scale.ticks = function(interval, step) {
     var domain = linear.domain(),
         t0 = domain[0],

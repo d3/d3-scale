@@ -436,16 +436,18 @@ Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolat
 If *clamp* is specified, enables or disables clamping accordingly. If clamping is disabled and the scale is passed a value outside the [domain](#time_domain), the scale may return a value outside the [range](#time_range) through extrapolation. If clamping is enabled, the return value of the scale is always within the scale’s range. Clamping similarly applies to [*time*.invert](#time_invert). See [*linear*.clamp](#linear_clamp) for examples. If *clamp* is not specified, returns whether or not the scale currently clamps values to within the range.
 
 <a name="time_nice" href="#time_nice">#</a> <i>time</i>.<b>nice</b>([<i>count</i>])
-<br><a name="time_nice" href="#time_nice">#</a> <i>time</i>.<b>nice</b>([<i>interval</i>[, <i>step</i>]])
+<br><a name="time_nice" href="#time_nice">#</a> <i>time</i>.<b>nice</b>([<i>intervalName</i>[, <i>step</i>]])
+<br><a name="time_nice" href="#time_nice">#</a> <i>time</i>.<b>nice</b>([<i>interval</i>])
 
 Extends the [domain](#time_domain) so that it starts and ends on nice round values. This method typically modifies the scale’s domain, and may only extend the bounds to the nearest round value.
 
-An optional tick *count* argument allows greater control over the step size used to extend the bounds, guaranteeing that the returned [ticks](#time_ticks) will exactly cover the domain. Alternatively, the name of a time *interval* may be specified to explicitly set the ticks. If an *interval* name is specified, an optional *step* may also be specified to skip some ticks. For example, `nice("seconds", 10)` will extend the domain to an even ten seconds (0, 10, 20, <i>etc.</i>). See [*time*.ticks](#time_ticks) for further detail.
+An optional tick *count* argument allows greater control over the step size used to extend the bounds, guaranteeing that the returned [ticks](#time_ticks) will exactly cover the domain. Alternatively, a [time *interval*](https://github.com/d3/d3-time#intervals) or *intervalName* may be specified to explicitly set the ticks. If an *intervalName* is specified, an optional *step* may also be specified to skip some ticks. For example, `nice("seconds", 10)` will extend the domain to an even ten seconds (0, 10, 20, <i>etc.</i>). See [*time*.ticks](#time_ticks) for further detail.
 
 Nicing is useful if the domain is computed from data, say using [extent](https://github.com/d3/d3-arrays#extent), and may be irregular. For example, for a domain of [2009-07-13T00:02, 2009-07-13T23:48], the nice domain is [2009-07-13, 2009-07-14]. If the domain has more than two values, nicing the domain only affects the first and last value.
 
 <a name="time_ticks" href="#time_ticks">#</a> <i>time</i>.<b>ticks</b>([<i>count</i>])
-<br><a name="time_ticks" href="#time_ticks">#</a> <i>time</i>.<b>ticks</b>([<i>interval</i>[, <i>step</i>]])
+<br><a name="time_ticks" href="#time_ticks">#</a> <i>time</i>.<b>ticks</b>([<i>intervalName</i>[, <i>step</i>]])
+<br><a name="time_ticks" href="#time_ticks">#</a> <i>time</i>.<b>ticks</b>([<i>interval</i>])
 
 Returns representative dates from the scale’s [domain](#time_domain). The returned tick values are uniformly-spaced (mostly), have sensible values (such every day at midnight), and are guaranteed to be within the extent of the domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data.
 
@@ -475,7 +477,7 @@ The following time intervals are considered for automatic ticks:
 * 1- and 3-month.
 * 1-year.
 
-In lieu of a *count*, the name of a time *interval* may be explicitly specified. The following interval names are supported:
+In lieu of a *count*, a [time *interval*](https://github.com/d3/d3-time#intervals) or *intervalName* may be explicitly specified. The following interval names are supported:
 
 * `milliseconds`
 * `seconds`
@@ -486,7 +488,7 @@ In lieu of a *count*, the name of a time *interval* may be explicitly specified.
 * `months`
 * `years`
 
-If an *interval* name is specified, an optional *step* may also be specified to prune generated ticks. For example, `ticks("minutes", 15)` will generate ticks at 15-minute intervals:
+If an *intervalName* is specified, an optional *step* may also be specified to prune generated ticks. For example, `ticks("minutes", 15)` will generate ticks at 15-minute intervals:
 
 ```js
 var s = time().domain([new Date(2000, 0, 1, 0), new Date(2000, 0, 1, 2)]);
@@ -500,6 +502,13 @@ s.ticks("minutes", 15);
 //  Sat Jan 01 2000 01:30:00 GMT-0800 (PST),
 //  Sat Jan 01 2000 01:45:00 GMT-0800 (PST),
 //  Sat Jan 01 2000 02:00:00 GMT-0800 (PST)]
+```
+
+This is equivalent to [minute](https://github.com/d3/d3-time#minute).[filter](https://github.com/d3/d3-time#interval_filter) as follows:
+
+```js
+var s = time().domain([new Date(2000, 0, 1, 0), new Date(2000, 0, 1, 2)]);
+s.ticks(minute.filter(function(d) { return d.getMinutes() % 15 === 0; }));
 ```
 
 Note: in some cases, such as with day ticks, specifying a *step* can result in irregular spacing of ticks because months have varying length.
