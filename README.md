@@ -167,6 +167,14 @@ If *specifier* uses the format type `s`, the scale will return a [SI-prefix form
 
 Returns an exact copy of this linear scale. Changes to this scale will not affect the returned scale, and vice versa.
 
+<a name="cubehelix" href="#cubehelix">#</a> <b>cubehelix</b>()
+
+Constructs a new linear scale with the [domain](#linear_domain) [0,1], a [range](#linear_range) of the default Cubehelix color scheme, and [interpolateCubehelixLong](https://github.com/d3/d3-color#interpolateCubehelixLong) as the interpolator.
+
+<a name="rainbow" href="#rainbow">#</a> <b>rainbow</b>()
+
+Constructs a new linear scale with the [domain](#linear_domain) [0,0.5,1], a [range](#linear_range) of the [less-angry rainbow](http://bl.ocks.org/mbostock/310c99e53880faec2434) color scheme (inspired by Matteo Niccoli’s [perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/)), and [interpolateCubehelixLong](https://github.com/d3/d3-color#interpolateCubehelixLong) as the interpolator.
+
 ### Power Scales
 
 Power scales are similar to [linear scales](#linear-scales), except an exponential transform is applied to the input [domain](#pow_domain) value before the output [range](#pow_range) value is computed. Each range value *y* can be expressed as a function of the domain value *x*: *y* = *mx^k* + *b*, where *k* is the [exponent](#pow_exponent) value. Power scales also support negative domain values, in which case the input value and the resulting output value are multiplied by -1.
