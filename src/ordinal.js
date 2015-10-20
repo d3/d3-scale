@@ -1,3 +1,5 @@
+import {map} from "d3-arrays";
+
 function steps(length, start, step) {
   var steps = new Array(length), i = -1;
   while (++i < length) steps[i] = start + step * i;
@@ -21,7 +23,7 @@ function newOrdinal(domain, ranger) {
   scale.domain = function(x) {
     if (!arguments.length) return domain.slice();
     domain = [];
-    index = new Map;
+    index = map();
     var i = -1, n = x.length, xi, xk;
     while (++i < n) if (!index.has(xk = (xi = x[i]) + "")) index.set(xk, domain.push(xi));
     return scale[ranger.t].apply(scale, ranger.a);
