@@ -1,6 +1,6 @@
 import {range} from "d3-arrays";
 import {format} from "d3-format";
-import {default as linear, rebind} from "./linear";
+import linear, {rebind} from "./linear";
 import nice from "./nice";
 
 var tickFormat10 = format(".0e"),

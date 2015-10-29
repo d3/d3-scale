@@ -1,7 +1,7 @@
-import {default as linear, rebind} from "./linear";
+import linear, {rebind} from "./linear";
 import nice from "./nice";
 import tickFormat from "./tickFormat";
-import {default as ticks, tickRange} from "./ticks";
+import ticks, {tickRange} from "./ticks";
 
 function newPow(linear, exponent, domain) {
 

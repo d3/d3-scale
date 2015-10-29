@@ -2,7 +2,7 @@ import {bisect} from "d3-arrays";
 import {interpolate, interpolateNumber, interpolateRound} from "d3-interpolate";
 import nice from "./nice";
 import tickFormat from "./tickFormat";
-import {default as ticks, tickRange} from "./ticks";
+import ticks, {tickRange} from "./ticks";
 
 function uninterpolateClamp(a, b) {
   b = (b -= a = +a) || 1 / b;

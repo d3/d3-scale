@@ -1,5 +1,5 @@
 import {bisector, range} from "d3-arrays";
-import {default as linear, rebind} from "./linear";
+import linear, {rebind} from "./linear";
 import {format} from "d3-time-format";
 import {second, minute, hour, day, month, week, year} from "d3-time";
 import {tickRange} from "./ticks";

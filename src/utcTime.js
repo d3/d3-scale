@@ -1,4 +1,4 @@
-import {default as linear} from "./linear";
+import linear from "./linear";
 import {millisecond, newTime} from "./time";
 import {range} from "d3-arrays";
 import {utcFormat} from "d3-time-format";
