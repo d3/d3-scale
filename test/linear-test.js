@@ -1,5 +1,6 @@
 var tape = require("tape"),
-    scale = require("../");
+    scale = require("../"),
+    roundEpsilon = require("./roundEpsilon");
 
 tape("linear() has the expected defaults", function(test) {
   var s = scale.linear();
@@ -252,16 +253,16 @@ tape("linear.nice(count) accepts a tick count to control nicing step", function(
 
 tape("linear.ticks(count) returns the expected ticks for an ascending domain", function(test) {
   var s = scale.linear();
-  test.deepEqual(s.ticks(10), [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
-  test.deepEqual(s.ticks(9),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
-  test.deepEqual(s.ticks(8),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
-  test.deepEqual(s.ticks(7),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
-  test.deepEqual(s.ticks(6),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
-  test.deepEqual(s.ticks(5),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
-  test.deepEqual(s.ticks(4),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
-  test.deepEqual(s.ticks(3),  [0.0,                     0.5,                     1.0]);
-  test.deepEqual(s.ticks(2),  [0.0,                     0.5,                     1.0]);
-  test.deepEqual(s.ticks(1),  [0.0,                                              1.0]);
+  test.deepEqual(s.ticks(10).map(roundEpsilon), [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
+  test.deepEqual(s.ticks(9).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
+  test.deepEqual(s.ticks(8).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
+  test.deepEqual(s.ticks(7).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  test.deepEqual(s.ticks(6).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  test.deepEqual(s.ticks(5).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  test.deepEqual(s.ticks(4).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  test.deepEqual(s.ticks(3).map(roundEpsilon),  [0.0,                     0.5,                     1.0]);
+  test.deepEqual(s.ticks(2).map(roundEpsilon),  [0.0,                     0.5,                     1.0]);
+  test.deepEqual(s.ticks(1).map(roundEpsilon),  [0.0,                                              1.0]);
   s.domain([-100, 100]);
   test.deepEqual(s.ticks(10), [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
   test.deepEqual(s.ticks(9),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
@@ -278,16 +279,16 @@ tape("linear.ticks(count) returns the expected ticks for an ascending domain", f
 
 tape("linear.ticks(count) returns the expected ticks for a descending domain", function(test) {
   var s = scale.linear().domain([1, 0]);
-  test.deepEqual(s.ticks(10), [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
-  test.deepEqual(s.ticks(9),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
-  test.deepEqual(s.ticks(8),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
-  test.deepEqual(s.ticks(7),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
-  test.deepEqual(s.ticks(6),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
-  test.deepEqual(s.ticks(5),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
-  test.deepEqual(s.ticks(4),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
-  test.deepEqual(s.ticks(3),  [0.0,                     0.5,                     1.0]);
-  test.deepEqual(s.ticks(2),  [0.0,                     0.5,                     1.0]);
-  test.deepEqual(s.ticks(1),  [0.0,                                              1.0]);
+  test.deepEqual(s.ticks(10).map(roundEpsilon), [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
+  test.deepEqual(s.ticks(9).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
+  test.deepEqual(s.ticks(8).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
+  test.deepEqual(s.ticks(7).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  test.deepEqual(s.ticks(6).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  test.deepEqual(s.ticks(5).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  test.deepEqual(s.ticks(4).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  test.deepEqual(s.ticks(3).map(roundEpsilon),  [0.0,                     0.5,                     1.0]);
+  test.deepEqual(s.ticks(2).map(roundEpsilon),  [0.0,                     0.5,                     1.0]);
+  test.deepEqual(s.ticks(1).map(roundEpsilon),  [0.0,                                              1.0]);
   s.domain([100, -100]);
   test.deepEqual(s.ticks(10), [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
   test.deepEqual(s.ticks(9),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
@@ -304,16 +305,16 @@ tape("linear.ticks(count) returns the expected ticks for a descending domain", f
 
 tape("linear.ticks(count) returns the expected ticks for a polylinear domain", function(test) {
   var s = scale.linear().domain([0, 0.25, 0.9, 1]);
-  test.deepEqual(s.ticks(10), [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
-  test.deepEqual(s.ticks(9),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
-  test.deepEqual(s.ticks(8),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
-  test.deepEqual(s.ticks(7),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
-  test.deepEqual(s.ticks(6),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
-  test.deepEqual(s.ticks(5),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
-  test.deepEqual(s.ticks(4),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
-  test.deepEqual(s.ticks(3),  [0.0,                     0.5,                     1.0]);
-  test.deepEqual(s.ticks(2),  [0.0,                     0.5,                     1.0]);
-  test.deepEqual(s.ticks(1),  [0.0,                                              1.0]);
+  test.deepEqual(s.ticks(10).map(roundEpsilon), [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
+  test.deepEqual(s.ticks(9).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
+  test.deepEqual(s.ticks(8).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
+  test.deepEqual(s.ticks(7).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  test.deepEqual(s.ticks(6).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  test.deepEqual(s.ticks(5).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  test.deepEqual(s.ticks(4).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  test.deepEqual(s.ticks(3).map(roundEpsilon),  [0.0,                     0.5,                     1.0]);
+  test.deepEqual(s.ticks(2).map(roundEpsilon),  [0.0,                     0.5,                     1.0]);
+  test.deepEqual(s.ticks(1).map(roundEpsilon),  [0.0,                                              1.0]);
   s.domain([100, 0, -100]);
   test.deepEqual(s.ticks(10), [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
   test.deepEqual(s.ticks(9),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
