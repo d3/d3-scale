@@ -20,19 +20,21 @@
     "url": "https://github.com/d3/d3-scale.git"
   },
   "scripts": {
-    "pretest": "mkdir -p build && d3-bundler --format=umd --name=scale -- index.js > build/scale.js",
+    "pretest": "mkdir -p build && rollup --format=cjs -- index.js > build/scale.js",
     "test": "TZ=America/Los_Angeles faucet `find test -name '*-test.js'`",
     "prepublish": "npm run test && uglifyjs build/scale.js -c -m -o build/scale.min.js && rm -f build/scale.zip && zip -j build/scale.zip -- LICENSE README.md build/scale.js build/scale.min.js"
   },
-  "devDependencies": {
+  "dependencies": {
     "d3-arrays": "~0.1.1",
-    "d3-bundler": "~0.2.5",
     "d3-color": "~0.2.6",
     "d3-format": "~0.3.3",
-    "d3-interpolate": "~0.1.1",
+    "d3-interpolate": "~0.1.2",
     "d3-time": "~0.0.5",
-    "d3-time-format": "~0.1.2",
+    "d3-time-format": "~0.1.3"
+  },
+  "devDependencies": {
     "faucet": "0.0",
+    "rollup": "0.20.3",
     "tape": "4",
     "uglify-js": "2"
   }
