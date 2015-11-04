@@ -13,16 +13,16 @@
     "name": "Mike Bostock",
     "url": "http://bost.ocks.org/mike"
   },
-  "main": "build/scale",
+  "main": "build/scale.cjs",
   "jsnext:main": "index",
   "repository": {
     "type": "git",
     "url": "https://github.com/d3/d3-scale.git"
   },
   "scripts": {
-    "pretest": "mkdir -p build && rollup --format=cjs -- index.js > build/scale.js",
+    "pretest": "mkdir -p build && d3-bundler -x -f cjs -o build/scale.cjs.js",
     "test": "TZ=America/Los_Angeles faucet `find test -name '*-test.js'`",
-    "prepublish": "npm run test && uglifyjs build/scale.js -c -m -o build/scale.min.js && rm -f build/scale.zip && zip -j build/scale.zip -- LICENSE README.md build/scale.js build/scale.min.js"
+    "prepublish": "npm run test && d3-bundler -o build/scale.js && uglifyjs build/scale.js -c -m -o build/scale.min.js && rm -f build/scale.zip && zip -j build/scale.zip -- LICENSE README.md build/scale.js build/scale.min.js"
   },
   "dependencies": {
     "d3-arrays": "~0.1.1",
@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "faucet": "0.0",
-    "rollup": "0.20.3",
+    "d3-bundler": "0.4",
     "tape": "4",
     "uglify-js": "2"
   }
