@@ -1,36 +1,16 @@
-import category10 from "./src/category10";
-import category20 from "./src/category20";
-import category20b from "./src/category20b";
-import category20c from "./src/category20c";
-import cubehelix from "./src/cubehelix";
-import identity from "./src/identity";
-import linear from "./src/linear";
-import log from "./src/log";
-import ordinal from "./src/ordinal";
-import pow, {sqrt} from "./src/pow";
-import quantile from "./src/quantile";
-import quantize from "./src/quantize";
-import rainbow from "./src/rainbow";
-import threshold from "./src/threshold";
-import time from "./src/time";
-import utcTime from "./src/utcTime";
-
-export {
-  category10,
-  category20,
-  category20b,
-  category20c,
-  cubehelix,
-  identity,
-  linear,
-  log,
-  ordinal,
-  pow,
-  quantile,
-  quantize,
-  rainbow,
-  sqrt,
-  threshold,
-  time,
-  utcTime
-};
+export {default as category10} from "./src/category10";
+export {default as category20b} from "./src/category20b";
+export {default as category20c} from "./src/category20c";
+export {default as category20} from "./src/category20";
+export {default as cubehelix} from "./src/cubehelix";
+export {default as identity} from "./src/identity";
+export {default as linear} from "./src/linear";
+export {default as log} from "./src/log";
+export {default as ordinal} from "./src/ordinal";
+export {default as pow, sqrt} from "./src/pow";
+export {default as quantile} from "./src/quantile";
+export {default as quantize} from "./src/quantize";
+export {default as rainbow} from "./src/rainbow";
+export {default as threshold} from "./src/threshold";
+export {default as time} from "./src/time";
+export {default as utcTime} from "./src/utcTime";
