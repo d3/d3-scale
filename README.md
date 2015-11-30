@@ -104,9 +104,7 @@ If *interpolate* is specified, sets the scale’s [range](#linear_range) interpo
 For example, if you create a diverging color scale with three colors in the range:
 
 ```js
-var s = linear()
-    .domain([-100, 0, +100])
-    .range(["red", "white", "green"]);
+var s = linear().domain([-100, 0, +100]).range(["red", "white", "green"]);
 ```
 
 Two interpolators are created internally by the scale, equivalent to:
@@ -119,10 +117,7 @@ var i1 = d3_interpolate.value("white", "green");
 Perhaps the most common reason to specify a custom interpolator is to change the color space of interpolation. For example, to use the [HCL color space](https://github.com/d3/d3-interpolate#hcl):
 
 ```js
-var s = linear()
-    .domain([10, 100])
-    .range(["brown", "steelblue"])
-    .interpolate(d3_interpolate.hcl);
+var s = linear().domain([10, 100]).range(["brown", "steelblue"]).interpolate(d3_interpolate.hcl);
 ```
 
 See [d3-interpolate](https://github.com/d3/d3-interpolate) for more color interpolators.
