@@ -1,5 +1,5 @@
 import {bisect} from "d3-arrays";
-import {interpolate, interpolateNumber, interpolateRound} from "d3-interpolate";
+import {value, number, round} from "d3-interpolate";
 import nice from "./nice";
 import tickFormat from "./tickFormat";
 import ticks, {tickRange} from "./ticks";
@@ -57,7 +57,7 @@ function newLinear(domain, range, interpolate, clamp) {
     var linear = Math.min(domain.length, range.length) > 2 ? polylinear : bilinear,
         uninterpolate = clamp ? uninterpolateClamp : uninterpolateNumber;
     output = linear(domain, range, uninterpolate, interpolate);
-    input = linear(range, domain, uninterpolate, interpolateNumber);
+    input = linear(range, domain, uninterpolate, number);
     return scale;
   }
 
@@ -82,7 +82,7 @@ function newLinear(domain, range, interpolate, clamp) {
   };
 
   scale.rangeRound = function(x) {
-    return scale.range(x).interpolate(interpolateRound);
+    return scale.range(x).interpolate(round);
   };
 
   scale.clamp = function(x) {
@@ -142,5 +142,5 @@ export function rebind(scale, linear) {
 };
 
 export default function() {
-  return newLinear([0, 1], [0, 1], interpolate, false);
+  return newLinear([0, 1], [0, 1], value, false);
 };

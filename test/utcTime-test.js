@@ -1,5 +1,5 @@
 var tape = require("tape"),
-    color = require("d3-color"),
+    interpolate = require("d3-interpolate"),
     time = require("d3-time"),
     scale = require("../"),
     date = require("./date");
@@ -106,7 +106,7 @@ tape("utcTime.copy() isolates changes to the interpolator", function(test) {
   var x = scale.utcTime().domain([date.utc(2009, 0, 1), date.utc(2010, 0, 1)]).range(["red", "blue"]),
       i = x.interpolate(),
       y = x.copy();
-  x.interpolate(color.interpolateHsl);
+  x.interpolate(interpolate.hsl);
   test.equal(x(date.utc(2009, 6, 1)), "#ff00fd");
   test.equal(y(date.utc(2009, 6, 1)), "#81007e");
   test.equal(y.interpolate(), i);
