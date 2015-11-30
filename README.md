@@ -101,26 +101,28 @@ The rounding interpolator is sometimes useful for avoiding antialiasing artifact
 
 If *interpolate* is specified, sets the scale’s [range](#linear_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory.
 
-For example, if you create a diverging color scale with three colors in the range, two interpolators are created internally by the scale, equivalent to:
+For example, if you create a diverging color scale with three colors in the range:
 
 ```js
-var s = scale.linear().domain([-100, 0, +100]).range(["red", "white", "green"]),
-    i0 = interpolate("red", "white"),
-    i1 = interpolate("white", "green");
+var s = linear().domain([-100, 0, +100]).range(["red", "white", "green"]);
 ```
 
-Perhaps the most common reason to specify a custom interpolator is to change the color space of interpolation. For example, to use the [HCL color space](https://github.com/d3/d3-color#interpolateHcl):
+Two interpolators are created internally by the scale, equivalent to:
 
 ```js
-var s = scale.linear()
-    .domain([10, 100])
-    .range(["brown", "steelblue"])
-    .interpolate(interpolateHcl);
+var i0 = d3_interpolate.value("red", "white");
+var i1 = d3_interpolate.value("white", "green");
 ```
 
-See [d3-color](https://github.com/d3/d3-color) for more color interpolators.
+Perhaps the most common reason to specify a custom interpolator is to change the color space of interpolation. For example, to use the [HCL color space](https://github.com/d3/d3-interpolate#hcl):
 
-Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
+```js
+var s = linear().domain([10, 100]).range(["brown", "steelblue"]).interpolate(d3_interpolate.hcl);
+```
+
+See [d3-interpolate](https://github.com/d3/d3-interpolate) for more color interpolators.
+
+Note: the [default interpolator](https://github.com/d3/d3-interpolate#value) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
 
 <a name="linear_clamp" href="#linear_clamp">#</a> <i>linear</i>.<b>clamp</b>([<i>clamp</i>])
 
@@ -169,15 +171,15 @@ Returns an exact copy of this linear scale. Changes to this scale will not affec
 
 <a name="cubehelix" href="#cubehelix">#</a> <b>cubehelix</b>()
 
-![cubehelix](https://cloud.githubusercontent.com/assets/230541/11226124/e1500ed2-8d32-11e5-915a-f2e7175e7a72.png)
+<img src="https://cloud.githubusercontent.com/assets/230541/11226124/e1500ed2-8d32-11e5-915a-f2e7175e7a72.png" width="100%" alt="cubehelix">
 
-Constructs a new linear scale with the [domain](#linear_domain) [0,1], a [range](#linear_range) of the default Cubehelix color scheme, and [interpolateCubehelixLong](https://github.com/d3/d3-color#interpolateCubehelixLong) as the interpolator.
+Constructs a new linear scale with the [domain](#linear_domain) [0,1], a [range](#linear_range) of the default Cubehelix color scheme, and [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
 
 <a name="rainbow" href="#rainbow">#</a> <b>rainbow</b>()
 
-![rainbow](https://cloud.githubusercontent.com/assets/230541/11226126/e3d0298a-8d32-11e5-9936-a931c6e3b470.png)
+<img src="https://cloud.githubusercontent.com/assets/230541/11226126/e3d0298a-8d32-11e5-9936-a931c6e3b470.png" width="100%" alt="rainbow">
 
-Constructs a new linear scale with the [domain](#linear_domain) [0,0.5,1], a [range](#linear_range) of the [less-angry rainbow](http://bl.ocks.org/mbostock/310c99e53880faec2434) color scheme (inspired by Matteo Niccoli’s [perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/)), and [interpolateCubehelixLong](https://github.com/d3/d3-color#interpolateCubehelixLong) as the interpolator.
+Constructs a new linear scale with the [domain](#linear_domain) [0,0.5,1], a [range](#linear_range) of the [less-angry rainbow](http://bl.ocks.org/mbostock/310c99e53880faec2434) color scheme (inspired by Matteo Niccoli’s [perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/)), and [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
 
 ### Power Scales
 
@@ -192,7 +194,7 @@ Constructs a new power scale with the default [domain](#pow_domain) [0,1], the d
 Given a value *x* in the [domain](#pow_domain), returns the corresponding value *y* in the [range](#pow_range). For example, a color encoding:
 
 ```js
-var s = pow().exponent(.5).domain([10, 100]).range(["brown", "steelblue"]);
+var s = pow().exponent(0.5).domain([10, 100]).range(["brown", "steelblue"]);
 s(20); // "#933b44"
 s(50); // "#6f5c79"
 ```
@@ -200,7 +202,7 @@ s(50); // "#6f5c79"
 Or a position encoding:
 
 ```js
-var s = pow().exponent(.5).domain([10, 100]).range([0, 960]);
+var s = pow().exponent(0.5).domain([10, 100]).range([0, 960]);
 s(20); // 183.90099810179152
 s(50); // 548.7848671143346
 ```
@@ -210,7 +212,7 @@ s(50); // 548.7848671143346
 Given a value *y* in the [range](#pow_range), returns the corresponding value *x* in the [domain](#pow_domain): the inverse of [*pow*](#_pow). For example, a position encoding:
 
 ```js
-var s = pow().exponent(.5).domain([10, 100]).range([0, 960]);
+var s = pow().exponent(0.5).domain([10, 100]).range([0, 960]);
 s.invert(183.90099810179152); // 20
 s.invert(548.7848671143346); // 50
 ```
@@ -633,7 +635,7 @@ Threshold scales are similar to [quantize scales](#quantize-scales), except they
 
 <a name="threshold" href="#threshold">#</a> <b>threshold</b>()
 
-Constructs a new threshold scale with the default [domain](#threshold_domain) [.5] and the default [range](#threshold_range) [0,1]. Thus, the default threshold scale is equivalent to the [Math.round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function for numbers; for example threshold(0.49) returns 0, and threshold(0.51) returns 1.
+Constructs a new threshold scale with the default [domain](#threshold_domain) [0.5] and the default [range](#threshold_range) [0,1]. Thus, the default threshold scale is equivalent to the [Math.round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function for numbers; for example threshold(0.49) returns 0, and threshold(0.51) returns 1.
 
 <a name="_threshold" href="#_threshold">#</a> <i>threshold</i>(<i>x</i>)
 

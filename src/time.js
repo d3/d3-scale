@@ -1,14 +1,52 @@
-import {bisector, range} from "d3-arrays";
+import {bisector} from "d3-arrays";
 import linear, {rebind} from "./linear";
 import {format} from "d3-time-format";
-import {second, minute, hour, day, month, week, year} from "d3-time";
+import {year, month, week, day, hour, minute, second, millisecond} from "d3-time";
 import {tickRange} from "./ticks";
+
+var millisecondsPerSecond = 1000,
+    millisecondsPerMinute = millisecondsPerSecond * 60,
+    millisecondsPerHour = millisecondsPerMinute * 60,
+    millisecondsPerDay = millisecondsPerHour * 24,
+    millisecondsPerWeek = millisecondsPerDay * 7,
+    millisecondsPerMonth = millisecondsPerDay * 30,
+    millisecondsPerYear = millisecondsPerDay * 365,
+    bisectTickIntervals = bisector(function(method) { return method[2]; }).right;
 
 function newDate(t) {
   return new Date(t);
 }
 
-export function newTime(linear, timeInterval, tickFormat, format) {
+export function newTime(linear, year, month, week, day, hour, minute, second, millisecond, format) {
+  var formatMillisecond = format(".%L"),
+      formatSecond = format(":%S"),
+      formatMinute = format("%I:%M"),
+      formatHour = format("%I %p"),
+      formatDay = format("%a %d"),
+      formatWeek = format("%b %d"),
+      formatMonth = format("%B"),
+      formatYear = format("%Y");
+
+  var tickIntervals = [
+    [second,  1,      millisecondsPerSecond],
+    [second,  5,  5 * millisecondsPerSecond],
+    [second, 15, 15 * millisecondsPerSecond],
+    [second, 30, 30 * millisecondsPerSecond],
+    [minute,  1,      millisecondsPerMinute],
+    [minute,  5,  5 * millisecondsPerMinute],
+    [minute, 15, 15 * millisecondsPerMinute],
+    [minute, 30, 30 * millisecondsPerMinute],
+    [  hour,  1,      millisecondsPerHour  ],
+    [  hour,  3,  3 * millisecondsPerHour  ],
+    [  hour,  6,  6 * millisecondsPerHour  ],
+    [  hour, 12, 12 * millisecondsPerHour  ],
+    [   day,  1,      millisecondsPerDay   ],
+    [   day,  2,  2 * millisecondsPerDay   ],
+    [  week,  1,      millisecondsPerWeek  ],
+    [ month,  1,      millisecondsPerMonth ],
+    [ month,  3,  3 * millisecondsPerMonth ],
+    [  year,  1,      millisecondsPerYear  ]
+  ];
 
   function scale(x) {
     return linear(x);
@@ -24,21 +62,39 @@ export function newTime(linear, timeInterval, tickFormat, format) {
     return scale;
   };
 
+  function tickFormat(date) {
+    return (second(date) < date ? formatMillisecond
+        : minute(date) < date ? formatSecond
+        : hour(date) < date ? formatMinute
+        : day(date) < date ? formatHour
+        : month(date) < date ? (week(date) < date ? formatDay : formatWeek)
+        : year(date) < date ? formatMonth
+        : formatYear)(date);
+  }
+
   function tickInterval(interval, start, stop, step) {
     if (interval == null) interval = 10;
 
     // If a desired tick count is specified, pick a reasonable tick interval
     // based on the extent of the domain and a rough estimate of tick size.
-    // If a named interval such as "seconds" was specified, convert to the
-    // corresponding time interval and optionally filter using the step.
     // Otherwise, assume interval is already a time interval and use it.
-    switch (typeof interval) {
-      case "number": interval = chooseTickInterval(start, stop, interval), step = interval[1], interval = interval[0]; break;
-      case "string": step = step == null ? 1 : Math.floor(step); break;
-      default: return interval;
+    if (typeof interval === "number") {
+      var target = Math.abs(stop - start) / interval,
+          i = bisectTickIntervals(tickIntervals, target);
+      if (i === tickIntervals.length) {
+        step = tickRange([start / millisecondsPerYear, stop / millisecondsPerYear], interval)[2];
+        interval = year;
+      } else if (i) {
+        i = tickIntervals[target / tickIntervals[i - 1][2] < tickIntervals[i][2] / target ? i - 1 : i];
+        step = i[1];
+        interval = i[0];
+      } else {
+        step = tickRange([start, stop], interval)[2];
+        interval = millisecond;
+      }
     }
 
-    return isFinite(step) && step > 0 ? timeInterval(interval, step) : null;
+    return step == null ? interval : interval.every(step);
   }
 
   scale.ticks = function(interval, step) {
@@ -81,93 +137,12 @@ export function newTime(linear, timeInterval, tickFormat, format) {
   };
 
   scale.copy = function() {
-    return newTime(linear.copy(), timeInterval, tickFormat, format);
+    return newTime(linear.copy(), year, month, week, day, hour, minute, second, millisecond, format);
   };
 
   return rebind(scale, linear);
 };
 
-var millisecondsPerSecond = 1000,
-    millisecondsPerMinute = millisecondsPerSecond * 60,
-    millisecondsPerHour = millisecondsPerMinute * 60,
-    millisecondsPerDay = millisecondsPerHour * 24,
-    millisecondsPerWeek = millisecondsPerDay * 7,
-    millisecondsPerMonth = millisecondsPerDay * 30,
-    millisecondsPerYear = millisecondsPerDay * 365;
-
-var tickIntervals = [
-  ["seconds",  1,      millisecondsPerSecond],
-  ["seconds",  5,  5 * millisecondsPerSecond],
-  ["seconds", 15, 15 * millisecondsPerSecond],
-  ["seconds", 30, 30 * millisecondsPerSecond],
-  ["minutes",  1,      millisecondsPerMinute],
-  ["minutes",  5,  5 * millisecondsPerMinute],
-  ["minutes", 15, 15 * millisecondsPerMinute],
-  ["minutes", 30, 30 * millisecondsPerMinute],
-  [  "hours",  1,      millisecondsPerHour  ],
-  [  "hours",  3,  3 * millisecondsPerHour  ],
-  [  "hours",  6,  6 * millisecondsPerHour  ],
-  [  "hours", 12, 12 * millisecondsPerHour  ],
-  [   "days",  1,      millisecondsPerDay   ],
-  [   "days",  2,  2 * millisecondsPerDay   ],
-  [  "weeks",  1,      millisecondsPerWeek  ],
-  [ "months",  1,      millisecondsPerMonth ],
-  [ "months",  3,  3 * millisecondsPerMonth ],
-  [  "years",  1,      millisecondsPerYear  ]
-];
-
-var bisectTickIntervals = bisector(function(method) {
-  return method[2];
-}).right;
-
-function chooseTickInterval(start, stop, count) {
-  var target = Math.abs(stop - start) / count,
-      i = bisectTickIntervals(tickIntervals, target);
-  return i === tickIntervals.length ? ["years", tickRange([start / millisecondsPerYear, stop / millisecondsPerYear], count)[2]]
-      : i ? tickIntervals[target / tickIntervals[i - 1][2] < tickIntervals[i][2] / target ? i - 1 : i]
-      : ["milliseconds", tickRange([start, stop], count)[2]];
-}
-
-var formatMillisecond = format(".%L"),
-    formatSecond = format(":%S"),
-    formatMinute = format("%I:%M"),
-    formatHour = format("%I %p"),
-    formatDay = format("%a %d"),
-    formatWeek = format("%b %d"),
-    formatMonth = format("%B"),
-    formatYear = format("%Y");
-
-function tickFormat(date) {
-  return (second(date) < date ? formatMillisecond
-      : minute(date) < date ? formatSecond
-      : hour(date) < date ? formatMinute
-      : day(date) < date ? formatHour
-      : month(date) < date ? (week(date) < date ? formatDay : formatWeek)
-      : year(date) < date ? formatMonth
-      : formatYear)(date);
-}
-
-export function millisecond(step) {
-  return {
-    range: function(start, stop) { return range(Math.ceil(start / step) * step, stop, step).map(newDate); },
-    floor: function(date) { return newDate(Math.floor(date / step) * step); },
-    ceil: function(date) { return newDate(Math.ceil(date / step) * step); }
-  };
-};
-
-function timeInterval(interval, step) {
-  switch (interval) {
-    case "milliseconds": return millisecond(step);
-    case "seconds": return step > 1 ? second.filter(function(d) { return d.getSeconds() % step === 0; }) : second;
-    case "minutes": return step > 1 ? minute.filter(function(d) { return d.getMinutes() % step === 0; }) : minute;
-    case "hours": return step > 1 ? hour.filter(function(d) { return d.getHours() % step === 0; }) : hour;
-    case "days": return step > 1 ? day.filter(function(d) { return (d.getDate() - 1) % step === 0; }) : day;
-    case "weeks": return step > 1 ? week.filter(function(d) { return week.count(0, d) % step === 0; }) : week;
-    case "months": return step > 1 ? month.filter(function(d) { return d.getMonth() % step === 0; }) : month;
-    case "years": return step > 1 ? year.filter(function(d) { return d.getFullYear() % step === 0; }) : year;
-  }
-}
-
 export default function() {
-  return newTime(linear(), timeInterval, tickFormat, format).domain([new Date(2000, 0, 1), new Date(2000, 0, 2)]);
+  return newTime(linear(), year, month, week, day, hour, minute, second, millisecond, format).domain([new Date(2000, 0, 1), new Date(2000, 0, 2)]);
 };

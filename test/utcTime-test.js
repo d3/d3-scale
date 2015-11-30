@@ -1,5 +1,5 @@
 var tape = require("tape"),
-    color = require("d3-color"),
+    interpolate = require("d3-interpolate"),
     time = require("d3-time"),
     scale = require("../"),
     date = require("./date");
@@ -44,33 +44,24 @@ tape("utcTime.nice(interval) nices using the specified time interval", function(
   test.end();
 });
 
-tape("utcTime.nice(intervalName) nices using the specified named time interval", function(test) {
-  var x = scale.utcTime().domain([date.utc(2009, 0, 1, 0, 12), date.utc(2009, 0, 1, 23, 48)]);
-  test.deepEqual(x.nice("days").domain(), [date.utc(2009, 0, 1), date.utc(2009, 0, 2)]);
-  test.deepEqual(x.nice("weeks").domain(), [date.utc(2008, 11, 28), date.utc(2009, 0, 4)]);
-  test.deepEqual(x.nice("months").domain(), [date.utc(2008, 11, 1), date.utc(2009, 1, 1)]);
-  test.deepEqual(x.nice("years").domain(), [date.utc(2008, 0, 1), date.utc(2010, 0, 1)]);
-  test.end();
-});
-
-tape("utcTime.nice(intervalName) can nice empty domains", function(test) {
+tape("utcTime.nice(interval) can nice empty domains", function(test) {
   var x = scale.utcTime().domain([date.utc(2009, 0, 1, 0, 12), date.utc(2009, 0, 1, 0, 12)]);
-  test.deepEqual(x.nice("days").domain(), [date.utc(2009, 0, 1), date.utc(2009, 0, 2)]);
+  test.deepEqual(x.nice(time.utcDay).domain(), [date.utc(2009, 0, 1), date.utc(2009, 0, 2)]);
   test.end();
 });
 
-tape("utcTime.nice(intervalName) can nice a polylinear domain, only affecting its extent", function(test) {
-  var x = scale.utcTime().domain([date.utc(2009, 0, 1, 0, 12), date.utc(2009, 0, 1, 23, 48), date.utc(2009, 0, 2, 23, 48)]).nice("days");
+tape("utcTime.nice(interval) can nice a polylinear domain, only affecting its extent", function(test) {
+  var x = scale.utcTime().domain([date.utc(2009, 0, 1, 0, 12), date.utc(2009, 0, 1, 23, 48), date.utc(2009, 0, 2, 23, 48)]).nice(time.utcDay);
   test.deepEqual(x.domain(), [date.utc(2009, 0, 1), date.utc(2009, 0, 1, 23, 48), date.utc(2009, 0, 3)]);
   test.end();
 });
 
-tape("utcTime.nice(intervalName, step) nices using the specified time interval and step", function(test) {
+tape("utcTime.nice(interval, step) nices using the specified time interval and step", function(test) {
   var x = scale.utcTime().domain([date.utc(2009, 0, 1, 0, 12), date.utc(2009, 0, 1, 23, 48)]);
-  test.deepEqual(x.nice("days", 3).domain(), [date.utc(2009, 0, 1), date.utc(2009, 0, 4)]);
-  test.deepEqual(x.nice("weeks", 2).domain(), [date.utc(2008, 11, 21), date.utc(2009, 0, 4)]);
-  test.deepEqual(x.nice("months", 3).domain(), [date.utc(2008, 9, 1), date.utc(2009, 3, 1)]);
-  test.deepEqual(x.nice("years", 10).domain(), [date.utc(2000, 0, 1), date.utc(2010, 0, 1)]);
+  test.deepEqual(x.nice(time.utcDay, 3).domain(), [date.utc(2009, 0, 1), date.utc(2009, 0, 4)]);
+  test.deepEqual(x.nice(time.utcWeek, 2).domain(), [date.utc(2008, 11, 21), date.utc(2009, 0, 4)]);
+  test.deepEqual(x.nice(time.utcMonth, 3).domain(), [date.utc(2008, 9, 1), date.utc(2009, 3, 1)]);
+  test.deepEqual(x.nice(time.utcYear, 10).domain(), [date.utc(2000, 0, 1), date.utc(2010, 0, 1)]);
   test.end();
 });
 
@@ -106,7 +97,7 @@ tape("utcTime.copy() isolates changes to the interpolator", function(test) {
   var x = scale.utcTime().domain([date.utc(2009, 0, 1), date.utc(2010, 0, 1)]).range(["red", "blue"]),
       i = x.interpolate(),
       y = x.copy();
-  x.interpolate(color.interpolateHsl);
+  x.interpolate(interpolate.hsl);
   test.equal(x(date.utc(2009, 6, 1)), "#ff00fd");
   test.equal(y(date.utc(2009, 6, 1)), "#81007e");
   test.equal(y.interpolate(), i);
@@ -137,9 +128,9 @@ tape("utcTime.ticks(interval) observes the specified tick interval", function(te
   test.end();
 });
 
-tape("utcTime.ticks(intervalName) observes the specified named tick interval", function(test) {
+tape("utcTime.ticks(interval) observes the specified named tick interval", function(test) {
   var x = scale.utcTime().domain([date.utc(2011, 0, 1, 12, 1, 0), date.utc(2011, 0, 1, 12, 4, 4)]);
-  test.deepEqual(x.ticks("minutes"), [
+  test.deepEqual(x.ticks(time.utcMinute), [
     date.utc(2011, 0, 1, 12, 1),
     date.utc(2011, 0, 1, 12, 2),
     date.utc(2011, 0, 1, 12, 3),
@@ -148,9 +139,9 @@ tape("utcTime.ticks(intervalName) observes the specified named tick interval", f
   test.end();
 });
 
-tape("utcTime.ticks(intervalName, step) observes the specified tick interval and step", function(test) {
+tape("utcTime.ticks(interval, step) observes the specified tick interval and step", function(test) {
   var x = scale.utcTime().domain([date.utc(2011, 0, 1, 12, 0, 0), date.utc(2011, 0, 1, 12, 33, 4)]);
-  test.deepEqual(x.ticks("minutes", 10), [
+  test.deepEqual(x.ticks(time.utcMinute, 10), [
     date.utc(2011, 0, 1, 12, 0),
     date.utc(2011, 0, 1, 12, 10),
     date.utc(2011, 0, 1, 12, 20),

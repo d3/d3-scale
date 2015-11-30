@@ -1,5 +1,5 @@
 var tape = require("tape"),
-    color = require("d3-color"),
+    interpolate = require("d3-interpolate"),
     time = require("d3-time"),
     scale = require("../"),
     date = require("./date");
@@ -44,33 +44,24 @@ tape("time.nice(interval) nices using the specified time interval", function(tes
   test.end();
 });
 
-tape("time.nice(intervalName) nices using the specified named time interval", function(test) {
-  var x = scale.time().domain([date.local(2009, 0, 1, 0, 12), date.local(2009, 0, 1, 23, 48)]);
-  test.deepEqual(x.nice("days").domain(), [date.local(2009, 0, 1), date.local(2009, 0, 2)]);
-  test.deepEqual(x.nice("weeks").domain(), [date.local(2008, 11, 28), date.local(2009, 0, 4)]);
-  test.deepEqual(x.nice("months").domain(), [date.local(2008, 11, 1), date.local(2009, 1, 1)]);
-  test.deepEqual(x.nice("years").domain(), [date.local(2008, 0, 1), date.local(2010, 0, 1)]);
-  test.end();
-});
-
-tape("time.nice(intervalName) can nice empty domains", function(test) {
+tape("time.nice(interval) can nice empty domains", function(test) {
   var x = scale.time().domain([date.local(2009, 0, 1, 0, 12), date.local(2009, 0, 1, 0, 12)]);
-  test.deepEqual(x.nice("days").domain(), [date.local(2009, 0, 1), date.local(2009, 0, 2)]);
+  test.deepEqual(x.nice(time.day).domain(), [date.local(2009, 0, 1), date.local(2009, 0, 2)]);
   test.end();
 });
 
-tape("time.nice(intervalName) can nice a polylinear domain, only affecting its extent", function(test) {
-  var x = scale.time().domain([date.local(2009, 0, 1, 0, 12), date.local(2009, 0, 1, 23, 48), date.local(2009, 0, 2, 23, 48)]).nice("days");
+tape("time.nice(interval) can nice a polylinear domain, only affecting its extent", function(test) {
+  var x = scale.time().domain([date.local(2009, 0, 1, 0, 12), date.local(2009, 0, 1, 23, 48), date.local(2009, 0, 2, 23, 48)]).nice(time.day);
   test.deepEqual(x.domain(), [date.local(2009, 0, 1), date.local(2009, 0, 1, 23, 48), date.local(2009, 0, 3)]);
   test.end();
 });
 
-tape("time.nice(intervalName, step) nices using the specified time interval and step", function(test) {
+tape("time.nice(interval, step) nices using the specified time interval and step", function(test) {
   var x = scale.time().domain([date.local(2009, 0, 1, 0, 12), date.local(2009, 0, 1, 23, 48)]);
-  test.deepEqual(x.nice("days", 3).domain(), [date.local(2009, 0, 1), date.local(2009, 0, 4)]);
-  test.deepEqual(x.nice("weeks", 2).domain(), [date.local(2008, 11, 21), date.local(2009, 0, 4)]);
-  test.deepEqual(x.nice("months", 3).domain(), [date.local(2008, 9, 1), date.local(2009, 3, 1)]);
-  test.deepEqual(x.nice("years", 10).domain(), [date.local(2000, 0, 1), date.local(2010, 0, 1)]);
+  test.deepEqual(x.nice(time.day, 3).domain(), [date.local(2009, 0, 1), date.local(2009, 0, 4)]);
+  test.deepEqual(x.nice(time.week, 2).domain(), [date.local(2008, 11, 21), date.local(2009, 0, 4)]);
+  test.deepEqual(x.nice(time.month, 3).domain(), [date.local(2008, 9, 1), date.local(2009, 3, 1)]);
+  test.deepEqual(x.nice(time.year, 10).domain(), [date.local(2000, 0, 1), date.local(2010, 0, 1)]);
   test.end();
 });
 
@@ -106,7 +97,7 @@ tape("time.copy() isolates changes to the interpolator", function(test) {
   var x = scale.time().domain([date.local(2009, 0, 1), date.local(2010, 0, 1)]).range(["red", "blue"]),
       i = x.interpolate(),
       y = x.copy();
-  x.interpolate(color.interpolateHsl);
+  x.interpolate(interpolate.hsl);
   test.equal(x(date.local(2009, 6, 1)), "#ff00fd");
   test.equal(y(date.local(2009, 6, 1)), "#81007e");
   test.equal(y.interpolate(), i);
@@ -137,20 +128,20 @@ tape("time.ticks(interval) observes the specified tick interval", function(test)
   test.end();
 });
 
-tape("time.ticks(intervalName) observes the specified named tick interval", function(test) {
-  var x = scale.time().domain([date.local(2011, 0, 1, 12, 1, 0), date.local(2011, 0, 1, 12, 4, 4)]);
-  test.deepEqual(x.ticks("minutes"), [
-    date.local(2011, 0, 1, 12, 1),
-    date.local(2011, 0, 1, 12, 2),
-    date.local(2011, 0, 1, 12, 3),
-    date.local(2011, 0, 1, 12, 4)
-  ]);
-  test.end();
-});
+// tape("time.ticks(intervalName) observes the specified named tick interval", function(test) {
+//   var x = scale.time().domain([date.local(2011, 0, 1, 12, 1, 0), date.local(2011, 0, 1, 12, 4, 4)]);
+//   test.deepEqual(x.ticks("minutes"), [
+//     date.local(2011, 0, 1, 12, 1),
+//     date.local(2011, 0, 1, 12, 2),
+//     date.local(2011, 0, 1, 12, 3),
+//     date.local(2011, 0, 1, 12, 4)
+//   ]);
+//   test.end();
+// });
 
-tape("time.ticks(intervalName, step) observes the specified tick interval and step", function(test) {
+tape("time.ticks(interval, step) observes the specified tick interval and step", function(test) {
   var x = scale.time().domain([date.local(2011, 0, 1, 12, 0, 0), date.local(2011, 0, 1, 12, 33, 4)]);
-  test.deepEqual(x.ticks("minutes", 10), [
+  test.deepEqual(x.ticks(time.minute, 10), [
     date.local(2011, 0, 1, 12, 0),
     date.local(2011, 0, 1, 12, 10),
     date.local(2011, 0, 1, 12, 20),
