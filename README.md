@@ -195,7 +195,7 @@ Constructs a new power scale with the default [domain](#pow_domain) [0,1], the d
 Given a value *x* in the [domain](#pow_domain), returns the corresponding value *y* in the [range](#pow_range). For example, a color encoding:
 
 ```js
-var s = pow().exponent(.5).domain([10, 100]).range(["brown", "steelblue"]);
+var s = pow().exponent(0.5).domain([10, 100]).range(["brown", "steelblue"]);
 s(20); // "#933b44"
 s(50); // "#6f5c79"
 ```
@@ -203,7 +203,7 @@ s(50); // "#6f5c79"
 Or a position encoding:
 
 ```js
-var s = pow().exponent(.5).domain([10, 100]).range([0, 960]);
+var s = pow().exponent(0.5).domain([10, 100]).range([0, 960]);
 s(20); // 183.90099810179152
 s(50); // 548.7848671143346
 ```
@@ -213,7 +213,7 @@ s(50); // 548.7848671143346
 Given a value *y* in the [range](#pow_range), returns the corresponding value *x* in the [domain](#pow_domain): the inverse of [*pow*](#_pow). For example, a position encoding:
 
 ```js
-var s = pow().exponent(.5).domain([10, 100]).range([0, 960]);
+var s = pow().exponent(0.5).domain([10, 100]).range([0, 960]);
 s.invert(183.90099810179152); // 20
 s.invert(548.7848671143346); // 50
 ```
@@ -636,7 +636,7 @@ Threshold scales are similar to [quantize scales](#quantize-scales), except they
 
 <a name="threshold" href="#threshold">#</a> <b>threshold</b>()
 
-Constructs a new threshold scale with the default [domain](#threshold_domain) [.5] and the default [range](#threshold_range) [0,1]. Thus, the default threshold scale is equivalent to the [Math.round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function for numbers; for example threshold(0.49) returns 0, and threshold(0.51) returns 1.
+Constructs a new threshold scale with the default [domain](#threshold_domain) [0.5] and the default [range](#threshold_range) [0,1]. Thus, the default threshold scale is equivalent to the [Math.round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function for numbers; for example threshold(0.49) returns 0, and threshold(0.51) returns 1.
 
 <a name="_threshold" href="#_threshold">#</a> <i>threshold</i>(<i>x</i>)
 
