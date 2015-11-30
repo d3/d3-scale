@@ -101,13 +101,17 @@ The rounding interpolator is sometimes useful for avoiding antialiasing artifact
 
 If *interpolate* is specified, sets the scale’s [range](#linear_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory.
 
-For example, if you create a diverging color scale with three colors in the range, two interpolators are created internally by the scale, equivalent to:
+For example, if you create a diverging color scale with three colors in the range:
 
 ```js
-var s = d3_scale.linear()
+var s = linear()
     .domain([-100, 0, +100])
     .range(["red", "white", "green"]);
+```
 
+Two interpolators are created internally by the scale, equivalent to:
+
+```js
 var i0 = d3_interpolate.value("red", "white");
 var i1 = d3_interpolate.value("white", "green");
 ```
@@ -115,7 +119,7 @@ var i1 = d3_interpolate.value("white", "green");
 Perhaps the most common reason to specify a custom interpolator is to change the color space of interpolation. For example, to use the [HCL color space](https://github.com/d3/d3-interpolate#hcl):
 
 ```js
-var s = d3_scale.linear()
+var s = linear()
     .domain([10, 100])
     .range(["brown", "steelblue"])
     .interpolate(d3_interpolate.hcl);
