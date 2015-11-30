@@ -104,23 +104,26 @@ If *interpolate* is specified, sets the scale’s [range](#linear_range) interpo
 For example, if you create a diverging color scale with three colors in the range, two interpolators are created internally by the scale, equivalent to:
 
 ```js
-var s = scale.linear().domain([-100, 0, +100]).range(["red", "white", "green"]),
-    i0 = interpolate("red", "white"),
-    i1 = interpolate("white", "green");
+var s = d3_scale.linear()
+    .domain([-100, 0, +100])
+    .range(["red", "white", "green"]);
+
+var i0 = d3_interpolate.value("red", "white");
+var i1 = d3_interpolate.value("white", "green");
 ```
 
-Perhaps the most common reason to specify a custom interpolator is to change the color space of interpolation. For example, to use the [HCL color space](https://github.com/d3/d3-color#interpolateHcl):
+Perhaps the most common reason to specify a custom interpolator is to change the color space of interpolation. For example, to use the [HCL color space](https://github.com/d3/d3-interpolate#hcl):
 
 ```js
-var s = scale.linear()
+var s = d3_scale.linear()
     .domain([10, 100])
     .range(["brown", "steelblue"])
-    .interpolate(interpolateHcl);
+    .interpolate(d3_interpolate.hcl);
 ```
 
-See [d3-color](https://github.com/d3/d3-color) for more color interpolators.
+See [d3-interpolate](https://github.com/d3/d3-interpolate) for more color interpolators.
 
-Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
+Note: the [default interpolator](https://github.com/d3/d3-interpolate#value) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
 
 <a name="linear_clamp" href="#linear_clamp">#</a> <i>linear</i>.<b>clamp</b>([<i>clamp</i>])
 
@@ -171,13 +174,13 @@ Returns an exact copy of this linear scale. Changes to this scale will not affec
 
 ![cubehelix](https://cloud.githubusercontent.com/assets/230541/11226124/e1500ed2-8d32-11e5-915a-f2e7175e7a72.png)
 
-Constructs a new linear scale with the [domain](#linear_domain) [0,1], a [range](#linear_range) of the default Cubehelix color scheme, and [interpolateCubehelixLong](https://github.com/d3/d3-color#interpolateCubehelixLong) as the interpolator.
+Constructs a new linear scale with the [domain](#linear_domain) [0,1], a [range](#linear_range) of the default Cubehelix color scheme, and [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
 
 <a name="rainbow" href="#rainbow">#</a> <b>rainbow</b>()
 
 ![rainbow](https://cloud.githubusercontent.com/assets/230541/11226126/e3d0298a-8d32-11e5-9936-a931c6e3b470.png)
 
-Constructs a new linear scale with the [domain](#linear_domain) [0,0.5,1], a [range](#linear_range) of the [less-angry rainbow](http://bl.ocks.org/mbostock/310c99e53880faec2434) color scheme (inspired by Matteo Niccoli’s [perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/)), and [interpolateCubehelixLong](https://github.com/d3/d3-color#interpolateCubehelixLong) as the interpolator.
+Constructs a new linear scale with the [domain](#linear_domain) [0,0.5,1], a [range](#linear_range) of the [less-angry rainbow](http://bl.ocks.org/mbostock/310c99e53880faec2434) color scheme (inspired by Matteo Niccoli’s [perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/)), and [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
 
 ### Power Scales
 
