@@ -1,4 +1,4 @@
-import {ascending, bisect, quantile} from "d3-arrays";
+import {ascending, bisect, quantile} from "d3-array";
 
 function newQuantile(domain, range) {
   var thresholds;

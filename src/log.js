@@ -1,4 +1,4 @@
-import {range} from "d3-arrays";
+import {range} from "d3-array";
 import {format} from "d3-format";
 import linear, {rebind} from "./linear";
 import nice from "./nice";

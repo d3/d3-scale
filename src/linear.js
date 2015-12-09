@@ -1,4 +1,4 @@
-import {bisect} from "d3-arrays";
+import {bisect} from "d3-array";
 import {value, number, round} from "d3-interpolate";
 import nice from "./nice";
 import tickFormat from "./tickFormat";

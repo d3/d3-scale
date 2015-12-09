@@ -1,4 +1,4 @@
-import {bisector} from "d3-arrays";
+import {bisector} from "d3-array";
 import linear, {rebind} from "./linear";
 import {format} from "d3-time-format";
 import {year, month, week, day, hour, minute, second, millisecond} from "d3-time";

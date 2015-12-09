@@ -1,4 +1,4 @@
-import {map} from "d3-arrays";
+import {map} from "d3-array";
 
 function steps(length, start, step) {
   var steps = new Array(length), i = -1;

@@ -1,5 +1,5 @@
 var tape = require("tape"),
-    arrays = require("d3-arrays"),
+    array = require("d3-array"),
     scale = require("../");
 
 require("./inDelta");
@@ -48,13 +48,13 @@ tape("quantize.domain() only considers the extent of the domain", function(test)
 
 tape("quantize.range() cardinality determines the degree of quantization", function(test) {
   var s = scale.quantize();
-  test.inDelta(s.range(arrays.range(0, 1.001, .001))(1/3), .333, 1e-6);
-  test.inDelta(s.range(arrays.range(0, 1.01, .01))(1/3), .33, 1e-6);
-  test.inDelta(s.range(arrays.range(0, 1.1, .1))(1/3), .3, 1e-6);
-  test.inDelta(s.range(arrays.range(0, 1.2, .2))(1/3), .4, 1e-6);
-  test.inDelta(s.range(arrays.range(0, 1.25, .25))(1/3), .25, 1e-6);
-  test.inDelta(s.range(arrays.range(0, 1.5, .5))(1/3), .5, 1e-6);
-  test.inDelta(s.range(arrays.range(1))(1/3), 0, 1e-6);
+  test.inDelta(s.range(array.range(0, 1.001, .001))(1/3), .333, 1e-6);
+  test.inDelta(s.range(array.range(0, 1.01, .01))(1/3), .33, 1e-6);
+  test.inDelta(s.range(array.range(0, 1.1, .1))(1/3), .3, 1e-6);
+  test.inDelta(s.range(array.range(0, 1.2, .2))(1/3), .4, 1e-6);
+  test.inDelta(s.range(array.range(0, 1.25, .25))(1/3), .25, 1e-6);
+  test.inDelta(s.range(array.range(0, 1.5, .5))(1/3), .5, 1e-6);
+  test.inDelta(s.range(array.range(1))(1/3), 0, 1e-6);
   test.end();
 });
 

@@ -1,4 +1,4 @@
-import {bisect} from "d3-arrays";
+import {bisect} from "d3-array";
 
 function newThreshold(domain, range, n) {
 
