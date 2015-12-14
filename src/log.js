@@ -59,9 +59,9 @@ function newLog(linear, base, domain) {
       if (u > 0) {
         for (--j, k = 1; k < n; ++k) if ((t = pow(i) * k) < u) continue; else ticks.push(t);
         while (++i < j) for (k = 1; k < n; ++k) ticks.push(pow(i) * k);
-        for (k = 1; k < n; ++k) if ((t = pow(i) * k) > v) break; else ticks.push(t);
+        for (k = 1; k <= n; ++k) if ((t = pow(i) * k) > v) break; else ticks.push(t);
       } else {
-        for (++i, k = n - 1; k >= 1; --k) if ((t = pow(i) * k) < u) continue; else ticks.push(t);
+        for (++i, k = n; k >= 1; --k) if ((t = pow(i) * k) < u) continue; else ticks.push(t);
         while (++i < j) for (k = n - 1; k >= 1; --k) ticks.push(pow(i) * k);
         for (k = n - 1; k >= 1; --k) if ((t = pow(i) * k) > v) break; else ticks.push(t);
       }
@@ -74,11 +74,11 @@ function newLog(linear, base, domain) {
     if (specifier == null) specifier = base === 10 ? tickFormat10 : tickFormatOther;
     else if (typeof specifier !== "function") specifier = format(specifier);
     if (count == null) return specifier;
-    var k = Math.min(base, scale.ticks().length / count),
-        f = domain[0] > 0 ? (e = 1e-12, Math.ceil) : (e = -1e-12, Math.floor),
-        e;
+    var k = Math.max(1, base * count / scale.ticks().length);
     return function(d) {
-      return pow(f(log(d) + e)) / d >= k ? specifier(d) : "";
+      var i = d / pow(Math.round(log(d)));
+      if (i * base < base - 0.5) i *= base;
+      return i <= k ? specifier(d) : "";
     };
   };
 
