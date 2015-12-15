@@ -1,8 +1,6 @@
 import constant from "./constant";
-import nice from "./nice";
+import {linearish} from "./linear";
 import {default as quantitative, copy} from "./quantitative";
-import tickFormat from "./tickFormat";
-import ticks, {tickRange} from "./ticks";
 
 export default function pow() {
   var exponent = 1,
@@ -33,30 +31,11 @@ export default function pow() {
     return arguments.length ? (exponent = +_, domain(domain())) : exponent;
   };
 
-  // TODO Don’t duplicate linear implementation.
-  scale.ticks = function(count) {
-    return ticks(domain(), count);
-  };
-
-  // TODO Don’t duplicate linear implementation.
-  scale.tickFormat = function(count, specifier) {
-    return tickFormat(domain(), count, specifier);
-  };
-
-  // TODO Don’t duplicate linear implementation.
-  scale.nice = function(count) {
-    var d = domain(),
-        k = tickRange(d, count)[2];
-    return k ? domain(nice(d,
-        function(x) { return Math.floor(x / k) * k; },
-        function(x) { return Math.ceil(x / k) * k; })) : scale;
-  };
-
   scale.copy = function() {
     return copy(scale, pow().exponent(exponent));
   };
 
-  return scale;
+  return linearish(scale);
 };
 
 export function sqrt() {

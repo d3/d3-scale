@@ -4,9 +4,8 @@ import {default as quantitative, copy, deinterpolateLinear as deinterpolate} fro
 import tickFormat from "./tickFormat";
 import ticks, {tickRange} from "./ticks";
 
-export default function linear() {
-  var scale = quantitative(deinterpolate, reinterpolate),
-      domain = scale.domain;
+export function linearish(scale) {
+  var domain = scale.domain;
 
   scale.ticks = function(count) {
     return ticks(domain(), count);
@@ -24,9 +23,15 @@ export default function linear() {
         function(x) { return Math.ceil(x / k) * k; })) : scale;
   };
 
+  return scale;
+};
+
+export default function linear() {
+  var scale = quantitative(deinterpolate, reinterpolate);
+
   scale.copy = function() {
     return copy(scale, linear());
   };
 
-  return scale;
+  return linearish(scale);
 };
