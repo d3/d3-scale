@@ -5,19 +5,20 @@ import tickFormat from "./tickFormat";
 import ticks, {tickRange} from "./ticks";
 
 function linear(scale) {
-  var copy = scale.copy;
+  var copy = scale.copy,
+      domain = scale.domain;
 
   scale.ticks = function(count) {
-    return ticks(scale.domain(), count);
+    return ticks(domain(), count);
   };
 
   scale.tickFormat = function(count, specifier) {
-    return tickFormat(scale.domain(), count, specifier);
+    return tickFormat(domain(), count, specifier);
   };
 
   scale.nice = function(count) {
-    var domain = scale.domain();
-    return scale.domain(nice(domain, tickRange(domain, count)[2]));
+    var d = domain();
+    return domain(nice(d, tickRange(d, count)[2]));
   };
 
   scale.copy = function() {
