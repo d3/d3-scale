@@ -1,27 +1,27 @@
 import {format} from "d3-format";
-import {value} from "d3-interpolate";
 import constant from "./constant";
 import nice from "./nice";
-import quantitative from "./quantitative";
+import {default as quantitative, copy} from "./quantitative";
 
 var tickFormat10 = format(".0e"),
     tickFormatOther = format(",");
 
-function deinterpolateLog(a, b) {
+function deinterpolate(a, b) {
   return (b = Math.log(b / a))
       ? function(x) { return Math.log(x / a) / b; }
       : constant(isNaN(b) ? NaN : 0);
 }
 
-function reinterpolatePow(a, b) {
+function reinterpolate(a, b) {
   return a < 0
       ? function(x) { return Math.pow(b, x) * Math.pow(a, 1 - x); }
       : function(x) { return -Math.pow(-b, x) * Math.pow(-a, 1 - x); };
 }
 
-function log(scale, base) {
-  var copy = scale.copy,
+export default function log() {
+  var scale = quantitative(deinterpolate, reinterpolate).domain([1, 10]),
       domain = scale.domain,
+      base = 10,
       floor = function(x) { return pow(Math.floor(log(x))); },
       ceil = function(x) { return pow(Math.ceil(log(x))); },
       log,
@@ -42,12 +42,12 @@ function log(scale, base) {
     return scale;
   }
 
-  scale.domain = function(_) {
-    return arguments.length ? (domain(_), rescale()) : domain();
-  };
-
   scale.base = function(_) {
     return arguments.length ? (base = +_, rescale()) : base;
+  };
+
+  scale.domain = function(_) {
+    return arguments.length ? (domain(_), rescale()) : domain();
   };
 
   scale.nice = function() {
@@ -58,7 +58,9 @@ function log(scale, base) {
     var d = domain(),
         u = d[0],
         v = d[d.length - 1];
+
     if (v < u) i = u, u = v, v = i;
+
     var i = Math.floor(log(u)),
         j = Math.ceil(log(v)),
         k,
@@ -94,12 +96,8 @@ function log(scale, base) {
   };
 
   scale.copy = function() {
-    return log(copy(), base);
+    return copy(scale, log().base(base));
   };
 
-  return scale;
-}
-
-export default function() {
-  return log(quantitative([1, 10], [0, 1], deinterpolateLog, reinterpolatePow, value, false), 10);
+  return rescale();
 };

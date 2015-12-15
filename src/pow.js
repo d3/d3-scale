@@ -1,62 +1,64 @@
-import linear, {rebind} from "./linear";
+import constant from "./constant";
 import nice from "./nice";
+import {default as quantitative, copy} from "./quantitative";
 import tickFormat from "./tickFormat";
 import ticks, {tickRange} from "./ticks";
 
-function newPow(linear, exponent, domain) {
+export default function pow() {
+  var exponent = 1,
+      scale = quantitative(deinterpolate, reinterpolate),
+      domain = scale.domain;
 
-  function powp(x) {
+  function raise(x) {
     return x < 0 ? -Math.pow(-x, exponent) : Math.pow(x, exponent);
   }
 
-  function powb(x) {
+  function lower(x) {
     return x < 0 ? -Math.pow(-x, 1 / exponent) : Math.pow(x, 1 / exponent);
   }
 
-  function scale(x) {
-    return linear(powp(x));
+  function deinterpolate(a, b) {
+    return (b = raise(b) - (a = raise(a)))
+        ? function(x) { return (raise(x) - a) / b; }
+        : constant(isNaN(b) ? NaN : 0);
   }
 
-  scale.invert = function(x) {
-    return powb(linear.invert(x));
+  function reinterpolate(a, b) {
+    return b = raise(b) - (a = raise(a)), function(t) {
+      return lower(a + b * t);
+    };
+  }
+
+  scale.exponent = function(_) {
+    return arguments.length ? (exponent = +_, domain(domain())) : exponent;
   };
 
-  scale.exponent = function(x) {
-    if (!arguments.length) return exponent;
-    exponent = +x;
-    return scale.domain(domain);
-  };
-
-  scale.domain = function(x) {
-    if (!arguments.length) return domain.slice();
-    domain = x.map(Number);
-    linear.domain(domain.map(powp));
-    return scale;
-  };
-
+  // TODO Don’t duplicate linear implementation.
   scale.ticks = function(count) {
-    return ticks(domain, count);
+    return ticks(domain(), count);
   };
 
+  // TODO Don’t duplicate linear implementation.
   scale.tickFormat = function(count, specifier) {
-    return tickFormat(domain, count, specifier);
+    return tickFormat(domain(), count, specifier);
   };
 
+  // TODO Don’t duplicate linear implementation.
   scale.nice = function(count) {
-    return scale.domain(nice(domain, tickRange(domain, count)[2]));
+    var d = domain(),
+        k = tickRange(d, count)[2];
+    return k ? domain(nice(d,
+        function(x) { return Math.floor(x / k) * k; },
+        function(x) { return Math.ceil(x / k) * k; })) : scale;
   };
 
   scale.copy = function() {
-    return newPow(linear.copy(), exponent, domain);
+    return copy(scale, pow().exponent(exponent));
   };
 
-  return rebind(scale, linear);
-}
-
-export function sqrt() {
-  return newPow(linear(), .5, [0, 1]);
+  return scale;
 };
 
-export default function() {
-  return newPow(linear(), 1, [0, 1]);
+export function sqrt() {
+  return pow().exponent(0.5);
 };

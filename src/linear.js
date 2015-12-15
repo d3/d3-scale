@@ -1,11 +1,11 @@
-import {value, number as reinterpolate} from "d3-interpolate";
+import {number as reinterpolate} from "d3-interpolate";
 import nice from "./nice";
-import {default as quantitative, deinterpolateLinear as deinterpolate} from "./quantitative";
+import {default as quantitative, copy, deinterpolateLinear as deinterpolate} from "./quantitative";
 import tickFormat from "./tickFormat";
 import ticks, {tickRange} from "./ticks";
 
-function linear(scale) {
-  var copy = scale.copy,
+export default function linear() {
+  var scale = quantitative(deinterpolate, reinterpolate),
       domain = scale.domain;
 
   scale.ticks = function(count) {
@@ -25,12 +25,8 @@ function linear(scale) {
   };
 
   scale.copy = function() {
-    return linear(copy());
+    return copy(scale, linear());
   };
 
   return scale;
-}
-
-export default function() {
-  return linear(quantitative([0, 1], [0, 1], deinterpolate, reinterpolate, value, false));
 };

@@ -1,8 +1,10 @@
 import {bisect} from "d3-array";
-import {round} from "d3-interpolate";
+import {value, round} from "d3-interpolate";
 import {map, slice} from "./array";
 import constant from "./constant";
 import number from "./number";
+
+var unit = [0, 1];
 
 export function deinterpolateLinear(a, b) {
   return (b -= (a = +a))
@@ -46,12 +48,22 @@ function polymap(domain, range, deinterpolate, reinterpolate) {
   };
 }
 
+export function copy(source, target) {
+  return target
+      .domain(source.domain())
+      .range(source.range())
+      .interpolate(source.interpolate())
+      .clamp(source.clamp());
+};
+
 // deinterpolate(a, b)(x) takes a domain value x in [a,b] and returns the corresponding parameter t in [0,1].
 // reinterpolate(a, b)(t) takes a parameter t in [0,1] and returns the corresponding domain value x in [a,b].
-// interpolate(a, b)(t) takes a parameter t in [0,1] and returns the corresponding range value in [a,b].
-// interpolate should always be a linear mapping, but deinterpolate and reinterpolate need not be.
-export default function quantitative(domain, range, deinterpolate, reinterpolate, interpolate, clamp) {
-  var output,
+export default function quantitative(deinterpolate, reinterpolate) {
+  var domain = unit,
+      range = unit,
+      interpolate = value,
+      clamp = false,
+      output,
       input;
 
   function rescale() {
@@ -78,7 +90,7 @@ export default function quantitative(domain, range, deinterpolate, reinterpolate
   };
 
   scale.rangeRound = function(_) {
-    return scale.range(_).interpolate(round);
+    return range = map.call(_, number), interpolate = round, rescale();
   };
 
   scale.clamp = function(_) {
@@ -87,10 +99,6 @@ export default function quantitative(domain, range, deinterpolate, reinterpolate
 
   scale.interpolate = function(_) {
     return arguments.length ? (interpolate = _, rescale()) : interpolate;
-  };
-
-  scale.copy = function() {
-    return quantitative(domain, range, deinterpolate, reinterpolate, interpolate, clamp);
   };
 
   return rescale();
