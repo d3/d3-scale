@@ -7,7 +7,7 @@ import number from "./number";
 export function deinterpolateLinear(a, b) {
   return (b -= (a = +a))
       ? function(x) { return (x - a) / b; }
-      : constant(0);
+      : constant(isNaN(b) ? NaN : 0);
 };
 
 function deinterpolateClamp(deinterpolate) {
