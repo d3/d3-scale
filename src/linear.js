@@ -17,8 +17,11 @@ function linear(scale) {
   };
 
   scale.nice = function(count) {
-    var d = domain();
-    return domain(nice(d, tickRange(d, count)[2]));
+    var d = domain(),
+        k = tickRange(d, count)[2];
+    return k ? domain(nice(d,
+        function(x) { return Math.floor(x / k) * k; },
+        function(x) { return Math.ceil(x / k) * k; })) : scale;
   };
 
   scale.copy = function() {

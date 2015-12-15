@@ -54,7 +54,7 @@ export default function quantitative(domain, range, deinterpolate, reinterpolate
   var output,
       input;
 
-  function remap() {
+  function rescale() {
     var map = Math.min(domain.length, range.length) > 2 ? polymap : bimap;
     output = map(domain, range, clamp ? deinterpolateClamp(deinterpolate) : deinterpolate, interpolate);
     input = map(range, domain, clamp ? deinterpolateClamp(deinterpolateLinear) : deinterpolateLinear, reinterpolate);
@@ -70,11 +70,11 @@ export default function quantitative(domain, range, deinterpolate, reinterpolate
   };
 
   scale.domain = function(_) {
-    return arguments.length ? (domain = map.call(_, number), remap()) : domain.slice();
+    return arguments.length ? (domain = map.call(_, number), rescale()) : domain.slice();
   };
 
   scale.range = function(_) {
-    return arguments.length ? (range = slice.call(_), remap()) : range.slice();
+    return arguments.length ? (range = slice.call(_), rescale()) : range.slice();
   };
 
   scale.rangeRound = function(_) {
@@ -82,16 +82,16 @@ export default function quantitative(domain, range, deinterpolate, reinterpolate
   };
 
   scale.clamp = function(_) {
-    return arguments.length ? (clamp = !!_, remap()) : clamp;
+    return arguments.length ? (clamp = !!_, rescale()) : clamp;
   };
 
   scale.interpolate = function(_) {
-    return arguments.length ? (interpolate = _, remap()) : interpolate;
+    return arguments.length ? (interpolate = _, rescale()) : interpolate;
   };
 
   scale.copy = function() {
     return quantitative(domain, range, deinterpolate, reinterpolate, interpolate, clamp);
   };
 
-  return remap();
+  return rescale();
 };

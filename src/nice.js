@@ -1,6 +1,5 @@
-export default function(domain, step) {
+export default function(domain, floor, ceil) {
   domain = domain.slice();
-  if (!step) return domain;
 
   var i0 = 0,
       i1 = domain.length - 1,
@@ -13,7 +12,7 @@ export default function(domain, step) {
     t = x0, x0 = x1, x1 = t;
   }
 
-  domain[i0] = Math.floor(x0 / step) * step;
-  domain[i1] = Math.ceil(x1 / step) * step;
+  domain[i0] = floor(x0);
+  domain[i1] = ceil(x1);
   return domain;
 };
