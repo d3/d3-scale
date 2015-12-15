@@ -12,5 +12,5 @@ export {default as quantile} from "./src/quantile";
 export {default as quantize} from "./src/quantize";
 export {default as rainbow} from "./src/rainbow";
 export {default as threshold} from "./src/threshold";
-// export {default as time} from "./src/time"; // TODO
-// export {default as utcTime} from "./src/utcTime"; // TODO
+export {default as time} from "./src/time";
+export {default as utcTime} from "./src/utcTime";

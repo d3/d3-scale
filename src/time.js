@@ -1,7 +1,8 @@
 import {bisector} from "d3-array";
-import linear, {rebind} from "./linear";
-import {format} from "d3-time-format";
 import {year, month, week, day, hour, minute, second, millisecond} from "d3-time";
+import {format} from "d3-time-format";
+import nice from "./nice";
+import {default as quantitative, copy, deinterpolateLinear as deinterpolate} from "./quantitative";
 import {tickRange} from "./ticks";
 
 var millisecondsPerSecond = 1000,
@@ -17,7 +18,16 @@ function newDate(t) {
   return new Date(t);
 }
 
-export function newTime(linear, year, month, week, day, hour, minute, second, millisecond, format) {
+function reinterpolate(a, b) {
+  return a = +a, b -= a, function(t) {
+    return new Date(a + b * t);
+  };
+}
+
+export function calendar(year, month, week, day, hour, minute, second, millisecond, format) {
+  var scale = quantitative(deinterpolate, reinterpolate),
+      domain = scale.domain;
+
   var formatMillisecond = format(".%L"),
       formatSecond = format(":%S"),
       formatMinute = format("%I:%M"),
@@ -47,20 +57,6 @@ export function newTime(linear, year, month, week, day, hour, minute, second, mi
     [ month,  3,  3 * millisecondsPerMonth ],
     [  year,  1,      millisecondsPerYear  ]
   ];
-
-  function scale(x) {
-    return linear(x);
-  }
-
-  scale.invert = function(x) {
-    return newDate(linear.invert(x));
-  };
-
-  scale.domain = function(x) {
-    if (!arguments.length) return linear.domain().map(newDate);
-    linear.domain(x);
-    return scale;
-  };
 
   function tickFormat(date) {
     return (second(date) < date ? formatMillisecond
@@ -97,10 +93,36 @@ export function newTime(linear, year, month, week, day, hour, minute, second, mi
     return step == null ? interval : interval.every(step);
   }
 
+  scale.domain = function(_) {
+    return arguments.length ? domain(_) : domain().map(newDate);
+  };
+
+  scale.nice = function(interval, step) {
+    var d = domain(),
+        i0 = 0,
+        i1 = d.length - 1,
+        t0 = d[i0],
+        t1 = d[i1],
+        t;
+
+    if (t1 < t0) {
+      t = i0, i0 = i1, i1 = t;
+      t = t0, t0 = t1, t1 = t;
+    }
+
+    if (interval = tickInterval(interval, t0, t1, step)) {
+      d[i0] = +interval.floor(t0);
+      d[i1] = +interval.ceil(t1);
+      domain(d);
+    }
+
+    return scale;
+  };
+
   scale.ticks = function(interval, step) {
-    var domain = linear.domain(),
-        t0 = domain[0],
-        t1 = domain[domain.length - 1],
+    var d = domain(),
+        t0 = d[0],
+        t1 = d[d.length - 1],
         t;
 
     if (t1 < t0) t = t0, t0 = t1, t1 = t;
@@ -114,35 +136,13 @@ export function newTime(linear, year, month, week, day, hour, minute, second, mi
     return specifier == null ? tickFormat : format(specifier);
   };
 
-  scale.nice = function(interval, step) {
-    var domain = linear.domain(),
-        i0 = 0,
-        i1 = domain.length - 1,
-        t0 = domain[i0],
-        t1 = domain[i1],
-        t;
-
-    if (t1 < t0) {
-      t = i0, i0 = i1, i1 = t;
-      t = t0, t0 = t1, t1 = t;
-    }
-
-    if (interval = tickInterval(interval, t0, t1, step)) {
-      domain[i0] = +interval.floor(t0);
-      domain[i1] = +interval.ceil(t1);
-      linear.domain(domain);
-    }
-
-    return scale;
-  };
-
   scale.copy = function() {
-    return newTime(linear.copy(), year, month, week, day, hour, minute, second, millisecond, format);
+    return copy(scale, calendar(year, month, week, day, hour, minute, second, millisecond, format));
   };
 
-  return rebind(scale, linear);
+  return scale;
 };
 
 export default function() {
-  return newTime(linear(), year, month, week, day, hour, minute, second, millisecond, format).domain([new Date(2000, 0, 1), new Date(2000, 0, 2)]);
+  return calendar(year, month, week, day, hour, minute, second, millisecond, format).domain([new Date(2000, 0, 1), new Date(2000, 0, 2)]);
 };
