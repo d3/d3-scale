@@ -89,7 +89,7 @@ export default function quantitative(domain, range, deinterpolate, reinterpolate
   };
 
   scale.interpolate = function(_) {
-    return arguments.length ? (interpolate = _, scale) : interpolate;
+    return arguments.length ? (interpolate = _, remap()) : interpolate;
   };
 
   scale.copy = function() {
