@@ -13,18 +13,14 @@ export function deinterpolateLinear(a, b) {
 function deinterpolateClamp(deinterpolate) {
   return function(a, b) {
     var d = deinterpolate(a, b);
-    return function(x) {
-      return Math.max(0, Math.min(1, d(x)));
-    };
+    return function(x) { return Math.max(0, Math.min(1, d(x))); };
   };
 }
 
 function bimap(domain, range, deinterpolate, reinterpolate) {
   var d = deinterpolate(domain[0], domain[1]),
       r = reinterpolate(range[0], range[1]);
-  return function(x) {
-    return r(d(x));
-  };
+  return function(x) { return r(d(x)); };
 }
 
 function polymap(domain, range, deinterpolate, reinterpolate) {
@@ -33,7 +29,7 @@ function polymap(domain, range, deinterpolate, reinterpolate) {
       r = new Array(j),
       i = -1;
 
-  // Handle descending domains.
+  // Reverse descending domains.
   if (domain[j] < domain[0]) {
     domain = domain.slice().reverse();
     range = range.slice().reverse();
@@ -50,9 +46,10 @@ function polymap(domain, range, deinterpolate, reinterpolate) {
   };
 }
 
-// deinterpolate takes a domain value and returns a parameter t in [0,1]
-// reinterpolate takes a parameter t in [0,1] and returns a domain value; the inverse of deinterpolate
-// interpolate takes a parameter t in [0,1] and returns a range value
+// deinterpolate(a, b)(x) takes a domain value x in [a,b] and returns the corresponding parameter t in [0,1].
+// reinterpolate(a, b)(t) takes a parameter t in [0,1] and returns the corresponding domain value x in [a,b].
+// interpolate(a, b)(t) takes a parameter t in [0,1] and returns the corresponding range value in [a,b].
+// interpolate should always be a linear mapping, but deinterpolate and reinterpolate need not be.
 export default function quantitative(domain, range, deinterpolate, reinterpolate, interpolate, clamp) {
   var output,
       input;
