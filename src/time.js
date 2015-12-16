@@ -1,4 +1,5 @@
 import {bisector} from "d3-array";
+import {number as reinterpolate} from "d3-interpolate";
 import {year, month, week, day, hour, minute, second, millisecond} from "d3-time";
 import {format} from "d3-time-format";
 import nice from "./nice";
@@ -18,15 +19,9 @@ function newDate(t) {
   return new Date(t);
 }
 
-function reinterpolate(a, b) {
-  b -= (a = +a);
-  return function(t) {
-    return new Date(a + b * t);
-  };
-}
-
 export function calendar(year, month, week, day, hour, minute, second, millisecond, format) {
   var scale = quantitative(deinterpolate, reinterpolate),
+      invert = scale.invert,
       domain = scale.domain;
 
   var formatMillisecond = format(".%L"),
@@ -93,6 +88,10 @@ export function calendar(year, month, week, day, hour, minute, second, milliseco
 
     return step == null ? interval : interval.every(step);
   }
+
+  scale.invert = function(y) {
+    return new Date(invert(y));
+  };
 
   scale.domain = function(_) {
     return arguments.length ? domain(_) : domain().map(newDate);

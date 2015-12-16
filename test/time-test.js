@@ -117,6 +117,17 @@ tape("time.copy() isolates changes to clamping", function(test) {
   test.end();
 });
 
+tape("time.clamp(true).invert(value) never returns a value outside the domain", function(test) {
+  var x = scale.time().clamp(true);
+  test.ok(x.invert(0) instanceof Date);
+  test.ok(x.invert(0) !== x.invert(0)); // returns a distinct copy
+  test.equal(+x.invert(-1), +x.domain()[0]);
+  test.equal(+x.invert(0), +x.domain()[0]);
+  test.equal(+x.invert(1), +x.domain()[1]);
+  test.equal(+x.invert(2), +x.domain()[1]);
+  test.end();
+});
+
 tape("time.ticks(interval) observes the specified tick interval", function(test) {
   var x = scale.time().domain([date.local(2011, 0, 1, 12, 1, 0), date.local(2011, 0, 1, 12, 4, 4)]);
   test.deepEqual(x.ticks(time.minute), [
@@ -127,17 +138,6 @@ tape("time.ticks(interval) observes the specified tick interval", function(test)
   ]);
   test.end();
 });
-
-// tape("time.ticks(intervalName) observes the specified named tick interval", function(test) {
-//   var x = scale.time().domain([date.local(2011, 0, 1, 12, 1, 0), date.local(2011, 0, 1, 12, 4, 4)]);
-//   test.deepEqual(x.ticks("minutes"), [
-//     date.local(2011, 0, 1, 12, 1),
-//     date.local(2011, 0, 1, 12, 2),
-//     date.local(2011, 0, 1, 12, 3),
-//     date.local(2011, 0, 1, 12, 4)
-//   ]);
-//   test.end();
-// });
 
 tape("time.ticks(interval, step) observes the specified tick interval and step", function(test) {
   var x = scale.time().domain([date.local(2011, 0, 1, 12, 0, 0), date.local(2011, 0, 1, 12, 33, 4)]);
