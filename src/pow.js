@@ -2,28 +2,24 @@ import constant from "./constant";
 import {linearish} from "./linear";
 import {default as quantitative, copy} from "./quantitative";
 
+function raise(x, exponent) {
+  return x < 0 ? -Math.pow(-x, exponent) : Math.pow(x, exponent);
+}
+
 export default function pow() {
   var exponent = 1,
       scale = quantitative(deinterpolate, reinterpolate),
       domain = scale.domain;
 
-  function raise(x) {
-    return x < 0 ? -Math.pow(-x, exponent) : Math.pow(x, exponent);
-  }
-
-  function lower(x) {
-    return x < 0 ? -Math.pow(-x, 1 / exponent) : Math.pow(x, 1 / exponent);
-  }
-
   function deinterpolate(a, b) {
-    return (b = raise(b) - (a = raise(a)))
-        ? function(x) { return (raise(x) - a) / b; }
+    return (a = raise(a, exponent), b = raise(b, exponent) - a)
+        ? function(x) { return (raise(x, exponent) - a) / b; }
         : constant(isNaN(b) ? NaN : 0);
   }
 
   function reinterpolate(a, b) {
-    return b = raise(b) - (a = raise(a)), function(t) {
-      return lower(a + b * t);
+    return a = raise(a, exponent), b = raise(b, exponent) - a, function(t) {
+      return raise(a + b * t, 1 / exponent);
     };
   }
 
