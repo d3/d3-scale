@@ -25,7 +25,7 @@
     "prepublish": "npm run test && uglifyjs build/d3-scale.js -c -m -o build/d3-scale.min.js && rm -f build/d3-scale.zip && zip -j build/d3-scale.zip -- LICENSE README.md build/d3-scale.js build/d3-scale.min.js"
   },
   "dependencies": {
-    "d3-array": "~0.5.1",
+    "d3-array": "~0.6.0",
     "d3-color": "~0.3.1",
     "d3-format": "~0.4.0",
     "d3-interpolate": "~0.2.0",

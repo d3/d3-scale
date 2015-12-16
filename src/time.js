@@ -1,10 +1,9 @@
-import {bisector} from "d3-array";
+import {bisector, tickStep} from "d3-array";
 import {number as reinterpolate} from "d3-interpolate";
 import {year, month, week, day, hour, minute, second, millisecond} from "d3-time";
 import {format} from "d3-time-format";
 import nice from "./nice";
 import {default as quantitative, copy, deinterpolateLinear as deinterpolate} from "./quantitative";
-import {tickRange} from "./ticks";
 
 var millisecondsPerSecond = 1000,
     millisecondsPerMinute = millisecondsPerSecond * 60,
@@ -74,14 +73,14 @@ export function calendar(year, month, week, day, hour, minute, second, milliseco
       var target = Math.abs(stop - start) / interval,
           i = bisectTickIntervals(tickIntervals, target);
       if (i === tickIntervals.length) {
-        step = tickRange([start / millisecondsPerYear, stop / millisecondsPerYear], interval)[2];
+        step = tickStep(start / millisecondsPerYear, stop / millisecondsPerYear, interval);
         interval = year;
       } else if (i) {
         i = tickIntervals[target / tickIntervals[i - 1][2] < tickIntervals[i][2] / target ? i - 1 : i];
         step = i[1];
         interval = i[0];
       } else {
-        step = tickRange([start, stop], interval)[2];
+        step = tickStep(start, stop, interval);
         interval = millisecond;
       }
     }

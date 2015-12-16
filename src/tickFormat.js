@@ -1,23 +1,17 @@
-import {
-  format,
-  formatPrefix,
-  formatSpecifier,
-  precisionFixed,
-  precisionPrefix,
-  precisionRound
-} from "d3-format";
-
-import {tickRange} from "./ticks";
+import {tickStep} from "d3-array";
+import {format, formatPrefix, formatSpecifier, precisionFixed, precisionPrefix, precisionRound} from "d3-format";
 
 export default function(domain, count, specifier) {
-  var range = tickRange(domain, count);
+  var start = domain[0],
+      stop = domain[domain.length - 1],
+      step = tickStep(start, stop, count == null ? 10 : count);
   if (specifier == null) {
-    specifier = ",." + precisionFixed(range[2]) + "f";
+    specifier = ",." + precisionFixed(step) + "f";
   } else {
     switch (specifier = formatSpecifier(specifier), specifier.type) {
       case "s": {
-        var value = Math.max(Math.abs(range[0]), Math.abs(range[1]));
-        if (specifier.precision == null) specifier.precision = precisionPrefix(range[2], value);
+        var value = Math.max(Math.abs(start), Math.abs(stop));
+        if (specifier.precision == null) specifier.precision = precisionPrefix(step, value);
         return formatPrefix(specifier, value);
       }
       case "":
@@ -25,12 +19,12 @@ export default function(domain, count, specifier) {
       case "g":
       case "p":
       case "r": {
-        if (specifier.precision == null) specifier.precision = precisionRound(range[2], Math.max(Math.abs(range[0]), Math.abs(range[1]))) - (specifier.type === "e");
+        if (specifier.precision == null) specifier.precision = precisionRound(step, Math.max(Math.abs(start), Math.abs(stop))) - (specifier.type === "e");
         break;
       }
       case "f":
       case "%": {
-        if (specifier.precision == null) specifier.precision = precisionFixed(range[2]) - (specifier.type === "%") * 2;
+        if (specifier.precision == null) specifier.precision = precisionFixed(step) - (specifier.type === "%") * 2;
         break;
       }
     }

@@ -1,14 +1,14 @@
+import {ticks, tickStep} from "d3-array";
 import {number as reinterpolate} from "d3-interpolate";
-import nice from "./nice";
 import {default as quantitative, copy, deinterpolateLinear as deinterpolate} from "./quantitative";
 import tickFormat from "./tickFormat";
-import ticks, {tickRange} from "./ticks";
 
 export function linearish(scale) {
   var domain = scale.domain;
 
   scale.ticks = function(count) {
-    return ticks(domain(), count);
+    var d = domain();
+    return ticks(d[0], d[d.length - 1], count == null ? 10 : count);
   };
 
   scale.tickFormat = function(count, specifier) {
@@ -17,11 +17,14 @@ export function linearish(scale) {
 
   scale.nice = function(count) {
     var d = domain(),
-        k = tickRange(d, count)[2];
-    return k ? domain(nice(d, {
-      floor: function(x) { return Math.floor(x / k) * k; },
-      ceil: function(x) { return Math.ceil(x / k) * k; }
-    })) : scale;
+        i = d.length - 1,
+        k = tickStep(d[0], d[i], count == null ? 10 : count);
+    if (k) {
+      d[0] = Math.floor(d[0] / k) * k;
+      d[i] = Math.ceil(d[i] / k) * k;
+      domain(d);
+    }
+    return scale;
   };
 
   return scale;
