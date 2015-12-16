@@ -18,12 +18,18 @@ export function linearish(scale) {
   scale.nice = function(count) {
     var d = domain(),
         i = d.length - 1,
-        k = tickStep(d[0], d[i], count == null ? 10 : count);
-    if (k) {
-      d[0] = Math.floor(d[0] / k) * k;
-      d[i] = Math.ceil(d[i] / k) * k;
+        n = count == null ? 10 : count,
+        start = d[0],
+        stop = d[i],
+        step = tickStep(start, stop, n);
+
+    if (step) {
+      step = tickStep(Math.floor(start / step) * step, Math.ceil(stop / step) * step, n);
+      d[0] = Math.floor(start / step) * step;
+      d[i] = Math.ceil(stop / step) * step;
       domain(d);
     }
+
     return scale;
   };
 
