@@ -14,8 +14,8 @@ function deinterpolate(a, b) {
 
 function reinterpolate(a, b) {
   return a < 0
-      ? function(x) { return Math.pow(b, x) * Math.pow(a, 1 - x); }
-      : function(x) { return -Math.pow(-b, x) * Math.pow(-a, 1 - x); };
+      ? function(t) { return Math.pow(b, t) * Math.pow(a, 1 - t); }
+      : function(t) { return -Math.pow(-b, t) * Math.pow(-a, 1 - t); };
 }
 
 export default function log() {
@@ -63,6 +63,7 @@ export default function log() {
 
     var i = Math.floor(log(u)),
         j = Math.ceil(log(v)),
+        p,
         k,
         t,
         n = base % 1 ? 2 : base,
@@ -70,13 +71,13 @@ export default function log() {
 
     if (isFinite(j - i)) {
       if (u > 0) {
-        for (--j, k = 1; k < n; ++k) if ((t = pow(i) * k) < u) continue; else ticks.push(t);
-        while (++i < j) for (k = 1; k < n; ++k) ticks.push(pow(i) * k);
-        for (k = 1; k <= n; ++k) if ((t = pow(i) * k) > v) break; else ticks.push(t);
+        for (--j, k = 1, p = pow(i); k < n; ++k) if ((t = p * k) < u) continue; else ticks.push(t);
+        while (++i < j) for (k = 1, p = pow(i); k < n; ++k) ticks.push(p * k);
+        for (k = 1, p = pow(i); k <= n; ++k) if ((t = p * k) > v) break; else ticks.push(t);
       } else {
-        for (++i, k = n; k >= 1; --k) if ((t = pow(i) * k) < u) continue; else ticks.push(t);
-        while (++i < j) for (k = n - 1; k >= 1; --k) ticks.push(pow(i) * k);
-        for (k = n - 1; k >= 1; --k) if ((t = pow(i) * k) > v) break; else ticks.push(t);
+        for (++i, k = n, p = pow(i); k >= 1; --k) if ((t = p * k) < u) continue; else ticks.push(t);
+        while (++i < j) for (k = n - 1, p = pow(i); k >= 1; --k) ticks.push(p * k);
+        for (k = n - 1, p = pow(i); k >= 1; --k) if ((t = p * k) > v) break; else ticks.push(t);
       }
     }
 
