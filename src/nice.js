@@ -1,4 +1,4 @@
-export default function(domain, floor, ceil) {
+export default function(domain, interval) {
   domain = domain.slice();
 
   var i0 = 0,
@@ -12,7 +12,7 @@ export default function(domain, floor, ceil) {
     t = x0, x0 = x1, x1 = t;
   }
 
-  domain[i0] = floor(x0);
-  domain[i1] = ceil(x1);
+  domain[i0] = interval.floor(x0);
+  domain[i1] = interval.ceil(x1);
   return domain;
 };

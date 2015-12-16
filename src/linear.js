@@ -18,9 +18,10 @@ export function linearish(scale) {
   scale.nice = function(count) {
     var d = domain(),
         k = tickRange(d, count)[2];
-    return k ? domain(nice(d,
-        function(x) { return Math.floor(x / k) * k; },
-        function(x) { return Math.ceil(x / k) * k; })) : scale;
+    return k ? domain(nice(d, {
+      floor: function(x) { return Math.floor(x / k) * k; },
+      ceil: function(x) { return Math.ceil(x / k) * k; }
+    })) : scale;
   };
 
   return scale;

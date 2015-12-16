@@ -98,25 +98,10 @@ export function calendar(year, month, week, day, hour, minute, second, milliseco
   };
 
   scale.nice = function(interval, step) {
-    var d = domain(),
-        i0 = 0,
-        i1 = d.length - 1,
-        t0 = d[i0],
-        t1 = d[i1],
-        t;
-
-    if (t1 < t0) {
-      t = i0, i0 = i1, i1 = t;
-      t = t0, t0 = t1, t1 = t;
-    }
-
-    if (interval = tickInterval(interval, t0, t1, step)) {
-      d[i0] = +interval.floor(t0);
-      d[i1] = +interval.ceil(t1);
-      domain(d);
-    }
-
-    return scale;
+    var d = domain();
+    return (interval = tickInterval(interval, d[0], d[d.length - 1], step))
+        ? domain(nice(d, interval))
+        : scale;
   };
 
   scale.ticks = function(interval, step) {

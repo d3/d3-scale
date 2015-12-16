@@ -22,8 +22,7 @@ export default function log() {
   var scale = quantitative(deinterpolate, reinterpolate).domain([1, 10]),
       domain = scale.domain,
       base = 10,
-      floor = function(x) { return pow(Math.floor(log(x))); },
-      ceil = function(x) { return pow(Math.ceil(log(x))); },
+      interval = {floor: function(x) { return pow(Math.floor(log(x))); }, ceil: function(x) { return pow(Math.ceil(log(x))); }},
       log,
       pow;
 
@@ -51,7 +50,7 @@ export default function log() {
   };
 
   scale.nice = function() {
-    return domain(nice(domain(), floor, ceil)), rescale();
+    return domain(nice(domain(), interval)), rescale();
   };
 
   scale.ticks = function() {
