@@ -482,6 +482,13 @@ tape("pow.copy() returns a copy with changes to clamping are isolated", function
   test.end();
 });
 
+tape("pow().clamp(true).invert(x) cannot return a value outside the domain", function(test) {
+  var x = scale.pow().exponent(0.5).domain([1, 20]).clamp(true);
+  test.equal(x.invert(0), 1);
+  test.equal(x.invert(1), 20);
+  test.end();
+});
+
 tape("sqrt() is an alias for pow().exponent(0.5)", function(test) {
   var s = scale.sqrt();
   test.equal(s.exponent(), 0.5);

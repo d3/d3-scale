@@ -14,8 +14,15 @@ export function deinterpolateLinear(a, b) {
 
 function deinterpolateClamp(deinterpolate) {
   return function(a, b) {
-    var d = deinterpolate(a, b);
-    return function(x) { return Math.max(0, Math.min(1, d(x))); };
+    var d = deinterpolate(a = +a, b = +b);
+    return function(x) { return x <= a ? 0 : x >= b ? 1 : d(x); };
+  };
+}
+
+function reinterpolateClamp(reinterpolate) {
+  return function(a, b) {
+    var r = reinterpolate(a = +a, b = +b);
+    return function(t) { return t <= 0 ? a : t >= 1 ? b : r(t); };
   };
 }
 
@@ -69,16 +76,16 @@ export default function quantitative(deinterpolate, reinterpolate) {
   function rescale() {
     var map = Math.min(domain.length, range.length) > 2 ? polymap : bimap;
     output = map(domain, range, clamp ? deinterpolateClamp(deinterpolate) : deinterpolate, interpolate);
-    input = map(range, domain, clamp ? deinterpolateClamp(deinterpolateLinear) : deinterpolateLinear, reinterpolate);
+    input = map(range, domain, deinterpolateLinear, clamp ? reinterpolateClamp(reinterpolate) : reinterpolate);
     return scale;
   }
 
   function scale(x) {
-    return output(x);
+    return output(+x);
   }
 
   scale.invert = function(y) {
-    return input(y);
+    return input(+y);
   };
 
   scale.domain = function(_) {
@@ -90,7 +97,7 @@ export default function quantitative(deinterpolate, reinterpolate) {
   };
 
   scale.rangeRound = function(_) {
-    return range = map.call(_, number), interpolate = round, rescale();
+    return range = slice.call(_), interpolate = round, rescale();
   };
 
   scale.clamp = function(_) {
