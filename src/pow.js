@@ -12,15 +12,14 @@ export default function pow() {
       domain = scale.domain;
 
   function deinterpolate(a, b) {
-    return (a = raise(a, exponent), b = raise(b, exponent) - a)
+    return (b = raise(b, exponent) - (a = raise(a, exponent)))
         ? function(x) { return (raise(x, exponent) - a) / b; }
-        : constant(isNaN(b) ? NaN : 0);
+        : constant(b);
   }
 
   function reinterpolate(a, b) {
-    return a = raise(a, exponent), b = raise(b, exponent) - a, function(t) {
-      return raise(a + b * t, 1 / exponent);
-    };
+    b = raise(b, exponent) - (a = raise(a, exponent));
+    return function(t) { return raise(a + b * t, 1 / exponent); };
   }
 
   scale.exponent = function(_) {

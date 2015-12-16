@@ -19,7 +19,8 @@ function newDate(t) {
 }
 
 function reinterpolate(a, b) {
-  return a = +a, b -= a, function(t) {
+  b -= (a = +a);
+  return function(t) {
     return new Date(a + b * t);
   };
 }

@@ -9,7 +9,7 @@ var unit = [0, 1];
 export function deinterpolateLinear(a, b) {
   return (b -= (a = +a))
       ? function(x) { return (x - a) / b; }
-      : constant(isNaN(b) ? NaN : 0);
+      : constant(b);
 };
 
 function deinterpolateClamp(deinterpolate) {

@@ -9,7 +9,7 @@ var tickFormat10 = format(".0e"),
 function deinterpolate(a, b) {
   return (b = Math.log(b / a))
       ? function(x) { return Math.log(x / a) / b; }
-      : constant(isNaN(b) ? NaN : 0);
+      : constant(b);
 }
 
 function reinterpolate(a, b) {
