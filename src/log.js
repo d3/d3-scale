@@ -23,8 +23,8 @@ export default function log() {
       domain = scale.domain,
       base = 10,
       logbase = Math.LN10,
-      log = logp,
-      pow = powp;
+      logs = logp,
+      pows = powp;
 
   function logp(x) {
     return Math.log(x) / logbase;
@@ -47,13 +47,13 @@ export default function log() {
   };
 
   scale.domain = function(_) {
-    return arguments.length ? (domain(_), +_[0] < 0 ? (log = logn, pow = pown) : (log = logp, pow = powp), scale) : domain();
+    return arguments.length ? (domain(_), +_[0] < 0 ? (logs = logn, pows = pown) : (logs = logp, pows = powp), scale) : domain();
   };
 
   scale.nice = function() {
     return domain(nice(domain(), {
-      floor: function(x) { return pow(Math.floor(log(x))); },
-      ceil: function(x) { return pow(Math.ceil(log(x))); }
+      floor: function(x) { return pows(Math.floor(logs(x))); },
+      ceil: function(x) { return pows(Math.ceil(logs(x))); }
     }));
   };
 
@@ -64,8 +64,8 @@ export default function log() {
 
     if (v < u) i = u, u = v, v = i;
 
-    var i = Math.floor(log(u)),
-        j = Math.ceil(log(v)),
+    var i = Math.floor(logs(u)),
+        j = Math.ceil(logs(v)),
         p,
         k,
         t,
@@ -74,13 +74,13 @@ export default function log() {
 
     if (isFinite(j - i)) {
       if (u > 0) {
-        for (--j, k = 1, p = pow(i); k < n; ++k) if ((t = p * k) < u) continue; else ticks.push(t);
-        while (++i < j) for (k = 1, p = pow(i); k < n; ++k) ticks.push(p * k);
-        for (k = 1, p = pow(i); k <= n; ++k) if ((t = p * k) > v) break; else ticks.push(t);
+        for (--j, k = 1, p = pows(i); k < n; ++k) if ((t = p * k) < u) continue; else ticks.push(t);
+        while (++i < j) for (k = 1, p = pows(i); k < n; ++k) ticks.push(p * k);
+        for (k = 1, p = pows(i); k <= n; ++k) if ((t = p * k) > v) break; else ticks.push(t);
       } else {
-        for (++i, k = n, p = pow(i); k >= 1; --k) if ((t = p * k) < u) continue; else ticks.push(t);
-        while (++i < j) for (k = n - 1, p = pow(i); k >= 1; --k) ticks.push(p * k);
-        for (k = n - 1, p = pow(i); k >= 1; --k) if ((t = p * k) > v) break; else ticks.push(t);
+        for (++i, k = n, p = pows(i); k >= 1; --k) if ((t = p * k) < u) continue; else ticks.push(t);
+        while (++i < j) for (k = n - 1, p = pows(i); k >= 1; --k) ticks.push(p * k);
+        for (k = n - 1, p = pows(i); k >= 1; --k) if ((t = p * k) > v) break; else ticks.push(t);
       }
     }
 
@@ -93,7 +93,7 @@ export default function log() {
     if (count == null) return specifier;
     var k = Math.max(1, base * count / scale.ticks().length); // TODO fast estimate?
     return function(d) {
-      var i = d / pow(Math.round(log(d)));
+      var i = d / pows(Math.round(logs(d)));
       if (i * base < base - 0.5) i *= base;
       return i <= k ? specifier(d) : "";
     };

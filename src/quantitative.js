@@ -27,9 +27,10 @@ function reinterpolateClamp(reinterpolate) {
 }
 
 function bimap(domain, range, deinterpolate, reinterpolate) {
-  var d = deinterpolate(domain[0], domain[1]),
-      r = reinterpolate(range[0], range[1]);
-  return function(x) { return r(d(x)); };
+  var d0 = domain[0], d1 = domain[1], r0 = range[0], r1 = range[1];
+  if (d1 < d0) d0 = deinterpolate(d1, d0), r0 = reinterpolate(r1, r0);
+  else d0 = deinterpolate(d0, d1), r0 = reinterpolate(r0, r1);
+  return function(x) { return r0(d0(x)); };
 }
 
 function polymap(domain, range, deinterpolate, reinterpolate) {
