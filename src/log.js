@@ -19,8 +19,12 @@ function reinterpolate(a, b) {
       : function(t) { return Math.pow(b, t) * Math.pow(a, 1 - t); };
 }
 
+function pow10(x) {
+  return isFinite(x) ? +("1e" + x) : x < 0 ? 0 : x;
+}
+
 function powp(base) {
-  return base === 10 ? function(x) { return isFinite(x) ? +("1e" + x) : x < 0 ? 0 : x; }
+  return base === 10 ? pow10
       : base === Math.E ? Math.exp
       : function(x) { return Math.pow(base, x); };
 }
