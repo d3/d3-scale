@@ -1,7 +1,7 @@
 import {range as sequence} from "d3-array";
 import ordinal from "./ordinal";
 
-export default function ordinalPoint() {
+export default function point() {
   var scale = ordinal().unknown(undefined),
       domain = scale.domain,
       range = scale.range,
@@ -45,7 +45,7 @@ export default function ordinalPoint() {
   };
 
   scale.copy = function() {
-    return ordinalBand().domain(domain).range(range).round(round).padding(padding);
+    return point().domain(domain).range(range).round(round).padding(padding);
   };
 
   return scale;

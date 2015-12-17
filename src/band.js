@@ -1,12 +1,12 @@
 import {range as sequence} from "d3-array";
 import ordinal from "./ordinal";
 
-export default function ordinalBand() {
+export default function band() {
   var scale = ordinal().unknown(undefined),
       domain = scale.domain,
       range = scale.range,
       extent = [0, 1],
-      band = 0,
+      step = 0,
       round = false,
       paddingInner = 0,
       paddingOuter = 0;
@@ -22,8 +22,8 @@ export default function ordinalBand() {
     if (round) step = Math.floor(step), start = Math.round(start + (stop - start - (n - paddingInner) * step) / 2);
     else start += step * paddingOuter;
     var values = sequence(n).map(function(i) { return start + step * i; });
-    band = step * (1 - paddingInner);
-    if (round) band = Math.round(band);
+    step *= 1 - paddingInner;
+    if (round) step = Math.round(step);
     return range(reverse ? values.reverse() : values);
   }
 
@@ -36,7 +36,7 @@ export default function ordinalBand() {
   };
 
   scale.band = function() {
-    return band;
+    return step;
   };
 
   scale.round = function(_) {
@@ -56,7 +56,7 @@ export default function ordinalBand() {
   };
 
   scale.copy = function() {
-    return ordinalBand().domain(domain).range(range).round(round).paddingInner(paddingInner).paddingOuter(paddingOuter);
+    return band().domain(domain).range(range).round(round).paddingInner(paddingInner).paddingOuter(paddingOuter);
   };
 
   return scale;
