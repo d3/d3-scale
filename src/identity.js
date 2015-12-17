@@ -3,7 +3,8 @@ import {map, slice} from "./array";
 import number from "./number";
 import tickFormat from "./tickFormat";
 
-function identity(domain) {
+export default function identity() {
+  var domain = [0, 1];
 
   function scale(x) {
     return +x;
@@ -24,12 +25,8 @@ function identity(domain) {
   };
 
   scale.copy = function() {
-    return identity(domain);
+    return identity().domain(domain);
   };
 
   return scale;
-}
-
-export default function() {
-  return identity([0, 1]);
 };

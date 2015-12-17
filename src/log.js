@@ -14,43 +14,47 @@ function deinterpolate(a, b) {
 
 function reinterpolate(a, b) {
   return a < 0
-      ? function(t) { return Math.pow(b, t) * Math.pow(a, 1 - t); }
-      : function(t) { return -Math.pow(-b, t) * Math.pow(-a, 1 - t); };
+      ? function(t) { return -Math.pow(-b, t) * Math.pow(-a, 1 - t); }
+      : function(t) { return Math.pow(b, t) * Math.pow(a, 1 - t); };
 }
 
 export default function log() {
   var scale = quantitative(deinterpolate, reinterpolate).domain([1, 10]),
       domain = scale.domain,
       base = 10,
-      interval = {floor: function(x) { return pow(Math.floor(log(x))); }, ceil: function(x) { return pow(Math.ceil(log(x))); }},
-      log,
-      pow;
+      logbase = Math.LN10,
+      log = logp,
+      pow = powp;
 
-  function rescale() {
-    var d = domain(),
-        k = Math.log(base);
+  function logp(x) {
+    return Math.log(x) / logbase;
+  }
 
-    if (d[0] < 0) {
-      log = function(x) { return -Math.log(-x) / k; };
-      pow = function(x) { return -Math.pow(base, -x); };
-    } else {
-      log = function(x) { return Math.log(x) / k; };
-      pow = function(x) { return Math.pow(base, x); };
-    }
+  function logn(x) {
+    return -Math.log(-x) / logbase;
+  }
 
-    return scale;
+  function powp(x) {
+    return Math.pow(base, x);
+  }
+
+  function pown(x) {
+    return -Math.pow(base, -x);
   }
 
   scale.base = function(_) {
-    return arguments.length ? (base = +_, rescale()) : base;
+    return arguments.length ? (logbase = Math.log(base = +_), scale) : base;
   };
 
   scale.domain = function(_) {
-    return arguments.length ? (domain(_), rescale()) : domain();
+    return arguments.length ? (domain(_), +_[0] < 0 ? (log = logn, pow = pown) : (log = logp, pow = powp), scale) : domain();
   };
 
   scale.nice = function() {
-    return domain(nice(domain(), interval)), rescale();
+    return domain(nice(domain(), {
+      floor: function(x) { return pow(Math.floor(log(x))); },
+      ceil: function(x) { return pow(Math.ceil(log(x))); }
+    }));
   };
 
   scale.ticks = function() {
@@ -99,5 +103,5 @@ export default function log() {
     return copy(scale, log().base(base));
   };
 
-  return rescale();
+  return scale;
 };
