@@ -1,18 +1,18 @@
 import {map} from "d3-array";
 import {slice} from "./array";
 
-var rangeRecycle = {};
+export var reuse = {};
 
 export default function ordinal() {
   var index = map(),
       domain = [],
       range = [],
-      rangeMissing = rangeRecycle;
+      unknown = reuse;
 
   function scale(d) {
     var key = d + "", i = index.get(key);
     if (!i) {
-      if (rangeMissing !== rangeRecycle) return rangeMissing;
+      if (unknown !== reuse) return unknown;
       index.set(key, i = domain.push(d));
     }
     return range[(i - 1) % range.length];
@@ -26,12 +26,16 @@ export default function ordinal() {
     return scale;
   };
 
-  scale.range = function(_, missing) {
-    return arguments.length ? (range = slice.call(_), rangeMissing = arguments.length < 2 ? rangeRecycle : missing, scale) : range.slice();
+  scale.range = function(_) {
+    return arguments.length ? (range = slice.call(_), scale) : range.slice();
+  };
+
+  scale.unknown = function(_) {
+    return arguments.length ? (unknown = _, scale) : range.slice();
   };
 
   scale.copy = function() {
-    return ordinal().domain(domain).range(range, rangeMissing);
+    return ordinal().domain(domain).range(range).unknown(unknown);
   };
 
   return scale;

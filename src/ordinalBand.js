@@ -1,33 +1,30 @@
+import {range as sequence} from "d3-array";
 import ordinal from "./ordinal";
 
-function steps(length, start, step) {
-  var steps = new Array(length), i = -1;
-  while (++i < length) steps[i] = start + step * i;
-  return steps;
-}
-
 export default function ordinalBand() {
-  var scale = ordinal().range([], undefined),
+  var scale = ordinal().unknown(undefined),
       domain = scale.domain,
       range = scale.range,
-      rangeExtent = [0, 1],
-      rangeBand = 0,
+      extent = [0, 1],
+      band = 0,
       round = false,
       paddingInner = 0,
       paddingOuter = 0;
 
+  delete scale.unknown;
+
   function rescale() {
     var n = domain().length,
-        reverse = rangeExtent[1] < rangeExtent[0],
-        start = rangeExtent[reverse - 0],
-        stop = rangeExtent[1 - reverse],
+        reverse = extent[1] < extent[0],
+        start = extent[reverse - 0],
+        stop = extent[1 - reverse],
         step = (stop - start) / (n - paddingInner + 2 * paddingOuter);
     if (round) step = Math.floor(step), start = Math.round(start + (stop - start - (n - paddingInner) * step) / 2);
     else start += step * paddingOuter;
-    var rangeValues = steps(n, start, step);
-    rangeBand = step * (1 - paddingInner);
-    if (round) rangeBand = Math.round(rangeBand);
-    return range(reverse ? rangeValues.reverse() : rangeValues);
+    var values = sequence(n).map(function(i) { return start + step * i; });
+    band = step * (1 - paddingInner);
+    if (round) band = Math.round(band);
+    return range(reverse ? values.reverse() : values);
   }
 
   scale.domain = function(_) {
@@ -35,11 +32,11 @@ export default function ordinalBand() {
   };
 
   scale.range = function(_) {
-    return arguments.length ? (rangeExtent = [+_[0], +_[1]], rescale()) : rangeExtent.slice();
+    return arguments.length ? (extent = [+_[0], +_[1]], rescale()) : extent.slice();
   };
 
-  scale.rangeBand = function() {
-    return rangeBand;
+  scale.band = function() {
+    return band;
   };
 
   scale.round = function(_) {
