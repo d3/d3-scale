@@ -1,42 +1,45 @@
-function newQuantize(x0, x1, range) {
-  var kx, i;
+import {bisect} from "d3-array";
+import {slice} from "./array";
+
+export default function quantize() {
+  var x0 = 0,
+      x1 = 1,
+      n = 1,
+      domain = [0.5],
+      range = [0, 1];
 
   function scale(x) {
-    return range[Math.max(0, Math.min(i, Math.floor(kx * (x - x0))))];
+    if (x <= x) return range[bisect(domain, x, 0, n)];
   }
 
   function rescale() {
-    kx = range.length / (x1 - x0);
-    i = range.length - 1;
+    var i = -1;
+    while (++i < n) domain[i] = ((i + 1) * x1 - (i - n) * x0) / (n + 1);
+    domain.length = n;
     return scale;
   }
 
-  scale.domain = function(x) {
-    if (!arguments.length) return [x0, x1];
-    x0 = +x[0];
-    x1 = +x[x.length - 1];
-    return rescale();
+  scale.domain = function(_) {
+    return arguments.length ? (x0 = +_[0], x1 = +_[_.length - 1], rescale()) : [x0, x1];
   };
 
-  scale.range = function(x) {
-    if (!arguments.length) return range.slice();
-    range = x.slice();
-    return rescale();
+  scale.range = function(_) {
+    return arguments.length ? (n = (range = slice.call(_)).length - 1, rescale()) : range.slice();
   };
 
   scale.invertExtent = function(y) {
-    y = range.indexOf(y);
-    y = y < 0 ? NaN : y / kx + x0;
-    return [y, y + 1 / kx];
+    var i = range.indexOf(y);
+    return i < 0 ? [NaN, NaN]
+        : i < 1 ? [x0, domain[0]]
+        : i >= n ? [domain[n - 1], x1]
+        : [domain[i - 1], domain[i]];
   };
 
   scale.copy = function() {
-    return newQuantize(x0, x1, range); // copy on write
+    return quantize()
+        .domain([x0, x1])
+        .range(range);
   };
 
-  return rescale();
-}
-
-export default function() {
-  return newQuantize(0, 1, [0, 1]);
+  return scale;
 };
