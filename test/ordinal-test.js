@@ -114,19 +114,6 @@ tape("ordinal.range() recycles values when exhausted", function(test) {
   test.end();
 });
 
-// tape("ordinal.rangeExtent() returns the continuous range", function(test) {
-//   test.deepEqual(scale.ordinal().domain(["a", "b", "c"]).rangePoints([20, 120]).rangeExtent(), [20, 120]);
-//   test.deepEqual(scale.ordinal().domain(["a", "b", "c"]).rangeBands([10, 110]).rangeExtent(), [10, 110]);
-//   test.deepEqual(scale.ordinal().domain(["a", "b", "c"]).rangeRoundBands([0, 100]).rangeExtent(), [0, 100]);
-//   test.deepEqual(scale.ordinal().domain(["a", "b", "c"]).range([0, 20, 100]).rangeExtent(), [0, 100]);
-//   test.end();
-// });
-
-// tape("ordinal.rangeExtent() can handle descending ranges", function(test) {
-//   test.deepEqual(scale.ordinal().domain(["a", "b", "c"]).rangeBands([100, 0]).rangeExtent(), [0, 100]);
-//   test.end();
-// });
-
 tape("ordinal.copy() changes to the domain are isolated", function(test) {
   var s1 = scale.ordinal().range(["foo", "bar"]),
       s2 = s1.copy();

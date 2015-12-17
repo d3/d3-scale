@@ -45,7 +45,7 @@ export default function point() {
   };
 
   scale.copy = function() {
-    return point().domain(domain).range(range).round(round).padding(padding);
+    return point().domain(domain()).range(extent).round(round).padding(padding);
   };
 
   return scale;

@@ -56,7 +56,7 @@ export default function band() {
   };
 
   scale.copy = function() {
-    return band().domain(domain).range(range).round(round).paddingInner(paddingInner).paddingOuter(paddingOuter);
+    return band().domain(domain()).range(extent).round(round).paddingInner(paddingInner).paddingOuter(paddingOuter);
   };
 
   return scale;
