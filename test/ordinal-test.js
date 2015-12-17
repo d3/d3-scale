@@ -1,6 +1,8 @@
 var tape = require("tape"),
     scale = require("../");
 
+require("./inDelta");
+
 tape("ordinal() has the expected defaults", function(test) {
   var s = scale.ordinal();
   test.deepEqual(s.domain(), []);
