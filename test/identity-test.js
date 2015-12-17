@@ -1,7 +1,6 @@
 var tape = require("tape"),
     scale = require("../");
 
-
 tape("identity(x) is the identity function", function(test) {
   var s = scale.identity().domain([1, 2]);
   test.equal(s(.5), .5);
