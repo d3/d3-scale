@@ -363,9 +363,9 @@ Extends the [domain](#log_domain) so that it starts and ends on nice round value
 
 Nicing is useful if the domain is computed from data, say using [extent](https://github.com/d3/d3-array#extent), and may be irregular. For example, for a domain of [0.20147987687960267, 0.996679553296417], the nice domain is [0.1, 1]. If the domain has more than two values, nicing the domain only affects the first and last value.
 
-<a name="log_ticks" href="#log_ticks">#</a> <i>log</i>.<b>ticks</b>()
+<a name="log_ticks" href="#log_ticks">#</a> <i>log</i>.<b>ticks</b>([<i>count</i>])
 
-Returns representative values from the scale’s [domain](#log_domain). The returned tick values are uniformly spaced within each power of ten, and are guaranteed to be within the extent of the domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data. Note that the number of ticks cannot be customized (due to the nature of log scales); however, you can filter the returned array of values if you want to reduce the number of ticks.
+Returns representative values from the scale’s [domain](#log_domain). The returned tick values are uniformly spaced within each power of [base](#log_base), and are guaranteed to be within the extent of the domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data. If the orders of magnitude in the domain is greater than *count*, then at most one tick per power is returned. Otherwise, the tick values are unfiltered, but note that you can use [*log*.tickFormat](#log_tickFormat) to filter the display of tick lables. If *count* is not specified, it defaults to 10.
 
 <a name="log_tickFormat" href="#log_tickFormat">#</a> <i>log</i>.<b>tickFormat</b>([<i>count</i>[, <i>format</i>]])
 

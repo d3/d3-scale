@@ -1,3 +1,4 @@
+import {ticks} from "d3-array";
 import {format} from "d3-format";
 import constant from "./constant";
 import nice from "./nice";
@@ -18,36 +19,44 @@ function reinterpolate(a, b) {
       : function(t) { return Math.pow(b, t) * Math.pow(a, 1 - t); };
 }
 
+function powp(base) {
+  return base === 10 ? function(x) { return isFinite(x) ? +("1e" + x) : x < 0 ? 0 : x; }
+      : base === Math.E ? Math.exp
+      : function(x) { return Math.pow(base, x); };
+}
+
+function logp(base) {
+  return base === Math.E ? Math.log
+      : base === 10 && Math.log10
+      || base === 2 && Math.log2
+      || (base = Math.log(base), function(x) { return Math.log(x) / base; });
+}
+
+function reflect(f) {
+  return function(x) {
+    return -f(-x);
+  };
+}
+
 export default function log() {
   var scale = quantitative(deinterpolate, reinterpolate).domain([1, 10]),
       domain = scale.domain,
       base = 10,
-      logbase = Math.LN10,
-      logs = logp,
-      pows = powp;
+      logs = logp(10),
+      pows = powp(10);
 
-  function logp(x) {
-    return Math.log(x) / logbase;
-  }
-
-  function logn(x) {
-    return -Math.log(-x) / logbase;
-  }
-
-  function powp(x) {
-    return Math.pow(base, x);
-  }
-
-  function pown(x) {
-    return -Math.pow(base, -x);
+  function rescale() {
+    logs = logp(base), pows = powp(base);
+    if (domain()[0] < 0) logs = reflect(logs), pows = reflect(pows);
+    return scale;
   }
 
   scale.base = function(_) {
-    return arguments.length ? (logbase = Math.log(base = +_), scale) : base;
+    return arguments.length ? (base = +_, rescale()) : base;
   };
 
   scale.domain = function(_) {
-    return arguments.length ? (domain(_), +_[0] < 0 ? (logs = logn, pows = pown) : (logs = logp, pows = powp), scale) : domain();
+    return arguments.length ? (domain(_), rescale()) : domain();
   };
 
   scale.nice = function() {
@@ -57,34 +66,37 @@ export default function log() {
     }));
   };
 
-  scale.ticks = function() {
+  scale.ticks = function(count) {
     var d = domain(),
         u = d[0],
         v = d[d.length - 1];
 
     if (v < u) i = u, u = v, v = i;
 
-    var i = Math.floor(logs(u)),
-        j = Math.ceil(logs(v)),
+    var i = logs(u),
+        j = logs(v),
         p,
         k,
         t,
-        n = base % 1 ? 2 : base,
-        ticks = [];
+        n = count == null ? 10 : +count,
+        z = [];
 
-    if (isFinite(j - i)) {
+    if (!(base % 1) && j - i < n) {
+      i = Math.floor(i), j = Math.ceil(j);
       if (u > 0) {
-        for (--j, k = 1, p = pows(i); k < n; ++k) if ((t = p * k) < u) continue; else ticks.push(t);
-        while (++i < j) for (k = 1, p = pows(i); k < n; ++k) ticks.push(p * k);
-        for (k = 1, p = pows(i); k <= n; ++k) if ((t = p * k) > v) break; else ticks.push(t);
+        for (--j, k = 1, p = pows(i); k < base; ++k) if ((t = p * k) < u) continue; else z.push(t);
+        while (++i < j) for (k = 1, p = pows(i); k < base; ++k) z.push(p * k);
+        for (k = 1, p = pows(i); k <= base; ++k) if ((t = p * k) > v) break; else z.push(t);
       } else {
-        for (++i, k = n, p = pows(i); k >= 1; --k) if ((t = p * k) < u) continue; else ticks.push(t);
-        while (++i < j) for (k = n - 1, p = pows(i); k >= 1; --k) ticks.push(p * k);
-        for (k = n - 1, p = pows(i); k >= 1; --k) if ((t = p * k) > v) break; else ticks.push(t);
+        for (++i, k = base, p = pows(i); k >= 1; --k) if ((t = p * k) < u) continue; else z.push(t);
+        while (++i < j) for (k = base - 1, p = pows(i); k >= 1; --k) z.push(p * k);
+        for (k = base - 1, p = pows(i); k >= 1; --k) if ((t = p * k) > v) break; else z.push(t);
       }
+    } else {
+      z = ticks(i, j, Math.min(j - i, n)).map(pows);
     }
 
-    return ticks;
+    return z;
   };
 
   scale.tickFormat = function(count, specifier) {
