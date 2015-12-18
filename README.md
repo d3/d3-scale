@@ -4,7 +4,9 @@ Scales are a convenient abstraction for a fundamental task in visualization: map
 
 For continuous quantitative data, you often want a [linear scale](#linear-scales). (For time series data, a [time scale](#time-scales).) If the distribution calls for it, you may transform data using a [power scale](#power-scales) or [log scale](#log-scales). To aid differentiation, consider a [quantize scale](#quantize-scales), which rounds continuous data to a fixed set of discrete values; similarly, a [quantile scale](#quantile-scales) computes quantiles from a sample population, and a [threshold scale](#threshold-scales) allows you to specify arbitrary thresholds to specify discrete breaks in continuous data.
 
-For ordinal or categorical data, use an [ordinal scale](#ordinal-scales). Ordinal scales can specify an explicit mapping from a discrete set of data values to a discrete set of visual attributes (such as colors), but they are also useful for position-encoding ordinal data, such as bars in a bar chart or dots in an categorical scatterplot. Several built-in [categorical color scales](#category-scales) are also provided; if you don’t like these palettes, try [ColorBrewer](http://colorbrewer2.org/).
+For ordinal or categorical data, use an [ordinal scale](#ordinal-scales). Ordinal scales can specify an explicit mapping from a discrete set of data values to a discrete set of visual attributes (such as colors), but they are also useful for position-encoding ordinal data, such as bars in a bar chart or dots in an categorical scatterplot.
+
+Several built-in [sequential](#sequential-color-scales) and [categorical](#categorical-color-scales) color scales are also provided. If you don’t like these palettes, try [ColorBrewer](http://colorbrewer2.org/).
 
 Scales have no intrinsic visual representation; for that, consider an [axis](https://github.com/mbostock/d3/wiki/SVG-Axes). However, scales typically provide a ticks method (such as [*linear*.ticks](#linear_ticks)) that can be used to render reference marks.
 
@@ -29,7 +31,8 @@ If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release]
 * [Threshold](#threshold-scales)
 * [Identity](#identity-scales)
 * [Ordinal](#ordinal-scales)
-* [Category](#category-scales)
+* [Sequential Colors](#sequential-color-scales)
+* [Categorical Colors](#categorical-color-scales)
 
 ### Linear Scales
 
@@ -788,37 +791,37 @@ Returns an exact copy of this ordinal scale. Changes to this scale will not affe
 
 <a name="cubehelix" href="#cubehelix">#</a> <b>cubehelix</b>()
 
-<img src="https://github.com/d3/d3-scale/tree/master/img/cubehelix.png" width="100%" alt="cubehelix">
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cubehelix.png" width="100%" alt="cubehelix">
 
 Constructs a new [linear scale](#linear-scales) with the [domain](#linear_domain) [0, 1], a [range](#linear_range) of the default Cubehelix color scheme, and [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
 
 <a name="rainbow" href="#rainbow">#</a> <b>rainbow</b>()
 
-<img src="https://github.com/d3/d3-scale/tree/master/img/rainbow.png" width="100%" alt="rainbow">
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/rainbow.png" width="100%" alt="rainbow">
 
 Constructs a new [linear scale](#linear-scales) with the [domain](#linear_domain) [0, 0.5, 1], a [range](#linear_range) of the [less-angry rainbow](http://bl.ocks.org/mbostock/310c99e53880faec2434) color scheme (inspired by Matteo Niccoli’s [perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/)), and [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
 
 <a name="inferno" href="#inferno">#</a> <b>inferno</b>()
 
-<img src="https://github.com/d3/d3-scale/tree/master/img/inferno.png" width="100%" alt="inferno">
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/inferno.png" width="100%" alt="inferno">
 
 Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1], a [range](#quantize_range) of the Inferno perceptually-uniform color scheme.
 
 <a name="magma" href="#magma">#</a> <b>magma</b>()
 
-<img src="https://github.com/d3/d3-scale/tree/master/img/magma.png" width="100%" alt="magma">
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/magma.png" width="100%" alt="magma">
 
 Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1], a [range](#quantize_range) of the Magma perceptually-uniform color scheme.
 
 <a name="plasma" href="#plasma">#</a> <b>plasma</b>()
 
-<img src="https://github.com/d3/d3-scale/tree/master/img/plasma.png" width="100%" alt="plasma">
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/plasma.png" width="100%" alt="plasma">
 
 Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1], a [range](#quantize_range) of the Plasma perceptually-uniform color scheme.
 
 <a name="viridis" href="#viridis">#</a> <b>viridis</b>()
 
-<img src="https://github.com/d3/d3-scale/tree/master/img/viridis.png" width="100%" alt="viridis">
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/viridis.png" width="100%" alt="viridis">
 
 Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1], a [range](#quantize_range) of the Viridis perceptually-uniform color scheme.
 
