@@ -803,25 +803,25 @@ Constructs a new [linear scale](#linear-scales) with the [domain](#linear_domain
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/inferno.png" width="100%" height="80" alt="inferno">
 
-Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1], a [range](#quantize_range) of a perceptually-uniform color scheme.
+Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1] and a [range](#quantize_range) of a perceptually-uniform color scheme.
 
 <a name="magma" href="#magma">#</a> <b>magma</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/magma.png" width="100%" height="80" alt="magma">
 
-Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1], a [range](#quantize_range) of a perceptually-uniform color scheme.
+Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1] and a [range](#quantize_range) of a perceptually-uniform color scheme.
 
 <a name="plasma" href="#plasma">#</a> <b>plasma</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/plasma.png" width="100%" height="80" alt="plasma">
 
-Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1], a [range](#quantize_range) of a perceptually-uniform color scheme.
+Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1] and a [range](#quantize_range) of a perceptually-uniform color scheme.
 
 <a name="viridis" href="#viridis">#</a> <b>viridis</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/viridis.png" width="100%" height="80" alt="viridis">
 
-Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1], a [range](#quantize_range) of a perceptually-uniform color scheme.
+Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1] and a [range](#quantize_range) of a perceptually-uniform color scheme.
 
 ### Categorical Color Scales
 
