@@ -29,8 +29,8 @@ If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release]
 * [Threshold](#threshold-scales)
 * [Identity](#identity-scales)
 * [Ordinal](#ordinal-scales)
-* [Sequential Colors](#sequential-color-scales)
-* [Categorical Colors](#categorical-color-scales)
+* [Sequential Color](#sequential-color-scales)
+* [Categorical Color](#categorical-color-scales)
 
 ### Linear Scales
 
