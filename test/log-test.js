@@ -273,14 +273,29 @@ tape("log.copy() isolates changes to clamping", function(test) {
   test.end();
 });
 
-tape("log.ticks() generates the expected power-of-ten ticks", function(test) {
+tape("log.ticks() generates the expected power-of-ten for ascending ticks", function(test) {
   var s = scale.log();
   test.deepEqual(s.domain([1e-1, 1e1]).ticks().map(round), [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
   test.deepEqual(s.domain([1e-1, 1e0]).ticks().map(round), [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]);
-  test.deepEqual(s.domain([1e0, 1e-1]).ticks().map(round), [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]);
-  test.deepEqual(s.domain([-1e-1, -1e1]).ticks().map(round), [-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1]);
-  test.deepEqual(s.domain([-1e-1, -1e0]).ticks().map(round), [-1, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1]);
   test.deepEqual(s.domain([-1e0, -1e-1]).ticks().map(round), [-1, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1]);
+  test.end();
+});
+
+
+tape("log.ticks() generates the expected power-of-ten ticks for descending domains", function(test) {
+  var s = scale.log();
+  test.deepEqual(s.domain([-1e-1, -1e1]).ticks().map(round), [-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1].reverse());
+  test.deepEqual(s.domain([-1e-1, -1e0]).ticks().map(round), [-1, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1].reverse());
+  test.deepEqual(s.domain([1e0, 1e-1]).ticks().map(round), [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1].reverse());
+  test.end();
+});
+
+tape("log.ticks() generates the expected power-of-ten ticks for small domains", function(test) {
+  var s = scale.log();
+  test.deepEqual(s.domain([1, 5]).ticks(), [1, 2, 3, 4, 5]);
+  test.deepEqual(s.domain([5, 1]).ticks(), [5, 4, 3, 2, 1]);
+  test.deepEqual(s.domain([-1, -5]).ticks(), [-1, -2, -3, -4, -5]);
+  test.deepEqual(s.domain([-5, -1]).ticks(), [-5, -4, -3, -2, -1]);
   test.end();
 });
 
@@ -333,14 +348,15 @@ tape("log.ticks() generates log ticks", function(test) {
   ]);
   x.domain([100, 1]);
   test.deepEqual(x.ticks().map(x.tickFormat()), [
-    "1e+0", "2e+0", "3e+0", "4e+0", "5e+0", "6e+0", "7e+0", "8e+0", "9e+0",
-    "1e+1", "2e+1", "3e+1", "4e+1", "5e+1", "6e+1", "7e+1", "8e+1", "9e+1",
-    "1e+2"
+    "1e+2",
+    "9e+1", "8e+1", "7e+1", "6e+1", "5e+1", "4e+1", "3e+1", "2e+1", "1e+1",
+    "9e+0", "8e+0", "7e+0", "6e+0", "5e+0", "4e+0", "3e+0", "2e+0", "1e+0",
   ]);
   x.domain([0.49999, 0.006029505943610648]);
   test.deepEqual(x.ticks().map(x.tickFormat()), [
-    "7e-3", "8e-3", "9e-3", "1e-2", "2e-2", "3e-2", "4e-2", "5e-2",
-    "6e-2", "7e-2", "8e-2", "9e-2", "1e-1", "2e-1", "3e-1", "4e-1"
+    "4e-1", "3e-1", "2e-1", "1e-1",
+    "9e-2", "8e-2", "7e-2", "6e-2", "5e-2", "4e-2", "3e-2", "2e-2", "1e-2",
+    "9e-3", "8e-3", "7e-3"
   ]);
   x.domain([0.95, 1.05e8]);
   test.deepEqual(x.ticks().map(x.tickFormat(8)).filter(String), [
@@ -357,9 +373,9 @@ tape("log.tickFormat(count) filters ticks to about count", function(test) {
   ]);
   x.domain([100, 1]);
   test.deepEqual(x.ticks().map(x.tickFormat(10)), [
-    "1e+0", "2e+0", "3e+0", "4e+0", "5e+0", "", "", "", "",
-    "1e+1", "2e+1", "3e+1", "4e+1", "5e+1", "", "", "", "",
-    "1e+2"
+    "1e+2",
+    "", "", "", "", "5e+1", "4e+1", "3e+1", "2e+1", "1e+1",
+    "", "", "", "", "5e+0", "4e+0", "3e+0", "2e+0", "1e+0"
   ]);
   test.end();
 });
@@ -403,10 +419,10 @@ tape("log.ticks() generates ticks that cover the niced domain", function(test) {
 tape("log.tickFormat(count, format) returns a filtered format", function(test) {
   var x = scale.log().domain([1000.1, 1]);
   test.deepEqual(x.ticks().map(x.tickFormat(10, format.format("+,d"))), [
-    "+1", "+2", "+3", "", "", "", "", "", "",
-    "+10", "+20", "+30", "", "", "", "", "", "",
-    "+100", "+200", "+300", "", "", "", "", "", "",
-    "+1,000"
+    "+1,000",
+    "", "", "", "", "", "", "+300", "+200", "+100",
+    "", "", "", "", "", "", "+30", "+20", "+10",
+    "", "", "", "", "", "", "+3", "+2", "+1"
   ]);
   test.end();
 });
@@ -414,10 +430,10 @@ tape("log.tickFormat(count, format) returns a filtered format", function(test) {
 tape("log.tickFormat(count, specifier) returns a filtered format", function(test) {
   var x = scale.log().domain([1000.1, 1]);
   test.deepEqual(x.ticks().map(x.tickFormat(10, ".1s")), [
-    "1", "2", "3", "", "", "", "", "", "",
-    "10", "20", "30", "", "", "", "", "", "",
-    "100", "200", "300", "", "", "", "", "", "",
-    "1k"
+    "1k",
+    "", "", "", "", "", "", "300", "200", "100",
+    "", "", "", "", "", "", "30", "20", "10",
+    "", "", "", "", "", "", "3", "2", "1"
   ]);
   test.end();
 });

@@ -73,9 +73,10 @@ export default function log() {
   scale.ticks = function(count) {
     var d = domain(),
         u = d[0],
-        v = d[d.length - 1];
+        v = d[d.length - 1],
+        r;
 
-    if (v < u) i = u, u = v, v = i;
+    if (r = v < u) i = u, u = v, v = i;
 
     var i = logs(u),
         j = logs(v),
@@ -86,16 +87,23 @@ export default function log() {
         z = [];
 
     if (!(base % 1) && j - i < n) {
-      i = Math.floor(i), j = Math.ceil(j);
-      if (u > 0) {
-        for (--j, k = 1, p = pows(i); k < base; ++k) if ((t = p * k) < u) continue; else z.push(t);
-        while (++i < j) for (k = 1, p = pows(i); k < base; ++k) z.push(p * k);
-        for (k = 1, p = pows(i); k <= base; ++k) if ((t = p * k) > v) break; else z.push(t);
-      } else {
-        for (++i, k = base, p = pows(i); k >= 1; --k) if ((t = p * k) < u) continue; else z.push(t);
-        while (++i < j) for (k = base - 1, p = pows(i); k >= 1; --k) z.push(p * k);
-        for (k = base - 1, p = pows(i); k >= 1; --k) if ((t = p * k) > v) break; else z.push(t);
+      i = Math.round(i) - 1, j = Math.round(j) + 1;
+      if (u > 0) for (; i < j; ++i) {
+        for (k = 1, p = pows(i); k < base; ++k) {
+          t = p * k;
+          if (t < u) continue;
+          if (t > v) break;
+          z.push(t);
+        }
+      } else for (; i < j; ++i) {
+        for (k = base - 1, p = pows(i); k >= 1; --k) {
+          t = p * k;
+          if (t < u) continue;
+          if (t > v) break;
+          z.push(t);
+        }
       }
+      if (r) z.reverse();
     } else {
       z = ticks(i, j, Math.min(j - i, n)).map(pows);
     }
