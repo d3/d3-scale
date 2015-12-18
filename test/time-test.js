@@ -380,6 +380,13 @@ tape("time.ticks(count) returns no ticks for an empty domain", function(test) {
   test.end();
 });
 
+tape("time.ticks() returns descending ticks for a descending domain", function(test) {
+  var x = scale.time();
+  test.deepEqual(x.domain([date.local(2014, 2, 2), date.local(2010, 11, 18)]).ticks(4), [date.local(2014, 0, 1, 0, 0), date.local(2013, 0, 1, 0, 0), date.local(2012, 0, 1, 0, 0), date.local(2011, 0, 1, 0, 0)]);
+  test.deepEqual(x.domain([date.local(2011, 10, 2), date.local(2010, 11, 18)]).ticks(4), [date.local(2011, 9, 1, 0, 0), date.local(2011, 6, 1, 0, 0), date.local(2011, 3, 1, 0, 0), date.local(2011, 0, 1, 0, 0)]);
+  test.end();
+});
+
 tape("time.tickFormat()(date) formats year on New Year's", function(test) {
   var f = scale.time().tickFormat();
   test.equal(f(date.local(2011, 0, 1)), "2011");

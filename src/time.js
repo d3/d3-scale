@@ -107,13 +107,12 @@ export function calendar(year, month, week, day, hour, minute, second, milliseco
     var d = domain(),
         t0 = d[0],
         t1 = d[d.length - 1],
+        r = t1 < t0,
         t;
-
-    if (t1 < t0) t = t0, t0 = t1, t1 = t;
-
-    return (interval = tickInterval(interval, t0, t1, step))
-        ? interval.range(t0, t1 + 1) // inclusive stop
-        : [];
+    if (r) t = t0, t0 = t1, t1 = t;
+    t = tickInterval(interval, t0, t1, step);
+    t = t ? t.range(t0, t1 + 1) : []; // inclusive stop
+    return r ? t.reverse() : t;
   };
 
   scale.tickFormat = function(specifier) {
