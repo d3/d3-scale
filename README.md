@@ -171,15 +171,15 @@ Returns an exact copy of this linear scale. Changes to this scale will not affec
 
 <a name="cubehelix" href="#cubehelix">#</a> <b>cubehelix</b>()
 
-<img src="https://cloud.githubusercontent.com/assets/230541/11226124/e1500ed2-8d32-11e5-915a-f2e7175e7a72.png" width="100%" alt="cubehelix">
+<img src="https://github.com/d3/d3-scale/tree/master/img/cubehelix.png" width="100%" alt="cubehelix">
 
-Constructs a new linear scale with the [domain](#linear_domain) [0,1], a [range](#linear_range) of the default Cubehelix color scheme, and [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
+Constructs a new linear scale with the [domain](#linear_domain) [0, 1], a [range](#linear_range) of the default Cubehelix color scheme, and [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
 
 <a name="rainbow" href="#rainbow">#</a> <b>rainbow</b>()
 
-<img src="https://cloud.githubusercontent.com/assets/230541/11226126/e3d0298a-8d32-11e5-9936-a931c6e3b470.png" width="100%" alt="rainbow">
+<img src="https://github.com/d3/d3-scale/tree/master/img/rainbow.png" width="100%" alt="rainbow">
 
-Constructs a new linear scale with the [domain](#linear_domain) [0,0.5,1], a [range](#linear_range) of the [less-angry rainbow](http://bl.ocks.org/mbostock/310c99e53880faec2434) color scheme (inspired by Matteo Niccoli’s [perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/)), and [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
+Constructs a new linear scale with the [domain](#linear_domain) [0, 0.5, 1], a [range](#linear_range) of the [less-angry rainbow](http://bl.ocks.org/mbostock/310c99e53880faec2434) color scheme (inspired by Matteo Niccoli’s [perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/)), and [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
 
 ### Power Scales
 
@@ -583,6 +583,30 @@ If *range* is specified, sets the scale’s range to the specified array of valu
 <a name="quantize_copy" href="#quantize_copy">#</a> <i>quantize</i>.<b>copy</b>()
 
 Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
+
+<a name="inferno" href="#inferno">#</a> <b>inferno</b>()
+
+<img src="https://github.com/d3/d3-scale/tree/master/img/inferno.png" width="100%" alt="inferno">
+
+Constructs a new quantize scale with the [domain](#quantize_domain) [0, 1], a [range](#quantize_range) of the Inferno perceptually-uniform color scheme.
+
+<a name="magma" href="#magma">#</a> <b>magma</b>()
+
+<img src="https://github.com/d3/d3-scale/tree/master/img/magma.png" width="100%" alt="magma">
+
+Constructs a new quantize scale with the [domain](#quantize_domain) [0, 1], a [range](#quantize_range) of the Magma perceptually-uniform color scheme.
+
+<a name="plasma" href="#plasma">#</a> <b>plasma</b>()
+
+<img src="https://github.com/d3/d3-scale/tree/master/img/plasma.png" width="100%" alt="plasma">
+
+Constructs a new quantize scale with the [domain](#quantize_domain) [0, 1], a [range](#quantize_range) of the Plasma perceptually-uniform color scheme.
+
+<a name="viridis" href="#viridis">#</a> <b>viridis</b>()
+
+<img src="https://github.com/d3/d3-scale/tree/master/img/viridis.png" width="100%" alt="viridis">
+
+Constructs a new quantize scale with the [domain](#quantize_domain) [0, 1], a [range](#quantize_range) of the Viridis perceptually-uniform color scheme.
 
 ### Quantile Scales
 
