@@ -14,8 +14,8 @@ export default function quantize() {
 
   function rescale() {
     var i = -1;
+    domain = new Array(n);
     while (++i < n) domain[i] = ((i + 1) * x1 - (i - n) * x0) / (n + 1);
-    domain.length = n;
     return scale;
   }
 
@@ -36,9 +36,7 @@ export default function quantize() {
   };
 
   scale.copy = function() {
-    return quantize()
-        .domain([x0, x1])
-        .range(range);
+    return quantize().domain([x0, x1]).range(range);
   };
 
   return scale;

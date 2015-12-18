@@ -1,11 +1,6 @@
+import colors from "./colors";
 import ordinal from "./ordinal";
 
 export default function() {
-  return ordinal().range([
-    "#3182bd", "#6baed6", "#9ecae1", "#c6dbef",
-    "#e6550d", "#fd8d3c", "#fdae6b", "#fdd0a2",
-    "#31a354", "#74c476", "#a1d99b", "#c7e9c0",
-    "#756bb1", "#9e9ac8", "#bcbddc", "#dadaeb",
-    "#636363", "#969696", "#bdbdbd", "#d9d9d9"
-  ]);
+  return ordinal().range(colors("3182bd6baed69ecae1c6dbefe6550dfd8d3cfdae6bfdd0a231a35474c476a1d99bc7e9c0756bb19e9ac8bcbddcdadaeb636363969696bdbdbdd9d9d9"));
 };
