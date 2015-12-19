@@ -829,25 +829,25 @@ Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cubehelix.png" width="100%" height="40" alt="cubehelix">
 
-Constructs a new [linear scale](#linear-scales) with the [domain](#linear_domain) [0, 1], a [range](#linear_range) of [Green’s default Cubehelix](https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/) color scheme, and [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
+Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and implementing [Green’s default Cubehelix](https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/) color scheme.
 
 <a name="warm" href="#warm">#</a> <b>warm</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/warm.png" width="100%" height="40" alt="warm">
 
-Constructs a new [linear scale](#linear-scales) with the [domain](#linear_domain) [0, 1], and a range approximating [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/) rotated by 180°, with [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
+Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and approximately implementing a 180° rotation of [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/) color scheme using the Cubehelix color space.
 
 <a name="cool" href="#cool">#</a> <b>cool</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cool.png" width="100%" height="40" alt="cool">
 
-Constructs a new [linear scale](#linear-scales) with the [domain](#linear_domain) [0, 1], and a range approximating [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/), with [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
+Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and approximately implementing [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/) color scheme using the Cubehelix color space.
 
 <a name="rainbow" href="#rainbow">#</a> <b>rainbow</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/rainbow.png" width="100%" height="40" alt="rainbow">
 
-Constructs a new [linear scale](#linear-scales) with the [domain](#linear_domain) [0, 1] combining the [warm](#warm) scale from [0.0, 0.5] followed by the [cool](#cool) scale from [0.5, 1.0], thus implementing the cyclical [less-angry rainbow](http://bl.ocks.org/mbostock/310c99e53880faec2434) color scheme.
+Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] combining the [warm](#warm) scale from [0.0, 0.5] followed by the [cool](#cool) scale from [0.5, 1.0], thus implementing the cyclical [less-angry rainbow](http://bl.ocks.org/mbostock/310c99e53880faec2434) color scheme.
 
 ### Categorical Color Scales
 
