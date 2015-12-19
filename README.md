@@ -565,6 +565,18 @@ s.invertExtent(2); // [40, 70]
 
 If *domain* is specified, sets the scale’s domain to the specified two-element array of numbers. If the array contains more than two numbers, only the first and last number are used; if the elements in the given array are not numbers, they will be coerced to numbers. If *domain* is not specified, returns the scale’s current domain.
 
+<a name="quantize_nice" href="#quantize_nice">#</a> <i>quantize</i>.<b>nice</b>()
+
+Equivalent to [*linear*.nice](#linear_nice).
+
+<a name="quantize_ticks" href="#quantize_ticks">#</a> <i>quantize</i>.<b>ticks</b>([<i>count</i>])
+
+Equivalent to [*linear*.ticks](#linear_ticks).
+
+<a name="quantize_tickFormat" href="#quantize_tickFormat">#</a> <i>quantize</i>.<b>tickFormat</b>([<i>count</i>[, <i>specifier</i>]])
+
+Equivalent to [*linear*.tickFormat](#linear_tickFormat).
+
 <a name="quantize_range" href="#quantize_range">#</a> <i>quantize</i>.<b>range</b>([<i>range</i>])
 
 If *range* is specified, sets the scale’s range to the specified array of values. The array may contain any number of discrete values. The elements in the given array need not be numbers; any value or type will work. If *range* is not specified, returns the scale’s current range.
@@ -667,15 +679,17 @@ Returns the given value *x*.
 
 If *domain* is specified, sets the scale’s domain and range to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. If *domain* is not specified, returns the scale’s current domain (or equivalently, range).
 
+<a name="identity_nice" href="#identity_nice">#</a> <i>identity</i>.<b>nice</b>()
+
+Equivalent to [*linear*.nice](#linear_nice).
+
 <a name="identity_ticks" href="#identity_ticks">#</a> <i>identity</i>.<b>ticks</b>([<i>count</i>])
 
-Returns approximately *count* representative values from the scale’s [domain](#identity_domain) (or equivalently, range). If *count* is not specified, it defaults to 10. The returned tick values are uniformly spaced, have human-readable values (such as multiples of powers of 10), and are guaranteed to be within the extent of the domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data. The specified *count* is only a hint; the scale may return more or fewer values depending on the domain.
+Equivalent to [*linear*.ticks](#linear_ticks).
 
-<a name="identity_tickFormat" href="#identity_tickFormat">#</a> <i>identity</i>.<b>tickFormat</b>(<i>count</i>[, <i>specifier</i>])
+<a name="identity_tickFormat" href="#identity_tickFormat">#</a> <i>identity</i>.<b>tickFormat</b>([<i>count</i>[, <i>specifier</i>]])
 
-Returns a [number format](https://github.com/d3/d3-format) function suitable for displaying a tick value. The specified *count* should have the same value as the count that is used to generate the tick values. You don’t have to use the scale’s built-in tick format, but it automatically computes the appropriate precision based on the fixed interval between tick values.
-
-The optional *specifier* argument allows a [custom format](https://github.com/d3/d3-format#locale_format) to be specified. If the format specifier doesn’t have a defined precision, the precision will be set automatically by the scale, returning the appropriate format. This provides a convenient, declarative way of specifying a format whose precision will be automatically set by the scale.
+Equivalent to [*linear*.tickFormat](#linear_tickFormat).
 
 <a name="identity_copy" href="#identity_copy">#</a> <i>identity</i>.<b>copy</b>()
 
