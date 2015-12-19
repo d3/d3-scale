@@ -38,7 +38,7 @@ Linear scales are the most common and a good default choice to map a continuous 
 
 <a name="linear" href="#linear">#</a> <b>linear</b>()
 
-Constructs a new linear scale with the default [domain](#linear_domain) [0,1], the default [range](#linear_range) [0,1], the default [interpolator](#linear_interpolate) and [clamping](#linear_clamp) disabled.
+Constructs a new linear scale with the default [domain](#linear_domain) [0, 1], the default [range](#linear_range) [0, 1], the default [interpolator](#linear_interpolate) and [clamping](#linear_clamp) disabled.
 
 <a name="_linear" href="#_linear">#</a> <i>linear</i>(<i>x</i>)
 
@@ -98,9 +98,9 @@ s.range(range).interpolate(interpolateRound);
 
 The rounding interpolator is sometimes useful for avoiding antialiasing artifacts, though also consider [shape-rendering](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering): crispEdges. Note that this interpolator can only be used with numeric ranges.
 
-<a name="linear_interpolate" href="#linear_interpolate">#</a> <i>linear</i>.<b>interpolate</b>([<i>interpolate</i>])
+<a name="linear_interpolate" href="#linear_interpolate">#</a> <i>linear</i>.<b>interpolate</b>([<i>interpolate</i>[, <i>parameters…</i>]])
 
-If *interpolate* is specified, sets the scale’s [range](#linear_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory.
+If *interpolate* is specified, sets the scale’s [range](#linear_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0, 1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory.
 
 For example, if you create a diverging color scale with three colors in the range:
 
@@ -176,7 +176,7 @@ Power scales are similar to [linear scales](#linear-scales), except an exponenti
 
 <a name="pow" href="#pow">#</a> <b>pow</b>()
 
-Constructs a new power scale with the default [domain](#pow_domain) [0,1], the default [range](#pow_range) [0,1], the default [exponent](#pow_exponent) 1, the default [interpolator](#pow_interpolate) and [clamping](#pow_clamp) disabled. (Note that this is effectively a [linear](#linear) scale until you set a different exponent.)
+Constructs a new power scale with the default [domain](#pow_domain) [0, 1], the default [range](#pow_range) [0, 1], the default [exponent](#pow_exponent) 1, the default [interpolator](#pow_interpolate) and [clamping](#pow_clamp) disabled. (Note that this is effectively a [linear](#linear) scale until you set a different exponent.)
 
 <a name="_pow" href="#_pow">#</a> <i>pow</i>(<i>x</i>)
 
@@ -232,9 +232,9 @@ s.range(range).interpolate(interpolateRound);
 
 The rounding interpolator is sometimes useful for avoiding antialiasing artifacts, though also consider [shape-rendering](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering): crispEdges. Note that this interpolator can only be used with numeric ranges.
 
-<a name="pow_interpolate" href="#pow_interpolate">#</a> <i>pow</i>.<b>interpolate</b>([<i>interpolate</i>])
+<a name="pow_interpolate" href="#pow_interpolate">#</a> <i>pow</i>.<b>interpolate</b>([<i>interpolate</i>[, <i>parameters…</i>]])
 
-If *interpolate* is specified, sets the scale’s [range](#pow_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory. See [*linear*.interpolate](#linear_interpolate) for examples.
+If *interpolate* is specified, sets the scale’s [range](#pow_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0, 1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory. See [*linear*.interpolate](#linear_interpolate) for examples.
 
 Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
 
@@ -264,7 +264,7 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 <a name="sqrt" href="#sqrt">#</a> <b>sqrt</b>()
 
-Constructs a new power scale with the default [domain](#pow_domain) [0,1], the default [range](#pow_range) [0,1], and the [exponent](#pow_exponent) 0.5. This is a convenience method equivalent to:
+Constructs a new power scale with the default [domain](#pow_domain) [0, 1], the default [range](#pow_range) [0, 1], and the [exponent](#pow_exponent) 0.5. This is a convenience method equivalent to:
 
 ```js
 pow().exponent(0.5)
@@ -280,7 +280,7 @@ As log(0) = -∞, a log scale domain must be **strictly-positive or strictly-neg
 
 <a name="log" href="#log">#</a> <b>log</b>()
 
-Constructs a new log scale with the default domain [1,10], the default range [0,1], and the base 10.
+Constructs a new log scale with the default domain [1,10], the default range [0, 1], and the base 10.
 
 <a name="_log" href="#_log">#</a> <i>log</i>(<i>x</i>)
 
@@ -336,9 +336,9 @@ s.range(range).interpolate(interpolateRound);
 
 The rounding interpolator is sometimes useful for avoiding antialiasing artifacts, though also consider [shape-rendering](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering): crispEdges. Note that this interpolator can only be used with numeric ranges.
 
-<a name="log_interpolate" href="#log_interpolate">#</a> <i>log</i>.<b>interpolate</b>([<i>interpolate</i>])
+<a name="log_interpolate" href="#log_interpolate">#</a> <i>log</i>.<b>interpolate</b>([<i>interpolate</i>[, <i>parameters…</i>]])
 
-If *interpolate* is specified, sets the scale’s [range](#log_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory. See [*linear*.interpolate](#linear_interpolate) for examples.
+If *interpolate* is specified, sets the scale’s [range](#log_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0, 1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory. See [*linear*.interpolate](#linear_interpolate) for examples.
 
 Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
 
@@ -378,7 +378,7 @@ Time scales are a variant of [linear scales](#linear-scales) that have a time do
 
 <a name="time" href="#time">#</a> <b>time</b>()
 
-Constructs a new time scale with the default [domain](#time_domain) [2000-01-01,2000-01-02], the default [range](#time_range) [0,1], the default [interpolator](#time_interpolate) and [clamping](#time_clamp) disabled.
+Constructs a new time scale with the default [domain](#time_domain) [2000-01-01,2000-01-02], the default [range](#time_range) [0, 1], the default [interpolator](#time_interpolate) and [clamping](#time_clamp) disabled.
 
 <a name="_time" href="#_time">#</a> <i>time</i>(<i>date</i>)
 
@@ -428,9 +428,9 @@ s.range(range).interpolate(interpolateRound);
 
 The rounding interpolator is sometimes useful for avoiding antialiasing artifacts, though also consider [shape-rendering](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering): crispEdges. Note that this interpolator can only be used with numeric ranges.
 
-<a name="time_interpolate" href="#time_interpolate">#</a> <i>time</i>.<b>interpolate</b>([<i>interpolate</i>])
+<a name="time_interpolate" href="#time_interpolate">#</a> <i>time</i>.<b>interpolate</b>([<i>interpolate</i>[, <i>parameters…</i>]])
 
-If *interpolate* is specified, sets the scale’s [range](#time_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0,1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory. See [*linear*.interpolate](#linear_interpolate) for examples.
+If *interpolate* is specified, sets the scale’s [range](#time_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0, 1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory. See [*linear*.interpolate](#linear_interpolate) for examples.
 
 Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
 
@@ -531,7 +531,7 @@ Quantize scales are a variant of [linear scales](#linear-scales) with a discrete
 
 <a name="quantize" href="#quantize">#</a> <b>quantize</b>()
 
-Constructs a new quantize scale with the default [domain](#quantize_domain) [0,1] and the default [range](#quantize_range) [0,1]. Thus, the default quantize scale is equivalent to the [Math.round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function.
+Constructs a new quantize scale with the default [domain](#quantize_domain) [0, 1] and the default [range](#quantize_range) [0, 1]. Thus, the default quantize scale is equivalent to the [Math.round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function.
 
 <a name="_quantize" href="#_quantize">#</a> <i>quantize</i>(<i>x</i>)
 
@@ -623,7 +623,7 @@ Threshold scales are similar to [quantize scales](#quantize-scales), except they
 
 <a name="threshold" href="#threshold">#</a> <b>threshold</b>()
 
-Constructs a new threshold scale with the default [domain](#threshold_domain) [0.5] and the default [range](#threshold_range) [0,1]. Thus, the default threshold scale is equivalent to the [Math.round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function for numbers; for example threshold(0.49) returns 0, and threshold(0.51) returns 1.
+Constructs a new threshold scale with the default [domain](#threshold_domain) [0.5] and the default [range](#threshold_range) [0, 1]. Thus, the default threshold scale is equivalent to the [Math.round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function for numbers; for example threshold(0.49) returns 0, and threshold(0.51) returns 1.
 
 <a name="_threshold" href="#_threshold">#</a> <i>threshold</i>(<i>x</i>)
 
@@ -667,7 +667,7 @@ Identity scales are a special case of [linear scales](#linear-scales) where the 
 
 <a name="identity" href="#identity">#</a> <b>identity</b>()
 
-Constructs a new identity scale with the default [domain](#identity_domain) [0,1] and the default [range](#identity_range) [0,1]. An identity scale is always equivalent to the identity function.
+Constructs a new identity scale with the default [domain](#identity_domain) [0, 1] and the default [range](#identity_range) [0, 1]. An identity scale is always equivalent to the identity function.
 
 <a name="_identity" href="#_identity">#</a> <i>identity</i>(<i>x</i>)<br>
 <a href="#_identity">#</a> <i>identity</i>.<b>invert</b>(<i>x</i>)
@@ -754,7 +754,7 @@ s.range(); // [1, 3, 5, …, 95, 97, 98]
 
 <a name="ordinal_rangeBands" href="#ordinal_rangeBands">#</a> <i>ordinal</i>.<b>rangeBands</b>(<i>interval</i>[, <i>padding</i>[, <i>outerPadding</i>]])
 
-Sets the range from the specified continuous *interval*. The array *interval* contains two elements representing the minimum and maximum numeric value. This interval is subdivided into *n* evenly-spaced **bands**, where *n* is the number of (unique) values in the domain. The bands may be offset from the edge of the interval and other bands according to the specified *padding*, which defaults to zero. The padding is typically in the range [0,1] and corresponds to the amount of space in the range interval to allocate to padding. A value of 0.5 means that the band width will be equal to the padding width. The *outerPadding* argument is for the entire group of bands; a value of 0 means there will be padding only between rangeBands.
+Sets the range from the specified continuous *interval*. The array *interval* contains two elements representing the minimum and maximum numeric value. This interval is subdivided into *n* evenly-spaced **bands**, where *n* is the number of (unique) values in the domain. The bands may be offset from the edge of the interval and other bands according to the specified *padding*, which defaults to zero. The padding is typically in the range [0, 1] and corresponds to the amount of space in the range interval to allocate to padding. A value of 0.5 means that the band width will be equal to the padding width. The *outerPadding* argument is for the entire group of bands; a value of 0 means there will be padding only between rangeBands.
 
 ![rangebands](https://f.cloud.github.com/assets/230541/538688/46c298c0-c193-11e2-9a7e-15d9abcfab9b.png)
 

@@ -1,5 +1,5 @@
 import {bisect} from "d3-array";
-import {value, round} from "d3-interpolate";
+import {bind, value, round} from "d3-interpolate";
 import {map, slice} from "./array";
 import constant from "./constant";
 import number from "./number";
@@ -106,7 +106,7 @@ export default function quantitative(deinterpolate, reinterpolate) {
   };
 
   scale.interpolate = function(_) {
-    return arguments.length ? (interpolate = _, rescale()) : interpolate;
+    return arguments.length ? (interpolate = bind.apply(null, arguments), rescale()) : interpolate;
   };
 
   return rescale();
