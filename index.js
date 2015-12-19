@@ -14,5 +14,5 @@ export {default as category20b} from "./src/category20b";
 export {default as category20c} from "./src/category20c";
 export {default as category20} from "./src/category20";
 export {default as cubehelix} from "./src/cubehelix";
-export {default as rainbow} from "./src/rainbow";
+export {default as rainbow, warm, cool} from "./src/rainbow";
 export {viridis, magma, inferno, plasma} from "./src/viridis";
