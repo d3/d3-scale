@@ -787,53 +787,53 @@ Returns an exact copy of this ordinal scale. Changes to this scale will not affe
 
 ### Sequential Color Scales
 
-<a name="cubehelix" href="#cubehelix">#</a> <b>cubehelix</b>()
+<a name="viridis" href="#viridis">#</a> <b>viridis</b>()
 
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cubehelix.png" width="100%" height="80" alt="cubehelix">
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/viridis.png" width="100%" height="40" alt="viridis">
 
-Constructs a new [linear scale](#linear-scales) with the [domain](#linear_domain) [0, 1], a [range](#linear_range) of the default Cubehelix color scheme, and [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
-
-<a name="warm" href="#warm">#</a> <b>warm</b>()
-
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/warm.png" width="100%" height="80" alt="warm">
-
-Constructs a new [linear scale](#linear-scales) with the [domain](#linear_domain) [0, 1] implementing a color scale inspired by Matteo Niccoli’s [perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/), using [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
-
-<a name="cool" href="#cool">#</a> <b>cool</b>()
-
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cool.png" width="100%" height="80" alt="cool">
-
-Constructs a new [linear scale](#linear-scales) with the [domain](#linear_domain) [0, 1] implementing a color scale inspired by Matteo Niccoli’s [perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/), using [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
-
-<a name="rainbow" href="#rainbow">#</a> <b>rainbow</b>()
-
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/rainbow.png" width="100%" height="80" alt="rainbow">
-
-Constructs a new [linear scale](#linear-scales) with the [domain](#linear_domain) [0, 1] combining the [warm](#warm) scale from [0.0, 0.5] followed by the [cool](#cool) scale from [0.5, 1.0], thus implementing the cyclical [less-angry rainbow](http://bl.ocks.org/mbostock/310c99e53880faec2434) color scheme.
+Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1] and a [range](#quantize_range) of a perceptually-uniform color scheme.
 
 <a name="inferno" href="#inferno">#</a> <b>inferno</b>()
 
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/inferno.png" width="100%" height="80" alt="inferno">
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/inferno.png" width="100%" height="40" alt="inferno">
 
 Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1] and a [range](#quantize_range) of a perceptually-uniform color scheme.
 
 <a name="magma" href="#magma">#</a> <b>magma</b>()
 
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/magma.png" width="100%" height="80" alt="magma">
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/magma.png" width="100%" height="40" alt="magma">
 
 Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1] and a [range](#quantize_range) of a perceptually-uniform color scheme.
 
 <a name="plasma" href="#plasma">#</a> <b>plasma</b>()
 
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/plasma.png" width="100%" height="80" alt="plasma">
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/plasma.png" width="100%" height="40" alt="plasma">
 
 Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1] and a [range](#quantize_range) of a perceptually-uniform color scheme.
 
-<a name="viridis" href="#viridis">#</a> <b>viridis</b>()
+<a name="cubehelix" href="#cubehelix">#</a> <b>cubehelix</b>()
 
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/viridis.png" width="100%" height="80" alt="viridis">
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cubehelix.png" width="100%" height="40" alt="cubehelix">
 
-Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1] and a [range](#quantize_range) of a perceptually-uniform color scheme.
+Constructs a new [linear scale](#linear-scales) with the [domain](#linear_domain) [0, 1], a [range](#linear_range) of the default Cubehelix color scheme, and [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
+
+<a name="warm" href="#warm">#</a> <b>warm</b>()
+
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/warm.png" width="100%" height="40" alt="warm">
+
+Constructs a new [linear scale](#linear-scales) with the [domain](#linear_domain) [0, 1] implementing a color scale inspired by Matteo Niccoli’s [perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/), using [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
+
+<a name="cool" href="#cool">#</a> <b>cool</b>()
+
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cool.png" width="100%" height="40" alt="cool">
+
+Constructs a new [linear scale](#linear-scales) with the [domain](#linear_domain) [0, 1] implementing a color scale inspired by Matteo Niccoli’s [perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/), using [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
+
+<a name="rainbow" href="#rainbow">#</a> <b>rainbow</b>()
+
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/rainbow.png" width="100%" height="40" alt="rainbow">
+
+Constructs a new [linear scale](#linear-scales) with the [domain](#linear_domain) [0, 1] combining the [warm](#warm) scale from [0.0, 0.5] followed by the [cool](#cool) scale from [0.5, 1.0], thus implementing the cyclical [less-angry rainbow](http://bl.ocks.org/mbostock/310c99e53880faec2434) color scheme.
 
 ### Categorical Color Scales
 
