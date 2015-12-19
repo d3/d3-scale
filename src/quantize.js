@@ -28,6 +28,15 @@ export default function quantize() {
     return arguments.length ? (n = (range = slice.call(_)).length - 1, rescale()) : range.slice();
   };
 
+  scale.reduce = function(count) {
+    var n = Math.max(0, Math.floor(count));
+    if (!(n < range.length)) return scale;
+    var reduced = new Array(n);
+    if (n === 1) reduced[i] = range[range.length >> 1];
+    else for (var i = 0; i < n; ++i) reduced[i] = range[Math.round(i / (n - 1) * (range.length - 1))];
+    return scale.range(reduced);
+  };
+
   scale.invertExtent = function(y) {
     var i = range.indexOf(y);
     return i < 0 ? [NaN, NaN]
