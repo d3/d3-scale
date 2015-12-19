@@ -791,31 +791,31 @@ Returns an exact copy of this ordinal scale. Changes to this scale will not affe
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/viridis.png" width="100%" height="40" alt="viridis">
 
-Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1] and a [range](#quantize_range) of a perceptually-uniform color scheme.
+Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1] and a [range](#quantize_range) of a perceptually-uniform color scheme designed by [van der Walt, Smith and Firing](https://bids.github.io/colormap/).
 
 <a name="inferno" href="#inferno">#</a> <b>inferno</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/inferno.png" width="100%" height="40" alt="inferno">
 
-Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1] and a [range](#quantize_range) of a perceptually-uniform color scheme.
+Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1] and a [range](#quantize_range) of a perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/).
 
 <a name="magma" href="#magma">#</a> <b>magma</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/magma.png" width="100%" height="40" alt="magma">
 
-Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1] and a [range](#quantize_range) of a perceptually-uniform color scheme.
+Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1] and a [range](#quantize_range) of a perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/).
 
 <a name="plasma" href="#plasma">#</a> <b>plasma</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/plasma.png" width="100%" height="40" alt="plasma">
 
-Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1] and a [range](#quantize_range) of a perceptually-uniform color scheme.
+Constructs a new [quantize scale](#quantize-scales) with the [domain](#quantize_domain) [0, 1] and a [range](#quantize_range) of a perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/).
 
 <a name="cubehelix" href="#cubehelix">#</a> <b>cubehelix</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cubehelix.png" width="100%" height="40" alt="cubehelix">
 
-Constructs a new [linear scale](#linear-scales) with the [domain](#linear_domain) [0, 1], a [range](#linear_range) of the default Cubehelix color scheme, and [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
+Constructs a new [linear scale](#linear-scales) with the [domain](#linear_domain) [0, 1], a [range](#linear_range) of [Green’s default Cubehelix](https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/) color scheme, and [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
 
 <a name="warm" href="#warm">#</a> <b>warm</b>()
 
