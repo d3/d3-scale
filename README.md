@@ -821,13 +821,13 @@ Constructs a new [linear scale](#linear-scales) with the [domain](#linear_domain
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/warm.png" width="100%" height="40" alt="warm">
 
-Constructs a new [linear scale](#linear-scales) with the [domain](#linear_domain) [0, 1] implementing a color scale inspired by [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/), with [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
+Constructs a new [linear scale](#linear-scales) with the [domain](#linear_domain) [0, 1], and a range approximating [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/), with [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
 
 <a name="cool" href="#cool">#</a> <b>cool</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cool.png" width="100%" height="40" alt="cool">
 
-Constructs a new [linear scale](#linear-scales) with the [domain](#linear_domain) [0, 1] implementing a color scale inspired by [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/), with [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
+Constructs a new [linear scale](#linear-scales) with the [domain](#linear_domain) [0, 1], and a range approximating [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/), with [cubehelixLong](https://github.com/d3/d3-interpolate#cubehelixLong) as the interpolator.
 
 <a name="rainbow" href="#rainbow">#</a> <b>rainbow</b>()
 
