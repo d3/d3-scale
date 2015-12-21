@@ -17,8 +17,8 @@ export default function band() {
     var n = domain().length,
         reverse = range[1] < range[0],
         start = range[reverse - 0],
-        stop = range[1 - reverse],
-        step = (stop - start) / (n - paddingInner + 2 * paddingOuter);
+        stop = range[1 - reverse];
+    step = (stop - start) / (n - paddingInner + 2 * paddingOuter);
     if (round) step = Math.floor(step), start = Math.round(start + (stop - start - (n - paddingInner) * step) / 2);
     else start += step * paddingOuter;
     var values = sequence(n).map(function(i) { return start + step * i; });
