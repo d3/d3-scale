@@ -24,8 +24,6 @@ export default function band() {
     start += (stop - start - step * (n - paddingInner)) * align;
     if (round) start = Math.round(start);
     var values = sequence(n).map(function(i) { return start + step * i; });
-    step *= 1 - paddingInner;
-    if (round) step = Math.round(step);
     return ordinalRange(reverse ? values.reverse() : values);
   }
 
@@ -42,6 +40,11 @@ export default function band() {
   };
 
   scale.band = function() {
+    var b = step * (1 - paddingInner);
+    return round ? Math.round(b) : b;
+  };
+
+  scale.step = function() {
     return step;
   };
 
@@ -50,25 +53,25 @@ export default function band() {
   };
 
   scale.padding = function(_) {
-    return arguments.length ? (paddingInner = paddingOuter = +_, rescale()) : paddingInner;
+    return arguments.length ? (paddingInner = paddingOuter = Math.max(0, Math.min(1, _)), rescale()) : paddingInner;
   };
 
   scale.paddingInner = function(_) {
-    return arguments.length ? (paddingInner = +_, rescale()) : paddingInner;
+    return arguments.length ? (paddingInner = Math.max(0, Math.min(1, _)), rescale()) : paddingInner;
   };
 
   scale.paddingOuter = function(_) {
-    return arguments.length ? (paddingOuter = +_, rescale()) : paddingOuter;
+    return arguments.length ? (paddingOuter = Math.max(0, Math.min(1, _)), rescale()) : paddingOuter;
   };
 
   scale.align = function(_) {
-    return arguments.length ? (align = +_, rescale()) : align;
+    return arguments.length ? (align = Math.max(0, Math.min(1, _)), rescale()) : align;
   };
 
   scale.copy = function() {
     return band()
         .domain(domain())
-        .range(extent)
+        .range(range)
         .round(round)
         .paddingInner(paddingInner)
         .paddingOuter(paddingOuter)

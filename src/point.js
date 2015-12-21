@@ -1,67 +1,19 @@
-import {range as sequence} from "d3-array";
-import ordinal from "./ordinal";
+import band from "./band";
 
-export default function point() {
-  var scale = ordinal().unknown(undefined),
-      domain = scale.domain,
-      ordinalRange = scale.range,
-      range = [0, 1],
-      step = 0,
-      round = false,
-      padding = 0,
-      align = 0.5;
+function point(scale) {
+  var copy = scale.copy;
 
-  delete scale.unknown;
-
-  function rescale() {
-    var n = domain().length,
-        reverse = range[1] < range[0],
-        start = range[reverse - 0],
-        stop = range[1 - reverse];
-    step = (stop - start) / Math.max(1, n - 1 + padding * 2);
-    if (round) step = Math.floor(step);
-    start += (stop - start - step * (n - 1)) * align;
-    if (round) start = Math.round(start);
-    var values = sequence(n).map(function(i) { return start + step * i; });
-    return ordinalRange(reverse ? values.reverse() : values);
-  }
-
-  scale.domain = function(_) {
-    return arguments.length ? (domain(_), rescale()) : domain();
-  };
-
-  scale.range = function(_) {
-    return arguments.length ? (range = [+_[0], +_[1]], rescale()) : range.slice();
-  };
-
-  scale.rangeRound = function(_) {
-    return range = [+_[0], +_[1]], round = true, rescale();
-  };
-
-  scale.step = function() {
-    return step;
-  };
-
-  scale.round = function(_) {
-    return arguments.length ? (round = !!_, rescale()) : round;
-  };
-
-  scale.padding = function(_) {
-    return arguments.length ? (padding = +_, rescale()) : padding;
-  };
-
-  scale.align = function(_) {
-    return arguments.length ? (align = +_, rescale()) : align;
-  };
+  scale.padding = scale.paddingOuter;
+  delete scale.paddingInner;
+  delete scale.paddingOuter;
 
   scale.copy = function() {
-    return point()
-        .domain(domain())
-        .range(extent)
-        .round(round)
-        .padding(padding)
-        .align(align);
+    return point(copy());
   };
 
   return scale;
+}
+
+export default function() {
+  return point(band().paddingInner(1));
 };
