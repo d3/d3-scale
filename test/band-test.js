@@ -5,8 +5,8 @@ tape("band() has the expected defaults", function(test) {
   var s = scale.band();
   test.deepEqual(s.domain(), []);
   test.deepEqual(s.range(), [0, 1]);
-  test.equal(s.band(), 0);
-  test.equal(s.step(), 0);
+  test.equal(s.band(), 1);
+  test.equal(s.step(), 1);
   test.equal(s.round(), false);
   test.equal(s.paddingInner(), 0);
   test.equal(s.paddingOuter(), 0);

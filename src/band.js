@@ -6,8 +6,8 @@ export default function band() {
       domain = scale.domain,
       ordinalRange = scale.range,
       range = [0, 1],
-      step = 0,
-      width = 0,
+      step,
+      width,
       round = false,
       paddingInner = 0,
       paddingOuter = 0,
@@ -79,7 +79,7 @@ export default function band() {
         .align(align);
   };
 
-  return scale;
+  return rescale();
 };
 
 function pointish(scale) {
