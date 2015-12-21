@@ -58,7 +58,8 @@ export default function point() {
         .domain(domain())
         .range(extent)
         .round(round)
-        .padding(padding);
+        .padding(padding)
+        .align(align);
   };
 
   return scale;

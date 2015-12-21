@@ -9,7 +9,8 @@ export default function band() {
       step = 0,
       round = false,
       paddingInner = 0,
-      paddingOuter = 0;
+      paddingOuter = 0,
+      align = 0.5;
 
   delete scale.unknown;
 
@@ -18,9 +19,9 @@ export default function band() {
         reverse = range[1] < range[0],
         start = range[reverse - 0],
         stop = range[1 - reverse];
-    step = (stop - start) / (n - paddingInner + 2 * paddingOuter);
-    if (round) step = Math.floor(step), start = Math.round(start + (stop - start - (n - paddingInner) * step) / 2);
-    else start += step * paddingOuter;
+    step = (stop - start) / (n - paddingInner + paddingOuter * 2);
+    if (round) step = Math.floor(step), start = Math.round(start + (stop - start - (n - paddingInner) * step) * align);
+    else start += step * paddingOuter * 2 * align;
     var values = sequence(n).map(function(i) { return start + step * i; });
     step *= 1 - paddingInner;
     if (round) step = Math.round(step);
@@ -59,13 +60,18 @@ export default function band() {
     return arguments.length ? (paddingOuter = +_, rescale()) : paddingOuter;
   };
 
+  scale.align = function(_) {
+    return arguments.length ? (align = +_, rescale()) : align;
+  };
+
   scale.copy = function() {
     return band()
         .domain(domain())
         .range(extent)
         .round(round)
         .paddingInner(paddingInner)
-        .paddingOuter(paddingOuter);
+        .paddingOuter(paddingOuter)
+        .align(align);
   };
 
   return scale;
