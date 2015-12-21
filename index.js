@@ -2,7 +2,7 @@ export {default as band, point} from "./src/band";
 export {default as identity} from "./src/identity";
 export {default as linear} from "./src/linear";
 export {default as log} from "./src/log";
-export {default as ordinal, reuse as ordinalReuse} from "./src/ordinal";
+export {default as ordinal, reuse} from "./src/ordinal";
 export {default as pow, sqrt} from "./src/pow";
 export {default as quantile} from "./src/quantile";
 export {default as quantize} from "./src/quantize";

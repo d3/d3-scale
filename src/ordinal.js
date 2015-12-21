@@ -31,7 +31,7 @@ export default function ordinal() {
   };
 
   scale.unknown = function(_) {
-    return arguments.length ? (unknown = _, scale) : range.slice();
+    return arguments.length ? (unknown = _, scale) : unknown;
   };
 
   scale.copy = function() {
