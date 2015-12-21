@@ -19,9 +19,10 @@ export default function band() {
         reverse = range[1] < range[0],
         start = range[reverse - 0],
         stop = range[1 - reverse];
-    step = (stop - start) / (n - paddingInner + paddingOuter * 2);
-    if (round) step = Math.floor(step), start = Math.round(start + (stop - start - (n - paddingInner) * step) * align);
-    else start += step * paddingOuter * 2 * align;
+    step = (stop - start) / Math.max(1, n - paddingInner + paddingOuter * 2);
+    if (round) step = Math.floor(step);
+    start += (stop - start - step * (n - paddingInner)) * align;
+    if (round) start = Math.round(start);
     var values = sequence(n).map(function(i) { return start + step * i; });
     step *= 1 - paddingInner;
     if (round) step = Math.round(step);

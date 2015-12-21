@@ -18,9 +18,10 @@ export default function point() {
         reverse = range[1] < range[0],
         start = range[reverse - 0],
         stop = range[1 - reverse];
-    step = n < 2 ? (start = (start + stop) * align, 0) : (stop - start) / (n - 1 + padding * 2);
-    if (round) step = Math.floor(step), start = Math.round(start + (stop - start - (n - 1) * step) * align);
-    else start += step * padding * 2 * align;
+    step = (stop - start) / Math.max(1, n - 1 + padding * 2);
+    if (round) step = Math.floor(step);
+    start += (stop - start - step * (n - 1)) * align;
+    if (round) start = Math.round(start);
     var values = sequence(n).map(function(i) { return start + step * i; });
     return ordinalRange(reverse ? values.reverse() : values);
   }
