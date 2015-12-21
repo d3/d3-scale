@@ -35,7 +35,10 @@ export default function ordinal() {
   };
 
   scale.copy = function() {
-    return ordinal().domain(domain).range(range).unknown(unknown);
+    return ordinal()
+        .domain(domain)
+        .range(range)
+        .unknown(unknown);
   };
 
   return scale;
