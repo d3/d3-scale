@@ -8,7 +8,8 @@ export default function point() {
       range = [0, 1],
       step = 0,
       round = false,
-      padding = 0;
+      padding = 0,
+      align = 0.5;
 
   delete scale.unknown;
 
@@ -17,9 +18,9 @@ export default function point() {
         reverse = range[1] < range[0],
         start = range[reverse - 0],
         stop = range[1 - reverse];
-    step = n < 2 ? (start = (start + stop) / 2, 0) : (stop - start) / (n - 1 + padding);
-    if (round) step = Math.floor(step), start = Math.round(start + step * padding / 2 + (stop - start - (n - 1 + padding) * step) / 2);
-    else start += step * padding / 2;
+    step = n < 2 ? (start = (start + stop) * align, 0) : (stop - start) / (n - 1 + padding * 2);
+    if (round) step = Math.floor(step), start = Math.round(start + (stop - start - (n - 1) * step) * align);
+    else start += step * padding * 2 * align;
     var values = sequence(n).map(function(i) { return start + step * i; });
     return ordinalRange(reverse ? values.reverse() : values);
   }
@@ -46,6 +47,10 @@ export default function point() {
 
   scale.padding = function(_) {
     return arguments.length ? (padding = +_, rescale()) : padding;
+  };
+
+  scale.align = function(_) {
+    return arguments.length ? (align = +_, rescale()) : align;
   };
 
   scale.copy = function() {
