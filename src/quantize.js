@@ -37,7 +37,9 @@ export default function quantize() {
   };
 
   scale.copy = function() {
-    return quantize().domain([x0, x1]).range(range);
+    return quantize()
+        .domain([x0, x1])
+        .range(range);
   };
 
   return linearish(scale);

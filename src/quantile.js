@@ -1,13 +1,15 @@
-import {ascending, bisect, quantile} from "d3-array";
+import {ascending, bisect, quantile as threshold} from "d3-array";
+import {slice} from "./array";
 
-function newQuantile(domain, range) {
-  var thresholds;
+export default function quantile() {
+  var domain = [],
+      range = [],
+      thresholds = [];
 
   function rescale() {
-    var k = 0,
-        q = range.length;
-    thresholds = [];
-    while (++k < q) thresholds[k - 1] = quantile(domain, k / q);
+    var i = 0, n = Math.max(1, range.length);
+    thresholds = new Array(n - 1);
+    while (++i < n) thresholds[i - 1] = threshold(domain, i / n);
     return scale;
   }
 
@@ -15,39 +17,35 @@ function newQuantile(domain, range) {
     if (!isNaN(x = +x)) return range[bisect(thresholds, x)];
   }
 
-  scale.domain = function(x) {
-    if (!arguments.length) return domain;
+  scale.invertExtent = function(y) {
+    var i = range.indexOf(y);
+    return i < 0 ? [NaN, NaN] : [
+      i > 0 ? thresholds[i - 1] : domain[0],
+      i < thresholds.length ? thresholds[i] : domain[domain.length - 1]
+    ];
+  };
+
+  scale.domain = function(_) {
+    if (!arguments.length) return domain.slice();
     domain = [];
-    for (var i = 0, n = x.length, v; i < n; ++i) if (v = x[i], v != null && !isNaN(v = +v)) domain.push(v);
+    for (var i = 0, n = _.length, d; i < n; ++i) if (d = _[i], d != null && !isNaN(d = +d)) domain.push(d);
     domain.sort(ascending);
     return rescale();
   };
 
-  scale.range = function(x) {
-    if (!arguments.length) return range.slice();
-    range = x.slice();
-    return rescale();
+  scale.range = function(_) {
+    return arguments.length ? (range = slice.call(_), rescale()) : range.slice();
   };
 
   scale.quantiles = function() {
-    return thresholds;
-  };
-
-  scale.invertExtent = function(y) {
-    y = range.indexOf(y);
-    return y < 0 ? [NaN, NaN] : [
-      y > 0 ? thresholds[y - 1] : domain[0],
-      y < thresholds.length ? thresholds[y] : domain[domain.length - 1]
-    ];
+    return thresholds.slice();
   };
 
   scale.copy = function() {
-    return newQuantile(domain, range); // copy on write!
+    return quantile()
+        .domain(domain)
+        .range(range);
   };
 
-  return rescale();
-}
-
-export default function() {
-  return newQuantile([], []);
+  return scale;
 };
