@@ -80,3 +80,21 @@ export default function band() {
 
   return scale;
 };
+
+function pointish(scale) {
+  var copy = scale.copy;
+
+  scale.padding = scale.paddingOuter;
+  delete scale.paddingInner;
+  delete scale.paddingOuter;
+
+  scale.copy = function() {
+    return pointish(copy());
+  };
+
+  return scale;
+}
+
+export function point() {
+  return pointish(band().paddingInner(1));
+};
