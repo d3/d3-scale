@@ -45,7 +45,18 @@ tape("band(value) does not implicitly add values to the domain", function(test) 
   test.end();
 });
 
-tape("band.band() returns the band width", function(test) {
+tape("band.step() returns the distance between the starts of adjacent bands", function(test) {
+  var s = scale.band().range([0, 960]);
+  test.equal(s.domain(["foo"]).step(), 960);
+  test.equal(s.domain(["foo", "bar"]).step(), 480);
+  test.equal(s.domain(["foo", "bar", "baz"]).step(), 320);
+  s.padding(0.5);
+  test.equal(s.domain(["foo"]).step(), 640);
+  test.equal(s.domain(["foo", "bar"]).step(), 384);
+  test.end();
+});
+
+tape("band.band() returns the width of the band", function(test) {
   var s = scale.band().range([0, 960]);
   test.equal(s.domain([]).band(), 960);
   test.equal(s.domain(["foo"]).band(), 960);
@@ -55,6 +66,35 @@ tape("band.band() returns the band width", function(test) {
   test.equal(s.domain([]).band(), 480);
   test.equal(s.domain(["foo"]).band(), 320);
   test.equal(s.domain(["foo", "bar"]).band(), 192);
+  test.end();
+});
+
+tape("band.domain([]) computes reasonable band and step values", function(test) {
+  var s = scale.band().domain([]).range([0, 960]);
+  test.equal(s.step(), 960);
+  test.equal(s.band(), 960);
+  s.padding(0.5);
+  test.equal(s.step(), 960);
+  test.equal(s.band(), 480);
+  s.padding(1);
+  test.equal(s.step(), 960);
+  test.equal(s.band(), 0);
+  test.end();
+});
+
+tape("band.domain([value]) computes a reasonable singleton band, even with padding", function(test) {
+  var s = scale.band().domain(["foo"]).range([0, 960]);
+  test.equal(s("foo"), 0);
+  test.equal(s.step(), 960);
+  test.equal(s.band(), 960);
+  s.padding(0.5);
+  test.equal(s("foo"), 320);
+  test.equal(s.step(), 640);
+  test.equal(s.band(), 320);
+  s.padding(1);
+  test.equal(s("foo"), 480);
+  test.equal(s.step(), 480);
+  test.equal(s.band(), 0);
   test.end();
 });
 
@@ -68,7 +108,7 @@ tape("band.domain(values) recomputes the bands", function(test) {
   test.end();
 });
 
-tape("band.domain(x) makes a copy of the domain", function(test) {
+tape("band.domain(values) makes a copy of the specified domain values", function(test) {
   var domain = ["red", "green"],
       s = scale.band().domain(domain);
   domain.push("blue");
@@ -95,7 +135,7 @@ tape("band.range(values) can be descending", function(test) {
   test.end();
 });
 
-tape("band.range(x) makes a copy of the range", function(test) {
+tape("band.range(values) makes a copy of the specified range values", function(test) {
   var range = [1, 2],
       s = scale.band().range(range);
   range.push("blue");
@@ -112,7 +152,7 @@ tape("band.range() returns a copy of the range", function(test) {
   test.end();
 });
 
-tape("band.range(values) coerces values[0] and values[1] to a number", function(test) {
+tape("band.range(values) coerces values[0] and values[1] to numbers", function(test) {
   var s = scale.band().range({0: "1.0", 1: "2.0", length: 2});
   test.deepEqual(s.range(), [1, 2]);
   test.end();
@@ -184,37 +224,32 @@ tape("band.copy() copies all fields", function(test) {
   test.end();
 });
 
-// tape("band.copy() changes to the domain are isolated", function(test) {
-//   var s1 = scale.band().range(["foo", "bar"]),
-//       s2 = s1.copy();
-//   s1.domain([1, 2]);
-//   test.deepEqual(s2.domain(), []);
-//   test.equal(s1(1), "foo");
-//   test.equal(s2(1), "foo");
-//   s2.domain([2, 3]);
-//   test.equal(s1(2), "bar");
-//   test.equal(s2(2), "foo");
-//   test.deepEqual(s1.domain(), [1, 2]);
-//   test.deepEqual(s2.domain(), [2, 3]);
-//   test.end();
-// });
+tape("band.copy() isolates changes to the domain", function(test) {
+  var s1 = scale.band().domain(["foo", "bar"]).range([0, 2]),
+      s2 = s1.copy();
+  s1.domain(["red", "blue"]);
+  test.deepEqual(s2.domain(), ["foo", "bar"]);
+  test.deepEqual(s1.domain().map(s1), [0, 1]);
+  test.deepEqual(s2.domain().map(s2), [0, 1]);
+  s2.domain(["red", "blue"]);
+  test.deepEqual(s1.domain(), ["red", "blue"]);
+  test.deepEqual(s1.domain().map(s1), [0, 1]);
+  test.deepEqual(s2.domain().map(s2), [0, 1]);
+  test.end();
+});
 
-// tape("band.copy() changes to the range type are isolated", function(test) {
-//   var s1 = scale.band().domain([0, 1]).range([0, 1], .2),
-//       s2 = s1.copy();
-//   s1.rangePoints([1, 2]);
-//   test.inDelta(s1(0), 1, 1e-6);
-//   test.inDelta(s1(1), 2, 1e-6);
-//   test.inDelta(s1.band(), 0, 1e-6);
-//   test.inDelta(s2(0), 1/11, 1e-6);
-//   test.inDelta(s2(1), 6/11, 1e-6);
-//   test.inDelta(s2.band(), 4/11, 1e-6);
-//   s2.range([0, 1]);
-//   test.inDelta(s1(0), 1, 1e-6);
-//   test.inDelta(s1(1), 2, 1e-6);
-//   test.inDelta(s1.band(), 0, 1e-6);
-//   test.inDelta(s2(0), 0, 1e-6);
-//   test.inDelta(s2(1), 1/2, 1e-6);
-//   test.inDelta(s2.band(), 1/2, 1e-6);
-//   test.end();
-// });
+tape("band.copy() isolates changes to the range", function(test) {
+  var s1 = scale.band().domain(["foo", "bar"]).range([0, 2]),
+      s2 = s1.copy();
+  s1.range([3, 5]);
+  test.deepEqual(s2.range(), [0, 2]);
+  test.deepEqual(s1.domain().map(s1), [3, 4]);
+  test.deepEqual(s2.domain().map(s2), [0, 1]);
+  s2.range([5, 7]);
+  test.deepEqual(s1.range(), [3, 5]);
+  test.deepEqual(s1.domain().map(s1), [3, 4]);
+  test.deepEqual(s2.domain().map(s2), [5, 6]);
+  test.end();
+});
+
+// TODO align tests for padding & round
