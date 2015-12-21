@@ -35,6 +35,10 @@ export default function band() {
     return arguments.length ? (extent = [+_[0], +_[1]], rescale()) : extent.slice();
   };
 
+  scale.rangeRound = function(_) {
+    return extent = [+_[0], +_[1]], round = true, rescale();
+  };
+
   scale.band = function() {
     return step;
   };
