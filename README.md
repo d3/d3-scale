@@ -2,13 +2,13 @@
 
 Scales are a convenient abstraction for a fundamental task in visualization: mapping a dimension of abstract data to a visual representation. Although most often used for position-encoding quantitative data, such as mapping the height in meters of a sample population to the height in pixels of bars in a bar chart, scales can represent virtually any visual encoding, such as diverging colors, stroke widths, or symbol size. Scales can also be used with virtually any type of data, such as named categorical data or discrete data that needs sensible breaks.
 
-For continuous quantitative data, you often want a [linear scale](#linear-scales). (For time series data, a [time scale](#time-scales).) If the distribution calls for it, you may transform data using a [power scale](#power-scales) or [log scale](#log-scales). To aid differentiation, consider a [quantize scale](#quantize-scales), which rounds continuous data to a fixed set of discrete values; similarly, a [quantile scale](#quantile-scales) computes quantiles from a sample population, and a [threshold scale](#threshold-scales) allows you to specify arbitrary thresholds to specify discrete breaks in continuous data. Several built-in [sequential color scales](#sequential-color-scales) are also provided. (If you don’t like these palettes, try [ColorBrewer](http://colorbrewer2.org/).)
+For continuous quantitative data, you often want a [linear scale](#linear-scales). (For time series data, a [time scale](#time-scales).) If the distribution calls for it, consider transforming data using a [power scale](#power-scales) or [log scale](#log-scales). A [quantize scale](#quantize-scales) may aid differentiation by rounding continuous data to a fixed set of discrete values; similarly, a [quantile scale](#quantile-scales) computes quantiles from a sample population, and a [threshold scale](#threshold-scales) allows you to specify arbitrary breaks in continuous data. Several built-in [sequential color scales](#sequential-color-scales) are also provided. (If you don’t like these palettes, try [ColorBrewer](http://colorbrewer2.org/).)
 
-For ordinal or categorical data, use an [ordinal scale](#ordinal-scales). Ordinal scales can specify an explicit mapping from a discrete set of data values to a discrete set of visual attributes (such as colors), but they are also useful for position-encoding ordinal data, such as bars in a bar chart or dots in an categorical scatterplot. Several built-in [categorical color scales](#categorical-color-scales) are also provided.
+For ordinal or categorical data, an [ordinal scale](#ordinal-scales) can specify an explicit mapping from a discrete set of data values to a corresponding set of visual attributes (such as colors). The related [band](#band) and [point](#point) scales are useful for position-encoding ordinal data, such as bars in a bar chart or dots in an categorical scatterplot. Several built-in [categorical color scales](#categorical-color-scales) are also provided.
 
-Scales have no intrinsic visual representation; for that, consider an [axis](https://github.com/mbostock/d3/wiki/SVG-Axes). However, scales typically provide a ticks method (such as [*linear*.ticks](#linear_ticks)) that can be used to render reference marks.
+Scales have no intrinsic visual representation; for that, consider an [axis](https://github.com/mbostock/d3/wiki/SVG-Axes). However, scales typically provide a [ticks method](#linear_ticks) and a [tick format](#linear_tickFormat) that can be used to render reference marks.
 
-Want a longer introduction? See these recommended tutorials:
+For a longer introduction, see these recommended tutorials:
 
 * [Chapter 7. Scales](http://chimera.labs.oreilly.com/books/1230000000345/ch07.html) of *Interactive Data Visualization for the Web* by Scott Murray
 
@@ -28,8 +28,8 @@ If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release]
 * [Quantile](#quantile-scales)
 * [Threshold](#threshold-scales)
 * [Identity](#identity-scales)
-* [Ordinal](#ordinal-scales)
 * [Sequential Color](#sequential-color-scales)
+* [Ordinal](#ordinal-scales)
 * [Categorical Color](#categorical-color-scales)
 
 ### Linear Scales
@@ -695,6 +695,56 @@ Equivalent to [*linear*.tickFormat](#linear_tickFormat).
 
 Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
 
+### Sequential Color Scales
+
+<a name="viridis" href="#viridis">#</a> <b>viridis</b>()
+
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/viridis.png" width="100%" height="40" alt="viridis">
+
+Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and implementing the “viridis” perceptually-uniform color scheme designed by [van der Walt, Smith and Firing](https://bids.github.io/colormap/) for matplotlib.
+
+<a name="inferno" href="#inferno">#</a> <b>inferno</b>()
+
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/inferno.png" width="100%" height="40" alt="inferno">
+
+Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and implementing the “inferno” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
+
+<a name="magma" href="#magma">#</a> <b>magma</b>()
+
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/magma.png" width="100%" height="40" alt="magma">
+
+Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and implementing the “magma” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
+
+<a name="plasma" href="#plasma">#</a> <b>plasma</b>()
+
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/plasma.png" width="100%" height="40" alt="plasma">
+
+Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and implementing the “plasma” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
+
+<a name="cubehelix" href="#cubehelix">#</a> <b>cubehelix</b>()
+
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cubehelix.png" width="100%" height="40" alt="cubehelix">
+
+Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and implementing [Green’s default Cubehelix](https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/) color scheme.
+
+<a name="warm" href="#warm">#</a> <b>warm</b>()
+
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/warm.png" width="100%" height="40" alt="warm">
+
+Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and approximately implementing a 180° rotation of [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/) color scheme using the Cubehelix color space.
+
+<a name="cool" href="#cool">#</a> <b>cool</b>()
+
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cool.png" width="100%" height="40" alt="cool">
+
+Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and approximately implementing [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/) color scheme using the Cubehelix color space.
+
+<a name="rainbow" href="#rainbow">#</a> <b>rainbow</b>()
+
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/rainbow.png" width="100%" height="40" alt="rainbow">
+
+Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] combining the [warm](#warm) scale from [0.0, 0.5] followed by the [cool](#cool) scale from [0.5, 1.0], thus implementing the cyclical [less-angry rainbow](http://bl.ocks.org/mbostock/310c99e53880faec2434) color scheme.
+
 ### Ordinal Scales
 
 Unlike [linear](#linear-scales) and other quantitative scales, ordinal scales have a discrete domain and range. For example, an ordinal scale might map a set of named categories to a set of colors, or determine the horizontal positions of columns in a column chart.
@@ -798,56 +848,6 @@ Returns a two-element array representing the extent of the scale's range, i.e., 
 <a name="ordinal_copy" href="#ordinal_copy">#</a> <i>ordinal</i>.<b>copy</b>()
 
 Returns an exact copy of this ordinal scale. Changes to this scale will not affect the returned scale, and vice versa.
-
-### Sequential Color Scales
-
-<a name="viridis" href="#viridis">#</a> <b>viridis</b>()
-
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/viridis.png" width="100%" height="40" alt="viridis">
-
-Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and implementing the “viridis” perceptually-uniform color scheme designed by [van der Walt, Smith and Firing](https://bids.github.io/colormap/) for matplotlib.
-
-<a name="inferno" href="#inferno">#</a> <b>inferno</b>()
-
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/inferno.png" width="100%" height="40" alt="inferno">
-
-Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and implementing the “inferno” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
-
-<a name="magma" href="#magma">#</a> <b>magma</b>()
-
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/magma.png" width="100%" height="40" alt="magma">
-
-Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and implementing the “magma” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
-
-<a name="plasma" href="#plasma">#</a> <b>plasma</b>()
-
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/plasma.png" width="100%" height="40" alt="plasma">
-
-Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and implementing the “plasma” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
-
-<a name="cubehelix" href="#cubehelix">#</a> <b>cubehelix</b>()
-
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cubehelix.png" width="100%" height="40" alt="cubehelix">
-
-Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and implementing [Green’s default Cubehelix](https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/) color scheme.
-
-<a name="warm" href="#warm">#</a> <b>warm</b>()
-
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/warm.png" width="100%" height="40" alt="warm">
-
-Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and approximately implementing a 180° rotation of [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/) color scheme using the Cubehelix color space.
-
-<a name="cool" href="#cool">#</a> <b>cool</b>()
-
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cool.png" width="100%" height="40" alt="cool">
-
-Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and approximately implementing [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/) color scheme using the Cubehelix color space.
-
-<a name="rainbow" href="#rainbow">#</a> <b>rainbow</b>()
-
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/rainbow.png" width="100%" height="40" alt="rainbow">
-
-Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] combining the [warm](#warm) scale from [0.0, 0.5] followed by the [cool](#cool) scale from [0.5, 1.0], thus implementing the cyclical [less-angry rainbow](http://bl.ocks.org/mbostock/310c99e53880faec2434) color scheme.
 
 ### Categorical Color Scales
 
