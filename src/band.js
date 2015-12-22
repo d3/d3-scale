@@ -7,7 +7,7 @@ export default function band() {
       ordinalRange = scale.range,
       range = [0, 1],
       step,
-      width,
+      bandwidth,
       round = false,
       paddingInner = 0,
       paddingOuter = 0,
@@ -23,8 +23,8 @@ export default function band() {
     step = (stop - start) / Math.max(1, n - paddingInner + paddingOuter * 2);
     if (round) step = Math.floor(step);
     start += (stop - start - step * (n - paddingInner)) * align;
-    width = step * (1 - paddingInner);
-    if (round) start = Math.round(start), width = Math.round(width);
+    bandwidth = step * (1 - paddingInner);
+    if (round) start = Math.round(start), bandwidth = Math.round(bandwidth);
     var values = sequence(n).map(function(i) { return start + step * i; });
     return ordinalRange(reverse ? values.reverse() : values);
   }
@@ -41,8 +41,8 @@ export default function band() {
     return range = [+_[0], +_[1]], round = true, rescale();
   };
 
-  scale.band = function() {
-    return width;
+  scale.bandwidth = function() {
+    return bandwidth;
   };
 
   scale.step = function() {
