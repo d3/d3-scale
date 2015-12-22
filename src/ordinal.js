@@ -1,18 +1,18 @@
 import {map} from "d3-array";
 import {slice} from "./array";
 
-export var reuse = {};
+export var implicit = {};
 
 export default function ordinal() {
   var index = map(),
       domain = [],
       range = [],
-      unknown = reuse;
+      unknown = implicit;
 
   function scale(d) {
     var key = d + "", i = index.get(key);
     if (!i) {
-      if (unknown !== reuse) return unknown;
+      if (unknown !== implicit) return unknown;
       index.set(key, i = domain.push(d));
     }
     return range[(i - 1) % range.length];

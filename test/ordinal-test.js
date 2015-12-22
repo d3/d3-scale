@@ -6,7 +6,7 @@ tape("ordinal() has the expected defaults", function(test) {
   test.deepEqual(s.domain(), []);
   test.deepEqual(s.range(), []);
   test.equal(s(0), undefined);
-  test.equal(s.unknown(), scale.reuse);
+  test.equal(s.unknown(), scale.implicit);
   test.deepEqual(s.domain(), [0]);
   test.end();
 });
@@ -157,7 +157,7 @@ tape("ordinal.unknown(x) sets the output value for unknown inputs", function(tes
   test.end();
 });
 
-tape("ordinal.unknown(x) prevents implicit domain extension if x is not reuse", function(test) {
+tape("ordinal.unknown(x) prevents implicit domain extension if x is not implicit", function(test) {
   var s = scale.ordinal().domain(["foo", "bar"]).unknown(undefined).range(["red", "blue"]);
   test.equal(s("baz"), undefined);
   test.deepEqual(s.domain(), ["foo", "bar"]);

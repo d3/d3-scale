@@ -37,7 +37,7 @@ If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release]
 * [Quantize](#quantize-scales)
 * [Quantile](#quantile-scales)
 * [Threshold](#threshold-scales)
-* [Ordinal](#ordinal-scales)
+* [Ordinal](#ordinal-scales) ([Band](#band-scales), [Point](#point))
 * [Categorical Color](#categorical-color-scales)
 
 ### Continuous Scales
@@ -165,7 +165,7 @@ var color = d3_scale.linear()
     .interpolate(d3_interpolate.hcl);
 ```
 
-See [d3-interpolate](https://github.com/d3/d3-interpolate) for more interpolators. Note: the default interpolator, [value](https://github.com/d3/d3-interpolate#value), **may reuse return values**. For example, if the range values are objects, then the default interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, this is typically acceptable; however, if you need to store the scale’s return value, you must specify your own interpolator or make a copy as appropriate.
+See [d3-interpolate](https://github.com/d3/d3-interpolate) for more interpolators. Note: the default [value](https://github.com/d3/d3-interpolate#value) interpolator **may reuse return values**. For example, if the range values are objects, then the value interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, this is typically acceptable; however, if you need to store the scale’s return value, you must specify your own interpolator or make a copy as appropriate.
 
 <a name="continuous_ticks" href="#continuous_ticks">#</a> <i>continuous</i>.<b>ticks</b>([<i>count</i>])
 
@@ -250,7 +250,7 @@ Identity scales are a special case of [linear scales](#linear) where the domain 
 
 <a name="identity" href="#identity">#</a> <b>identity</b>()
 
-Constructs a new identity scale with the default [domain](#continuous_domain) [0, 1] and the default [range](#continuous_range) [0, 1].
+Constructs a new identity scale with the unit [domain](#continuous_domain) [0, 1] and the unit [range](#continuous_range) [0, 1].
 
 #### Time Scales
 
@@ -273,7 +273,7 @@ For a valid value *y* in the range, <i>time</i>(<i>time</i>.invert(<i>y</i>)) eq
 
 <a name="time" href="#time">#</a> <b>time</b>()
 
-Constructs a new time scale with the [domain](#continuous_domain) [2000-01-01, 2000-01-02], the default [range](#continuous_range) [0, 1], a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled.
+Constructs a new time scale with the [domain](#continuous_domain) [2000-01-01, 2000-01-02], the unit [range](#continuous_range) [0, 1], a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled.
 
 <a name="time_ticks" href="#time_ticks">#</a> <i>time</i>.<b>ticks</b>([<i>count</i>])
 <br><a name="time_ticks" href="#time_ticks">#</a> <i>time</i>.<b>ticks</b>([<i>interval</i>[, <i>step</i>]])
@@ -417,43 +417,56 @@ Constructs a new [linear scale](#linear) with the unit [domain](#continuous_doma
 
 ### Quantize Scales
 
-Quantize scales are similar to [linear scales](#linear), except they use a discrete rather than continuous range. The input domain is still continuous, and divided into uniform segments based on the number of values in (*i.e.*, the cardinality of) the output range. Each range value *y* can be expressed as a quantized linear function of the domain value *x*: *y* = *m round(x)* + *b*. See [bl.ocks.org/4060606](http://bl.ocks.org/mbostock/4060606) for an example.
+Quantize scales are similar to [linear scales](#linear), except they use a discrete rather than continuous range. The continuous input domain is divided into uniform segments based on the number of values in (*i.e.*, the cardinality of) the output range. Each range value *y* can be expressed as a quantized linear function of the domain value *x*: *y* = *m round(x)* + *b*. See [bl.ocks.org/4060606](http://bl.ocks.org/mbostock/4060606) for an example.
 
 <a name="quantize" href="#quantize">#</a> <b>quantize</b>()
 
-Constructs a new quantize scale with the default [domain](#quantize_domain) [0, 1] and the default [range](#quantize_range) [0, 1]. Thus, the default quantize scale is equivalent to the [Math.round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function.
+Constructs a new quantize scale with the unit [domain](#quantize_domain) [0, 1] and the unit [range](#quantize_range) [0, 1]. Thus, the default quantize scale is equivalent to the [Math.round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function.
 
-<a name="_quantize" href="#_quantize">#</a> <i>quantize</i>(<i>x</i>)
+<a name="_quantize" href="#_quantize">#</a> <i>quantize</i>(<i>value</i>)
 
-Given a value *x* in the input [domain](#quantize_domain), returns the corresponding value *y* in the output [range](#quantize_rangE). For example, a color encoding:
+Given a *value* in the input [domain](#quantize_domain), returns the corresponding valuein the output [range](#quantize_range). For example, to apply a color encoding:
 
 ```js
-var s = quantize().domain([0, 1]).range(["brown", "steelblue"]);
-s(0.49); // "brown"
-s(0.51); // "steelblue"
+var color = d3_scale.quantize()
+    .domain([0, 1])
+    .range(["brown", "steelblue"]);
+
+color(0.49); // "brown"
+color(0.51); // "steelblue"
 ```
 
-Dividing the domain into three equally-sized parts with different range values, say to compute an appropriate stroke width:
+Or dividing the domain into three equally-sized parts with different range values to compute an appropriate stroke width:
 
 ```js
-var s = quantize().domain([10, 100]).range([1, 2, 4]);
-s(20); // 1
-s(50); // 2
-s(80); // 4
+var width = d3_scale.quantize()
+    .domain([10, 100])
+    .range([1, 2, 4]);
+
+width(20); // 1
+width(50); // 2
+width(80); // 4
 ```
 
-<a name="quantize_invertExtent" href="#quantize_invertExtent">#</a> <i>quantize</i>.<b>invertExtent</b>(<i>y</i>)
+<a name="quantize_invertExtent" href="#quantize_invertExtent">#</a> <i>quantize</i>.<b>invertExtent</b>(<i>value</i>)
 
-Returns the extent of values in the [domain](#quantize_domain) [<i>x0</i>, <i>x1</i>] for the corresponding value in the [range](#quantize_range) *y*: the inverse of [*quantize*](#_quantize). This method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
+Returns the extent of values in the [domain](#quantize_domain) [<i>x0</i>, <i>x1</i>] for the corresponding *value* in the [range](#quantize_range): the inverse of [*quantize*](#_quantize). This method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
 
 ```js
-var s = quantize().domain([10, 100]).range([1, 2, 4]);
-s.invertExtent(2); // [40, 70]
+var width = d3_scale.quantize()
+    .domain([10, 100])
+    .range([1, 2, 4]);
+
+width.invertExtent(2); // [40, 70]
 ```
 
 <a name="quantize_domain" href="#quantize_domain">#</a> <i>quantize</i>.<b>domain</b>([<i>domain</i>])
 
 If *domain* is specified, sets the scale’s domain to the specified two-element array of numbers. If the array contains more than two numbers, only the first and last number are used; if the elements in the given array are not numbers, they will be coerced to numbers. If *domain* is not specified, returns the scale’s current domain.
+
+<a name="quantize_range" href="#quantize_range">#</a> <i>quantize</i>.<b>range</b>([<i>range</i>])
+
+If *range* is specified, sets the scale’s range to the specified array of values. The array may contain any number of discrete values. The elements in the given array need not be numbers; any value or type will work. If *range* is not specified, returns the scale’s current range.
 
 <a name="quantize_nice" href="#quantize_nice">#</a> <i>quantize</i>.<b>nice</b>()
 
@@ -467,29 +480,25 @@ Equivalent to [*linear*.ticks](#linear_ticks).
 
 Equivalent to [*linear*.tickFormat](#linear_tickFormat).
 
-<a name="quantize_range" href="#quantize_range">#</a> <i>quantize</i>.<b>range</b>([<i>range</i>])
-
-If *range* is specified, sets the scale’s range to the specified array of values. The array may contain any number of discrete values. The elements in the given array need not be numbers; any value or type will work. If *range* is not specified, returns the scale’s current range.
-
 <a name="quantize_copy" href="#quantize_copy">#</a> <i>quantize</i>.<b>copy</b>()
 
 Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
 
 ### Quantile Scales
 
-Quantile scales map an input domain to a discrete range. Although the domain is continuous and the scale will accept any reasonable input value, the domain is specified as a discrete set of values. The number of values in (the cardinality of) the output range determines the number of quantiles that will be computed from the domain. To compute the quantiles, the domain is sorted, and treated as a [population of discrete values](https://en.wikipedia.org/wiki/Quantile#Quantiles_of_a_population). The domain is typically a dimension of the data that you want to visualize, such as the daily change of the stock market. The range is typically a dimension of the desired output visualization, such as a diverging color scale. See [bl.ocks.org/8ca036b3505121279daf](http://bl.ocks.org/mbostock/8ca036b3505121279daf) for an example.
+Quantile scales map a sampled input domain to a discrete range. The domain is considered continuous and thus the scale will accept any reasonable input value; however, the domain is specified as a discrete set of sample values. The number of values in (the cardinality of) the output range determines the number of quantiles that will be computed from the domain. To compute the quantiles, the domain is sorted, and treated as a [population of discrete values](https://en.wikipedia.org/wiki/Quantile#Quantiles_of_a_population); see d3-array’s [quantile](https://github.com/d3/d3-array#quantile). See [bl.ocks.org/8ca036b3505121279daf](http://bl.ocks.org/mbostock/8ca036b3505121279daf) for an example.
 
 <a name="quantile" href="#quantile">#</a> <b>quantile</b>()
 
 Constructs a new quantile scale with an empty [domain](#quantile_domain) and an empty [range](#quantile_range). The quantile scale is invalid until both a domain and range are specified.
 
-<a name="_quantile" href="#_quantile">#</a> <i>quantile</i>(<i>x</i>)
+<a name="_quantile" href="#_quantile">#</a> <i>quantile</i>(<i>value</i>)
 
-Given a value *x* in the input [domain](#quantile_domain), returns the corresponding value *y* in the output [range](#quantile_range).
+Given a *value* in the input [domain](#quantile_domain), returns the corresponding value in the output [range](#quantile_range).
 
-<a name="quantile_invertExtent" href="#quantile_invertExtent">#</a> <i>quantile</i>.<b>invertExtent</b>(<i>y</i>)
+<a name="quantile_invertExtent" href="#quantile_invertExtent">#</a> <i>quantile</i>.<b>invertExtent</b>(<i>value</i>)
 
-Returns the extent of values in the [domain](#quantile_domain) [<i>x0</i>, <i>x1</i>] for the corresponding value in the [range](#quantile_range) *y*: the inverse of [*quantile*](#_quantile). This method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
+Returns the extent of values in the [domain](#quantile_domain) [<i>x0</i>, <i>x1</i>] for the corresponding *value* in the [range](#quantile_range): the inverse of [*quantile*](#_quantile). This method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
 
 <a name="quantile_domain" href="#quantile_domain">#</a> <i>quantile</i>.<b>domain</b>([<i>domain</i>])
 
@@ -509,34 +518,40 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 ### Threshold Scales
 
-Threshold scales are similar to [quantize scales](#quantize-scales), except they allow you to map arbitrary subsets of the domain to discrete values in the range. The input domain is still continuous, and divided into slices based on a set of threshold values. The domain is typically a dimension of the data that you want to visualize, such as the height of students in meters in a sample population. The range is typically a dimension of the desired output visualization, such as a set of colors. See [bl.ocks.org/3306362](http://bl.ocks.org/mbostock/3306362) for an example.
+Threshold scales are similar to [quantize scales](#quantize-scales), except they allow you to map arbitrary subsets of the domain to discrete values in the range. The input domain is still continuous, and divided into slices based on a set of threshold values. See [bl.ocks.org/3306362](http://bl.ocks.org/mbostock/3306362) for an example.
 
 <a name="threshold" href="#threshold">#</a> <b>threshold</b>()
 
 Constructs a new threshold scale with the default [domain](#threshold_domain) [0.5] and the default [range](#threshold_range) [0, 1]. Thus, the default threshold scale is equivalent to the [Math.round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function for numbers; for example threshold(0.49) returns 0, and threshold(0.51) returns 1.
 
-<a name="_threshold" href="#_threshold">#</a> <i>threshold</i>(<i>x</i>)
+<a name="_threshold" href="#_threshold">#</a> <i>threshold</i>(<i>value</i>)
 
-Given a value *x* in the input [domain](#threshold_domain), returns the corresponding value *y* in the output [range](#threshold_range). For example:
+Given a *value* in the input [domain](#threshold_domain), returns the corresponding value in the output [range](#threshold_range). For example:
 
 ```js
-var s = threshold().domain([0, 1]).range(["a", "b", "c"]);
-s(-1);   // "a"
-s(0);    // "b"
-s(0.5);  // "b"
-s(1);    // "c"
-s(1000); // "c"
+var color = d3_scale.threshold()
+    .domain([0, 1])
+    .range(["red", "white", "green"]);
+
+color(-1);   // "red"
+color(0);    // "white"
+color(0.5);  // "white"
+color(1);    // "green"
+color(1000); // "green"
 ```
 
-<a name="threshold_invertExtent" href="#threshold_invertExtent">#</a> <i>threshold</i>.<b>invertExtent</b>(<i>y</i>)
+<a name="threshold_invertExtent" href="#threshold_invertExtent">#</a> <i>threshold</i>.<b>invertExtent</b>(<i>value</i>)
 
-Returns the extent of values in the [domain](#threshold_domain) [<i>x0</i>, <i>x1</i>] for the corresponding value in the [range](#threshold_range) *y*, representing the inverse mapping from range to domain. This method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse. For example:
+Returns the extent of values in the [domain](#threshold_domain) [<i>x0</i>, <i>x1</i>] for the corresponding *value* in the [range](#threshold_range), representing the inverse mapping from range to domain. This method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse. For example:
 
 ```js
-var s = threshold().domain([0, 1]).range(["a", "b", "c"]);
-s.invertExtent("a"); // [undefined, 0]
-s.invertExtent("b"); // [0, 1]
-s.invertExtent("c"); // [1, undefined]
+var color = threshold()
+    .domain([0, 1])
+    .range(["red", "white", "green"]);
+
+color.invertExtent("red"); // [undefined, 0]
+color.invertExtent("white"); // [0, 1]
+color.invertExtent("green"); // [1, undefined]
 ```
 
 <a name="threshold_domain" href="#threshold_domain">#</a> <i>threshold</i>.<b>domain</b>([<i>domain</i>])
@@ -553,107 +568,51 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 ### Ordinal Scales
 
-Unlike [linear](#linear) and other quantitative scales, ordinal scales have a discrete domain and range. For example, an ordinal scale might map a set of named categories to a set of colors, or determine the horizontal positions of columns in a column chart.
+Unlike [continuous scales](#continuous-scales), ordinal scales have a discrete domain and range. For example, an ordinal scale might map a set of named categories to a set of colors, or determine the horizontal positions of columns in a column chart.
 
 <a name="ordinal" href="#ordinal">#</a> <b>ordinal</b>()
 
-Constructs a new ordinal scale with an empty [domain](#ordinal_domain) and an empty [range](#ordinal_range). The ordinal scale is invalid (always returning undefined) until a range is specified.
+Constructs a new ordinal scale with an empty [domain](#ordinal_domain) and an empty [range](#ordinal_range). The ordinal scale always returns undefined until an output range is specified.
 
-<a name="_ordinal" href="#_ordinal">#</a> <i>ordinal</i>(<i>x</i>)
+<a name="_ordinal" href="#_ordinal">#</a> <i>ordinal</i>(<i>value</i>)
 
-Given a value *x* in the input [domain](#ordinal_domain), returns the corresponding value *y* in the output [range](#ordinal_range).
-
-If the given value *x* is not in the scale’s [domain](#ordinal_domain), and the range was specified explicitly (as by [range](#ordinal_range) but not [rangeBands](#ordinal_rangeBands), [rangeRoundBands](#ordinal_rangeRoundBands) or [rangePoints](#ordinal_rangePoints)), then *x* is implicitly added to the domain and the next-available value *y* in the range is assigned to *x*, such that this and subsequent invocations of the scale given the same *x* return the same *y*.
+Given a *value* in the input [domain](#ordinal_domain), returns the corresponding value in the output [range](#ordinal_range). If the given *value* is not in the scale’s [domain](#ordinal_domain), returns the [unknown](#ordinal_value); or, if the unknown value is [implicit](#implicit), then the *value* is implicitly added to the domain and the next-available value in the range is assigned to *value*, such that this and subsequent invocations of the scale given the same input *value* return the same output value.
 
 <a name="ordinal_domain" href="#ordinal_domain">#</a> <i>ordinal</i>.<b>domain</b>([<i>domain</i>])
 
-If *domain* is specified, sets the domain of the ordinal scale to the specified array of values. The first element in *domain* will be mapped to the first element in the range, the second domain value to the second range value, and so on. Domain values are stored internally in an associative array as a mapping from value to index; the resulting index is then used to retrieve a value from the range. Thus, an ordinal scale's values must be coercible to a string, and the stringified version of the domain value uniquely identifies the corresponding range value. If *domain* is not specified, this method returns the current domain.
+If *domain* is specified, sets the domain to the specified array of values. The first element in *domain* will be mapped to the first element in the range, the second domain value to the second range value, and so on. Domain values are stored internally in a map from stringified value to index; the resulting index is then used to retrieve a value from the range. Thus, an ordinal scale’s values must be coercible to a string, and the stringified version of the domain value uniquely identifies the corresponding range value. If *domain* is not specified, this method returns the current domain.
 
-Setting the domain on an ordinal scale is optional. If no domain is set, a [range](#ordinal_range) must be set explicitly. Then, each unique value that is passed to the scale function will be assigned a new value from the range; in other words, the domain will be inferred implicitly from usage. Although domains may thus be constructed implicitly, it is still a good idea to assign the ordinal scale's domain explicitly to ensure deterministic behavior, as inferring the domain from usage will be dependent on ordering.
+Setting the domain on an ordinal scale is optional if the [unknown value](#ordinal_unknown) is [implicit](#implicit). In this case, the domain will be inferred implicitly from usage by assigning each unique value passed to the scale a new value from the range. Note that an explicit domain is recommended to ensure deterministic behavior, as inferring the domain from usage will be dependent on ordering.
 
 <a name="ordinal_range" href="#ordinal_range">#</a> <i>ordinal</i>.<b>range</b>([<i>range</i>])
 
-If *range* is specified, sets the range of the ordinal scale to the specified array of values. The first element in the domain will be mapped to the first element in *range*, the second domain value to the second range value, and so on. If there are fewer elements in the range than in the domain, the scale will recycle values from the start of the range. If *range* is not specified, this method returns the current range.
+If *range* is specified, sets the range of the ordinal scale to the specified array of values. The first element in the domain will be mapped to the first element in *range*, the second domain value to the second range value, and so on. If there are fewer elements in the range than in the domain, the scale will reuse values from the start of the range. If *range* is not specified, this method returns the current range.
 
 This method is intended for when the set of discrete output values is computed explicitly, such as a set of categorical colors. In other cases, such as determining the layout of an ordinal scatterplot or bar chart, you may find the [rangePoints](#ordinal_rangePoints) or [rangeBands](#ordinal_rangeBands) operators more convenient.
 
-<a name="ordinal_rangePoints" href="#ordinal_rangePoints">#</a> <i>ordinal</i>.<b>rangePoints</b>(<i>interval</i>[, <i>padding</i>])
+<a name="ordinal_unknown" href="#ordinal_unknown">#</a> <i>ordinal</i>.<b>unknown</b>([<i>value</i>])
 
-Sets the range from the specified continuous *interval*. The array *interval* contains two elements representing the minimum and maximum numeric value. This interval is subdivided into *n* evenly-spaced **points**, where *n* is the number of (unique) values in the domain. The first and last point may be offset from the edge of the interval according to the specified *padding*, which defaults to zero. The *padding* is expressed as a multiple of the spacing between points. A reasonable value is 1.0, such that the first and last point will be offset from the minimum and maximum value by half the distance between points.
-
-![rangepoints](https://f.cloud.github.com/assets/230541/538689/46d87118-c193-11e2-83ab-2008df7c36aa.png)
-
-```js
-var s = ordinal().domain([1, 2, 3, 4]).rangePoints([0, 100]);
-s.range(); // [0, 33.333333333333336, 66.66666666666667, 100]
-```
-
-<a name="ordinal_rangeRoundPoints" href="#ordinal_rangeRoundPoints">#</a> <i>ordinal</i>.<b>rangeRoundPoints</b>(<i>interval</i>[, <i>padding</i>])
-
-Like [rangePoints](#ordinal_rangePoints), except guarantees that the range values are integers so as to avoid antialiasing artifacts.
-
-```js
-var s = ordinal().domain([1, 2, 3, 4]).rangeRoundPoints([0, 100]);
-s.range(); // [1, 34, 67, 100]
-```
-
-Note that rounding necessarily introduces additional outer padding which is, on average, proportional to the length of the domain. For example, for a domain of size 50, an additional 25px of outer padding on either side may be required. Modifying the range extent to be closer to a multiple of the domain length may reduce the additional padding.
-
-```js
-var s = ordinal().domain(range(50)).rangeRoundPoints([0, 95]);
-s.range(); // [23, 24, 25, …, 70, 71, 72]
-s.rangeRoundPoints([0, 100]);
-s.range(); // [1, 3, 5, …, 95, 97, 98]
-```
-
-(Alternatively, you could round the output of the scale manually or apply shape-rendering: crispEdges. However, this will result in irregularly spaced points.)
-
-<a name="ordinal_rangeBands" href="#ordinal_rangeBands">#</a> <i>ordinal</i>.<b>rangeBands</b>(<i>interval</i>[, <i>padding</i>[, <i>outerPadding</i>]])
-
-Sets the range from the specified continuous *interval*. The array *interval* contains two elements representing the minimum and maximum numeric value. This interval is subdivided into *n* evenly-spaced **bands**, where *n* is the number of (unique) values in the domain. The bands may be offset from the edge of the interval and other bands according to the specified *padding*, which defaults to zero. The padding is typically in the range [0, 1] and corresponds to the amount of space in the range interval to allocate to padding. A value of 0.5 means that the band width will be equal to the padding width. The *outerPadding* argument is for the entire group of bands; a value of 0 means there will be padding only between rangeBands.
-
-![rangebands](https://f.cloud.github.com/assets/230541/538688/46c298c0-c193-11e2-9a7e-15d9abcfab9b.png)
-
-```js
-var s = ordinal().domain([1, 2, 3]).rangeBands([0, 100]);
-s.rangeBand(); // 33.333333333333336
-s.range(); // [0, 33.333333333333336, 66.66666666666667]
-s.rangeExtent(); // [0, 100]
-```
-
-<a name="ordinal_rangeRoundBands" href="#ordinal_rangeRoundBands">#</a> <i>ordinal</i>.<b>rangeRoundBands</b>(<i>interval</i>[, <i>padding</i>[, <i>outerPadding</i>]])
-
-Like [rangeBands](#ordinal_rangeBands), except guarantees that range values and band width are integers so as to avoid antialiasing artifacts.
-
-```js
-var s = ordinal().domain([1, 2, 3]).rangeRoundBands([0, 100]);
-s.range(); // [1, 34, 67]
-s.rangeBand(); // 33
-s.rangeExtent(); // [0, 100]
-```
-
-Note that rounding necessarily introduces additional outer padding which is, on average, proportional to the length of the domain. For example, for a domain of size 50, an additional 25px of outer padding on either side may be required. Modifying the range extent to be closer to a multiple of the domain length may reduce the additional padding.
-
-```js
-var s = ordinal().domain(range(50)).rangeRoundBands([0, 95]);
-s.range(); // [23, 24, 25, …, 70, 71, 72]
-s.rangeRoundBands([0, 100]);
-s.range(); // [0, 2, 4, …, 94, 96, 98]
-```
-
-(Alternatively, you could round the output of the scale manually or apply shape-rendering: crispEdges. However, this will result in irregularly spaced and sized bands.)
-
-<a name="ordinal_rangeBand" href="#ordinal_rangeBand">#</a> <i>ordinal</i>.<b>rangeBand</b>()
-
-Returns the band width. When the scale’s range is configured with rangeBands or rangeRoundBands, the scale returns the lower value for the given input. The upper value can then be computed by offsetting by the band width. If the scale’s range is set using range or rangePoints, the band width is zero.
-
-<a name="ordinal_rangeExtent" href="#ordinal_rangeExtent">#</a> <i>ordinal</i>.<b>rangeExtent</b>()
-
-Returns a two-element array representing the extent of the scale's range, i.e., the smallest and largest values.
+…
 
 <a name="ordinal_copy" href="#ordinal_copy">#</a> <i>ordinal</i>.<b>copy</b>()
 
 Returns an exact copy of this ordinal scale. Changes to this scale will not affect the returned scale, and vice versa.
+
+<a name="implicit" href="#implicit">#</a> <b>implicit</b>
+
+A special value for [*ordinal*.unknown](#ordinal_unknown) that enables implicit domain construction: unknown values are implicitly added to the domain.
+
+#### Band Scales
+
+<a name="band" href="#band">#</a> <b>band</b>()
+
+…
+
+#### Point Scales
+
+<a name="point" href="#point">#</a> <b>point</b>()
+
+…
 
 ### Categorical Color Scales
 
