@@ -853,90 +853,24 @@ Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] combi
 
 <a name="category10" href="#category10">#</a> <b>category10</b>()
 
-Constructs a new [ordinal scale](#ordinal) with a range of ten categorical colors.
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category10.png" width="100%" height="40" alt="category10">
 
-![1f77b4](https://cloud.githubusercontent.com/assets/230541/8294503/052c3462-18f2-11e5-8532-8e6f95a0a2fa.png) #1f77b4<br>
-![ff7f0e](https://cloud.githubusercontent.com/assets/230541/8294556/05d92a0a-18f2-11e5-8954-cd7e28d8e265.png) #ff7f0e<br>
-![2ca02c](https://cloud.githubusercontent.com/assets/230541/8294504/052cedda-18f2-11e5-903f-4bc4d1e489ce.png) #2ca02c<br>
-![d62728](https://cloud.githubusercontent.com/assets/230541/8294542/05a966d0-18f2-11e5-8902-ae194b562d57.png) #d62728<br>
-![9467bd](https://cloud.githubusercontent.com/assets/230541/8294525/05775078-18f2-11e5-90c2-cd604dc0eb69.png) #9467bd<br>
-![8c564b](https://cloud.githubusercontent.com/assets/230541/8294509/05416ab2-18f2-11e5-9093-81b592d6a40b.png) #8c564b<br>
-![e377c2](https://cloud.githubusercontent.com/assets/230541/8294548/05ba04ae-18f2-11e5-8f7c-e4ca8eabe655.png) #e377c2<br>
-![7f7f7f](https://cloud.githubusercontent.com/assets/230541/8294500/051d70e4-18f2-11e5-83df-c45e7bc20803.png) #7f7f7f<br>
-![bcbd22](https://cloud.githubusercontent.com/assets/230541/8294532/058e2aa0-18f2-11e5-8c42-b93f8d6f210d.png) #bcbd22<br>
-![17becf](https://cloud.githubusercontent.com/assets/230541/8294517/055eeac4-18f2-11e5-9bed-3ecdd0d7a87b.png) #17becf<br>
+Constructs a new [ordinal scale](#ordinal) with a range of ten categorical colors.
 
 <a name="category20" href="#category20">#</a> <b>category20</b>()
 
-Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical colors.
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category20.png" width="100%" height="40" alt="category20">
 
-![1f77b4](https://cloud.githubusercontent.com/assets/230541/8294503/052c3462-18f2-11e5-8532-8e6f95a0a2fa.png) #1f77b4<br>
-![aec7e8](https://cloud.githubusercontent.com/assets/230541/8294530/0583af58-18f2-11e5-8ad1-e06b75439900.png) #aec7e8<br>
-![ff7f0e](https://cloud.githubusercontent.com/assets/230541/8294556/05d92a0a-18f2-11e5-8954-cd7e28d8e265.png) #ff7f0e<br>
-![ffbb78](https://cloud.githubusercontent.com/assets/230541/8294555/05d890ea-18f2-11e5-8aef-f618983c741f.png) #ffbb78<br>
-![2ca02c](https://cloud.githubusercontent.com/assets/230541/8294504/052cedda-18f2-11e5-903f-4bc4d1e489ce.png) #2ca02c<br>
-![98df8a](https://cloud.githubusercontent.com/assets/230541/8294520/05670682-18f2-11e5-8d54-5685d3fa096d.png) #98df8a<br>
-![d62728](https://cloud.githubusercontent.com/assets/230541/8294542/05a966d0-18f2-11e5-8902-ae194b562d57.png) #d62728<br>
-![ff9896](https://cloud.githubusercontent.com/assets/230541/8294557/05db90ba-18f2-11e5-9a48-cfdd6fe0cd81.png) #ff9896<br>
-![9467bd](https://cloud.githubusercontent.com/assets/230541/8294525/05775078-18f2-11e5-90c2-cd604dc0eb69.png) #9467bd<br>
-![c5b0d5](https://cloud.githubusercontent.com/assets/230541/8294535/05947f86-18f2-11e5-8325-336478038a2b.png) #c5b0d5<br>
-![8c564b](https://cloud.githubusercontent.com/assets/230541/8294509/05416ab2-18f2-11e5-9093-81b592d6a40b.png) #8c564b<br>
-![c49c94](https://cloud.githubusercontent.com/assets/230541/8294537/05a1bb1a-18f2-11e5-8f9d-0638b5444d5b.png) #c49c94<br>
-![e377c2](https://cloud.githubusercontent.com/assets/230541/8294548/05ba04ae-18f2-11e5-8f7c-e4ca8eabe655.png) #e377c2<br>
-![f7b6d2](https://cloud.githubusercontent.com/assets/230541/8294549/05c6985e-18f2-11e5-8fe1-555b340e5c1b.png) #f7b6d2<br>
-![7f7f7f](https://cloud.githubusercontent.com/assets/230541/8294500/051d70e4-18f2-11e5-83df-c45e7bc20803.png) #7f7f7f<br>
-![c7c7c7](https://cloud.githubusercontent.com/assets/230541/8294499/051c446c-18f2-11e5-8230-497286d225dc.png) #c7c7c7<br>
-![bcbd22](https://cloud.githubusercontent.com/assets/230541/8294532/058e2aa0-18f2-11e5-8c42-b93f8d6f210d.png) #bcbd22<br>
-![dbdb8d](https://cloud.githubusercontent.com/assets/230541/8294546/05b707cc-18f2-11e5-8189-fd060071b0cc.png) #dbdb8d<br>
-![17becf](https://cloud.githubusercontent.com/assets/230541/8294517/055eeac4-18f2-11e5-9bed-3ecdd0d7a87b.png) #17becf<br>
-![9edae5](https://cloud.githubusercontent.com/assets/230541/8294513/0552f584-18f2-11e5-93fa-823f2dec5a84.png) #9edae5<br>
+Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical colors.
 
 <a name="category20b" href="#category20b">#</a> <b>category20b</b>()
 
-Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical colors.
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category20b.png" width="100%" height="40" alt="category20b">
 
-![393b79](https://cloud.githubusercontent.com/assets/230541/8294519/0565d19a-18f2-11e5-8626-08531146a382.png) #393b79<br>
-![5254a3](https://cloud.githubusercontent.com/assets/230541/8294523/057054c6-18f2-11e5-9921-3e4763ce32ae.png) #5254a3<br>
-![6b6ecf](https://cloud.githubusercontent.com/assets/230541/8294505/052e8320-18f2-11e5-91eb-b22ab5d74aa6.png) #6b6ecf<br>
-![9c9ede](https://cloud.githubusercontent.com/assets/230541/8294511/0543b3d0-18f2-11e5-9c41-7b63ec7d4e5b.png) #9c9ede<br>
-![637939](https://cloud.githubusercontent.com/assets/230541/8294526/057b6014-18f2-11e5-92a9-ebabc51c8587.png) #637939<br>
-![8ca252](https://cloud.githubusercontent.com/assets/230541/8294510/054208dc-18f2-11e5-9f24-676b4b350f72.png) #8ca252<br>
-![b5cf6b](https://cloud.githubusercontent.com/assets/230541/8294531/058b5e2e-18f2-11e5-923f-2cf857af6060.png) #b5cf6b<br>
-![cedb9c](https://cloud.githubusercontent.com/assets/230541/8294538/05a2ae76-18f2-11e5-940a-5109e8310f27.png) #cedb9c<br>
-![8c6d31](https://cloud.githubusercontent.com/assets/230541/8294508/053fbc44-18f2-11e5-9984-2a233483ce06.png) #8c6d31<br>
-![bd9e39](https://cloud.githubusercontent.com/assets/230541/8294534/0591c250-18f2-11e5-8d18-b1cf77245d9f.png) #bd9e39<br>
-![e7ba52](https://cloud.githubusercontent.com/assets/230541/8294547/05b787a6-18f2-11e5-8cbf-97fadded7e8b.png) #e7ba52<br>
-![e7cb94](https://cloud.githubusercontent.com/assets/230541/8294545/05b69bac-18f2-11e5-9253-6f0922ebb88d.png) #e7cb94<br>
-![843c39](https://cloud.githubusercontent.com/assets/230541/8294522/056d4466-18f2-11e5-8dea-e72e0668bcb9.png) #843c39<br>
-![ad494a](https://cloud.githubusercontent.com/assets/230541/8294529/05832b50-18f2-11e5-8811-a01316c48447.png) #ad494a<br>
-![d6616b](https://cloud.githubusercontent.com/assets/230541/8294539/05a48a5c-18f2-11e5-9891-84c242808d25.png) #d6616b<br>
-![e7969c](https://cloud.githubusercontent.com/assets/230541/8294553/05c9f832-18f2-11e5-9571-58955d5307de.png) #e7969c<br>
-![7b4173](https://cloud.githubusercontent.com/assets/230541/8294507/05344634-18f2-11e5-9132-4bde5cd9046c.png) #7b4173<br>
-![a55194](https://cloud.githubusercontent.com/assets/230541/8294528/0580d972-18f2-11e5-81d6-67a71edf3687.png) #a55194<br>
-![ce6dbd](https://cloud.githubusercontent.com/assets/230541/8294541/05a61f2a-18f2-11e5-8ba5-7976b2bb58f8.png) #ce6dbd<br>
-![de9ed6](https://cloud.githubusercontent.com/assets/230541/8294543/05b51354-18f2-11e5-9ab5-3acfdfb55902.png) #de9ed6<br>
+Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical colors.
 
 <a name="category20c" href="#category20c">#</a> <b>category20c</b>()
 
-Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical colors. This color scale includes color specifications and designs developed by Cynthia Brewer ([colorbrewer.org](http://colorbrewer.org/)).
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category20c.png" width="100%" height="40" alt="category20c">
 
-![3182bd](https://cloud.githubusercontent.com/assets/230541/8294524/05733826-18f2-11e5-93da-468df888f34e.png) #3182bd<br>
-![6baed6](https://cloud.githubusercontent.com/assets/230541/8294506/05320036-18f2-11e5-9897-64b7a60fc1f9.png) #6baed6<br>
-![9ecae1](https://cloud.githubusercontent.com/assets/230541/8294514/05540a14-18f2-11e5-92e1-6fe4e77a32f5.png) #9ecae1<br>
-![c6dbef](https://cloud.githubusercontent.com/assets/230541/8294536/0595f00a-18f2-11e5-96da-bd6a07a6c07b.png) #c6dbef<br>
-![e6550d](https://cloud.githubusercontent.com/assets/230541/8294551/05c89082-18f2-11e5-825c-39fcd1568018.png) #e6550d<br>
-![fd8d3c](https://cloud.githubusercontent.com/assets/230541/8294550/05c71a7c-18f2-11e5-950e-ba1124961d0a.png) #fd8d3c<br>
-![fdae6b](https://cloud.githubusercontent.com/assets/230541/8294552/05ca1164-18f2-11e5-80ac-8e4c8da9a52f.png) #fdae6b<br>
-![fdd0a2](https://cloud.githubusercontent.com/assets/230541/8294554/05cc4920-18f2-11e5-9a5e-3237f59b81e7.png) #fdd0a2<br>
-![31a354](https://cloud.githubusercontent.com/assets/230541/8294515/0556cc40-18f2-11e5-9960-1615d9c8907c.png) #31a354<br>
-![74c476](https://cloud.githubusercontent.com/assets/230541/8294516/055a1922-18f2-11e5-9005-21977889c9cf.png) #74c476<br>
-![a1d99b](https://cloud.githubusercontent.com/assets/230541/8294527/057ed708-18f2-11e5-983d-9a423278f2ea.png) #a1d99b<br>
-![c7e9c0](https://cloud.githubusercontent.com/assets/230541/8294540/05a4c864-18f2-11e5-9eb2-23eb61c5641e.png) #c7e9c0<br>
-![756bb1](https://cloud.githubusercontent.com/assets/230541/8294521/056acad8-18f2-11e5-905b-aa6c8817f402.png) #756bb1<br>
-![9e9ac8](https://cloud.githubusercontent.com/assets/230541/8294512/0547342e-18f2-11e5-9334-12c7f9400d3c.png) #9e9ac8<br>
-![bcbddc](https://cloud.githubusercontent.com/assets/230541/8294533/059195e6-18f2-11e5-844d-a5ae45346e4b.png) #bcbddc<br>
-![dadaeb](https://cloud.githubusercontent.com/assets/230541/8294544/05b529b6-18f2-11e5-8841-55f543b23c76.png) #dadaeb<br>
-![636363](https://cloud.githubusercontent.com/assets/230541/8294501/051e1076-18f2-11e5-9c4d-b7233e33c09a.png) #636363<br>
-![969696](https://cloud.githubusercontent.com/assets/230541/8294498/051bceba-18f2-11e5-9732-ad2b95b72ea3.png) #969696<br>
-![bdbdbd](https://cloud.githubusercontent.com/assets/230541/8294502/051f981a-18f2-11e5-8c4c-5f9fa4e36833.png) #bdbdbd<br>
-![d9d9d9](https://cloud.githubusercontent.com/assets/230541/8294518/05601516-18f2-11e5-848c-291939213e5d.png) #d9d9d9<br>
+Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical colors. This color scale includes color specifications and designs developed by Cynthia Brewer ([colorbrewer.org](http://colorbrewer.org/)).
