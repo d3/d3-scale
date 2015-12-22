@@ -602,17 +602,71 @@ A special value for [*ordinal*.unknown](#ordinal_unknown) that enables implicit 
 
 #### Band Scales
 
-Band scales are like [ordinal scales](#ordinal-scales), except the output range is continuous and numeric.
+Band scales are like [ordinal scales](#ordinal-scales), except the output range is continuous and numeric. Band scales are typically used for bar charts with an ordinal or categorical dimension.
+
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/band.png" width="751" height="238" alt="band">
 
 <a name="band" href="#band">#</a> <b>band</b>()
 
 …
 
+<a name="band_domain" href="#band_domain">#</a> <i>band</i>.<b>domain</b>()
+
+…
+
+<a name="band_range" href="#band_range">#</a> <i>band</i>.<b>range</b>()
+
+…
+
+<a name="band_rangeRound" href="#band_rangeRound">#</a> <i>band</i>.<b>rangeRound</b>()
+
+…
+
+<a name="band_bandwidth" href="#band_bandwidth">#</a> <i>band</i>.<b>bandwidth</b>()
+
+…
+
+<a name="band_step" href="#band_step">#</a> <i>band</i>.<b>step</b>()
+
+…
+
+<a name="band_round" href="#band_round">#</a> <i>band</i>.<b>round</b>()
+
+…
+
+<a name="band_padding" href="#band_padding">#</a> <i>band</i>.<b>padding</b>()
+
+…
+
+<a name="band_paddingInner" href="#band_paddingInner">#</a> <i>band</i>.<b>paddingInner</b>()
+
+…
+
+<a name="band_paddingOuter" href="#band_paddingOuter">#</a> <i>band</i>.<b>paddingOuter</b>()
+
+…
+
+<a name="band_align" href="#band_align">#</a> <i>band</i>.<b>align</b>()
+
+…
+
+<a name="band_copy" href="#band_copy">#</a> <i>band</i>.<b>copy</b>()
+
+…
+
 #### Point Scales
+
+Point scales are a variant of [band scales](#band-scales) with the bandwidth fixed to zero. Point scales are typically used for scatterplots with an ordinal or categorical dimension.
+
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/point.png" width="648" height="155" alt="point">
 
 <a name="point" href="#point">#</a> <b>point</b>()
 
-…
+Constructs a new point scale with the empty [domain](#band_domain), the unit [range](#band_range) [0, 1], no [padding](#point_padding), no [rounding](#band_round) and center [alignment](#band_align).
+
+<a name="point_padding" href="#point_padding">#</a> <i>point</i>.<b>padding</b>()
+
+Equivalent to [*band*.paddingOuter](#band_paddingOuter).
 
 ### Categorical Color Scales
 
