@@ -57,9 +57,20 @@ x(20); // 80
 x(50); // 320
 ```
 
+Or to apply a color encoding:
+
+```js
+var color = d3_scale.linear()
+    .domain([10, 100])
+    .range(["brown", "steelblue"]);
+
+color(20); // "#9a3439"
+color(50); // "#7b5167"
+```
+
 <a name="continuous_invert" href="#continuous_invert">#</a> <i>continuous</i>.<b>invert</b>(<i>value</i>)
 
-Given a *value* from the [range](#continuous_range), returns the corresponding value from the [domain](#continuous_domain). Inversion is useful for interaction, say to determine the data value corresponding to the position of the mouse. If the given *value* is outside the range, and [clamping](#continuous_clamp) is not enabled, the mapping may be extrapolated such that the returned value is outside the down. This method is only supported if the range is numeric. If the range is not numeric, returns NaN. For example, to invert a position encoding:
+Given a *value* from the [range](#continuous_range), returns the corresponding value from the [domain](#continuous_domain). Inversion is useful for interaction, say to determine the data value corresponding to the position of the mouse. For example, to invert a position encoding:
 
 ```js
 var x = d3_scale.linear()
@@ -70,11 +81,13 @@ x.invert(80); // 20
 x.invert(320); // 50
 ```
 
+If the given *value* is outside the range, and [clamping](#continuous_clamp) is not enabled, the mapping may be extrapolated such that the returned value is outside the domain. This method is only supported if the range is numeric. If the range is not numeric, returns NaN.
+
 For a valid value *y* in the range, <i>continuous</i>(<i>continuous</i>.invert(<i>y</i>)) approximately equals *y*; similarly, for a valid value *x* in the domain, <i>continuous</i>.invert(<i>continuous</i>(<i>x</i>)) approximately equals *x*. (The scale and its inverse may not be exact due to the limitations of floating point precision.)
 
 <a name="continuous_domain" href="#continuous_domain">#</a> <i>continuous</i>.<b>domain</b>([<i>domain</i>])
 
-If *domain* is specified, sets the scale’s domain to the specified array of numbers. The array must contain two or more elements. If the elements in the given array are not numbers, they will be coerced to numbers. If *domain* is not specified, returns the scale’s current domain.
+If *domain* is specified, sets the scale’s domain to the specified array of numbers. The array must contain two or more elements. If the elements in the given array are not numbers, they will be coerced to numbers. If *domain* is not specified, returns a copy of the scale’s current domain.
 
 Although continuous scales typically have two values each in their domain and range, specifying more than two values produces a piecewise scale. For example, to create a diverging color scale that interpolates between white and red for negative values, and white and green for positive values, say:
 
@@ -91,20 +104,7 @@ Internally, a piecewise scale performs a [binary search](https://github.com/d3/d
 
 <a name="continuous_range" href="#continuous_range">#</a> <i>continuous</i>.<b>range</b>([<i>range</i>])
 
-If *range* is specified, sets the scale’s range to the specified array of values. The array must contain two or more elements. Unlike the [domain](#continuous_domain), elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#continuous_interpolate) will work. For example, to apply a sequential color encoding:
-
-```js
-var color = d3_scale.linear()
-    .domain([10, 100])
-    .range(["brown", "steelblue"]);
-
-color(20); // "#9a3439"
-color(50); // "#7b5167"
-```
-
-See [*continuous*.interpolate](#continuous_interpolate) for more examples. Note that numeric ranges are required for [invert](#quantiative_invert).
-
-If *range* is not specified, returns the scale’s current range.
+If *range* is specified, sets the scale’s range to the specified array of values. The array must contain two or more elements. Unlike the [domain](#continuous_domain), elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#continuous_interpolate) will work. If *range* is not specified, returns a copy of the scale’s current range. See [*continuous*.interpolate](#continuous_interpolate) for more examples. Note that numeric ranges are required for [invert](#quantiative_invert).
 
 <a name="continuous_rangeRound" href="#continuous_rangeRound">#</a> <i>continuous</i>.<b>rangeRound</b>([<i>range</i>])
 
