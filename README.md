@@ -2,7 +2,7 @@
 
 Scales are a convenient abstraction for a fundamental task in visualization: mapping a dimension of abstract data to a visual representation. Although most often used for position-encoding quantitative data, such as mapping the height in meters of a sample population to the height in pixels of bars in a bar chart, scales can represent virtually any visual encoding, such as diverging colors, stroke widths, or symbol size. Scales can also be used with virtually any type of data, such as named categorical data or discrete data that needs sensible breaks.
 
-For quantitative data, you typically want a [linear scale](#linear-scales). (For time series data, a [time scale](#time-scales).) If the distribution calls for it, consider transforming data using a [power](#power-scales) or [log](#log-scales) scale. A [quantize scale](#quantize-scales) may aid differentiation by rounding continuous data to a fixed set of discrete values; similarly, a [quantile scale](#quantile-scales) computes quantiles from a sample population, and a [threshold scale](#threshold-scales) allows you to specify arbitrary breaks in continuous data. Several built-in [sequential color scales](#sequential-color-scales) are also provided. (If you don’t like these palettes, try [ColorBrewer](http://colorbrewer2.org/).)
+For quantitative data, you typically want a [linear scale](#linear). (For time series data, a [time scale](#time-scales).) If the distribution calls for it, consider transforming data using a [power](#power-scales) or [log](#log-scales) scale. A [quantize scale](#quantize-scales) may aid differentiation by rounding continuous data to a fixed set of discrete values; similarly, a [quantile scale](#quantile-scales) computes quantiles from a sample population, and a [threshold scale](#threshold-scales) allows you to specify arbitrary breaks in continuous data. Several built-in [sequential color scales](#sequential-color-scales) are also provided. (If you don’t like these palettes, try [ColorBrewer](http://colorbrewer2.org/).)
 
 For ordinal (ordered) or categorical data, an [ordinal scale](#ordinal-scales) specifies an explicit mapping from a discrete set of data values to a corresponding set of visual attributes (such as colors). The related [band](#band) and [point](#point) scales are useful for position-encoding ordinal data, such as bars in a bar chart or dots in an categorical scatterplot. Several built-in [categorical color scales](#categorical-color-scales) are also provided.
 
@@ -33,11 +33,10 @@ If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release]
 ## API Reference
 
 * [Continuous](#continuous-scales)
+* [Sequential Color](#sequential-color-scales)
 * [Quantize](#quantize-scales)
 * [Quantile](#quantile-scales)
 * [Threshold](#threshold-scales)
-* [Identity](#identity-scales)
-* [Sequential Color](#sequential-color-scales)
 * [Ordinal](#ordinal-scales)
 * [Categorical Color](#categorical-color-scales)
 
@@ -201,11 +200,15 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 <a name="linear" href="#linear">#</a> <b>linear</b>()
 
-Constructs a new linear scale with the unit [domain](#continuous_domain) [0, 1], the unit [range](#continuous_range) [0, 1], a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. Linear scales are a good default choice for continuous quantitative data because they preserve proportional differences. Each range value *y* can be expressed as a function of the domain value *x*: *y* = *mx* + *b*.
+Constructs a new [continuous scale](#continuous-scales) with the unit [domain](#continuous_domain) [0, 1], the unit [range](#continuous_range) [0, 1], a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. Linear scales are a good default choice for continuous quantitative data because they preserve proportional differences. Each range value *y* can be expressed as a function of the domain value *x*: *y* = *mx* + *b*.
+
+#### Power Scales
+
+Power scales are similar to [linear scales](#linear), except an exponential transform is applied to the input domain value before the output range value is computed. Each range value *y* can be expressed as a function of the domain value *x*: *y* = *mx^k* + *b*, where *k* is the [exponent](#pow_exponent) value. Power scales also support negative domain values, in which case the input value and the resulting output value are multiplied by -1.
 
 <a name="pow" href="#pow">#</a> <b>pow</b>()
 
-Constructs a new power scale with the unit [domain](#continuous_domain) [0, 1], the unit [range](#continuous_range) [0, 1], the [exponent](#pow_exponent) 1, a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. (Note that this is effectively a [linear](#linear) scale until you set a different exponent.) Power scales are similar to [linear scales](#linear), except an exponential transform is applied to the input domain value before the output range value is computed. Each range value *y* can be expressed as a function of the domain value *x*: *y* = *mx^k* + *b*, where *k* is the [exponent](#pow_exponent) value. Power scales also support negative domain values, in which case the input value and the resulting output value are multiplied by -1.
+Constructs a new [continuous scale](#continuous-scales) with the unit [domain](#continuous_domain) [0, 1], the unit [range](#continuous_range) [0, 1], the [exponent](#pow_exponent) 1, a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. (Note that this is effectively a [linear](#linear) scale until you set a different exponent.)
 
 <a name="pow_exponent" href="#pow_exponent">#</a> <i>pow</i>.<b>exponent</b>([<i>exponent</i>])
 
@@ -213,11 +216,15 @@ If *exponent* is specified, sets the current exponent to the given numeric value
 
 <a name="sqrt" href="#sqrt">#</a> <b>sqrt</b>()
 
-Constructs a new [power scale](#pow) with the unit [domain](#continuous_domain) [0, 1], the unit [range](#continuous_range) [0, 1], the [exponent](#pow_exponent) 0.5, a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. This is a convenience method equivalent to `d3_scale.pow().exponent(0.5)`.
+Constructs a new [continuous](#continuous-scales) [power scale](#pow) with the unit [domain](#continuous_domain) [0, 1], the unit [range](#continuous_range) [0, 1], the [exponent](#pow_exponent) 0.5, a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. This is a convenience method equivalent to `d3_scale.pow().exponent(0.5)`.
+
+#### Log Scales
+
+Log scales are similar to [linear scales](#linear), except a logarithmic transform is applied to the input domain value before the output range value is computed. The mapping to the range value *y* can be expressed as a function of the domain value *x*: *y* = *m* log(<i>x</i>) + *b*.
 
 <a name="log" href="#log">#</a> <b>log</b>()
 
-Constructs a new log scale with the [domain](#continuous_domain) [1, 10], the unit [range](#continuous_range) [0, 1], the [base](#log_base) 10, a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. Log scales are similar to [linear scales](#linear), except a logarithmic transform is applied to the input domain value before the output range value is computed. The mapping to the range value *y* can be expressed as a function of the domain value *x*: *y* = *m* log(<i>x</i>) + *b*.
+Constructs a new [continuous scale](#continuous-scales) with the [domain](#continuous_domain) [1, 10], the unit [range](#continuous_range) [0, 1], the [base](#log_base) 10, a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled.
 
 As log(0) = -∞, a log scale domain must be **strictly-positive or strictly-negative**; the domain must not include or cross zero. A log scale with a positive domain has a well-defined behavior for positive values, and a log scale with a negative domain has a well-defined behavior for negative values. (For a negative domain, input and output values are implicitly multiplied by -1.) The behavior of the scale is undefined if you pass a negative value to a log scale with a positive domain or vice versa.
 
@@ -237,93 +244,48 @@ Like [*continuous*.ticks](#continuous_ticks), but customized for a log scale. If
 
 Like [*continuous*.tickFormat](#continuous_tickFormat), but customized for a log scale. If a *count* is specified, then the formatter may return the empty string for some of the tick labels; this is useful if there is not enough room to fit all of the tick labels, but you still want to display the tick marks to show the log scale distortion. When specifying a count, you may also provide a format *specifier* or format function. For example, to get a tick formatter that will display 20 ticks of a currency, say `log.tickFormat(20, "$,f")`. If the specifier does not have a defined precision, the precision will be set automatically by the scale, returning the appropriate format. This provides a convenient, declarative way of specifying a format whose precision will be automatically set by the scale.
 
-CAUTION: DOCUMENTATION BELOW THIS POINT IS BEING REWRITTEN.
+#### Identity Scales
 
-### Time Scales
+Identity scales are a special case of [linear scales](#linear) where the domain and range are identical; the scale and its invert method are both the identity function. These scales are occasionally useful when working with pixel coordinates, say in conjunction with an axis or brush. Identity scales do not support [rangeRound](#continuous_rangeRound), [clamp](#continuous_clamp) or [interpolate](#continuous_interpolate).
 
-Time scales are a variant of [linear scales](#linear-scales) that have a time domain: domain values are coerced to [dates](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date) rather than numbers, and [*time*.invert](#time_invert) likewise returns a date. More importantly, time scales implement [ticks](#time_ticks) based on [conventional time intervals](https://github.com/d3/d3-time), taking the pain out of generating axes for temporal domains.
+<a name="identity" href="#identity">#</a> <b>identity</b>()
+
+Constructs a new identity scale with the default [domain](#continuous_domain) [0, 1] and the default [range](#continuous_range) [0, 1].
+
+#### Time Scales
+
+Time scales are a variant of [linear scales](#linear) that have a temporal domain: domain values are coerced to [dates](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date) rather than numbers, and [invert](#continuous_invert) likewise returns a date. Time scales implement [ticks](#time_ticks) based on [calendar intervals](https://github.com/d3/d3-time), taking the pain out of generating axes for temporal domains.
+
+For example, to create a position encoding:
+
+```js
+var x = d3_scale.time()
+    .domain([new Date(2000, 0, 1), new Date(2000, 0, 2)])
+    .range([0, 960]);
+
+x(new Date(2000, 0, 1,  5)); // 200
+x(new Date(2000, 0, 1, 16)); // 640
+x.invert(200); // Sat Jan 01 2000 05:00:00 GMT-0800 (PST)
+x.invert(640); // Sat Jan 01 2000 16:00:00 GMT-0800 (PST)
+```
+
+For a valid value *y* in the range, <i>time</i>(<i>time</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the domain, <i>time</i>.invert(<i>time</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
 
 <a name="time" href="#time">#</a> <b>time</b>()
 
-Constructs a new time scale with the default [domain](#time_domain) [2000-01-01,2000-01-02], the default [range](#time_range) [0, 1], the default [interpolator](#time_interpolate) and [clamping](#time_clamp) disabled.
-
-<a name="_time" href="#_time">#</a> <i>time</i>(<i>date</i>)
-
-Given a *date* in the [domain](#time_domain), returns the corresponding value in the [range](#time_range). For example, a position encoding:
-
-```js
-var s = time()
-    .domain([new Date(2000, 0, 1), new Date(2000, 0, 2)])
-    .range([0, 960]);
-
-s(new Date(2000, 0, 1,  5)); // 200
-s(new Date(2000, 0, 1, 16)); // 640
-```
-
-<a name="time_invert" href="#time_invert">#</a> <i>time</i>.<b>invert</b>(<i>y</i>)
-
-Given a value *y* in the [range](#time_range), returns the corresponding date in the [domain](#time_domain): the inverse of [*time*](#_time). For example, a position encoding:
-
-```js
-var s = time()
-    .domain([new Date(2000, 0, 1), new Date(2000, 0, 2)])
-    .range([0, 960]);
-
-s.invert(200); // Sat Jan 01 2000 05:00:00 GMT-0800 (PST)
-s.invert(640); // Sat Jan 01 2000 16:00:00 GMT-0800 (PST)
-```
-
-This method is only supported if the range is numeric, and may return undefined if the range is non-numeric (such as colors). For a valid value *y* in the range, <i>time</i>(<i>time</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the domain, <i>time</i>.invert(<i>time</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
-
-<a name="time_domain" href="#time_domain">#</a> <i>time</i>.<b>domain</b>([<i>dates</i>])
-
-If *domain* is specified, sets the scale’s domain to the specified array of dates. The array must contain two or more dates. If the elements in the given array are not dates, they will be coerced to dates. If *domain* is not specified, returns the scale’s current domain.
-
-As with [*linear*.domain](#linear_domain), this method can accept more than two values for the domain and range, thus resulting in a “polylinear” scale.
-
-<a name="time_range" href="#time_range">#</a> <i>time</i>.<b>range</b>([<i>range</i>])
-
-If *range* is specified, sets the scale’s range to the specified array of values. The array must contain two or more values, matching the cardinality of the [domain](#range_domain); otherwise, the longer of the two is truncated to match the other. The elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#range_interpolate) will work; however, numeric ranges are required for [invert](#range_invert). If *range* is not specified, returns the scale’s current range.
-
-<a name="time_rangeRound" href="#time_rangeRound">#</a> <i>time</i>.<b>rangeRound</b>([<i>range</i>])
-
-Sets the scale’s [*range*](#time_range) to the specified array of values while also setting the scale’s [interpolator](#time_interpolate) to [interpolateRound](https://github.com/d3/d3-interpolate#interpolateRound). This is a convenience method equivalent to:
-
-```js
-s.range(range).interpolate(interpolateRound);
-```
-
-The rounding interpolator is sometimes useful for avoiding antialiasing artifacts, though also consider [shape-rendering](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering): crispEdges. Note that this interpolator can only be used with numeric ranges.
-
-<a name="time_interpolate" href="#time_interpolate">#</a> <i>time</i>.<b>interpolate</b>([<i>interpolate</i>[, <i>parameters…</i>]])
-
-If *interpolate* is specified, sets the scale’s [range](#time_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0, 1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s interpolator factory. See [*linear*.interpolate](#linear_interpolate) for examples.
-
-Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the domain values are arbitrary objects, then the default interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, you typically don’t have to worry about this recyling of the scale’s return value; however, if you need to store the scale’s return value, specify your own interpolator or make a copy as appropriate.
-
-<a name="time_clamp" href="#time_clamp">#</a> <i>time</i>.<b>clamp</b>([<i>clamp</i>])
-
-If *clamp* is specified, enables or disables clamping accordingly. If clamping is disabled and the scale is passed a value outside the [domain](#time_domain), the scale may return a value outside the [range](#time_range) through extrapolation. If clamping is enabled, the return value of the scale is always within the scale’s range. Clamping similarly applies to [*time*.invert](#time_invert). See [*linear*.clamp](#linear_clamp) for examples. If *clamp* is not specified, returns whether or not the scale currently clamps values to within the range.
-
-<a name="time_nice" href="#time_nice">#</a> <i>time</i>.<b>nice</b>([<i>count</i>])
-<br><a name="time_nice" href="#time_nice">#</a> <i>time</i>.<b>nice</b>([<i>interval</i>[, <i>step</i>]])
-
-Extends the [domain](#time_domain) so that it starts and ends on nice round values. This method typically modifies the scale’s domain, and may only extend the bounds to the nearest round value.
-
-An optional tick *count* argument allows greater control over the step size used to extend the bounds, guaranteeing that the returned [ticks](#time_ticks) will exactly cover the domain. Alternatively, a [time *interval*](https://github.com/d3/d3-time#intervals) may be specified to explicitly set the ticks. If an *interval* is specified, an optional *step* may also be specified to skip some ticks. For example, `nice(second, 10)` will extend the domain to an even ten seconds (0, 10, 20, <i>etc.</i>). See [*time*.ticks](#time_ticks) and [*interval*.every](https://github.com/d3/d3-time#interval_every) for further detail.
-
-Nicing is useful if the domain is computed from data, say using [extent](https://github.com/d3/d3-array#extent), and may be irregular. For example, for a domain of [2009-07-13T00:02, 2009-07-13T23:48], the nice domain is [2009-07-13, 2009-07-14]. If the domain has more than two values, nicing the domain only affects the first and last value.
+Constructs a new time scale with the [domain](#continuous_domain) [2000-01-01, 2000-01-02], the default [range](#continuous_range) [0, 1], a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled.
 
 <a name="time_ticks" href="#time_ticks">#</a> <i>time</i>.<b>ticks</b>([<i>count</i>])
 <br><a name="time_ticks" href="#time_ticks">#</a> <i>time</i>.<b>ticks</b>([<i>interval</i>[, <i>step</i>]])
 
-Returns representative dates from the scale’s [domain](#time_domain). The returned tick values are uniformly-spaced (mostly), have sensible values (such every day at midnight), and are guaranteed to be within the extent of the domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data.
+Returns representative dates from the scale’s [domain](#continuous_domain). The returned tick values are uniformly-spaced (mostly), have sensible values (such as every day at midnight), and are guaranteed to be within the extent of the domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data.
 
 An optional *count* may be specified to affect how many ticks are generated. If *count* is not specified, it defaults to 10. The specified *count* is only a hint; the scale may return more or fewer values depending on the domain. For example, to create ten default ticks, say:
 
 ```js
-var s = time();
-s.ticks(10);
+var x = d3_scale.time();
+
+x.ticks(10);
 // [Sat Jan 01 2000 00:00:00 GMT-0800 (PST),
 //  Sat Jan 01 2000 03:00:00 GMT-0800 (PST),
 //  Sat Jan 01 2000 06:00:00 GMT-0800 (PST),
@@ -348,8 +310,10 @@ The following time intervals are considered for automatic ticks:
 In lieu of a *count*, a [time *interval*](https://github.com/d3/d3-time#intervals) may be explicitly specified. If an *interval* is specified, an optional *step* may also be specified to prune generated ticks. For example, `ticks(minute, 15)` will generate ticks at 15-minute intervals:
 
 ```js
-var s = time().domain([new Date(2000, 0, 1, 0), new Date(2000, 0, 1, 2)]);
-s.ticks(minute, 15);
+var x = d3_scale.time()
+    .domain([new Date(2000, 0, 1, 0), new Date(2000, 0, 1, 2)]);
+
+x.ticks(d3_time.minute, 15);
 // [Sat Jan 01 2000 00:00:00 GMT-0800 (PST),
 //  Sat Jan 01 2000 00:15:00 GMT-0800 (PST),
 //  Sat Jan 01 2000 00:30:00 GMT-0800 (PST),
@@ -361,13 +325,15 @@ s.ticks(minute, 15);
 //  Sat Jan 01 2000 02:00:00 GMT-0800 (PST)]
 ```
 
-This is equivalent to using [minute](https://github.com/d3/d3-time#minute).[every](https://github.com/d3/d3-time#interval_every)(15) or minute.filter with the following test function:
+This is equivalent to using [minute](https://github.com/d3/d3-time#minute).[every](https://github.com/d3/d3-time#interval_every)(15), or minute.[filter](https://github.com/d3/d3-time#interval_filter) with the following test function:
 
 ```js
-s.ticks(minute.filter(function(d) { return d.getMinutes() % 15 === 0; }));
+x.ticks(d3_time.minute.filter(function(d) {
+  return d.getMinutes() % 15 === 0;
+}));
 ```
 
-Note: in some cases, such as with day ticks, specifying a *step* can result in irregular spacing of ticks because months have varying length.
+Note: in some cases, such as with day ticks, specifying a *step* can result in irregular spacing of ticks because time intervals have varying length.
 
 <a name="time_tickFormat" href="#time_tickFormat">#</a> <i>time</i>.<b>tickFormat</b>([<i>specifier</i>])
 
@@ -384,17 +350,72 @@ Returns a time format function suitable for displaying [tick](#time_ticks) value
 
 Although somewhat unusual, this default behavior has the benefit of providing both local and global context: for example, formatting a sequence of ticks as [11 PM, Mon 07, 01 AM] reveals information about hours, dates, and day simultaneously, rather than just the hours [11 PM, 12 AM, 01 AM]. See [d3-time-format](https://github.com/d3/d3-time-format) if you’d like to roll your own conditional time format.
 
-<a name="time_copy" href="#time_copy">#</a> <i>time</i>.<b>copy</b>()
+<a name="time_nice" href="#time_nice">#</a> <i>time</i>.<b>nice</b>([<i>count</i>])
+<br><a name="time_nice" href="#time_nice">#</a> <i>time</i>.<b>nice</b>([<i>interval</i>[, <i>step</i>]])
 
-Returns an exact copy of this time scale. Changes to this scale will not affect the returned scale, and vice versa.
+Extends the [domain](#continuous_domain) so that it starts and ends on nice round values. This method typically modifies the scale’s domain, and may only extend the bounds to the nearest round value.
+
+An optional tick *count* argument allows greater control over the step size used to extend the bounds, guaranteeing that the returned [ticks](#time_ticks) will exactly cover the domain. Alternatively, a [time *interval*](https://github.com/d3/d3-time#intervals) may be specified to explicitly set the ticks. If an *interval* is specified, an optional *step* may also be specified to skip some ticks. For example, `nice(second, 10)` will extend the domain to an even ten seconds (0, 10, 20, <i>etc.</i>). See [*time*.ticks](#time_ticks) and [*interval*.every](https://github.com/d3/d3-time#interval_every) for further detail.
+
+Nicing is useful if the domain is computed from data, say using [extent](https://github.com/d3/d3-array#extent), and may be irregular. For example, for a domain of [2009-07-13T00:02, 2009-07-13T23:48], the nice domain is [2009-07-13, 2009-07-14]. If the domain has more than two values, nicing the domain only affects the first and last value.
 
 <a name="utcTime" href="#utcTime">#</a> <b>utcTime</b>()
 
 Equivalent to [time](#time), but the returned time scale operates in [Coordinated Universal Time](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) rather than local time.
 
+### Sequential Color Scales
+
+<a name="viridis" href="#viridis">#</a> <b>viridis</b>()
+
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/viridis.png" width="100%" height="40" alt="viridis">
+
+Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and implementing the “viridis” perceptually-uniform color scheme designed by [van der Walt, Smith and Firing](https://bids.github.io/colormap/) for matplotlib.
+
+<a name="inferno" href="#inferno">#</a> <b>inferno</b>()
+
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/inferno.png" width="100%" height="40" alt="inferno">
+
+Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and implementing the “inferno” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
+
+<a name="magma" href="#magma">#</a> <b>magma</b>()
+
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/magma.png" width="100%" height="40" alt="magma">
+
+Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and implementing the “magma” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
+
+<a name="plasma" href="#plasma">#</a> <b>plasma</b>()
+
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/plasma.png" width="100%" height="40" alt="plasma">
+
+Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and implementing the “plasma” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
+
+<a name="cubehelix" href="#cubehelix">#</a> <b>cubehelix</b>()
+
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cubehelix.png" width="100%" height="40" alt="cubehelix">
+
+Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and implementing [Green’s default Cubehelix](https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/) color scheme.
+
+<a name="warm" href="#warm">#</a> <b>warm</b>()
+
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/warm.png" width="100%" height="40" alt="warm">
+
+Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and approximately implementing a 180° rotation of [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/) color scheme using the Cubehelix color space.
+
+<a name="cool" href="#cool">#</a> <b>cool</b>()
+
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cool.png" width="100%" height="40" alt="cool">
+
+Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and approximately implementing [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/) color scheme using the Cubehelix color space.
+
+<a name="rainbow" href="#rainbow">#</a> <b>rainbow</b>()
+
+<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/rainbow.png" width="100%" height="40" alt="rainbow">
+
+Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] combining the [warm](#warm) scale from [0.0, 0.5] followed by the [cool](#cool) scale from [0.5, 1.0], thus implementing the cyclical [less-angry rainbow](http://bl.ocks.org/mbostock/310c99e53880faec2434) color scheme.
+
 ### Quantize Scales
 
-Quantize scales are a variant of [linear scales](#linear-scales) with a discrete rather than continuous range. The input domain is still continuous, and divided into uniform segments based on the number of values in (the cardinality of) the output range. Each range value *y* can be expressed as a quantized linear function of the domain value *x*: *y* = *m round(x)* + *b*. See [bl.ocks.org/4060606](http://bl.ocks.org/mbostock/4060606) for an example.
+Quantize scales are a variant of [linear scales](#linear) with a discrete rather than continuous range. The input domain is still continuous, and divided into uniform segments based on the number of values in (the cardinality of) the output range. Each range value *y* can be expressed as a quantized linear function of the domain value *x*: *y* = *m round(x)* + *b*. See [bl.ocks.org/4060606](http://bl.ocks.org/mbostock/4060606) for an example.
 
 <a name="quantize" href="#quantize">#</a> <b>quantize</b>()
 
@@ -528,93 +549,9 @@ If *range* is specified, sets the scale’s range to the specified array of valu
 
 Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
 
-### Identity Scales
-
-Identity scales are a special case of [linear scales](#linear-scales) where the [domain](#identity_domain) and [range](#identity_range) are identical; the scale and its invert method are both the identity function. These scales are occasionally useful when working with pixel coordinates, say in conjunction with an axis or brush.
-
-<a name="identity" href="#identity">#</a> <b>identity</b>()
-
-Constructs a new identity scale with the default [domain](#identity_domain) [0, 1] and the default [range](#identity_range) [0, 1]. An identity scale is always equivalent to the identity function.
-
-<a name="_identity" href="#_identity">#</a> <i>identity</i>(<i>x</i>)<br>
-<a href="#_identity">#</a> <i>identity</i>.<b>invert</b>(<i>x</i>)
-
-Returns the given value *x*.
-
-<a name="identity_domain" href="#identity_domain">#</a> <i>identity</i>.<b>domain</b>([<i>domain</i>])<br>
-<a href="#identity_domain">#</a> <i>identity</i>.<b>range</b>([<i>domain</i>])
-
-If *domain* is specified, sets the scale’s domain and range to the specified array of numbers. The array must contain two or more numbers. If the elements in the given array are not numbers, they will be coerced to numbers. If *domain* is not specified, returns the scale’s current domain (or equivalently, range).
-
-<a name="identity_nice" href="#identity_nice">#</a> <i>identity</i>.<b>nice</b>()
-
-Equivalent to [*linear*.nice](#linear_nice).
-
-<a name="identity_ticks" href="#identity_ticks">#</a> <i>identity</i>.<b>ticks</b>([<i>count</i>])
-
-Equivalent to [*linear*.ticks](#linear_ticks).
-
-<a name="identity_tickFormat" href="#identity_tickFormat">#</a> <i>identity</i>.<b>tickFormat</b>([<i>count</i>[, <i>specifier</i>]])
-
-Equivalent to [*linear*.tickFormat](#linear_tickFormat).
-
-<a name="identity_copy" href="#identity_copy">#</a> <i>identity</i>.<b>copy</b>()
-
-Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
-
-### Sequential Color Scales
-
-<a name="viridis" href="#viridis">#</a> <b>viridis</b>()
-
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/viridis.png" width="100%" height="40" alt="viridis">
-
-Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and implementing the “viridis” perceptually-uniform color scheme designed by [van der Walt, Smith and Firing](https://bids.github.io/colormap/) for matplotlib.
-
-<a name="inferno" href="#inferno">#</a> <b>inferno</b>()
-
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/inferno.png" width="100%" height="40" alt="inferno">
-
-Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and implementing the “inferno” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
-
-<a name="magma" href="#magma">#</a> <b>magma</b>()
-
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/magma.png" width="100%" height="40" alt="magma">
-
-Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and implementing the “magma” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
-
-<a name="plasma" href="#plasma">#</a> <b>plasma</b>()
-
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/plasma.png" width="100%" height="40" alt="plasma">
-
-Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and implementing the “plasma” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
-
-<a name="cubehelix" href="#cubehelix">#</a> <b>cubehelix</b>()
-
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cubehelix.png" width="100%" height="40" alt="cubehelix">
-
-Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and implementing [Green’s default Cubehelix](https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/) color scheme.
-
-<a name="warm" href="#warm">#</a> <b>warm</b>()
-
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/warm.png" width="100%" height="40" alt="warm">
-
-Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and approximately implementing a 180° rotation of [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/) color scheme using the Cubehelix color space.
-
-<a name="cool" href="#cool">#</a> <b>cool</b>()
-
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cool.png" width="100%" height="40" alt="cool">
-
-Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] and approximately implementing [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/) color scheme using the Cubehelix color space.
-
-<a name="rainbow" href="#rainbow">#</a> <b>rainbow</b>()
-
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/rainbow.png" width="100%" height="40" alt="rainbow">
-
-Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] combining the [warm](#warm) scale from [0.0, 0.5] followed by the [cool](#cool) scale from [0.5, 1.0], thus implementing the cyclical [less-angry rainbow](http://bl.ocks.org/mbostock/310c99e53880faec2434) color scheme.
-
 ### Ordinal Scales
 
-Unlike [linear](#linear-scales) and other quantitative scales, ordinal scales have a discrete domain and range. For example, an ordinal scale might map a set of named categories to a set of colors, or determine the horizontal positions of columns in a column chart.
+Unlike [linear](#linear) and other quantitative scales, ordinal scales have a discrete domain and range. For example, an ordinal scale might map a set of named categories to a set of colors, or determine the horizontal positions of columns in a column chart.
 
 <a name="ordinal" href="#ordinal">#</a> <b>ordinal</b>()
 
