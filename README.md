@@ -6,7 +6,7 @@ For [continuous](#continuous-scales) quantitative data, you typically want a [li
 
 For discrete ordinal (ordered) or categorical (unordered) data, an [ordinal scale](#ordinal-scales) specifies an explicit mapping from a set of data values to a corresponding set of visual attributes (such as colors). The related [band](#band) and [point](#point) scales are useful for position-encoding ordinal data, such as bars in a bar chart or dots in an categorical scatterplot. Several built-in [categorical color scales](#categorical-color-scales) are also provided.
 
-Scales have no intrinsic visual representation; for that, consider an [axis](https://github.com/mbostock/d3/wiki/SVG-Axes). However, most scales can [generate](#linear_ticks) and [format](#linear_tickFormat) ticks for reference marks.
+Scales have no intrinsic visual representation. However, most scales can [generate](#linear_ticks) and [format](#linear_tickFormat) ticks for reference marks to aid in the construction of axes.
 
 For a longer introduction, see these recommended tutorials:
 
