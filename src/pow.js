@@ -1,6 +1,6 @@
 import constant from "./constant";
 import {linearish} from "./linear";
-import {default as quantitative, copy} from "./quantitative";
+import {default as continuous, copy} from "./continuous";
 
 function raise(x, exponent) {
   return x < 0 ? -Math.pow(-x, exponent) : Math.pow(x, exponent);
@@ -8,7 +8,7 @@ function raise(x, exponent) {
 
 export default function pow() {
   var exponent = 1,
-      scale = quantitative(deinterpolate, reinterpolate),
+      scale = continuous(deinterpolate, reinterpolate),
       domain = scale.domain;
 
   function deinterpolate(a, b) {

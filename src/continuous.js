@@ -66,7 +66,7 @@ export function copy(source, target) {
 
 // deinterpolate(a, b)(x) takes a domain value x in [a,b] and returns the corresponding parameter t in [0,1].
 // reinterpolate(a, b)(t) takes a parameter t in [0,1] and returns the corresponding domain value x in [a,b].
-export default function quantitative(deinterpolate, reinterpolate) {
+export default function continuous(deinterpolate, reinterpolate) {
   var domain = unit,
       range = unit,
       interpolate = value,

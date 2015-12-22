@@ -3,7 +3,7 @@ import {number as reinterpolate} from "d3-interpolate";
 import {year, month, week, day, hour, minute, second, millisecond} from "d3-time";
 import {format} from "d3-time-format";
 import nice from "./nice";
-import {default as quantitative, copy, deinterpolateLinear as deinterpolate} from "./quantitative";
+import {default as continuous, copy, deinterpolateLinear as deinterpolate} from "./continuous";
 
 var millisecondsPerSecond = 1000,
     millisecondsPerMinute = millisecondsPerSecond * 60,
@@ -19,7 +19,7 @@ function newDate(t) {
 }
 
 export function calendar(year, month, week, day, hour, minute, second, millisecond, format) {
-  var scale = quantitative(deinterpolate, reinterpolate),
+  var scale = continuous(deinterpolate, reinterpolate),
       invert = scale.invert,
       domain = scale.domain;
 

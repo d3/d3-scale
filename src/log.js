@@ -2,7 +2,7 @@ import {ticks} from "d3-array";
 import {format} from "d3-format";
 import constant from "./constant";
 import nice from "./nice";
-import {default as quantitative, copy} from "./quantitative";
+import {default as continuous, copy} from "./continuous";
 
 var tickFormat10 = format(".0e"),
     tickFormatOther = format(",");
@@ -43,7 +43,7 @@ function reflect(f) {
 }
 
 export default function log() {
-  var scale = quantitative(deinterpolate, reinterpolate).domain([1, 10]),
+  var scale = continuous(deinterpolate, reinterpolate).domain([1, 10]),
       domain = scale.domain,
       base = 10,
       logs = logp(10),

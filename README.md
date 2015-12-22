@@ -2,7 +2,7 @@
 
 Scales are a convenient abstraction for a fundamental task in visualization: mapping a dimension of abstract data to a visual representation. Although most often used for position-encoding quantitative data, such as mapping the height in meters of a sample population to the height in pixels of bars in a bar chart, scales can represent virtually any visual encoding, such as diverging colors, stroke widths, or symbol size. Scales can also be used with virtually any type of data, such as named categorical data or discrete data that needs sensible breaks.
 
-For continuous quantitative data, you typically want a [linear scale](#linear-scales). (For time series data, a [time scale](#time-scales).) If the distribution calls for it, consider transforming data using a [power](#power-scales) or [log](#log-scales) scale. A [quantize scale](#quantize-scales) may aid differentiation by rounding continuous data to a fixed set of discrete values; similarly, a [quantile scale](#quantile-scales) computes quantiles from a sample population, and a [threshold scale](#threshold-scales) allows you to specify arbitrary breaks in continuous data. Several built-in [sequential color scales](#sequential-color-scales) are also provided. (If you don’t like these palettes, try [ColorBrewer](http://colorbrewer2.org/).)
+For quantitative data, you typically want a [linear scale](#linear-scales). (For time series data, a [time scale](#time-scales).) If the distribution calls for it, consider transforming data using a [power](#power-scales) or [log](#log-scales) scale. A [quantize scale](#quantize-scales) may aid differentiation by rounding continuous data to a fixed set of discrete values; similarly, a [quantile scale](#quantile-scales) computes quantiles from a sample population, and a [threshold scale](#threshold-scales) allows you to specify arbitrary breaks in continuous data. Several built-in [sequential color scales](#sequential-color-scales) are also provided. (If you don’t like these palettes, try [ColorBrewer](http://colorbrewer2.org/).)
 
 For ordinal (ordered) or categorical data, an [ordinal scale](#ordinal-scales) specifies an explicit mapping from a discrete set of data values to a corresponding set of visual attributes (such as colors). The related [band](#band) and [point](#point) scales are useful for position-encoding ordinal data, such as bars in a bar chart or dots in an categorical scatterplot. Several built-in [categorical color scales](#categorical-color-scales) are also provided.
 
@@ -32,7 +32,7 @@ If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release]
 
 ## API Reference
 
-* [Quantitative](#quantitative-scales)
+* [Continuous](#continuous-scales)
 * [Quantize](#quantize-scales)
 * [Quantile](#quantile-scales)
 * [Threshold](#threshold-scales)
@@ -41,13 +41,13 @@ If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release]
 * [Ordinal](#ordinal-scales)
 * [Categorical Color](#categorical-color-scales)
 
-### Quantitative Scales
+### Continuous Scales
 
-Quantitative scales map a continuous, numeric input [domain](#quantitative_domain) to a continuous output [range](#quantitative_range).
+Continuous scales map a continuous, quantitative input [domain](#continuous_domain) to a continuous output [range](#continuous_range). If the range is also numeric, the mapping may be [inverted](#continuous_invert).
 
-<a name="quantitative" href="#quantitative">#</a> <i>quantitative</i>(<i>value</i>)
+<a name="continuous" href="#continuous">#</a> <i>continuous</i>(<i>value</i>)
 
-Given a *value* in the [domain](#quantitative_domain), returns the corresponding value from the [range](#quantitative_range). If the given *value* is outside the domain, and [clamping](#quantitative_clamp) is not enabled, the quantitative mapping may be extrapolated such that the returned value is outside the range. For example, to apply a position encoding:
+Given a *value* in the [domain](#continuous_domain), returns the corresponding value from the [range](#continuous_range). If the given *value* is outside the domain, and [clamping](#continuous_clamp) is not enabled, the mapping may be extrapolated such that the returned value is outside the range. For example, to apply a position encoding:
 
 ```js
 var x = d3_scale.linear()
@@ -58,9 +58,9 @@ x(20); // 80
 x(50); // 320
 ```
 
-<a name="quantitative_invert" href="#quantitative_invert">#</a> <i>quantitative</i>.<b>invert</b>(<i>value</i>)
+<a name="continuous_invert" href="#continuous_invert">#</a> <i>continuous</i>.<b>invert</b>(<i>value</i>)
 
-Given a *value* in the [range](#quantitative_range), returns the corresponding value from the [domain](#quantitative_domain). Inversion is useful for interaction, say to determine the value in the domain that corresponds to the position under the mouse. If the given *value* is outside the range, and [clamping](#quantitative_clamp) is not enabled, the quantitative mapping may be extrapolated such that the returned value is outside the down. This method is only supported if the range is numeric. If the range is not numeric, returns NaN. For example, to invert a position encoding:
+Given a *value* in the [range](#continuous_range), returns the corresponding value from the [domain](#continuous_domain). Inversion is useful for interaction, say to determine the value in the domain that corresponds to the position under the mouse. If the given *value* is outside the range, and [clamping](#continuous_clamp) is not enabled, the mapping may be extrapolated such that the returned value is outside the down. This method is only supported if the range is numeric. If the range is not numeric, returns NaN. For example, to invert a position encoding:
 
 ```js
 var x = d3_scale.linear()
@@ -71,13 +71,13 @@ x.invert(80); // 20
 x.invert(320); // 50
 ```
 
-For a valid value *y* in the range, <i>quantitative</i>(<i>quantitative</i>.invert(<i>y</i>)) approximately equals *y*; similarly, for a valid value *x* in the domain, <i>quantitative</i>.invert(<i>quantitative</i>(<i>x</i>)) approximately equals *x*. (The scale and its inverse may not be exact due to the limitations of floating point precision.)
+For a valid value *y* in the range, <i>continuous</i>(<i>continuous</i>.invert(<i>y</i>)) approximately equals *y*; similarly, for a valid value *x* in the domain, <i>continuous</i>.invert(<i>continuous</i>(<i>x</i>)) approximately equals *x*. (The scale and its inverse may not be exact due to the limitations of floating point precision.)
 
-<a name="quantitative_domain" href="#quantitative_domain">#</a> <i>quantitative</i>.<b>domain</b>([<i>domain</i>])
+<a name="continuous_domain" href="#continuous_domain">#</a> <i>continuous</i>.<b>domain</b>([<i>domain</i>])
 
 If *domain* is specified, sets the scale’s domain to the specified array of numbers. The array must contain two or more elements. If the elements in the given array are not numbers, they will be coerced to numbers. If *domain* is not specified, returns the scale’s current domain.
 
-Although quantitative scales typically have two values each in their domain and range, specifying more than two values produces a piecewise quantitative scale. For example, to create a diverging color scale that interpolates between white and red for negative values, and white and green for positive values, say:
+Although continuous scales typically have two values each in their domain and range, specifying more than two values produces a piecewise scale. For example, to create a diverging color scale that interpolates between white and red for negative values, and white and green for positive values, say:
 
 ```js
 var color = d3_scale.linear()
@@ -88,11 +88,11 @@ color(-0.5); // "#ff8080"
 color(+0.5); // "#80c080"
 ```
 
-Internally, a quantitative piecewise scale performs a [binary search](https://github.com/d3/d3-array#bisect) for the range interpolator corresponding to the given domain value. Thus, the domain must be in ascending or descending order. If the domain and range have different lengths *N* and *M*, only the first *min(N,M)* elements in each are observed.
+Internally, a piecewise scale performs a [binary search](https://github.com/d3/d3-array#bisect) for the range interpolator corresponding to the given domain value. Thus, the domain must be in ascending or descending order. If the domain and range have different lengths *N* and *M*, only the first *min(N,M)* elements in each are observed.
 
-<a name="quantitative_range" href="#quantitative_range">#</a> <i>quantitative</i>.<b>range</b>([<i>range</i>])
+<a name="continuous_range" href="#continuous_range">#</a> <i>continuous</i>.<b>range</b>([<i>range</i>])
 
-If *range* is specified, sets the scale’s range to the specified array of values. The array must contain two or more elements. Unlike the [domain](#quantitative_domain), elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#quantitative_interpolate) will work. For example, to apply a sequential color encoding:
+If *range* is specified, sets the scale’s range to the specified array of values. The array must contain two or more elements. Unlike the [domain](#continuous_domain), elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#continuous_interpolate) will work. For example, to apply a sequential color encoding:
 
 ```js
 var color = d3_scale.linear()
@@ -103,25 +103,25 @@ color(20); // "#9a3439"
 color(50); // "#7b5167"
 ```
 
-See [*quantitative*.interpolate](#quantitative_interpolate) for more examples. Note that numeric ranges are required for [invert](#quantiative_invert).
+See [*continuous*.interpolate](#continuous_interpolate) for more examples. Note that numeric ranges are required for [invert](#quantiative_invert).
 
 If *range* is not specified, returns the scale’s current range.
 
-<a name="quantitative_rangeRound" href="#quantitative_rangeRound">#</a> <i>quantitative</i>.<b>rangeRound</b>([<i>range</i>])
+<a name="continuous_rangeRound" href="#continuous_rangeRound">#</a> <i>continuous</i>.<b>rangeRound</b>([<i>range</i>])
 
-Sets the scale’s [*range*](#quantitative_range) to the specified array of values while also setting the scale’s [interpolator](#quantitative_interpolate) to d3-interpolate’s [round](https://github.com/d3/d3-interpolate#round). This is a convenience method equivalent to:
+Sets the scale’s [*range*](#continuous_range) to the specified array of values while also setting the scale’s [interpolator](#continuous_interpolate) to d3-interpolate’s [round](https://github.com/d3/d3-interpolate#round). This is a convenience method equivalent to:
 
 ```js
-quantitative
+continuous
     .range(range)
     .interpolate(d3_interpolate.round);
 ```
 
 The rounding interpolator is sometimes useful for avoiding antialiasing artifacts, though also consider the [shape-rendering](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering) “crispEdges” styles. Note that this interpolator can only be used with numeric ranges.
 
-<a name="quantitative_clamp" href="#quantitative_clamp">#</a> <i>quantitative</i>.<b>clamp</b>(<i>clamp</i>)
+<a name="continuous_clamp" href="#continuous_clamp">#</a> <i>continuous</i>.<b>clamp</b>(<i>clamp</i>)
 
-If *clamp* is specified, enables or disables clamping accordingly. If clamping is disabled and the scale is passed a value outside the [domain](#quantitative_domain), the scale may return a value outside the [range](#quantitative_range) through extrapolation. If clamping is enabled, the return value of the scale is always within the scale’s range. Clamping similarly applies to [*quantitative*.invert](#quantitative_invert). For example:
+If *clamp* is specified, enables or disables clamping accordingly. If clamping is disabled and the scale is passed a value outside the [domain](#continuous_domain), the scale may return a value outside the [range](#continuous_range) through extrapolation. If clamping is enabled, the return value of the scale is always within the scale’s range. Clamping similarly applies to [*continuous*.invert](#continuous_invert). For example:
 
 ```js
 var x = d3_scale.linear()
@@ -138,9 +138,9 @@ x.invert(-160); // 10
 
 If *clamp* is not specified, returns whether or not the scale currently clamps values to within the range.
 
-<a name="quantitative_interpolate" href="#quantitative_interpolate">#</a> <i>quantitative</i>.<b>interpolate</b>(<i>interpolate</i>[, <i>parameters…</i>])
+<a name="continuous_interpolate" href="#continuous_interpolate">#</a> <i>continuous</i>.<b>interpolate</b>(<i>interpolate</i>[, <i>parameters…</i>])
 
-If *interpolate* is specified, sets the scale’s [range](#quantitative_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0, 1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s current interpolator factory, which defaults to d3-interpolate’s [value](https://github.com/d3/d3-interpolate#value).
+If *interpolate* is specified, sets the scale’s [range](#continuous_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0, 1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s current interpolator factory, which defaults to d3-interpolate’s [value](https://github.com/d3/d3-interpolate#value).
 
 For example, consider a diverging color scale with three colors in the range:
 
@@ -168,13 +168,13 @@ var color = d3_scale.linear()
 
 See [d3-interpolate](https://github.com/d3/d3-interpolate) for more interpolators. Note: the default interpolator, [value](https://github.com/d3/d3-interpolate#value), **may reuse return values**. For example, if the range values are objects, then the default interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, this is typically acceptable; however, if you need to store the scale’s return value, you must specify your own interpolator or make a copy as appropriate.
 
-<a name="quantitative_ticks" href="#quantitative_ticks">#</a> <i>quantitative</i>.<b>ticks</b>([<i>count</i>])
+<a name="continuous_ticks" href="#continuous_ticks">#</a> <i>continuous</i>.<b>ticks</b>([<i>count</i>])
 
-Returns approximately *count* representative values from the scale’s [domain](#quantitative_domain). If *count* is not specified, it defaults to 10. The returned tick values are uniformly spaced, have human-readable values (such as multiples of powers of 10), and are guaranteed to be within the extent of the domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data. The specified *count* is only a hint; the scale may return more or fewer values depending on the domain. See also d3-array’s [ticks](https://github.com/d3/d3-array#ticks).
+Returns approximately *count* representative values from the scale’s [domain](#continuous_domain). If *count* is not specified, it defaults to 10. The returned tick values are uniformly spaced, have human-readable values (such as multiples of powers of 10), and are guaranteed to be within the extent of the domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data. The specified *count* is only a hint; the scale may return more or fewer values depending on the domain. See also d3-array’s [ticks](https://github.com/d3/d3-array#ticks).
 
-<a name="quantitative_tickFormat" href="#quantitative_tickFormat">#</a> <i>quantitative</i>.<b>tickFormat</b>([<i>count</i>[, <i>specifier</i>]])
+<a name="continuous_tickFormat" href="#continuous_tickFormat">#</a> <i>continuous</i>.<b>tickFormat</b>([<i>count</i>[, <i>specifier</i>]])
 
-Returns a [number format](https://github.com/d3/d3-format) function suitable for displaying a tick value, automatically computing the appropriate precision based on the fixed interval between tick values. The specified *count* should have the same value as the count that is used to generate the [tick values](#quantitative_ticks).
+Returns a [number format](https://github.com/d3/d3-format) function suitable for displaying a tick value, automatically computing the appropriate precision based on the fixed interval between tick values. The specified *count* should have the same value as the count that is used to generate the [tick values](#continuous_ticks).
 
 The optional *specifier* argument allows a [custom format](https://github.com/d3/d3-format#locale_format) where the precision of the format is automatically substituted by the scale to be appropriate for the tick interval. For example, to format percentage change, you might say:
 
@@ -191,21 +191,21 @@ ticks.map(tickFormat); // ["-100%", "-50%", "+0%", "+50%", "+100%"]
 
 If *specifier* uses the format type `s`, the scale will return a [SI-prefix format](https://github.com/d3/d3-format#locale_formatPrefix) based on the largest value in the domain. If the *specifier* already specifies a precision, this method is equivalent to [*locale*.format](https://github.com/d3/d3-format#locale_format).
 
-<a name="quantitative_nice" href="#quantitative_nice">#</a> <i>quantitative</i>.<b>nice</b>([<i>count</i>])
+<a name="continuous_nice" href="#continuous_nice">#</a> <i>continuous</i>.<b>nice</b>([<i>count</i>])
 
-Extends the [domain](#quantitative_domain) so that it starts and ends on nice round values. This method typically modifies the scale’s domain, and may only extend the bounds to the nearest round value. An optional tick *count* argument allows greater control over the step size used to extend the bounds, guaranteeing that the returned [ticks](#quantitative_ticks) will exactly cover the domain. Nicing is useful if the domain is computed from data, say using [extent](https://github.com/d3/d3-array#extent), and may be irregular. For example, for a domain of [0.201479…, 0.996679…], a nice domain might be [0.2, 1.0]. If the domain has more than two values, nicing the domain only affects the first and last value. See also d3-array’s [tickStep](https://github.com/d3/d3-array#tickStep).
+Extends the [domain](#continuous_domain) so that it starts and ends on nice round values. This method typically modifies the scale’s domain, and may only extend the bounds to the nearest round value. An optional tick *count* argument allows greater control over the step size used to extend the bounds, guaranteeing that the returned [ticks](#continuous_ticks) will exactly cover the domain. Nicing is useful if the domain is computed from data, say using [extent](https://github.com/d3/d3-array#extent), and may be irregular. For example, for a domain of [0.201479…, 0.996679…], a nice domain might be [0.2, 1.0]. If the domain has more than two values, nicing the domain only affects the first and last value. See also d3-array’s [tickStep](https://github.com/d3/d3-array#tickStep).
 
-<a name="quantitative_copy" href="#quantitative_copy">#</a> <i>quantitative</i>.<b>copy</b>()
+<a name="continuous_copy" href="#continuous_copy">#</a> <i>continuous</i>.<b>copy</b>()
 
 Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
 
 <a name="linear" href="#linear">#</a> <b>linear</b>()
 
-Constructs a new linear scale with the unit [domain](#quantitative_domain) [0, 1], the unit [range](#quantitative_range) [0, 1], a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#quantitative_interpolate) and [clamping](#quantitative_clamp) disabled. Linear scales are a good default choice for quantitative data because they preserve proportional differences. Each range value *y* can be expressed as a function of the domain value *x*: *y* = *mx* + *b*.
+Constructs a new linear scale with the unit [domain](#continuous_domain) [0, 1], the unit [range](#continuous_range) [0, 1], a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. Linear scales are a good default choice for continuous quantitative data because they preserve proportional differences. Each range value *y* can be expressed as a function of the domain value *x*: *y* = *mx* + *b*.
 
 <a name="pow" href="#pow">#</a> <b>pow</b>()
 
-Constructs a new power scale with the unit [domain](#quantitative_domain) [0, 1], the unit [range](#quantitative_range) [0, 1], the [exponent](#pow_exponent) 1, a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#quantitative_interpolate) and [clamping](#quantitative_clamp) disabled. (Note that this is effectively a [linear](#linear) scale until you set a different exponent.) Power scales are similar to [linear scales](#linear), except an exponential transform is applied to the input domain value before the output range value is computed. Each range value *y* can be expressed as a function of the domain value *x*: *y* = *mx^k* + *b*, where *k* is the [exponent](#pow_exponent) value. Power scales also support negative domain values, in which case the input value and the resulting output value are multiplied by -1.
+Constructs a new power scale with the unit [domain](#continuous_domain) [0, 1], the unit [range](#continuous_range) [0, 1], the [exponent](#pow_exponent) 1, a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. (Note that this is effectively a [linear](#linear) scale until you set a different exponent.) Power scales are similar to [linear scales](#linear), except an exponential transform is applied to the input domain value before the output range value is computed. Each range value *y* can be expressed as a function of the domain value *x*: *y* = *mx^k* + *b*, where *k* is the [exponent](#pow_exponent) value. Power scales also support negative domain values, in which case the input value and the resulting output value are multiplied by -1.
 
 <a name="pow_exponent" href="#pow_exponent">#</a> <i>pow</i>.<b>exponent</b>([<i>exponent</i>])
 
@@ -213,11 +213,11 @@ If *exponent* is specified, sets the current exponent to the given numeric value
 
 <a name="sqrt" href="#sqrt">#</a> <b>sqrt</b>()
 
-Constructs a new [power scale](#pow) with the unit [domain](#quantitative_domain) [0, 1], the unit [range](#quantitative_range) [0, 1], the [exponent](#pow_exponent) 0.5, a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#quantitative_interpolate) and [clamping](#quantitative_clamp) disabled. This is a convenience method equivalent to `d3_scale.pow().exponent(0.5)`.
+Constructs a new [power scale](#pow) with the unit [domain](#continuous_domain) [0, 1], the unit [range](#continuous_range) [0, 1], the [exponent](#pow_exponent) 0.5, a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. This is a convenience method equivalent to `d3_scale.pow().exponent(0.5)`.
 
 <a name="log" href="#log">#</a> <b>log</b>()
 
-Constructs a new log scale with the [domain](#quantitative_domain) [1, 10], the unit [range](#quantitative_range) [0, 1], the [base](#log_base) 10, a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#quantitative_interpolate) and [clamping](#quantitative_clamp) disabled. Log scales are similar to [linear scales](#linear), except a logarithmic transform is applied to the input domain value before the output range value is computed. The mapping to the range value *y* can be expressed as a function of the domain value *x*: *y* = *m* log(<i>x</i>) + *b*.
+Constructs a new log scale with the [domain](#continuous_domain) [1, 10], the unit [range](#continuous_range) [0, 1], the [base](#log_base) 10, a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. Log scales are similar to [linear scales](#linear), except a logarithmic transform is applied to the input domain value before the output range value is computed. The mapping to the range value *y* can be expressed as a function of the domain value *x*: *y* = *m* log(<i>x</i>) + *b*.
 
 As log(0) = -∞, a log scale domain must be **strictly-positive or strictly-negative**; the domain must not include or cross zero. A log scale with a positive domain has a well-defined behavior for positive values, and a log scale with a negative domain has a well-defined behavior for negative values. (For a negative domain, input and output values are implicitly multiplied by -1.) The behavior of the scale is undefined if you pass a negative value to a log scale with a positive domain or vice versa.
 
@@ -227,15 +227,15 @@ If *base* is specified, sets the base for this logarithmic scale to the specifie
 
 <a name="log_nice" href="#log_nice">#</a> <i>log</i>.<b>nice</b>()
 
-Like [*quantitative*.nice](#quantitative_nice), except extends the domain to integer powers of [base](#log_base). For example, for a domain of [0.201479…, 0.996679…], the nice domain is [0.1, 1]. If the domain has more than two values, nicing the domain only affects the first and last value.
+Like [*continuous*.nice](#continuous_nice), except extends the domain to integer powers of [base](#log_base). For example, for a domain of [0.201479…, 0.996679…], the nice domain is [0.1, 1]. If the domain has more than two values, nicing the domain only affects the first and last value.
 
 <a name="log_ticks" href="#log_ticks">#</a> <i>log</i>.<b>ticks</b>([<i>count</i>])
 
-Like [*quantitative*.ticks](#quantitative_ticks), but customized for a log scale. If the [base](#log_base) is an integer, the returned ticks are uniformly spaced within each integer power of base; otherwise, one tick per power of base is returned. The returned ticks are guaranteed to be within the extent of the domain. If the orders of magnitude in the [domain](#quantitative_domain) is greater than *count*, then at most one tick per power is returned. Otherwise, the tick values are unfiltered, but note that you can use [*log*.tickFormat](#log_tickFormat) to filter the display of tick lables. If *count* is not specified, it defaults to 10.
+Like [*continuous*.ticks](#continuous_ticks), but customized for a log scale. If the [base](#log_base) is an integer, the returned ticks are uniformly spaced within each integer power of base; otherwise, one tick per power of base is returned. The returned ticks are guaranteed to be within the extent of the domain. If the orders of magnitude in the [domain](#continuous_domain) is greater than *count*, then at most one tick per power is returned. Otherwise, the tick values are unfiltered, but note that you can use [*log*.tickFormat](#log_tickFormat) to filter the display of tick lables. If *count* is not specified, it defaults to 10.
 
 <a name="log_tickFormat" href="#log_tickFormat">#</a> <i>log</i>.<b>tickFormat</b>([<i>count</i>[, <i>specifier</i>]])
 
-Like [*quantitative*.tickFormat](#quantitative_tickFormat), but customized for a log scale. If a *count* is specified, then the formatter may return the empty string for some of the tick labels; this is useful if there is not enough room to fit all of the tick labels, but you still want to display the tick marks to show the log scale distortion. When specifying a count, you may also provide a format *specifier* or format function. For example, to get a tick formatter that will display 20 ticks of a currency, say `log.tickFormat(20, "$,f")`. If the specifier does not have a defined precision, the precision will be set automatically by the scale, returning the appropriate format. This provides a convenient, declarative way of specifying a format whose precision will be automatically set by the scale.
+Like [*continuous*.tickFormat](#continuous_tickFormat), but customized for a log scale. If a *count* is specified, then the formatter may return the empty string for some of the tick labels; this is useful if there is not enough room to fit all of the tick labels, but you still want to display the tick marks to show the log scale distortion. When specifying a count, you may also provide a format *specifier* or format function. For example, to get a tick formatter that will display 20 ticks of a currency, say `log.tickFormat(20, "$,f")`. If the specifier does not have a defined precision, the precision will be set automatically by the scale, returning the appropriate format. This provides a convenient, declarative way of specifying a format whose precision will be automatically set by the scale.
 
 CAUTION: DOCUMENTATION BELOW THIS POINT IS BEING REWRITTEN.
 
