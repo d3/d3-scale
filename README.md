@@ -413,7 +413,7 @@ Constructs a new sequential scale with the unit [domain](#continuous_domain) [0,
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cubehelix.png" width="100%" height="40" alt="cubehelix">
 
-Constructs a new [linear scale](#linear) with the unit [domain](#continuous_domain) [0, 1] and implementing [Green’s default Cubehelix](https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/) color scheme. Note that this is a linear, not sequential scale, and then you may override the [range](#continuous_range) and [interpolator](#continuous_interpolate).
+Constructs a new [linear scale](#linear) with the unit [domain](#continuous_domain) [0, 1] and implementing [Green’s default Cubehelix](https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/) color scheme. Note that this is a linear, not sequential scale, and thus you may override the [range](#continuous_range) and [interpolator](#continuous_interpolate).
 
 ### Quantize Scales
 
