@@ -46,7 +46,7 @@ Continuous scales map a continuous, quantitative input [domain](#continuous_doma
 
 <a name="continuous" href="#continuous">#</a> <i>continuous</i>(<i>value</i>)
 
-Given a *value* in the [domain](#continuous_domain), returns the corresponding value from the [range](#continuous_range). If the given *value* is outside the domain, and [clamping](#continuous_clamp) is not enabled, the mapping may be extrapolated such that the returned value is outside the range. For example, to apply a position encoding:
+Given a *value* from the [domain](#continuous_domain), returns the corresponding value from the [range](#continuous_range). If the given *value* is outside the domain, and [clamping](#continuous_clamp) is not enabled, the mapping may be extrapolated such that the returned value is outside the range. For example, to apply a position encoding:
 
 ```js
 var x = d3_scale.linear()
@@ -59,7 +59,7 @@ x(50); // 320
 
 <a name="continuous_invert" href="#continuous_invert">#</a> <i>continuous</i>.<b>invert</b>(<i>value</i>)
 
-Given a *value* in the [range](#continuous_range), returns the corresponding value from the [domain](#continuous_domain). Inversion is useful for interaction, say to determine the value in the domain that corresponds to the position under the mouse. If the given *value* is outside the range, and [clamping](#continuous_clamp) is not enabled, the mapping may be extrapolated such that the returned value is outside the down. This method is only supported if the range is numeric. If the range is not numeric, returns NaN. For example, to invert a position encoding:
+Given a *value* from the [range](#continuous_range), returns the corresponding value from the [domain](#continuous_domain). Inversion is useful for interaction, say to determine the data value corresponding to the position of the mouse. If the given *value* is outside the range, and [clamping](#continuous_clamp) is not enabled, the mapping may be extrapolated such that the returned value is outside the down. This method is only supported if the range is numeric. If the range is not numeric, returns NaN. For example, to invert a position encoding:
 
 ```js
 var x = d3_scale.linear()
