@@ -415,7 +415,7 @@ Constructs a new sequential scale with the [domain](#linear_domain) [0, 1] combi
 
 ### Quantize Scales
 
-Quantize scales are a variant of [linear scales](#linear) with a discrete rather than continuous range. The input domain is still continuous, and divided into uniform segments based on the number of values in (the cardinality of) the output range. Each range value *y* can be expressed as a quantized linear function of the domain value *x*: *y* = *m round(x)* + *b*. See [bl.ocks.org/4060606](http://bl.ocks.org/mbostock/4060606) for an example.
+Quantize scales are similar to [linear scales](#linear), except they use a discrete rather than continuous range. The input domain is still continuous, and divided into uniform segments based on the number of values in (*i.e.*, the cardinality of) the output range. Each range value *y* can be expressed as a quantized linear function of the domain value *x*: *y* = *m round(x)* + *b*. See [bl.ocks.org/4060606](http://bl.ocks.org/mbostock/4060606) for an example.
 
 <a name="quantize" href="#quantize">#</a> <b>quantize</b>()
 
