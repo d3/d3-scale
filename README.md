@@ -462,7 +462,7 @@ width.invertExtent(2); // [40, 70]
 
 <a name="quantize_domain" href="#quantize_domain">#</a> <i>quantize</i>.<b>domain</b>([<i>domain</i>])
 
-If *domain* is specified, sets the scale’s domain to the specified two-element array of numbers. If the array contains more than two numbers, only the first and last number are used; if the elements in the given array are not numbers, they will be coerced to numbers. If *domain* is not specified, returns the scale’s current domain.
+If *domain* is specified, sets the scale’s domain to the specified two-element array of numbers. If the elements in the given array are not numbers, they will be coerced to numbers. If *domain* is not specified, returns the scale’s current domain.
 
 <a name="quantize_range" href="#quantize_range">#</a> <i>quantize</i>.<b>range</b>([<i>range</i>])
 
@@ -602,61 +602,73 @@ A special value for [*ordinal*.unknown](#ordinal_unknown) that enables implicit 
 
 #### Band Scales
 
-Band scales are like [ordinal scales](#ordinal-scales), except the output range is continuous and numeric. Band scales are typically used for bar charts with an ordinal or categorical dimension.
+Band scales are like [ordinal scales](#ordinal-scales), except the output range is continuous and numeric. The discrete output values are automatically computed by the scale by dividing the continuous range into uniform bands. Band scales are typically used for bar charts with an ordinal or categorical dimension. The [unknown value](#ordinal_unknown) of a band scale is always undefined: they do not allow implicit domain construction.
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/band.png" width="751" height="238" alt="band">
 
 <a name="band" href="#band">#</a> <b>band</b>()
 
+Constructs a new band scale with the empty [domain](#band_domain), the unit [range](#band_range) [0, 1], no [padding](#band_padding), no [rounding](#band_round) and center [alignment](#band_align).
+
+<a name="_band" href="#_band">#</a> <i>band</i>(*value*)
+
+Given a *value* in the input [domain](#band_domain), returns the start of the corresponding band derived from the output [range](#band_range). If the given *value* is not in the scale’s [domain](#ordinal_domain), returns undefined.
+
+<a name="band_domain" href="#band_domain">#</a> <i>band</i>.<b>domain</b>([<i>domain</i>])
+
+If *domain* is specified, sets the domain to the specified array of values. The first element in *domain* will be mapped to the first band, the second domain value to the second band, and so on. Domain values are stored internally in a map from stringified value to index; the resulting index is then used to determine the band. Thus, a band scale’s values must be coercible to a string, and the stringified version of the domain value uniquely identifies the corresponding band. If *domain* is not specified, this method returns the current domain.
+
+<a name="band_range" href="#band_range">#</a> <i>band</i>.<b>range</b>([<i>range</i>])
+
+If *domain* is specified, sets the scale’s domain to the specified two-element array of numbers. If the elements in the given array are not numbers, they will be coerced to numbers. If *range* is not specified, returns the scale’s current range, which defaults to [0, 1].
+
+<a name="band_rangeRound" href="#band_rangeRound">#</a> <i>band</i>.<b>rangeRound</b>([<i>range</i>])
+
+Sets the scale’s [*range*](#band_range) to the specified two-element array of numbers while also enabling [rounding](#band_round). This is a convenience method equivalent to:
+
+```js
+band
+    .range(range)
+    .round(true);
+```
+
+Rounding is sometimes useful for avoiding antialiasing artifacts, though also consider the [shape-rendering](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering) “crispEdges” styles.
+
+<a name="band_round" href="#band_round">#</a> <i>band</i>.<b>round</b>([<i>round</i>])
+
 …
 
-<a name="band_domain" href="#band_domain">#</a> <i>band</i>.<b>domain</b>()
+<a name="band_padding" href="#band_padding">#</a> <i>band</i>.<b>padding</b>([<i>padding</i>])
 
 …
 
-<a name="band_range" href="#band_range">#</a> <i>band</i>.<b>range</b>()
+<a name="band_paddingInner" href="#band_paddingInner">#</a> <i>band</i>.<b>paddingInner</b>([<i>paddingInner</i>])
 
 …
 
-<a name="band_rangeRound" href="#band_rangeRound">#</a> <i>band</i>.<b>rangeRound</b>()
+<a name="band_paddingOuter" href="#band_paddingOuter">#</a> <i>band</i>.<b>paddingOuter</b>([<i>paddingOuter</i>])
+
+…
+
+<a name="band_align" href="#band_align">#</a> <i>band</i>.<b>align</b>([<i>align</i>])
 
 …
 
 <a name="band_bandwidth" href="#band_bandwidth">#</a> <i>band</i>.<b>bandwidth</b>()
 
-…
+Returns the width of each band.
 
 <a name="band_step" href="#band_step">#</a> <i>band</i>.<b>step</b>()
 
-…
-
-<a name="band_round" href="#band_round">#</a> <i>band</i>.<b>round</b>()
-
-…
-
-<a name="band_padding" href="#band_padding">#</a> <i>band</i>.<b>padding</b>()
-
-…
-
-<a name="band_paddingInner" href="#band_paddingInner">#</a> <i>band</i>.<b>paddingInner</b>()
-
-…
-
-<a name="band_paddingOuter" href="#band_paddingOuter">#</a> <i>band</i>.<b>paddingOuter</b>()
-
-…
-
-<a name="band_align" href="#band_align">#</a> <i>band</i>.<b>align</b>()
-
-…
+Returns the distance between the starts of adjacent bands.
 
 <a name="band_copy" href="#band_copy">#</a> <i>band</i>.<b>copy</b>()
 
-…
+Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
 
 #### Point Scales
 
-Point scales are a variant of [band scales](#band-scales) with the bandwidth fixed to zero. Point scales are typically used for scatterplots with an ordinal or categorical dimension.
+Point scales are a variant of [band scales](#band-scales) with the bandwidth fixed to zero. Point scales are typically used for scatterplots with an ordinal or categorical dimension. The [unknown value](#ordinal_unknown) of a point scale is always undefined: they do not allow implicit domain construction.
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/point.png" width="648" height="155" alt="point">
 
@@ -664,7 +676,7 @@ Point scales are a variant of [band scales](#band-scales) with the bandwidth fix
 
 Constructs a new point scale with the empty [domain](#band_domain), the unit [range](#band_range) [0, 1], no [padding](#point_padding), no [rounding](#band_round) and center [alignment](#band_align).
 
-<a name="point_padding" href="#point_padding">#</a> <i>point</i>.<b>padding</b>()
+<a name="point_padding" href="#point_padding">#</a> <i>point</i>.<b>padding</b>([<i>padding</i>])
 
 Equivalent to [*band*.paddingOuter](#band_paddingOuter).
 

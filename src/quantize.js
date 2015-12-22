@@ -21,7 +21,7 @@ export default function quantize() {
   }
 
   scale.domain = function(_) {
-    return arguments.length ? (x0 = +_[0], x1 = +_[_.length - 1], rescale()) : [x0, x1];
+    return arguments.length ? (x0 = +_[0], x1 = +_[1], rescale()) : [x0, x1];
   };
 
   scale.range = function(_) {

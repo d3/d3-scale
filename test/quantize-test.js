@@ -40,8 +40,8 @@ tape("quantize.domain() coerces domain values to numbers", function(test) {
   test.end();
 });
 
-tape("quantize.domain() only considers the extent of the domain", function(test) {
-  var s = scale.quantize().domain([-1, 0, 100]);
+tape("quantize.domain() only considers the first and second element of the domain", function(test) {
+  var s = scale.quantize().domain([-1, 100, 200]);
   test.deepEqual(s.domain(), [-1, 100]);
   test.end();
 });
