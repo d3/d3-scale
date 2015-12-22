@@ -371,49 +371,49 @@ Sequential scales are similar to [continuous scales](#continuous-scales) in that
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/viridis.png" width="100%" height="40" alt="viridis">
 
-Constructs a new sequential scale with the [domain](#continuous_domain) [0, 1] and implementing the “viridis” perceptually-uniform color scheme designed by [van der Walt, Smith and Firing](https://bids.github.io/colormap/) for matplotlib.
+Constructs a new sequential scale with the unit [domain](#continuous_domain) [0, 1] and implementing the “viridis” perceptually-uniform color scheme designed by [van der Walt, Smith and Firing](https://bids.github.io/colormap/) for matplotlib.
 
 <a name="inferno" href="#inferno">#</a> <b>inferno</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/inferno.png" width="100%" height="40" alt="inferno">
 
-Constructs a new sequential scale with the [domain](#continuous_domain) [0, 1] and implementing the “inferno” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
+Constructs a new sequential scale with the unit [domain](#continuous_domain) [0, 1] and implementing the “inferno” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
 
 <a name="magma" href="#magma">#</a> <b>magma</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/magma.png" width="100%" height="40" alt="magma">
 
-Constructs a new sequential scale with the [domain](#continuous_domain) [0, 1] and implementing the “magma” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
+Constructs a new sequential scale with the unit [domain](#continuous_domain) [0, 1] and implementing the “magma” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
 
 <a name="plasma" href="#plasma">#</a> <b>plasma</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/plasma.png" width="100%" height="40" alt="plasma">
 
-Constructs a new sequential scale with the [domain](#continuous_domain) [0, 1] and implementing the “plasma” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
+Constructs a new sequential scale with the unit [domain](#continuous_domain) [0, 1] and implementing the “plasma” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
 
 <a name="warm" href="#warm">#</a> <b>warm</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/warm.png" width="100%" height="40" alt="warm">
 
-Constructs a new sequential scale with the [domain](#continuous_domain) [0, 1] and approximately implementing a 180° rotation of [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/) color scheme using the Cubehelix color space.
+Constructs a new sequential scale with the unit [domain](#continuous_domain) [0, 1] and approximately implementing a 180° rotation of [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/) color scheme using the Cubehelix color space.
 
 <a name="cool" href="#cool">#</a> <b>cool</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cool.png" width="100%" height="40" alt="cool">
 
-Constructs a new sequential scale with the [domain](#continuous_domain) [0, 1] and approximately implementing [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/) color scheme using the Cubehelix color space.
+Constructs a new sequential scale with the unit [domain](#continuous_domain) [0, 1] and approximately implementing [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/) color scheme using the Cubehelix color space.
 
 <a name="rainbow" href="#rainbow">#</a> <b>rainbow</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/rainbow.png" width="100%" height="40" alt="rainbow">
 
-Constructs a new sequential scale with the [domain](#continuous_domain) [0, 1] combining the [warm](#warm) scale from [0.0, 0.5] followed by the [cool](#cool) scale from [0.5, 1.0], thus implementing the cyclical [less-angry rainbow](http://bl.ocks.org/mbostock/310c99e53880faec2434) color scheme.
+Constructs a new sequential scale with the unit [domain](#continuous_domain) [0, 1] combining the [warm](#warm) scale from [0.0, 0.5] followed by the [cool](#cool) scale from [0.5, 1.0], thus implementing the cyclical [less-angry rainbow](http://bl.ocks.org/mbostock/310c99e53880faec2434) color scheme.
 
 <a name="cubehelix" href="#cubehelix">#</a> <b>cubehelix</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cubehelix.png" width="100%" height="40" alt="cubehelix">
 
-Constructs a new [linear scale](#linear) with the [domain](#continuous_domain) [0, 1] and implementing [Green’s default Cubehelix](https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/) color scheme. Note that this is a linear, not sequential scale, and then you may override the [range](#continuous_range) and [interpolator](#continuous_interpolate).
+Constructs a new [linear scale](#linear) with the unit [domain](#continuous_domain) [0, 1] and implementing [Green’s default Cubehelix](https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/) color scheme. Note that this is a linear, not sequential scale, and then you may override the [range](#continuous_range) and [interpolator](#continuous_interpolate).
 
 ### Quantize Scales
 
