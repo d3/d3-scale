@@ -83,7 +83,7 @@ x.invert(320); // 50
 
 If the given *value* is outside the range, and [clamping](#continuous_clamp) is not enabled, the mapping may be extrapolated such that the returned value is outside the domain. This method is only supported if the range is numeric. If the range is not numeric, returns NaN.
 
-For a valid value *y* in the range, <i>continuous</i>(<i>continuous</i>.invert(<i>y</i>)) approximately equals *y*; similarly, for a valid value *x* in the domain, <i>continuous</i>.invert(<i>continuous</i>(<i>x</i>)) approximately equals *x*. (The scale and its inverse may not be exact due to the limitations of floating point precision.)
+For a valid value *y* in the range, <i>continuous</i>(<i>continuous</i>.invert(<i>y</i>)) approximately equals *y*; similarly, for a valid value *x* in the domain, <i>continuous</i>.invert(<i>continuous</i>(<i>x</i>)) approximately equals *x*. The scale and its inverse may not be exact due to the limitations of floating point precision.
 
 <a name="continuous_domain" href="#continuous_domain">#</a> <i>continuous</i>.<b>domain</b>([<i>domain</i>])
 
@@ -104,7 +104,7 @@ Internally, a piecewise scale performs a [binary search](https://github.com/d3/d
 
 <a name="continuous_range" href="#continuous_range">#</a> <i>continuous</i>.<b>range</b>([<i>range</i>])
 
-If *range* is specified, sets the scale’s range to the specified array of values. The array must contain two or more elements. Unlike the [domain](#continuous_domain), elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#continuous_interpolate) will work. If *range* is not specified, returns a copy of the scale’s current range. See [*continuous*.interpolate](#continuous_interpolate) for more examples. Note that numeric ranges are required for [invert](#quantiative_invert).
+If *range* is specified, sets the scale’s range to the specified array of values. The array must contain two or more elements. Unlike the [domain](#continuous_domain), elements in the given array need not be numbers; any value that is supported by the underlying [interpolator](#continuous_interpolate) will work, though note that numeric ranges are required for [invert](#quantiative_invert). If *range* is not specified, returns a copy of the scale’s current range. See [*continuous*.interpolate](#continuous_interpolate) for more examples.
 
 <a name="continuous_rangeRound" href="#continuous_rangeRound">#</a> <i>continuous</i>.<b>rangeRound</b>([<i>range</i>])
 
@@ -127,19 +127,19 @@ var x = d3_scale.linear()
     .domain([10, 130])
     .range([0, 960]);
 
-x(-10); // -160
-x.invert(-160); // -10
+x(-10); // -160, outside range
+x.invert(-160); // -10, outside domain
 
 x.clamp(true);
-x(-10); // 0
-x.invert(-160); // 10
+x(-10); // 0, clamped to range
+x.invert(-160); // 10, clamped to domain
 ```
 
 If *clamp* is not specified, returns whether or not the scale currently clamps values to within the range.
 
 <a name="continuous_interpolate" href="#continuous_interpolate">#</a> <i>continuous</i>.<b>interpolate</b>(<i>interpolate</i>[, <i>parameters…</i>])
 
-If *interpolate* is specified, sets the scale’s [range](#continuous_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0, 1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s current interpolator factory, which defaults to d3-interpolate’s [value](https://github.com/d3/d3-interpolate#value).
+If *interpolate* is specified, sets the scale’s [range](#continuous_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0, 1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s current interpolator factory, which defaults to d3-interpolate’s [value](https://github.com/d3/d3-interpolate#value). See [d3-interpolate](https://github.com/d3/d3-interpolate) for more interpolators.
 
 For example, consider a diverging color scale with three colors in the range:
 
@@ -156,7 +156,7 @@ var i0 = d3_interpolate.value("red", "white"),
     i1 = d3_interpolate.value("white", "green");
 ```
 
-A common reason to specify a custom interpolator is to change the color space of interpolation. For example, to use the [HCL color space](https://github.com/d3/d3-interpolate#hcl):
+A common reason to specify a custom interpolator is to change the color space of interpolation. For example, to use [HCL](https://github.com/d3/d3-interpolate#hcl):
 
 ```js
 var color = d3_scale.linear()
@@ -165,7 +165,7 @@ var color = d3_scale.linear()
     .interpolate(d3_interpolate.hcl);
 ```
 
-See [d3-interpolate](https://github.com/d3/d3-interpolate) for more interpolators. Note: the default [value](https://github.com/d3/d3-interpolate#value) interpolator **may reuse return values**. For example, if the range values are objects, then the value interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, this is typically acceptable; however, if you need to store the scale’s return value, you must specify your own interpolator or make a copy as appropriate.
+Note: the default [value](https://github.com/d3/d3-interpolate#value) interpolator **may reuse return values**. For example, if the range values are objects, then the value interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, this is typically acceptable (and desirable for performance); however, if you need to store the scale’s return value, you must specify your own interpolator or make a copy as appropriate.
 
 <a name="continuous_ticks" href="#continuous_ticks">#</a> <i>continuous</i>.<b>ticks</b>([<i>count</i>])
 
@@ -175,7 +175,7 @@ Returns approximately *count* representative values from the scale’s [domain](
 
 Returns a [number format](https://github.com/d3/d3-format) function suitable for displaying a tick value, automatically computing the appropriate precision based on the fixed interval between tick values. The specified *count* should have the same value as the count that is used to generate the [tick values](#continuous_ticks).
 
-The optional *specifier* argument allows a [custom format](https://github.com/d3/d3-format#locale_format) where the precision of the format is automatically substituted by the scale to be appropriate for the tick interval. For example, to format percentage change, you might say:
+An optional *specifier* allows a [custom format](https://github.com/d3/d3-format#locale_format) where the precision of the format is automatically set by the scale as appropriate for the tick interval. For example, to format percentage change, you might say:
 
 ```js
 var x = d3_scale.linear()
@@ -222,11 +222,11 @@ Constructs a new [continuous](#continuous-scales) [power scale](#pow) with the u
 
 Log scales are similar to [linear scales](#linear), except a logarithmic transform is applied to the input domain value before the output range value is computed. The mapping to the range value *y* can be expressed as a function of the domain value *x*: *y* = *m* log(<i>x</i>) + *b*.
 
+As log(0) = -∞, a log scale domain must be **strictly-positive or strictly-negative**; the domain must not include or cross zero. A log scale with a positive domain has a well-defined behavior for positive values, and a log scale with a negative domain has a well-defined behavior for negative values. (For a negative domain, input and output values are implicitly multiplied by -1.) The behavior of the scale is undefined if you pass a negative value to a log scale with a positive domain or vice versa.
+
 <a name="log" href="#log">#</a> <b>log</b>()
 
 Constructs a new [continuous scale](#continuous-scales) with the [domain](#continuous_domain) [1, 10], the unit [range](#continuous_range) [0, 1], the [base](#log_base) 10, a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled.
-
-As log(0) = -∞, a log scale domain must be **strictly-positive or strictly-negative**; the domain must not include or cross zero. A log scale with a positive domain has a well-defined behavior for positive values, and a log scale with a negative domain has a well-defined behavior for negative values. (For a negative domain, input and output values are implicitly multiplied by -1.) The behavior of the scale is undefined if you pass a negative value to a log scale with a positive domain or vice versa.
 
 <a name="log_base" href="#log_base">#</a> <i>log</i>.<b>base</b>([<i>base</i>])
 
@@ -234,7 +234,7 @@ If *base* is specified, sets the base for this logarithmic scale to the specifie
 
 <a name="log_nice" href="#log_nice">#</a> <i>log</i>.<b>nice</b>()
 
-Like [*continuous*.nice](#continuous_nice), except extends the domain to integer powers of [base](#log_base). For example, for a domain of [0.201479…, 0.996679…], the nice domain is [0.1, 1]. If the domain has more than two values, nicing the domain only affects the first and last value.
+Like [*continuous*.nice](#continuous_nice), except extends the domain to integer powers of [base](#log_base). For example, for a domain of [0.201479…, 0.996679…], and base 10, the nice domain is [0.1, 1]. If the domain has more than two values, nicing the domain only affects the first and last value.
 
 <a name="log_ticks" href="#log_ticks">#</a> <i>log</i>.<b>ticks</b>([<i>count</i>])
 
@@ -246,7 +246,7 @@ Like [*continuous*.tickFormat](#continuous_tickFormat), but customized for a log
 
 #### Identity Scales
 
-Identity scales are a special case of [linear scales](#linear) where the domain and range are identical; the scale and its invert method are both the identity function. These scales are occasionally useful when working with pixel coordinates, say in conjunction with an axis or brush. Identity scales do not support [rangeRound](#continuous_rangeRound), [clamp](#continuous_clamp) or [interpolate](#continuous_interpolate).
+Identity scales are a special case of [linear scales](#linear) where the domain and range are identical; the scale and its invert method are thus the identity function. These scales are occasionally useful when working with pixel coordinates, say in conjunction with an axis or brush. Identity scales do not support [rangeRound](#continuous_rangeRound), [clamp](#continuous_clamp) or [interpolate](#continuous_interpolate).
 
 <a name="identity" href="#identity">#</a> <b>identity</b>()
 
@@ -355,7 +355,7 @@ Although somewhat unusual, this default behavior has the benefit of providing bo
 
 Extends the [domain](#continuous_domain) so that it starts and ends on nice round values. This method typically modifies the scale’s domain, and may only extend the bounds to the nearest round value.
 
-An optional tick *count* argument allows greater control over the step size used to extend the bounds, guaranteeing that the returned [ticks](#time_ticks) will exactly cover the domain. Alternatively, a [time *interval*](https://github.com/d3/d3-time#intervals) may be specified to explicitly set the ticks. If an *interval* is specified, an optional *step* may also be specified to skip some ticks. For example, `nice(second, 10)` will extend the domain to an even ten seconds (0, 10, 20, <i>etc.</i>). See [*time*.ticks](#time_ticks) and [*interval*.every](https://github.com/d3/d3-time#interval_every) for further detail.
+An optional tick *count* argument allows greater control over the step size used to extend the bounds, guaranteeing that the returned [ticks](#time_ticks) will exactly cover the domain. Alternatively, a [time *interval*](https://github.com/d3/d3-time#intervals) may be specified to explicitly set the ticks. If an *interval* is specified, an optional *step* may also be specified to skip some ticks. For example, `time.nice(d3_time.second, 10)` will extend the domain to an even ten seconds (0, 10, 20, <i>etc.</i>). See [*time*.ticks](#time_ticks) and [*interval*.every](https://github.com/d3/d3-time#interval_every) for further detail.
 
 Nicing is useful if the domain is computed from data, say using [extent](https://github.com/d3/d3-array#extent), and may be irregular. For example, for a domain of [2009-07-13T00:02, 2009-07-13T23:48], the nice domain is [2009-07-13, 2009-07-14]. If the domain has more than two values, nicing the domain only affects the first and last value.
 
@@ -545,7 +545,7 @@ color(1000); // "green"
 Returns the extent of values in the [domain](#threshold_domain) [<i>x0</i>, <i>x1</i>] for the corresponding *value* in the [range](#threshold_range), representing the inverse mapping from range to domain. This method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse. For example:
 
 ```js
-var color = threshold()
+var color = d3_scale.threshold()
     .domain([0, 1])
     .range(["red", "white", "green"]);
 
