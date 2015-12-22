@@ -42,7 +42,7 @@ If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release]
 
 ### Continuous Scales
 
-Continuous scales map a continuous, quantitative input [domain](#continuous_domain) to a continuous output [range](#continuous_range). If the range is also numeric, the mapping may be [inverted](#continuous_invert).
+Continuous scales map a continuous, quantitative input [domain](#continuous_domain) to a continuous output [range](#continuous_range). If the range is also numeric, the mapping may be [inverted](#continuous_invert). A continuous scale is not constructed directly; instead, try a [linear](#linear), [power](#pow), [log](#log), [identity](#identity), [time](#time) or [sequential color](#sequential-color-scales) scale.
 
 <a name="continuous" href="#continuous">#</a> <i>continuous</i>(<i>value</i>)
 
