@@ -25,7 +25,7 @@ If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release]
 <script src="https://d3js.org/d3-interpolate.v0.3.min.js"></script>
 <script src="https://d3js.org/d3-time.v0.1.min.js"></script>
 <script src="https://d3js.org/d3-time-format.v0.2.min.js"></script>
-<script src="https://d3js.org/d3-scale.v0.3.min.js"></script>
+<script src="https://d3js.org/d3-scale.v0.4.min.js"></script>
 ```
 
 (If you’re not using [time scales](#time), you can omit d3-time and d3-time-format.) In a vanilla environment, a `d3_scale` global is exported. [Try d3-scale in your browser.](https://tonicdev.com/npm/d3-scale)
