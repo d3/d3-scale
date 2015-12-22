@@ -32,7 +32,7 @@ If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release]
 
 ## API Reference
 
-* [Continuous](#continuous-scales)
+* [Continuous](#continuous-scales) ([Linear](#linear), [Power](#power-scales), [Log](#log-scales), [Identity](#identity-scales), [Time](#time-scales))
 * [Sequential Color](#sequential-color-scales)
 * [Quantize](#quantize-scales)
 * [Quantile](#quantile-scales)
