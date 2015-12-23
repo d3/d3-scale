@@ -307,7 +307,7 @@ The following time intervals are considered for automatic ticks:
 * 1- and 3-month.
 * 1-year.
 
-In lieu of a *count*, a [time *interval*](https://github.com/d3/d3-time#intervals) may be explicitly specified. If an *interval* is specified, an optional *step* may also be specified to prune generated ticks. For example, `ticks(minute, 15)` will generate ticks at 15-minute intervals:
+In lieu of a *count*, a [time *interval*](https://github.com/d3/d3-time#intervals) may be explicitly specified. If an *interval* is specified, an optional *step* may also be specified to prune generated ticks. For example, `time.ticks(d3_time.minute, 15)` will generate ticks at 15-minute intervals:
 
 ```js
 var x = d3_scale.time()
