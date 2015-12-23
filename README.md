@@ -198,7 +198,7 @@ Extends the [domain](#continuous_domain) so that it starts and ends on nice roun
 
 Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
 
-<a name="linear" href="#linear">#</a> <b>linear</b>()
+<a name="linear" href="#linear">#</a> d3_scale.<b>linear</b>()
 
 Constructs a new [continuous scale](#continuous-scales) with the unit [domain](#continuous_domain) [0, 1], the unit [range](#continuous_range) [0, 1], a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. Linear scales are a good default choice for continuous quantitative data because they preserve proportional differences. Each range value *y* can be expressed as a function of the domain value *x*: *y* = *mx* + *b*.
 
@@ -206,7 +206,7 @@ Constructs a new [continuous scale](#continuous-scales) with the unit [domain](#
 
 Power scales are similar to [linear scales](#linear), except an exponential transform is applied to the input domain value before the output range value is computed. Each range value *y* can be expressed as a function of the domain value *x*: *y* = *mx^k* + *b*, where *k* is the [exponent](#pow_exponent) value. Power scales also support negative domain values, in which case the input value and the resulting output value are multiplied by -1.
 
-<a name="pow" href="#pow">#</a> <b>pow</b>()
+<a name="pow" href="#pow">#</a> d3_scale.<b>pow</b>()
 
 Constructs a new [continuous scale](#continuous-scales) with the unit [domain](#continuous_domain) [0, 1], the unit [range](#continuous_range) [0, 1], the [exponent](#pow_exponent) 1, a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. (Note that this is effectively a [linear](#linear) scale until you set a different exponent.)
 
@@ -214,7 +214,7 @@ Constructs a new [continuous scale](#continuous-scales) with the unit [domain](#
 
 If *exponent* is specified, sets the current exponent to the given numeric value. If *exponent* is not specified, returns the current exponent, which defaults to 1. (Note that this is effectively a [linear](#linear) scale until you set a different exponent.)
 
-<a name="sqrt" href="#sqrt">#</a> <b>sqrt</b>()
+<a name="sqrt" href="#sqrt">#</a> d3_scale.<b>sqrt</b>()
 
 Constructs a new [continuous](#continuous-scales) [power scale](#pow) with the unit [domain](#continuous_domain) [0, 1], the unit [range](#continuous_range) [0, 1], the [exponent](#pow_exponent) 0.5, a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. This is a convenience method equivalent to `d3_scale.pow().exponent(0.5)`.
 
@@ -224,7 +224,7 @@ Log scales are similar to [linear scales](#linear), except a logarithmic transfo
 
 As log(0) = -∞, a log scale domain must be **strictly-positive or strictly-negative**; the domain must not include or cross zero. A log scale with a positive domain has a well-defined behavior for positive values, and a log scale with a negative domain has a well-defined behavior for negative values. (For a negative domain, input and output values are implicitly multiplied by -1.) The behavior of the scale is undefined if you pass a negative value to a log scale with a positive domain or vice versa.
 
-<a name="log" href="#log">#</a> <b>log</b>()
+<a name="log" href="#log">#</a> d3_scale.<b>log</b>()
 
 Constructs a new [continuous scale](#continuous-scales) with the [domain](#continuous_domain) [1, 10], the unit [range](#continuous_range) [0, 1], the [base](#log_base) 10, a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled.
 
@@ -248,7 +248,7 @@ Like [*continuous*.tickFormat](#continuous_tickFormat), but customized for a log
 
 Identity scales are a special case of [linear scales](#linear) where the domain and range are identical; the scale and its invert method are thus the identity function. These scales are occasionally useful when working with pixel coordinates, say in conjunction with an axis or brush. Identity scales do not support [rangeRound](#continuous_rangeRound), [clamp](#continuous_clamp) or [interpolate](#continuous_interpolate).
 
-<a name="identity" href="#identity">#</a> <b>identity</b>()
+<a name="identity" href="#identity">#</a> d3_scale.<b>identity</b>()
 
 Constructs a new identity scale with the unit [domain](#continuous_domain) [0, 1] and the unit [range](#continuous_range) [0, 1].
 
@@ -271,7 +271,7 @@ x.invert(640); // Sat Jan 01 2000 16:00:00 GMT-0800 (PST)
 
 For a valid value *y* in the range, <i>time</i>(<i>time</i>.invert(<i>y</i>)) equals *y*; similarly, for a valid value *x* in the domain, <i>time</i>.invert(<i>time</i>(<i>x</i>)) equals *x*. The invert method is useful for interaction, say to determine the value in the domain that corresponds to the pixel location under the mouse.
 
-<a name="time" href="#time">#</a> <b>time</b>()
+<a name="time" href="#time">#</a> d3_scale.<b>time</b>()
 
 Constructs a new time scale with the [domain](#continuous_domain) [2000-01-01, 2000-01-02], the unit [range](#continuous_range) [0, 1], a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled.
 
@@ -359,7 +359,7 @@ An optional tick *count* argument allows greater control over the step size used
 
 Nicing is useful if the domain is computed from data, say using [extent](https://github.com/d3/d3-array#extent), and may be irregular. For example, for a domain of [2009-07-13T00:02, 2009-07-13T23:48], the nice domain is [2009-07-13, 2009-07-14]. If the domain has more than two values, nicing the domain only affects the first and last value.
 
-<a name="utcTime" href="#utcTime">#</a> <b>utcTime</b>()
+<a name="utcTime" href="#utcTime">#</a> d3_scale.<b>utcTime</b>()
 
 Equivalent to [time](#time), but the returned time scale operates in [Coordinated Universal Time](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) rather than local time.
 
@@ -367,49 +367,49 @@ Equivalent to [time](#time), but the returned time scale operates in [Coordinate
 
 Sequential scales are similar to [continuous scales](#continuous-scales) in that they map a continuous, numeric input domain to a continuous output range. However, unlike continuous scales, the output range of a sequential color scale is fixed and not configurable. These scales do not expose [invert](#continuous_invert), [range](#continuous_range), [rangeRound](#continuous_rangeRound) and [interpolate](#continuous_interpolate) methods.
 
-<a name="viridis" href="#viridis">#</a> <b>viridis</b>()
+<a name="viridis" href="#viridis">#</a> d3_scale.<b>viridis</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/viridis.png" width="100%" height="40" alt="viridis">
 
 Constructs a new sequential scale with the unit [domain](#continuous_domain) [0, 1] and implementing the “viridis” perceptually-uniform color scheme designed by [van der Walt, Smith and Firing](https://bids.github.io/colormap/) for matplotlib.
 
-<a name="inferno" href="#inferno">#</a> <b>inferno</b>()
+<a name="inferno" href="#inferno">#</a> d3_scale.<b>inferno</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/inferno.png" width="100%" height="40" alt="inferno">
 
 Constructs a new sequential scale with the unit [domain](#continuous_domain) [0, 1] and implementing the “inferno” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
 
-<a name="magma" href="#magma">#</a> <b>magma</b>()
+<a name="magma" href="#magma">#</a> d3_scale.<b>magma</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/magma.png" width="100%" height="40" alt="magma">
 
 Constructs a new sequential scale with the unit [domain](#continuous_domain) [0, 1] and implementing the “magma” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
 
-<a name="plasma" href="#plasma">#</a> <b>plasma</b>()
+<a name="plasma" href="#plasma">#</a> d3_scale.<b>plasma</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/plasma.png" width="100%" height="40" alt="plasma">
 
 Constructs a new sequential scale with the unit [domain](#continuous_domain) [0, 1] and implementing the “plasma” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
 
-<a name="warm" href="#warm">#</a> <b>warm</b>()
+<a name="warm" href="#warm">#</a> d3_scale.<b>warm</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/warm.png" width="100%" height="40" alt="warm">
 
 Constructs a new sequential scale with the unit [domain](#continuous_domain) [0, 1] and approximately implementing a 180° rotation of [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/) color scheme using the Cubehelix color space.
 
-<a name="cool" href="#cool">#</a> <b>cool</b>()
+<a name="cool" href="#cool">#</a> d3_scale.<b>cool</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cool.png" width="100%" height="40" alt="cool">
 
 Constructs a new sequential scale with the unit [domain](#continuous_domain) [0, 1] and approximately implementing [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/) color scheme using the Cubehelix color space.
 
-<a name="rainbow" href="#rainbow">#</a> <b>rainbow</b>()
+<a name="rainbow" href="#rainbow">#</a> d3_scale.<b>rainbow</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/rainbow.png" width="100%" height="40" alt="rainbow">
 
 Constructs a new sequential scale with the unit [domain](#continuous_domain) [0, 1] combining the [warm](#warm) scale from [0.0, 0.5] followed by the [cool](#cool) scale from [0.5, 1.0], thus implementing the cyclical [less-angry rainbow](http://bl.ocks.org/mbostock/310c99e53880faec2434) color scheme.
 
-<a name="cubehelix" href="#cubehelix">#</a> <b>cubehelix</b>()
+<a name="cubehelix" href="#cubehelix">#</a> d3_scale.<b>cubehelix</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cubehelix.png" width="100%" height="40" alt="cubehelix">
 
@@ -419,7 +419,7 @@ Constructs a new [linear scale](#linear) with the unit [domain](#continuous_doma
 
 Quantize scales are similar to [linear scales](#linear), except they use a discrete rather than continuous range. The continuous input domain is divided into uniform segments based on the number of values in (*i.e.*, the cardinality of) the output range. Each range value *y* can be expressed as a quantized linear function of the domain value *x*: *y* = *m round(x)* + *b*. See [bl.ocks.org/4060606](http://bl.ocks.org/mbostock/4060606) for an example.
 
-<a name="quantize" href="#quantize">#</a> <b>quantize</b>()
+<a name="quantize" href="#quantize">#</a> d3_scale.<b>quantize</b>()
 
 Constructs a new quantize scale with the unit [domain](#quantize_domain) [0, 1] and the unit [range](#quantize_range) [0, 1]. Thus, the default quantize scale is equivalent to the [Math.round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function.
 
@@ -488,7 +488,7 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 Quantile scales map a sampled input domain to a discrete range. The domain is considered continuous and thus the scale will accept any reasonable input value; however, the domain is specified as a discrete set of sample values. The number of values in (the cardinality of) the output range determines the number of quantiles that will be computed from the domain. To compute the quantiles, the domain is sorted, and treated as a [population of discrete values](https://en.wikipedia.org/wiki/Quantile#Quantiles_of_a_population); see d3-array’s [quantile](https://github.com/d3/d3-array#quantile). See [bl.ocks.org/8ca036b3505121279daf](http://bl.ocks.org/mbostock/8ca036b3505121279daf) for an example.
 
-<a name="quantile" href="#quantile">#</a> <b>quantile</b>()
+<a name="quantile" href="#quantile">#</a> d3_scale.<b>quantile</b>()
 
 Constructs a new quantile scale with an empty [domain](#quantile_domain) and an empty [range](#quantile_range). The quantile scale is invalid until both a domain and range are specified.
 
@@ -520,7 +520,7 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 Threshold scales are similar to [quantize scales](#quantize-scales), except they allow you to map arbitrary subsets of the domain to discrete values in the range. The input domain is still continuous, and divided into slices based on a set of threshold values. See [bl.ocks.org/3306362](http://bl.ocks.org/mbostock/3306362) for an example.
 
-<a name="threshold" href="#threshold">#</a> <b>threshold</b>()
+<a name="threshold" href="#threshold">#</a> d3_scale.<b>threshold</b>()
 
 Constructs a new threshold scale with the default [domain](#threshold_domain) [0.5] and the default [range](#threshold_range) [0, 1]. Thus, the default threshold scale is equivalent to the [Math.round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function for numbers; for example threshold(0.49) returns 0, and threshold(0.51) returns 1.
 
@@ -570,7 +570,7 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 Unlike [continuous scales](#continuous-scales), ordinal scales have a discrete domain and range. For example, an ordinal scale might map a set of named categories to a set of colors, or determine the horizontal positions of columns in a column chart.
 
-<a name="ordinal" href="#ordinal">#</a> <b>ordinal</b>()
+<a name="ordinal" href="#ordinal">#</a> d3_scale.<b>ordinal</b>()
 
 Constructs a new ordinal scale with an empty [domain](#ordinal_domain) and an empty [range](#ordinal_range). The ordinal scale always returns undefined until an output range is specified.
 
@@ -596,7 +596,7 @@ If *value* is specified, sets the output value of the scale for unknown input va
 
 Returns an exact copy of this ordinal scale. Changes to this scale will not affect the returned scale, and vice versa.
 
-<a name="implicit" href="#implicit">#</a> <b>implicit</b>
+<a name="implicit" href="#implicit">#</a> d3_scale.<b>implicit</b>
 
 A special value for [*ordinal*.unknown](#ordinal_unknown) that enables implicit domain construction: unknown values are implicitly added to the domain.
 
@@ -606,7 +606,7 @@ Band scales are like [ordinal scales](#ordinal-scales) except the output range i
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/band.png" width="751" height="238" alt="band">
 
-<a name="band" href="#band">#</a> <b>band</b>()
+<a name="band" href="#band">#</a> d3_scale.<b>band</b>()
 
 Constructs a new band scale with the empty [domain](#band_domain), the unit [range](#band_range) [0, 1], no [padding](#band_padding), no [rounding](#band_round) and center [alignment](#band_align).
 
@@ -672,7 +672,7 @@ Point scales are a variant of [band scales](#band-scales) with the bandwidth fix
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/point.png" width="648" height="155" alt="point">
 
-<a name="point" href="#point">#</a> <b>point</b>()
+<a name="point" href="#point">#</a> d3_scale.<b>point</b>()
 
 Constructs a new point scale with the empty [domain](#band_domain), the unit [range](#band_range) [0, 1], no [padding](#point_padding), no [rounding](#band_round) and center [alignment](#band_align).
 
@@ -682,25 +682,25 @@ Equivalent to [*band*.paddingOuter](#band_paddingOuter).
 
 ### Categorical Color Scales
 
-<a name="category10" href="#category10">#</a> <b>category10</b>()
+<a name="category10" href="#category10">#</a> d3_scale.<b>category10</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category10.png" width="100%" height="40" alt="category10">
 
 Constructs a new [ordinal scale](#ordinal) with a range of ten categorical colors.
 
-<a name="category20" href="#category20">#</a> <b>category20</b>()
+<a name="category20" href="#category20">#</a> d3_scale.<b>category20</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category20.png" width="100%" height="40" alt="category20">
 
 Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical colors.
 
-<a name="category20b" href="#category20b">#</a> <b>category20b</b>()
+<a name="category20b" href="#category20b">#</a> d3_scale.<b>category20b</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category20b.png" width="100%" height="40" alt="category20b">
 
 Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical colors.
 
-<a name="category20c" href="#category20c">#</a> <b>category20c</b>()
+<a name="category20c" href="#category20c">#</a> d3_scale.<b>category20c</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category20c.png" width="100%" height="40" alt="category20c">
 
