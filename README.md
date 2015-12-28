@@ -10,6 +10,8 @@ Scales have no intrinsic visual representation. However, most scales can [genera
 
 For a longer introduction, see these recommended tutorials:
 
+* [Introducing d3-scale](https://medium.com/@mbostock/introducing-d3-scale-61980c51545f) by Mike Bostock
+
 * [Chapter 7. Scales](http://chimera.labs.oreilly.com/books/1230000000345/ch07.html) of *Interactive Data Visualization for the Web* by Scott Murray
 
 * [d3: scales, and color.](http://www.jeromecukier.net/blog/2011/08/11/d3-scales-and-color/) by Jérôme Cukier
