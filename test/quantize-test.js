@@ -13,7 +13,7 @@ tape("quantize() has the expected defaults", function(test) {
   test.end();
 });
 
-tape("quantize() maps a number to a discrete value in the range", function(test) {
+tape("quantize(value) maps a number to a discrete value in the range", function(test) {
   var s = scale.quantize().range([0, 1, 2]);
   test.equal(s(0.0), 0);
   test.equal(s(0.2), 0);
@@ -24,7 +24,7 @@ tape("quantize() maps a number to a discrete value in the range", function(test)
   test.end();
 });
 
-tape("quantize() clamps input values to the domain", function(test) {
+tape("quantize(value) clamps input values to the domain", function(test) {
   var a = {},
       b = {},
       c = {},
@@ -35,8 +35,12 @@ tape("quantize() clamps input values to the domain", function(test) {
 });
 
 tape("quantize.domain() coerces domain values to numbers", function(test) {
-  var s = scale.quantize().domain(["0", "100"]);
-  test.deepEqual(s.domain(), [0, 100]);
+  var s = scale.quantize().domain(["-1.20", "2.40"]);
+  test.deepEqual(s.domain(), [-1.2, 2.4]);
+  test.equal(s(-1.2), 0);
+  test.equal(s( 0.5), 0);
+  test.equal(s( 0.7), 1);
+  test.equal(s( 2.4), 1);
   test.end();
 });
 

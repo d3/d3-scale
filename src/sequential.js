@@ -1,6 +1,6 @@
 import {linearish} from "./linear";
 
-export default function(interpolate) {
+export default function sequential(interpolate) {
   var x0 = 0,
       x1 = 1,
       clamp = false;
@@ -19,7 +19,7 @@ export default function(interpolate) {
   };
 
   scale.copy = function() {
-    return sequential(interpolate).domain(domain).clamp(clamp);
+    return sequential(interpolate).domain([x0, x1]).clamp(clamp);
   };
 
   return linearish(scale);
