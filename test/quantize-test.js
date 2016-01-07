@@ -4,8 +4,8 @@ var tape = require("tape"),
 
 require("./inDelta");
 
-tape("quantize() has the expected defaults", function(test) {
-  var s = scale.quantize();
+tape("scaleQuantize() has the expected defaults", function(test) {
+  var s = scale.scaleQuantize();
   test.deepEqual(s.domain(), [0, 1]);
   test.deepEqual(s.range(), [0, 1]);
   test.equal(s(0.25), 0);
@@ -14,7 +14,7 @@ tape("quantize() has the expected defaults", function(test) {
 });
 
 tape("quantize(value) maps a number to a discrete value in the range", function(test) {
-  var s = scale.quantize().range([0, 1, 2]);
+  var s = scale.scaleQuantize().range([0, 1, 2]);
   test.equal(s(0.0), 0);
   test.equal(s(0.2), 0);
   test.equal(s(0.4), 1);
@@ -28,14 +28,14 @@ tape("quantize(value) clamps input values to the domain", function(test) {
   var a = {},
       b = {},
       c = {},
-      s = scale.quantize().range([a, b, c]);
+      s = scale.scaleQuantize().range([a, b, c]);
   test.equal(s(-0.5), a);
   test.equal(s(+1.5), c);
   test.end();
 });
 
 tape("quantize.domain() coerces domain values to numbers", function(test) {
-  var s = scale.quantize().domain(["-1.20", "2.40"]);
+  var s = scale.scaleQuantize().domain(["-1.20", "2.40"]);
   test.deepEqual(s.domain(), [-1.2, 2.4]);
   test.equal(s(-1.2), 0);
   test.equal(s( 0.5), 0);
@@ -45,13 +45,13 @@ tape("quantize.domain() coerces domain values to numbers", function(test) {
 });
 
 tape("quantize.domain() only considers the first and second element of the domain", function(test) {
-  var s = scale.quantize().domain([-1, 100, 200]);
+  var s = scale.scaleQuantize().domain([-1, 100, 200]);
   test.deepEqual(s.domain(), [-1, 100]);
   test.end();
 });
 
 tape("quantize.range() cardinality determines the degree of quantization", function(test) {
-  var s = scale.quantize();
+  var s = scale.scaleQuantize();
   test.inDelta(s.range(array.range(0, 1.001, 0.001))(1/3), 0.333, 1e-6);
   test.inDelta(s.range(array.range(0, 1.010, 0.010))(1/3), 0.330, 1e-6);
   test.inDelta(s.range(array.range(0, 1.100, 0.100))(1/3), 0.300, 1e-6);
@@ -66,7 +66,7 @@ tape("quantize.range() values are arbitrary", function(test) {
   var a = {},
       b = {},
       c = {},
-      s = scale.quantize().range([a, b, c]);
+      s = scale.scaleQuantize().range([a, b, c]);
   test.equal(s(0.0), a);
   test.equal(s(0.2), a);
   test.equal(s(0.4), b);
@@ -77,7 +77,7 @@ tape("quantize.range() values are arbitrary", function(test) {
 });
 
 tape("quantize.invertExtent() maps a value in the range to a domain extent", function(test) {
-  var s = scale.quantize().range([0, 1, 2, 3]);
+  var s = scale.scaleQuantize().range([0, 1, 2, 3]);
   test.deepEqual(s.invertExtent(0), [0.00, 0.25]);
   test.deepEqual(s.invertExtent(1), [0.25, 0.50]);
   test.deepEqual(s.invertExtent(2), [0.50, 0.75]);
@@ -88,14 +88,14 @@ tape("quantize.invertExtent() maps a value in the range to a domain extent", fun
 tape("quantize.invertExtent() allows arbitrary range values", function(test) {
   var a = {},
       b = {},
-      s = scale.quantize().range([a, b]);
+      s = scale.scaleQuantize().range([a, b]);
   test.deepEqual(s.invertExtent(a), [0.0, 0.5]);
   test.deepEqual(s.invertExtent(b), [0.5, 1.0]);
   test.end();
 });
 
 tape("quantize.invertExtent() returns [NaN, NaN] when the given value is not in the range", function(test) {
-  var s = scale.quantize();
+  var s = scale.scaleQuantize();
   test.ok(s.invertExtent(-1).every(Number.isNaN));
   test.ok(s.invertExtent(0.5).every(Number.isNaN));
   test.ok(s.invertExtent(2).every(Number.isNaN));
@@ -104,14 +104,14 @@ tape("quantize.invertExtent() returns [NaN, NaN] when the given value is not in 
 });
 
 tape("quantize.invertExtent() returns the first match if duplicate values exist in the range", function(test) {
-  var s = scale.quantize().range([0, 1, 2, 0]);
+  var s = scale.scaleQuantize().range([0, 1, 2, 0]);
   test.deepEqual(s.invertExtent(0), [0.00, 0.25]);
   test.deepEqual(s.invertExtent(1), [0.25, 0.50]);
   test.end();
 });
 
 tape("quantize.invertExtent(y) is exactly consistent with quantize(x)", function(test) {
-  var s = scale.quantize().domain([4.2, 6.2]).range(array.range(10));
+  var s = scale.scaleQuantize().domain([4.2, 6.2]).range(array.range(10));
   s.range().forEach(function(y) {
     var e = s.invertExtent(y);
     test.equal(s(e[0]), y);

@@ -2,8 +2,8 @@ var tape = require("tape"),
     scale = require("../"),
     roundEpsilon = require("./roundEpsilon");
 
-tape("linear() has the expected defaults", function(test) {
-  var s = scale.linear();
+tape("scaleLinear() has the expected defaults", function(test) {
+  var s = scale.scaleLinear();
   test.deepEqual(s.domain(), [0, 1]);
   test.deepEqual(s.range(), [0, 1]);
   test.equal(s.clamp(), false);
@@ -12,30 +12,30 @@ tape("linear() has the expected defaults", function(test) {
 });
 
 tape("linear(x) maps a domain value x to a range value y", function(test) {
-  test.equal(scale.linear().range([1, 2])(.5), 1.5);
+  test.equal(scale.scaleLinear().range([1, 2])(.5), 1.5);
   test.end();
 });
 
 tape("linear(x) ignores extra range values if the domain is smaller than the range", function(test) {
-  test.equal(scale.linear().domain([-10, 0]).range(["red", "white", "green"]).clamp(true)(-5), "#ff8080");
-  test.equal(scale.linear().domain([-10, 0]).range(["red", "white", "green"]).clamp(true)(50), "#ffffff");
+  test.equal(scale.scaleLinear().domain([-10, 0]).range(["red", "white", "green"]).clamp(true)(-5), "#ff8080");
+  test.equal(scale.scaleLinear().domain([-10, 0]).range(["red", "white", "green"]).clamp(true)(50), "#ffffff");
   test.end();
 });
 
 tape("linear(x) ignores extra domain values if the range is smaller than the domain", function(test) {
-  test.equal(scale.linear().domain([-10, 0, 100]).range(["red", "white"]).clamp(true)(-5), "#ff8080");
-  test.equal(scale.linear().domain([-10, 0, 100]).range(["red", "white"]).clamp(true)(50), "#ffffff");
+  test.equal(scale.scaleLinear().domain([-10, 0, 100]).range(["red", "white"]).clamp(true)(-5), "#ff8080");
+  test.equal(scale.scaleLinear().domain([-10, 0, 100]).range(["red", "white"]).clamp(true)(50), "#ffffff");
   test.end();
 });
 
 tape("linear(x) maps an empty domain to the range start", function(test) {
-  test.equal(scale.linear().domain([0, 0]).range([1, 2])(0), 1);
-  test.equal(scale.linear().domain([0, 0]).range([2, 1])(1), 2);
+  test.equal(scale.scaleLinear().domain([0, 0]).range([1, 2])(0), 1);
+  test.equal(scale.scaleLinear().domain([0, 0]).range([2, 1])(1), 2);
   test.end();
 });
 
 tape("linear(x) can map a bilinear domain with two values to the corresponding range", function(test) {
-  var s = scale.linear().domain([1, 2]);
+  var s = scale.scaleLinear().domain([1, 2]);
   test.deepEqual(s.domain(), [1, 2]);
   test.equal(s(0.5), -0.5);
   test.equal(s(1.0),  0.0);
@@ -51,17 +51,17 @@ tape("linear(x) can map a bilinear domain with two values to the corresponding r
 });
 
 tape("linear(x) can map a polylinear domain with more than two values to the corresponding range", function(test) {
-  var s = scale.linear().domain([-10, 0, 100]).range(["red", "white", "green"]);
+  var s = scale.scaleLinear().domain([-10, 0, 100]).range(["red", "white", "green"]);
   test.deepEqual(s.domain(), [-10, 0, 100]);
   test.equal(s(-5), "#ff8080");
   test.equal(s(50), "#80c080");
   test.equal(s(75), "#40a040");
-  var s = scale.linear().domain([4, 2, 1]).range([1, 2, 4]);
+  var s = scale.scaleLinear().domain([4, 2, 1]).range([1, 2, 4]);
   test.equal(s(1.5), 3);
   test.equal(s(3), 1.5);
   test.equal(s.invert(1.5), 3);
   test.equal(s.invert(3), 1.5);
-  var s = scale.linear().domain([1, 2, 4]).range([4, 2, 1]);
+  var s = scale.scaleLinear().domain([1, 2, 4]).range([4, 2, 1]);
   test.equal(s(1.5), 3);
   test.equal(s(3), 1.5);
   test.equal(s.invert(1.5), 3);
@@ -70,44 +70,44 @@ tape("linear(x) can map a polylinear domain with more than two values to the cor
 });
 
 tape("linear.invert(y) maps a range value y to a domain value x", function(test) {
-  test.equal(scale.linear().range([1, 2]).invert(1.5), .5);
+  test.equal(scale.scaleLinear().range([1, 2]).invert(1.5), .5);
   test.end();
 });
 
 tape("linear.invert(y) maps an empty range to the domain start", function(test) {
-  test.equal(scale.linear().domain([1, 2]).range([0, 0]).invert(0), 1);
-  test.equal(scale.linear().domain([2, 1]).range([0, 0]).invert(1), 2);
+  test.equal(scale.scaleLinear().domain([1, 2]).range([0, 0]).invert(0), 1);
+  test.equal(scale.scaleLinear().domain([2, 1]).range([0, 0]).invert(1), 2);
   test.end();
 });
 
 tape("linear.invert(y) coerces range values to numbers", function(test) {
-  test.equal(scale.linear().range(["0", "2"]).invert("1"), .5);
-  test.equal(scale.linear().range([new Date(1990, 0, 1), new Date(1991, 0, 1)]).invert(new Date(1990, 6, 2, 13)), .5);
+  test.equal(scale.scaleLinear().range(["0", "2"]).invert("1"), .5);
+  test.equal(scale.scaleLinear().range([new Date(1990, 0, 1), new Date(1991, 0, 1)]).invert(new Date(1990, 6, 2, 13)), .5);
   test.end();
 });
 
 tape("linear.invert(y) returns NaN if the range is not coercible to number", function(test) {
-  test.ok(isNaN(scale.linear().range(["#000", "#fff"]).invert("#999")));
-  test.ok(isNaN(scale.linear().range([0, "#fff"]).invert("#999")));
+  test.ok(isNaN(scale.scaleLinear().range(["#000", "#fff"]).invert("#999")));
+  test.ok(isNaN(scale.scaleLinear().range([0, "#fff"]).invert("#999")));
   test.end();
 });
 
 tape("linear.domain(domain) accepts an array of numbers", function(test) {
-  test.deepEqual(scale.linear().domain([]).domain(), []);
-  test.deepEqual(scale.linear().domain([1, 0]).domain(), [1, 0]);
-  test.deepEqual(scale.linear().domain([1, 2, 3]).domain(), [1, 2, 3]);
+  test.deepEqual(scale.scaleLinear().domain([]).domain(), []);
+  test.deepEqual(scale.scaleLinear().domain([1, 0]).domain(), [1, 0]);
+  test.deepEqual(scale.scaleLinear().domain([1, 2, 3]).domain(), [1, 2, 3]);
   test.end();
 });
 
 tape("linear.domain(domain) coerces domain values to numbers", function(test) {
-  test.deepEqual(scale.linear().domain([new Date(1990, 0, 1), new Date(1991, 0, 1)]).domain(), [631180800000, 662716800000]);
-  test.deepEqual(scale.linear().domain(["0.0", "1.0"]).domain(), [0, 1]);
-  test.deepEqual(scale.linear().domain([new Number(0), new Number(1)]).domain(), [0, 1]);
+  test.deepEqual(scale.scaleLinear().domain([new Date(1990, 0, 1), new Date(1991, 0, 1)]).domain(), [631180800000, 662716800000]);
+  test.deepEqual(scale.scaleLinear().domain(["0.0", "1.0"]).domain(), [0, 1]);
+  test.deepEqual(scale.scaleLinear().domain([new Number(0), new Number(1)]).domain(), [0, 1]);
   test.end();
 });
 
 tape("linear.domain(domain) makes a copy of domain values", function(test) {
-  var d = [1, 2], s = scale.linear().domain(d);
+  var d = [1, 2], s = scale.scaleLinear().domain(d);
   test.deepEqual(s.domain(), [1, 2]);
   d.push(3);
   test.deepEqual(s.domain(), [1, 2]);
@@ -116,7 +116,7 @@ tape("linear.domain(domain) makes a copy of domain values", function(test) {
 });
 
 tape("linear.domain() returns a copy of domain values", function(test) {
-  var s = scale.linear(), d = s.domain();
+  var s = scale.scaleLinear(), d = s.domain();
   test.deepEqual(d, [0, 1]);
   d.push(3);
   test.deepEqual(s.domain(), [0, 1]);
@@ -124,30 +124,30 @@ tape("linear.domain() returns a copy of domain values", function(test) {
 });
 
 tape("linear.range(range) does not coerce range to numbers", function(test) {
-  var s = scale.linear().range(["0px", "2px"]);
+  var s = scale.scaleLinear().range(["0px", "2px"]);
   test.deepEqual(s.range(), ["0px", "2px"]);
   test.equal(s(.5), "1px");
   test.end();
 });
 
 tape("linear.range(range) can accept range values as colors", function(test) {
-  test.equal(scale.linear().range(["red", "blue"])(.5), "#800080");
-  test.equal(scale.linear().range(["#ff0000", "#0000ff"])(.5), "#800080");
-  test.equal(scale.linear().range(["#f00", "#00f"])(.5), "#800080");
-  test.equal(scale.linear().range(["rgb(255,0,0)", "hsl(240,100%,50%)"])(.5), "#800080");
-  test.equal(scale.linear().range(["rgb(100%,0%,0%)", "hsl(240,100%,50%)"])(.5), "#800080");
-  test.equal(scale.linear().range(["hsl(0,100%,50%)", "hsl(240,100%,50%)"])(.5), "#800080");
+  test.equal(scale.scaleLinear().range(["red", "blue"])(.5), "#800080");
+  test.equal(scale.scaleLinear().range(["#ff0000", "#0000ff"])(.5), "#800080");
+  test.equal(scale.scaleLinear().range(["#f00", "#00f"])(.5), "#800080");
+  test.equal(scale.scaleLinear().range(["rgb(255,0,0)", "hsl(240,100%,50%)"])(.5), "#800080");
+  test.equal(scale.scaleLinear().range(["rgb(100%,0%,0%)", "hsl(240,100%,50%)"])(.5), "#800080");
+  test.equal(scale.scaleLinear().range(["hsl(0,100%,50%)", "hsl(240,100%,50%)"])(.5), "#800080");
   test.end();
 });
 
 tape("linear.range(range) can accept range values as arrays or objects", function(test) {
-  test.deepEqual(scale.linear().range([{color: "red"}, {color: "blue"}])(.5), {color: "#800080"});
-  test.deepEqual(scale.linear().range([["red"], ["blue"]])(.5), ["#800080"]);
+  test.deepEqual(scale.scaleLinear().range([{color: "red"}, {color: "blue"}])(.5), {color: "#800080"});
+  test.deepEqual(scale.scaleLinear().range([["red"], ["blue"]])(.5), ["#800080"]);
   test.end();
 });
 
 tape("linear.range(range) makes a copy of range values", function(test) {
-  var r = [1, 2], s = scale.linear().range(r);
+  var r = [1, 2], s = scale.scaleLinear().range(r);
   test.deepEqual(s.range(), [1, 2]);
   r.push(3);
   test.deepEqual(s.range(), [1, 2]);
@@ -156,7 +156,7 @@ tape("linear.range(range) makes a copy of range values", function(test) {
 });
 
 tape("linear.range() returns a copy of range values", function(test) {
-  var s = scale.linear(), r = s.range();
+  var s = scale.scaleLinear(), r = s.range();
   test.deepEqual(r, [0, 1]);
   r.push(3);
   test.deepEqual(s.range(), [0, 1]);
@@ -164,96 +164,96 @@ tape("linear.range() returns a copy of range values", function(test) {
 });
 
 tape("linear.rangeRound(range) is an alias for linear.range(range).interpolate(interpolateRound)", function(test) {
-  test.equal(scale.linear().rangeRound([0, 10])(.59), 6);
+  test.equal(scale.scaleLinear().rangeRound([0, 10])(.59), 6);
   test.end();
 });
 
 tape("linear.clamp() is false by default", function(test) {
-  test.equal(scale.linear().clamp(), false);
-  test.equal(scale.linear().range([10, 20])(2), 30);
-  test.equal(scale.linear().range([10, 20])(-1), 0);
-  test.equal(scale.linear().range([10, 20]).invert(30), 2);
-  test.equal(scale.linear().range([10, 20]).invert(0), -1);
+  test.equal(scale.scaleLinear().clamp(), false);
+  test.equal(scale.scaleLinear().range([10, 20])(2), 30);
+  test.equal(scale.scaleLinear().range([10, 20])(-1), 0);
+  test.equal(scale.scaleLinear().range([10, 20]).invert(30), 2);
+  test.equal(scale.scaleLinear().range([10, 20]).invert(0), -1);
   test.end();
 });
 
 tape("linear.clamp(true) restricts output values to the range", function(test) {
-  test.equal(scale.linear().clamp(true).range([10, 20])(2), 20);
-  test.equal(scale.linear().clamp(true).range([10, 20])(-1), 10);
+  test.equal(scale.scaleLinear().clamp(true).range([10, 20])(2), 20);
+  test.equal(scale.scaleLinear().clamp(true).range([10, 20])(-1), 10);
   test.end();
 });
 
 tape("linear.clamp(true) restricts input values to the domain", function(test) {
-  test.equal(scale.linear().clamp(true).range([10, 20]).invert(30), 1);
-  test.equal(scale.linear().clamp(true).range([10, 20]).invert(0), 0);
+  test.equal(scale.scaleLinear().clamp(true).range([10, 20]).invert(30), 1);
+  test.equal(scale.scaleLinear().clamp(true).range([10, 20]).invert(0), 0);
   test.end();
 });
 
 tape("linear.clamp(clamp) coerces the specified clamp value to a boolean", function(test) {
-  test.equal(scale.linear().clamp("true").clamp(), true);
-  test.equal(scale.linear().clamp(1).clamp(), true);
-  test.equal(scale.linear().clamp("").clamp(), false);
-  test.equal(scale.linear().clamp(0).clamp(), false);
+  test.equal(scale.scaleLinear().clamp("true").clamp(), true);
+  test.equal(scale.scaleLinear().clamp(1).clamp(), true);
+  test.equal(scale.scaleLinear().clamp("").clamp(), false);
+  test.equal(scale.scaleLinear().clamp(0).clamp(), false);
   test.end();
 });
 
 tape("linear.interpolate(interpolate) takes a custom interpolator factory", function(test) {
   function interpolate(a, b) { return function(t) { return [a, b, t]; }; }
-  var s = scale.linear().domain([10, 20]).range(["a", "b"]).interpolate(interpolate);
+  var s = scale.scaleLinear().domain([10, 20]).range(["a", "b"]).interpolate(interpolate);
   test.equal(s.interpolate(), interpolate);
   test.deepEqual(s(15), ["a", "b", .5]);
   test.end();
 });
 
 tape("linear.nice() is an alias for linear.nice(10)", function(test) {
-  test.deepEqual(scale.linear().domain([0, .96]).nice().domain(), [0, 1]);
-  test.deepEqual(scale.linear().domain([0, 96]).nice().domain(), [0, 100]);
+  test.deepEqual(scale.scaleLinear().domain([0, .96]).nice().domain(), [0, 1]);
+  test.deepEqual(scale.scaleLinear().domain([0, 96]).nice().domain(), [0, 100]);
   test.end();
 });
 
 tape("linear.nice(count) extends the domain to match the desired ticks", function(test) {
-  test.deepEqual(scale.linear().domain([0, .96]).nice(10).domain(), [0, 1]);
-  test.deepEqual(scale.linear().domain([0, 96]).nice(10).domain(), [0, 100]);
-  test.deepEqual(scale.linear().domain([.96, 0]).nice(10).domain(), [1, 0]);
-  test.deepEqual(scale.linear().domain([96, 0]).nice(10).domain(), [100, 0]);
-  test.deepEqual(scale.linear().domain([0, -.96]).nice(10).domain(), [0, -1]);
-  test.deepEqual(scale.linear().domain([0, -96]).nice(10).domain(), [0, -100]);
-  test.deepEqual(scale.linear().domain([-.96, 0]).nice(10).domain(), [-1, 0]);
-  test.deepEqual(scale.linear().domain([-96, 0]).nice(10).domain(), [-100, 0]);
-  test.deepEqual(scale.linear().domain([-0.1, 51.1]).nice(8).domain(), [-10, 60]);
+  test.deepEqual(scale.scaleLinear().domain([0, .96]).nice(10).domain(), [0, 1]);
+  test.deepEqual(scale.scaleLinear().domain([0, 96]).nice(10).domain(), [0, 100]);
+  test.deepEqual(scale.scaleLinear().domain([.96, 0]).nice(10).domain(), [1, 0]);
+  test.deepEqual(scale.scaleLinear().domain([96, 0]).nice(10).domain(), [100, 0]);
+  test.deepEqual(scale.scaleLinear().domain([0, -.96]).nice(10).domain(), [0, -1]);
+  test.deepEqual(scale.scaleLinear().domain([0, -96]).nice(10).domain(), [0, -100]);
+  test.deepEqual(scale.scaleLinear().domain([-.96, 0]).nice(10).domain(), [-1, 0]);
+  test.deepEqual(scale.scaleLinear().domain([-96, 0]).nice(10).domain(), [-100, 0]);
+  test.deepEqual(scale.scaleLinear().domain([-0.1, 51.1]).nice(8).domain(), [-10, 60]);
   test.end();
 });
 
 tape("linear.nice(count) nices the domain, extending it to round numbers", function(test) {
-  test.deepEqual(scale.linear().domain([1.1, 10.9]).nice(10).domain(), [1, 11]);
-  test.deepEqual(scale.linear().domain([10.9, 1.1]).nice(10).domain(), [11, 1]);
-  test.deepEqual(scale.linear().domain([.7, 11.001]).nice(10).domain(), [0, 12]);
-  test.deepEqual(scale.linear().domain([123.1, 6.7]).nice(10).domain(), [130, 0]);
-  test.deepEqual(scale.linear().domain([0, .49]).nice(10).domain(), [0, .5]);
+  test.deepEqual(scale.scaleLinear().domain([1.1, 10.9]).nice(10).domain(), [1, 11]);
+  test.deepEqual(scale.scaleLinear().domain([10.9, 1.1]).nice(10).domain(), [11, 1]);
+  test.deepEqual(scale.scaleLinear().domain([.7, 11.001]).nice(10).domain(), [0, 12]);
+  test.deepEqual(scale.scaleLinear().domain([123.1, 6.7]).nice(10).domain(), [130, 0]);
+  test.deepEqual(scale.scaleLinear().domain([0, .49]).nice(10).domain(), [0, .5]);
   test.end();
 });
 
 tape("linear.nice(count) has no effect on degenerate domains", function(test) {
-  test.deepEqual(scale.linear().domain([0, 0]).nice(10).domain(), [0, 0]);
-  test.deepEqual(scale.linear().domain([.5, .5]).nice(10).domain(), [.5, .5]);
+  test.deepEqual(scale.scaleLinear().domain([0, 0]).nice(10).domain(), [0, 0]);
+  test.deepEqual(scale.scaleLinear().domain([.5, .5]).nice(10).domain(), [.5, .5]);
   test.end();
 });
 
 tape("linear.nice(count) nicing a polylinear domain only affects the extent", function(test) {
-  test.deepEqual(scale.linear().domain([1.1, 1, 2, 3, 10.9]).nice(10).domain(), [1, 1, 2, 3, 11]);
-  test.deepEqual(scale.linear().domain([123.1, 1, 2, 3, -.9]).nice(10).domain(), [130, 1, 2, 3, -10]);
+  test.deepEqual(scale.scaleLinear().domain([1.1, 1, 2, 3, 10.9]).nice(10).domain(), [1, 1, 2, 3, 11]);
+  test.deepEqual(scale.scaleLinear().domain([123.1, 1, 2, 3, -.9]).nice(10).domain(), [130, 1, 2, 3, -10]);
   test.end();
 });
 
 tape("linear.nice(count) accepts a tick count to control nicing step", function(test) {
-  test.deepEqual(scale.linear().domain([12, 87]).nice(5).domain(), [0, 100]);
-  test.deepEqual(scale.linear().domain([12, 87]).nice(10).domain(), [10, 90]);
-  test.deepEqual(scale.linear().domain([12, 87]).nice(100).domain(), [12, 87]);
+  test.deepEqual(scale.scaleLinear().domain([12, 87]).nice(5).domain(), [0, 100]);
+  test.deepEqual(scale.scaleLinear().domain([12, 87]).nice(10).domain(), [10, 90]);
+  test.deepEqual(scale.scaleLinear().domain([12, 87]).nice(100).domain(), [12, 87]);
   test.end();
 });
 
 tape("linear.ticks(count) returns the expected ticks for an ascending domain", function(test) {
-  var s = scale.linear();
+  var s = scale.scaleLinear();
   test.deepEqual(s.ticks(10).map(roundEpsilon), [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
   test.deepEqual(s.ticks(9).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
   test.deepEqual(s.ticks(8).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
@@ -279,7 +279,7 @@ tape("linear.ticks(count) returns the expected ticks for an ascending domain", f
 });
 
 tape("linear.ticks(count) returns the expected ticks for a descending domain", function(test) {
-  var s = scale.linear().domain([1, 0]);
+  var s = scale.scaleLinear().domain([1, 0]);
   test.deepEqual(s.ticks(10).map(roundEpsilon), [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0].reverse());
   test.deepEqual(s.ticks(9).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0].reverse());
   test.deepEqual(s.ticks(8).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0].reverse());
@@ -305,7 +305,7 @@ tape("linear.ticks(count) returns the expected ticks for a descending domain", f
 });
 
 tape("linear.ticks(count) returns the expected ticks for a polylinear domain", function(test) {
-  var s = scale.linear().domain([0, 0.25, 0.9, 1]);
+  var s = scale.scaleLinear().domain([0, 0.25, 0.9, 1]);
   test.deepEqual(s.ticks(10).map(roundEpsilon), [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
   test.deepEqual(s.ticks(9).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
   test.deepEqual(s.ticks(8).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
@@ -331,7 +331,7 @@ tape("linear.ticks(count) returns the expected ticks for a polylinear domain", f
 });
 
 tape("linear.ticks(count) returns the empty array if count is not a positive integer", function(test) {
-  var s = scale.linear();
+  var s = scale.scaleLinear();
   test.deepEqual(s.ticks(NaN), []);
   test.deepEqual(s.ticks(0), []);
   test.deepEqual(s.ticks(-1), []);
@@ -340,58 +340,58 @@ tape("linear.ticks(count) returns the empty array if count is not a positive int
 });
 
 tape("linear.ticks() is an alias for linear.ticks(10)", function(test) {
-  var s = scale.linear();
+  var s = scale.scaleLinear();
   test.deepEqual(s.ticks(), s.ticks(10));
   test.end();
 });
 
 tape("linear.tickFormat() is an alias for linear.tickFormat(10)", function(test) {
-  test.equal(scale.linear().tickFormat()(0.2), "0.2");
-  test.equal(scale.linear().domain([-100, 100]).tickFormat()(-20), "-20");
+  test.equal(scale.scaleLinear().tickFormat()(0.2), "0.2");
+  test.equal(scale.scaleLinear().domain([-100, 100]).tickFormat()(-20), "-20");
   test.end();
 });
 
 tape("linear.tickFormat(count) returns a format suitable for the ticks", function(test) {
-  test.equal(scale.linear().tickFormat(10)(0.2), "0.2");
-  test.equal(scale.linear().tickFormat(20)(0.2), "0.20");
-  test.equal(scale.linear().domain([-100, 100]).tickFormat(10)(-20), "-20");
+  test.equal(scale.scaleLinear().tickFormat(10)(0.2), "0.2");
+  test.equal(scale.scaleLinear().tickFormat(20)(0.2), "0.20");
+  test.equal(scale.scaleLinear().domain([-100, 100]).tickFormat(10)(-20), "-20");
   test.end();
 });
 
 tape("linear.tickFormat(count, specifier) sets the appropriate fixed precision if not specified", function(test) {
-  test.equal(scale.linear().tickFormat(10, "+f")(0.2), "+0.2");
-  test.equal(scale.linear().tickFormat(20, "+f")(0.2), "+0.20");
-  test.equal(scale.linear().tickFormat(10, "+%")(0.2), "+20%");
-  test.equal(scale.linear().domain([0.19, 0.21]).tickFormat(10, "+%")(0.2), "+20.0%");
+  test.equal(scale.scaleLinear().tickFormat(10, "+f")(0.2), "+0.2");
+  test.equal(scale.scaleLinear().tickFormat(20, "+f")(0.2), "+0.20");
+  test.equal(scale.scaleLinear().tickFormat(10, "+%")(0.2), "+20%");
+  test.equal(scale.scaleLinear().domain([0.19, 0.21]).tickFormat(10, "+%")(0.2), "+20.0%");
   test.end();
 });
 
 tape("linear.tickFormat(count, specifier) sets the appropriate round precision if not specified", function(test) {
-  test.equal(scale.linear().domain([0, 9]).tickFormat(10, "")(2.10), "2");
-  test.equal(scale.linear().domain([0, 9]).tickFormat(100, "")(2.01), "2");
-  test.equal(scale.linear().domain([0, 9]).tickFormat(100, "")(2.11), "2.1");
-  test.equal(scale.linear().domain([0, 9]).tickFormat(10, "e")(2.10), "2e+0");
-  test.equal(scale.linear().domain([0, 9]).tickFormat(100, "e")(2.01), "2.0e+0");
-  test.equal(scale.linear().domain([0, 9]).tickFormat(100, "e")(2.11), "2.1e+0");
-  test.equal(scale.linear().domain([0, 9]).tickFormat(10, "g")(2.10), "2");
-  test.equal(scale.linear().domain([0, 9]).tickFormat(100, "g")(2.01), "2.0");
-  test.equal(scale.linear().domain([0, 9]).tickFormat(100, "g")(2.11), "2.1");
-  test.equal(scale.linear().domain([0, 9]).tickFormat(10, "r")(2.10e6), "2000000");
-  test.equal(scale.linear().domain([0, 9]).tickFormat(100, "r")(2.01e6), "2000000");
-  test.equal(scale.linear().domain([0, 9]).tickFormat(100, "r")(2.11e6), "2100000");
-  test.equal(scale.linear().domain([0, .9]).tickFormat(10, "p")(.210), "20%");
-  test.equal(scale.linear().domain([.19, .21]).tickFormat(10, "p")(.201), "20.1%");
+  test.equal(scale.scaleLinear().domain([0, 9]).tickFormat(10, "")(2.10), "2");
+  test.equal(scale.scaleLinear().domain([0, 9]).tickFormat(100, "")(2.01), "2");
+  test.equal(scale.scaleLinear().domain([0, 9]).tickFormat(100, "")(2.11), "2.1");
+  test.equal(scale.scaleLinear().domain([0, 9]).tickFormat(10, "e")(2.10), "2e+0");
+  test.equal(scale.scaleLinear().domain([0, 9]).tickFormat(100, "e")(2.01), "2.0e+0");
+  test.equal(scale.scaleLinear().domain([0, 9]).tickFormat(100, "e")(2.11), "2.1e+0");
+  test.equal(scale.scaleLinear().domain([0, 9]).tickFormat(10, "g")(2.10), "2");
+  test.equal(scale.scaleLinear().domain([0, 9]).tickFormat(100, "g")(2.01), "2.0");
+  test.equal(scale.scaleLinear().domain([0, 9]).tickFormat(100, "g")(2.11), "2.1");
+  test.equal(scale.scaleLinear().domain([0, 9]).tickFormat(10, "r")(2.10e6), "2000000");
+  test.equal(scale.scaleLinear().domain([0, 9]).tickFormat(100, "r")(2.01e6), "2000000");
+  test.equal(scale.scaleLinear().domain([0, 9]).tickFormat(100, "r")(2.11e6), "2100000");
+  test.equal(scale.scaleLinear().domain([0, .9]).tickFormat(10, "p")(.210), "20%");
+  test.equal(scale.scaleLinear().domain([.19, .21]).tickFormat(10, "p")(.201), "20.1%");
   test.end();
 });
 
 tape("linear.tickFormat(count, specifier) sets the appropriate prefix precision if not specified", function(test) {
-  test.equal(scale.linear().domain([0, 1e6]).tickFormat(10, "$s")(0.51e6), "$0.5M");
-  test.equal(scale.linear().domain([0, 1e6]).tickFormat(100, "$s")(0.501e6), "$0.50M");
+  test.equal(scale.scaleLinear().domain([0, 1e6]).tickFormat(10, "$s")(0.51e6), "$0.5M");
+  test.equal(scale.scaleLinear().domain([0, 1e6]).tickFormat(100, "$s")(0.501e6), "$0.50M");
   test.end();
 });
 
 tape("linear.copy() returns a copy with changes to the domain are isolated", function(test) {
-  var x = scale.linear(), y = x.copy();
+  var x = scale.scaleLinear(), y = x.copy();
   x.domain([1, 2]);
   test.deepEqual(y.domain(), [0, 1]);
   test.equal(x(1), 0);
@@ -409,7 +409,7 @@ tape("linear.copy() returns a copy with changes to the domain are isolated", fun
 });
 
 tape("linear.copy() returns a copy with changes to the range are isolated", function(test) {
-  var x = scale.linear(), y = x.copy();
+  var x = scale.scaleLinear(), y = x.copy();
   x.range([1, 2]);
   test.equal(x.invert(1), 0);
   test.equal(y.invert(1), 1);
@@ -423,7 +423,7 @@ tape("linear.copy() returns a copy with changes to the range are isolated", func
 });
 
 tape("linear.copy() returns a copy with changes to the interpolator are isolated", function(test) {
-  var x = scale.linear().range(["red", "blue"]),
+  var x = scale.scaleLinear().range(["red", "blue"]),
       y = x.copy(),
       i0 = x.interpolate(),
       i1 = function(a, b) { return function(t) { return b; }; };
@@ -435,7 +435,7 @@ tape("linear.copy() returns a copy with changes to the interpolator are isolated
 });
 
 tape("linear.copy() returns a copy with changes to clamping are isolated", function(test) {
-  var x = scale.linear().clamp(true), y = x.copy();
+  var x = scale.scaleLinear().clamp(true), y = x.copy();
   x.clamp(false);
   test.equal(x(2), 2);
   test.equal(y(2), 1);
