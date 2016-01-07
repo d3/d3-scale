@@ -1,7 +1,7 @@
 import {bisector, tickStep} from "d3-array";
 import {interpolateNumber as reinterpolate} from "d3-interpolate";
-import {year, month, week, day, hour, minute, second, millisecond} from "d3-time";
-import {format} from "d3-time-format";
+import {timeYear, timeMonth, timeWeek, timeDay, timeHour, timeMinute, timeSecond, timeMillisecond} from "d3-time";
+import {timeFormat} from "d3-time-format";
 import nice from "./nice";
 import {default as continuous, copy, deinterpolateLinear as deinterpolate} from "./continuous";
 
@@ -127,5 +127,5 @@ export function calendar(year, month, week, day, hour, minute, second, milliseco
 };
 
 export default function() {
-  return calendar(year, month, week, day, hour, minute, second, millisecond, format).domain([new Date(2000, 0, 1), new Date(2000, 0, 2)]);
+  return calendar(timeYear, timeMonth, timeWeek, timeDay, timeHour, timeMinute, timeSecond, timeMillisecond, timeFormat).domain([new Date(2000, 0, 1), new Date(2000, 0, 2)]);
 };

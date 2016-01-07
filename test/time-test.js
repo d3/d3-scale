@@ -37,31 +37,31 @@ tape("time.nice(count) nices using the specified tick count", function(test) {
 
 tape("time.nice(interval) nices using the specified time interval", function(test) {
   var x = scale.time().domain([date.local(2009, 0, 1, 0, 12), date.local(2009, 0, 1, 23, 48)]);
-  test.deepEqual(x.nice(time.day).domain(), [date.local(2009, 0, 1), date.local(2009, 0, 2)]);
-  test.deepEqual(x.nice(time.week).domain(), [date.local(2008, 11, 28), date.local(2009, 0, 4)]);
-  test.deepEqual(x.nice(time.month).domain(), [date.local(2008, 11, 1), date.local(2009, 1, 1)]);
-  test.deepEqual(x.nice(time.year).domain(), [date.local(2008, 0, 1), date.local(2010, 0, 1)]);
+  test.deepEqual(x.nice(time.timeDay).domain(), [date.local(2009, 0, 1), date.local(2009, 0, 2)]);
+  test.deepEqual(x.nice(time.timeWeek).domain(), [date.local(2008, 11, 28), date.local(2009, 0, 4)]);
+  test.deepEqual(x.nice(time.timeMonth).domain(), [date.local(2008, 11, 1), date.local(2009, 1, 1)]);
+  test.deepEqual(x.nice(time.timeYear).domain(), [date.local(2008, 0, 1), date.local(2010, 0, 1)]);
   test.end();
 });
 
 tape("time.nice(interval) can nice empty domains", function(test) {
   var x = scale.time().domain([date.local(2009, 0, 1, 0, 12), date.local(2009, 0, 1, 0, 12)]);
-  test.deepEqual(x.nice(time.day).domain(), [date.local(2009, 0, 1), date.local(2009, 0, 2)]);
+  test.deepEqual(x.nice(time.timeDay).domain(), [date.local(2009, 0, 1), date.local(2009, 0, 2)]);
   test.end();
 });
 
 tape("time.nice(interval) can nice a polylinear domain, only affecting its extent", function(test) {
-  var x = scale.time().domain([date.local(2009, 0, 1, 0, 12), date.local(2009, 0, 1, 23, 48), date.local(2009, 0, 2, 23, 48)]).nice(time.day);
+  var x = scale.time().domain([date.local(2009, 0, 1, 0, 12), date.local(2009, 0, 1, 23, 48), date.local(2009, 0, 2, 23, 48)]).nice(time.timeDay);
   test.deepEqual(x.domain(), [date.local(2009, 0, 1), date.local(2009, 0, 1, 23, 48), date.local(2009, 0, 3)]);
   test.end();
 });
 
 tape("time.nice(interval, step) nices using the specified time interval and step", function(test) {
   var x = scale.time().domain([date.local(2009, 0, 1, 0, 12), date.local(2009, 0, 1, 23, 48)]);
-  test.deepEqual(x.nice(time.day, 3).domain(), [date.local(2009, 0, 1), date.local(2009, 0, 4)]);
-  test.deepEqual(x.nice(time.week, 2).domain(), [date.local(2008, 11, 21), date.local(2009, 0, 4)]);
-  test.deepEqual(x.nice(time.month, 3).domain(), [date.local(2008, 9, 1), date.local(2009, 3, 1)]);
-  test.deepEqual(x.nice(time.year, 10).domain(), [date.local(2000, 0, 1), date.local(2010, 0, 1)]);
+  test.deepEqual(x.nice(time.timeDay, 3).domain(), [date.local(2009, 0, 1), date.local(2009, 0, 4)]);
+  test.deepEqual(x.nice(time.timeWeek, 2).domain(), [date.local(2008, 11, 21), date.local(2009, 0, 4)]);
+  test.deepEqual(x.nice(time.timeMonth, 3).domain(), [date.local(2008, 9, 1), date.local(2009, 3, 1)]);
+  test.deepEqual(x.nice(time.timeYear, 10).domain(), [date.local(2000, 0, 1), date.local(2010, 0, 1)]);
   test.end();
 });
 
@@ -130,7 +130,7 @@ tape("time.clamp(true).invert(value) never returns a value outside the domain", 
 
 tape("time.ticks(interval) observes the specified tick interval", function(test) {
   var x = scale.time().domain([date.local(2011, 0, 1, 12, 1, 0), date.local(2011, 0, 1, 12, 4, 4)]);
-  test.deepEqual(x.ticks(time.minute), [
+  test.deepEqual(x.ticks(time.timeMinute), [
     date.local(2011, 0, 1, 12, 1),
     date.local(2011, 0, 1, 12, 2),
     date.local(2011, 0, 1, 12, 3),
@@ -141,7 +141,7 @@ tape("time.ticks(interval) observes the specified tick interval", function(test)
 
 tape("time.ticks(interval, step) observes the specified tick interval and step", function(test) {
   var x = scale.time().domain([date.local(2011, 0, 1, 12, 0, 0), date.local(2011, 0, 1, 12, 33, 4)]);
-  test.deepEqual(x.ticks(time.minute, 10), [
+  test.deepEqual(x.ticks(time.timeMinute, 10), [
     date.local(2011, 0, 1, 12, 0),
     date.local(2011, 0, 1, 12, 10),
     date.local(2011, 0, 1, 12, 20),
