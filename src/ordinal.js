@@ -1,4 +1,4 @@
-import {map} from "d3-array";
+import {map} from "d3-collection";
 import {slice} from "./array";
 
 export var implicit = {};

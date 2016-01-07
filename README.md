@@ -21,7 +21,8 @@ For a longer introduction, see these recommended tutorials:
 If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release](https://github.com/d3/d3-scale/releases/latest). The released bundle supports AMD, CommonJS, and vanilla environments. Create a custom build using [Rollup](https://github.com/rollup/rollup) or your preferred bundler. You can also load directly from [d3js.org](https://d3js.org):
 
 ```html
-<script src="https://d3js.org/d3-array.v0.6.min.js"></script>
+<script src="https://d3js.org/d3-array.v0.7.min.js"></script>
+<script src="https://d3js.org/d3-collection.v0.1.min.js"></script>
 <script src="https://d3js.org/d3-color.v0.3.min.js"></script>
 <script src="https://d3js.org/d3-format.v0.4.min.js"></script>
 <script src="https://d3js.org/d3-interpolate.v0.3.min.js"></script>

@@ -1,6 +1,6 @@
 {
   "name": "d3-scale",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Encodings that map abstract data to visual representation.",
   "keywords": [
     "d3",
@@ -20,12 +20,13 @@
     "url": "https://github.com/d3/d3-scale.git"
   },
   "scripts": {
-    "pretest": "mkdir -p build && node -e 'process.stdout.write(\"var version = \\\"\" + require(\"./package.json\").version + \"\\\"; export * from \\\"../index\\\"; export {version};\");' > build/bundle.js && rollup -f umd -g d3-array:d3_array,d3-color:d3_color,d3-format:d3_format,d3-interpolate:d3_interpolate,d3-time:d3_time,d3-time-format:d3_time_format -u d3-scale -n d3_scale -o build/d3-scale.js -- build/bundle.js",
+    "pretest": "mkdir -p build && node -e 'process.stdout.write(\"var version = \\\"\" + require(\"./package.json\").version + \"\\\"; export * from \\\"../index\\\"; export {version};\");' > build/bundle.js && rollup -f umd -g d3-array:d3_array,d3-collection:d3_collection,d3-color:d3_color,d3-format:d3_format,d3-interpolate:d3_interpolate,d3-time:d3_time,d3-time-format:d3_time_format -u d3-scale -n d3_scale -o build/d3-scale.js -- build/bundle.js",
     "test": "TZ=America/Los_Angeles faucet `find test -name '*-test.js'`",
     "prepublish": "npm run test && uglifyjs build/d3-scale.js -c -m -o build/d3-scale.min.js && rm -f build/d3-scale.zip && zip -j build/d3-scale.zip -- LICENSE README.md build/d3-scale.js build/d3-scale.min.js"
   },
   "dependencies": {
-    "d3-array": "~0.6.1",
+    "d3-array": "~0.7.0",
+    "d3-collection": "~0.1.0",
     "d3-color": "~0.3.2",
     "d3-format": "~0.4.1",
     "d3-interpolate": "~0.3.0",
