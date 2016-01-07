@@ -1,5 +1,5 @@
 import {bisect} from "d3-array";
-import {bind, value, round} from "d3-interpolate";
+import {interpolateBind, interpolate as interpolateValue, interpolateRound} from "d3-interpolate";
 import {map, slice} from "./array";
 import constant from "./constant";
 import number from "./number";
@@ -69,7 +69,7 @@ export function copy(source, target) {
 export default function continuous(deinterpolate, reinterpolate) {
   var domain = unit,
       range = unit,
-      interpolate = value,
+      interpolate = interpolateValue,
       clamp = false,
       output,
       input;
@@ -98,7 +98,7 @@ export default function continuous(deinterpolate, reinterpolate) {
   };
 
   scale.rangeRound = function(_) {
-    return range = slice.call(_), interpolate = round, rescale();
+    return range = slice.call(_), interpolate = interpolateRound, rescale();
   };
 
   scale.clamp = function(_) {
@@ -106,7 +106,7 @@ export default function continuous(deinterpolate, reinterpolate) {
   };
 
   scale.interpolate = function(_) {
-    return arguments.length ? (interpolate = bind.apply(null, arguments), rescale()) : interpolate;
+    return arguments.length ? (interpolate = interpolateBind.apply(null, arguments), rescale()) : interpolate;
   };
 
   return rescale();

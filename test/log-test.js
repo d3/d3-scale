@@ -12,7 +12,7 @@ tape("log() has the expected defaults", function(test) {
   test.deepEqual(x.range(), [0, 1]);
   test.equal(x.clamp(), false);
   test.equal(x.base(), 10);
-  test.equal(x.interpolate(), interpolate.value);
+  test.equal(x.interpolate(), interpolate.interpolate);
   test.deepEqual(x.interpolate()({array: ["red"]}, {array: ["blue"]})(.5), {array: ["#800080"]});
   test.inDelta(x(5), 0.69897);
   test.inDelta(x.invert(0.69897), 5);
@@ -98,9 +98,9 @@ tape("log.range(…) can take arrays or objects", function(test) {
 
 tape("log.interpolate(f) sets the interpolator", function(test) {
   var x = scale.log().range(["red", "blue"]);
-  test.equal(x.interpolate(), interpolate.value);
+  test.equal(x.interpolate(), interpolate.interpolate);
   test.equal(x(5), "#4d00b2");
-  x.interpolate(interpolate.hsl);
+  x.interpolate(interpolate.interpolateHsl);
   test.equal(x(5), "#9a00ff");
   test.end();
 });
@@ -253,10 +253,10 @@ tape("log.copy() isolates changes to the range", function(test) {
 
 tape("log.copy() isolates changes to the interpolator", function(test) {
   var x = scale.log().range(["red", "blue"]), y = x.copy();
-  x.interpolate(interpolate.hsl);
+  x.interpolate(interpolate.interpolateHsl);
   test.equal(x(5), "#9a00ff");
   test.equal(y(5), "#4d00b2");
-  test.equal(y.interpolate(), interpolate.value);
+  test.equal(y.interpolate(), interpolate.interpolate);
   test.end();
 });
 

@@ -97,7 +97,7 @@ tape("time.copy() isolates changes to the interpolator", function(test) {
   var x = scale.time().domain([date.local(2009, 0, 1), date.local(2010, 0, 1)]).range(["red", "blue"]),
       i = x.interpolate(),
       y = x.copy();
-  x.interpolate(interpolate.hsl);
+  x.interpolate(interpolate.interpolateHsl);
   test.equal(x(date.local(2009, 6, 1)), "#ff00fd");
   test.equal(y(date.local(2009, 6, 1)), "#81007e");
   test.equal(y.interpolate(), i);

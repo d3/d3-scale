@@ -25,7 +25,7 @@ If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release]
 <script src="https://d3js.org/d3-collection.v0.1.min.js"></script>
 <script src="https://d3js.org/d3-color.v0.3.min.js"></script>
 <script src="https://d3js.org/d3-format.v0.4.min.js"></script>
-<script src="https://d3js.org/d3-interpolate.v0.3.min.js"></script>
+<script src="https://d3js.org/d3-interpolate.v0.4.min.js"></script>
 <script src="https://d3js.org/d3-time.v0.1.min.js"></script>
 <script src="https://d3js.org/d3-time-format.v0.2.min.js"></script>
 <script src="https://d3js.org/d3-scale.v0.4.min.js"></script>
@@ -111,12 +111,12 @@ If *range* is specified, sets the scale’s range to the specified array of valu
 
 <a name="continuous_rangeRound" href="#continuous_rangeRound">#</a> <i>continuous</i>.<b>rangeRound</b>([<i>range</i>])
 
-Sets the scale’s [*range*](#continuous_range) to the specified array of values while also setting the scale’s [interpolator](#continuous_interpolate) to d3-interpolate’s [round](https://github.com/d3/d3-interpolate#round). This is a convenience method equivalent to:
+Sets the scale’s [*range*](#continuous_range) to the specified array of values while also setting the scale’s [interpolator](#continuous_interpolate) to [interpolateRound](https://github.com/d3/d3-interpolate#interpolateRound). This is a convenience method equivalent to:
 
 ```js
 continuous
     .range(range)
-    .interpolate(d3_interpolate.round);
+    .interpolate(d3.interpolateRound);
 ```
 
 The rounding interpolator is sometimes useful for avoiding antialiasing artifacts, though also consider the [shape-rendering](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering) “crispEdges” styles. Note that this interpolator can only be used with numeric ranges.
@@ -142,7 +142,7 @@ If *clamp* is not specified, returns whether or not the scale currently clamps v
 
 <a name="continuous_interpolate" href="#continuous_interpolate">#</a> <i>continuous</i>.<b>interpolate</b>(<i>interpolate</i>[, <i>parameters…</i>])
 
-If *interpolate* is specified, sets the scale’s [range](#continuous_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0, 1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s current interpolator factory, which defaults to d3-interpolate’s [value](https://github.com/d3/d3-interpolate#value). See [d3-interpolate](https://github.com/d3/d3-interpolate) for more interpolators.
+If *interpolate* is specified, sets the scale’s [range](#continuous_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0, 1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s current interpolator factory, which defaults to [interpolate](https://github.com/d3/d3-interpolate#interpolate). See [d3-interpolate](https://github.com/d3/d3-interpolate) for more interpolators.
 
 For example, consider a diverging color scale with three colors in the range:
 
@@ -155,20 +155,20 @@ var color = d3_scale.linear()
 Two interpolators are created internally by the scale, equivalent to:
 
 ```js
-var i0 = d3_interpolate.value("red", "white"),
-    i1 = d3_interpolate.value("white", "green");
+var i0 = d3.interpolate("red", "white"),
+    i1 = d3.interpolate("white", "green");
 ```
 
-A common reason to specify a custom interpolator is to change the color space of interpolation. For example, to use [HCL](https://github.com/d3/d3-interpolate#hcl):
+A common reason to specify a custom interpolator is to change the color space of interpolation. For example, to use [HCL](https://github.com/d3/d3-interpolate#interpolateHcl):
 
 ```js
 var color = d3_scale.linear()
     .domain([10, 100])
     .range(["brown", "steelblue"])
-    .interpolate(d3_interpolate.hcl);
+    .interpolate(d3.interpolateHcl);
 ```
 
-Note: the default [value](https://github.com/d3/d3-interpolate#value) interpolator **may reuse return values**. For example, if the range values are objects, then the value interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, this is typically acceptable (and desirable for performance); however, if you need to store the scale’s return value, you must specify your own interpolator or make a copy as appropriate.
+Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the range values are objects, then the value interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, this is typically acceptable (and desirable for performance); however, if you need to store the scale’s return value, you must specify your own interpolator or make a copy as appropriate.
 
 <a name="continuous_ticks" href="#continuous_ticks">#</a> <i>continuous</i>.<b>ticks</b>([<i>count</i>])
 
@@ -203,7 +203,7 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 <a name="linear" href="#linear">#</a> d3_scale.<b>linear</b>()
 
-Constructs a new [continuous scale](#continuous-scales) with the unit [domain](#continuous_domain) [0, 1], the unit [range](#continuous_range) [0, 1], a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. Linear scales are a good default choice for continuous quantitative data because they preserve proportional differences. Each range value *y* can be expressed as a function of the domain value *x*: *y* = *mx* + *b*.
+Constructs a new [continuous scale](#continuous-scales) with the unit [domain](#continuous_domain) [0, 1], the unit [range](#continuous_range) [0, 1], the [default](https://github.com/d3/d3-interpolate#interpolate) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. Linear scales are a good default choice for continuous quantitative data because they preserve proportional differences. Each range value *y* can be expressed as a function of the domain value *x*: *y* = *mx* + *b*.
 
 #### Power Scales
 
@@ -211,7 +211,7 @@ Power scales are similar to [linear scales](#linear), except an exponential tran
 
 <a name="pow" href="#pow">#</a> d3_scale.<b>pow</b>()
 
-Constructs a new [continuous scale](#continuous-scales) with the unit [domain](#continuous_domain) [0, 1], the unit [range](#continuous_range) [0, 1], the [exponent](#pow_exponent) 1, a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. (Note that this is effectively a [linear](#linear) scale until you set a different exponent.)
+Constructs a new [continuous scale](#continuous-scales) with the unit [domain](#continuous_domain) [0, 1], the unit [range](#continuous_range) [0, 1], the [exponent](#pow_exponent) 1, the [default](https://github.com/d3/d3-interpolate#interpolate) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. (Note that this is effectively a [linear](#linear) scale until you set a different exponent.)
 
 <a name="pow_exponent" href="#pow_exponent">#</a> <i>pow</i>.<b>exponent</b>([<i>exponent</i>])
 
@@ -219,7 +219,7 @@ If *exponent* is specified, sets the current exponent to the given numeric value
 
 <a name="sqrt" href="#sqrt">#</a> d3_scale.<b>sqrt</b>()
 
-Constructs a new [continuous](#continuous-scales) [power scale](#pow) with the unit [domain](#continuous_domain) [0, 1], the unit [range](#continuous_range) [0, 1], the [exponent](#pow_exponent) 0.5, a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. This is a convenience method equivalent to `d3_scale.pow().exponent(0.5)`.
+Constructs a new [continuous](#continuous-scales) [power scale](#pow) with the unit [domain](#continuous_domain) [0, 1], the unit [range](#continuous_range) [0, 1], the [exponent](#pow_exponent) 0.5, the [default](https://github.com/d3/d3-interpolate#interpolate) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. This is a convenience method equivalent to `d3_scale.pow().exponent(0.5)`.
 
 #### Log Scales
 
@@ -229,7 +229,7 @@ As log(0) = -∞, a log scale domain must be **strictly-positive or strictly-neg
 
 <a name="log" href="#log">#</a> d3_scale.<b>log</b>()
 
-Constructs a new [continuous scale](#continuous-scales) with the [domain](#continuous_domain) [1, 10], the unit [range](#continuous_range) [0, 1], the [base](#log_base) 10, a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled.
+Constructs a new [continuous scale](#continuous-scales) with the [domain](#continuous_domain) [1, 10], the unit [range](#continuous_range) [0, 1], the [base](#log_base) 10, the [default](https://github.com/d3/d3-interpolate#interpolate) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled.
 
 <a name="log_base" href="#log_base">#</a> <i>log</i>.<b>base</b>([<i>base</i>])
 
@@ -276,7 +276,7 @@ For a valid value *y* in the range, <i>time</i>(<i>time</i>.invert(<i>y</i>)) eq
 
 <a name="time" href="#time">#</a> d3_scale.<b>time</b>()
 
-Constructs a new time scale with the [domain](#continuous_domain) [2000-01-01, 2000-01-02], the unit [range](#continuous_range) [0, 1], a [value](https://github.com/d3/d3-interpolate#value) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled.
+Constructs a new time scale with the [domain](#continuous_domain) [2000-01-01, 2000-01-02], the unit [range](#continuous_range) [0, 1], the [default](https://github.com/d3/d3-interpolate#interpolate) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled.
 
 <a name="time_ticks" href="#time_ticks">#</a> <i>time</i>.<b>ticks</b>([<i>count</i>])
 <br><a name="time_ticks" href="#time_ticks">#</a> <i>time</i>.<b>ticks</b>([<i>interval</i>[, <i>step</i>]])

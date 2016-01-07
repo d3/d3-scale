@@ -1,5 +1,5 @@
 import {cubehelix} from "d3-color";
-import {cubehelixLong} from "d3-interpolate";
+import {interpolateCubehelixLong} from "d3-interpolate";
 import sequential from "./sequential";
 
 var a = cubehelix(-100, 0.75, 0.35),
@@ -7,8 +7,8 @@ var a = cubehelix(-100, 0.75, 0.35),
     c = cubehelix(260, 0.75, 0.35),
     d = cubehelix();
 
-var interpolateWarm = cubehelixLong(a, b),
-    interpolateCool = cubehelixLong(c, b);
+var interpolateWarm = interpolateCubehelixLong(a, b),
+    interpolateCool = interpolateCubehelixLong(c, b);
 
 function interpolateRainbow(t) {
   if (t < 0 || t > 1) t -= Math.floor(t);

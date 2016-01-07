@@ -1,5 +1,5 @@
 import {bisector, tickStep} from "d3-array";
-import {number as reinterpolate} from "d3-interpolate";
+import {interpolateNumber as reinterpolate} from "d3-interpolate";
 import {year, month, week, day, hour, minute, second, millisecond} from "d3-time";
 import {format} from "d3-time-format";
 import nice from "./nice";
