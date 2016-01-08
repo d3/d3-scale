@@ -63,13 +63,6 @@ export default function log() {
     return arguments.length ? (domain(_), rescale()) : domain();
   };
 
-  scale.nice = function() {
-    return domain(nice(domain(), {
-      floor: function(x) { return pows(Math.floor(logs(x))); },
-      ceil: function(x) { return pows(Math.ceil(logs(x))); }
-    }));
-  };
-
   scale.ticks = function(count) {
     var d = domain(),
         u = d[0],
@@ -121,6 +114,13 @@ export default function log() {
       if (i * base < base - 0.5) i *= base;
       return i <= k ? specifier(d) : "";
     };
+  };
+
+  scale.nice = function() {
+    return domain(nice(domain(), {
+      floor: function(x) { return pows(Math.floor(logs(x))); },
+      ceil: function(x) { return pows(Math.ceil(logs(x))); }
+    }));
   };
 
   scale.copy = function() {

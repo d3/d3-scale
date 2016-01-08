@@ -96,13 +96,6 @@ export function calendar(year, month, week, day, hour, minute, second, milliseco
     return arguments.length ? domain(_) : domain().map(newDate);
   };
 
-  scale.nice = function(interval, step) {
-    var d = domain();
-    return (interval = tickInterval(interval, d[0], d[d.length - 1], step))
-        ? domain(nice(d, interval))
-        : scale;
-  };
-
   scale.ticks = function(interval, step) {
     var d = domain(),
         t0 = d[0],
@@ -117,6 +110,13 @@ export function calendar(year, month, week, day, hour, minute, second, milliseco
 
   scale.tickFormat = function(specifier) {
     return specifier == null ? tickFormat : format(specifier);
+  };
+
+  scale.nice = function(interval, step) {
+    var d = domain();
+    return (interval = tickInterval(interval, d[0], d[d.length - 1], step))
+        ? domain(nice(d, interval))
+        : scale;
   };
 
   scale.copy = function() {

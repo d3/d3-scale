@@ -307,10 +307,6 @@ See [*continuous*.clamp](#continuous_clamp).
 
 See [*continuous*.interpolate](#continuous_interpolate).
 
-<a name="log_nice" href="#log_nice">#</a> <i>log</i>.<b>nice</b>()
-
-Like [*continuous*.nice](#continuous_nice), except extends the domain to integer powers of [base](#log_base). For example, for a domain of [0.201479…, 0.996679…], and base 10, the nice domain is [0.1, 1]. If the domain has more than two values, nicing the domain only affects the first and last value.
-
 <a name="log_ticks" href="#log_ticks">#</a> <i>log</i>.<b>ticks</b>([<i>count</i>])
 
 Like [*continuous*.ticks](#continuous_ticks), but customized for a log scale. If the [base](#log_base) is an integer, the returned ticks are uniformly spaced within each integer power of base; otherwise, one tick per power of base is returned. The returned ticks are guaranteed to be within the extent of the domain. If the orders of magnitude in the [domain](#log_domain) is greater than *count*, then at most one tick per power is returned. Otherwise, the tick values are unfiltered, but note that you can use [*log*.tickFormat](#log_tickFormat) to filter the display of tick lables. If *count* is not specified, it defaults to 10.
@@ -318,6 +314,10 @@ Like [*continuous*.ticks](#continuous_ticks), but customized for a log scale. If
 <a name="log_tickFormat" href="#log_tickFormat">#</a> <i>log</i>.<b>tickFormat</b>([<i>count</i>[, <i>specifier</i>]])
 
 Like [*continuous*.tickFormat](#continuous_tickFormat), but customized for a log scale. If a *count* is specified, then the formatter may return the empty string for some of the tick labels; this is useful if there is not enough room to fit all of the tick labels, but you still want to display the tick marks to show the log scale distortion. When specifying a count, you may also provide a format *specifier* or format function. For example, to get a tick formatter that will display 20 ticks of a currency, say `log.tickFormat(20, "$,f")`. If the specifier does not have a defined precision, the precision will be set automatically by the scale, returning the appropriate format. This provides a convenient, declarative way of specifying a format whose precision will be automatically set by the scale.
+
+<a name="log_nice" href="#log_nice">#</a> <i>log</i>.<b>nice</b>()
+
+Like [*continuous*.nice](#continuous_nice), except extends the domain to integer powers of [base](#log_base). For example, for a domain of [0.201479…, 0.996679…], and base 10, the nice domain is [0.1, 1]. If the domain has more than two values, nicing the domain only affects the first and last value.
 
 <a name="log_copy" href="#log_copy">#</a> <i>log</i>.<b>copy</b>()
 
@@ -575,10 +575,6 @@ If *domain* is specified, sets the scale’s domain to the specified two-element
 
 If *range* is specified, sets the scale’s range to the specified array of values. The array may contain any number of discrete values. The elements in the given array need not be numbers; any value or type will work. If *range* is not specified, returns the scale’s current range.
 
-<a name="quantize_nice" href="#quantize_nice">#</a> <i>quantize</i>.<b>nice</b>()
-
-Equivalent to [*linear*.nice](#linear_nice).
-
 <a name="quantize_ticks" href="#quantize_ticks">#</a> <i>quantize</i>.<b>ticks</b>([<i>count</i>])
 
 Equivalent to [*linear*.ticks](#linear_ticks).
@@ -586,6 +582,10 @@ Equivalent to [*linear*.ticks](#linear_ticks).
 <a name="quantize_tickFormat" href="#quantize_tickFormat">#</a> <i>quantize</i>.<b>tickFormat</b>([<i>count</i>[, <i>specifier</i>]])
 
 Equivalent to [*linear*.tickFormat](#linear_tickFormat).
+
+<a name="quantize_nice" href="#quantize_nice">#</a> <i>quantize</i>.<b>nice</b>()
+
+Equivalent to [*linear*.nice](#linear_nice).
 
 <a name="quantize_copy" href="#quantize_copy">#</a> <i>quantize</i>.<b>copy</b>()
 
