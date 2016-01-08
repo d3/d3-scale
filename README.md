@@ -615,7 +615,7 @@ Constructs a new band scale with the empty [domain](#band_domain), the unit [ran
 
 <a name="_band" href="#_band">#</a> <i>band</i>(*value*)
 
-Given a *value* in the input [domain](#band_domain), returns the start of the corresponding band derived from the output [range](#band_range). If the given *value* is not in the scale’s [domain](#ordinal_domain), returns undefined.
+Given a *value* in the input [domain](#band_domain), returns the start of the corresponding band derived from the output [range](#band_range). If the given *value* is not in the scale’s domain, returns undefined.
 
 <a name="band_domain" href="#band_domain">#</a> <i>band</i>.<b>domain</b>([<i>domain</i>])
 
@@ -643,11 +643,11 @@ If *round* is specified, enables or disables rounding accordingly. If rounding i
 
 <a name="band_paddingInner" href="#band_paddingInner">#</a> <i>band</i>.<b>paddingInner</b>([<i>padding</i>])
 
-If *padding* is specified, sets the inner padding to the specified value which must be in the range [0, 1]. If *padding* is not specified, returns the current inner padding which defaults to 0. The inner padding determines the ratio of the range that is reserved for blank space between bars.
+If *padding* is specified, sets the inner padding to the specified value which must be in the range [0, 1]. If *padding* is not specified, returns the current inner padding which defaults to 0. The inner padding determines the ratio of the range that is reserved for blank space between bands.
 
 <a name="band_paddingOuter" href="#band_paddingOuter">#</a> <i>band</i>.<b>paddingOuter</b>([<i>padding</i>])
 
-If *padding* is specified, sets the outer padding to the specified value which must be in the range [0, 1]. If *padding* is not specified, returns the current outer padding which defaults to 0. The outer padding determines the ratio of the range that is reserved for blank space before the first bar and after the last bar.
+If *padding* is specified, sets the outer padding to the specified value which must be in the range [0, 1]. If *padding* is not specified, returns the current outer padding which defaults to 0. The outer padding determines the ratio of the range that is reserved for blank space before the first band and after the last band.
 
 <a name="band_padding" href="#band_padding">#</a> <i>band</i>.<b>padding</b>([<i>padding</i>])
 
@@ -655,7 +655,7 @@ A convenience method for setting the [inner](#band_paddingInner) and [outer](#ba
 
 <a name="band_align" href="#band_align">#</a> <i>band</i>.<b>align</b>([<i>align</i>])
 
-If *align* is specified, sets the alignment to the specified value which must be in the range [0, 1]. If *align* is not specified, returns the current alignment which defaults to 0.5. The alignment determines how any leftover unused space in the range is distributed. A value of 0.5 indicates that the leftover space should be equally distributed before the first bar and after the last bar; *i.e.*, the bars should be centered within the range. A value of 0 or 1 may be used to shift the bars to one side, say to position them adjacent to an axis.
+If *align* is specified, sets the alignment to the specified value which must be in the range [0, 1]. If *align* is not specified, returns the current alignment which defaults to 0.5. The alignment determines how any leftover unused space in the range is distributed. A value of 0.5 indicates that the leftover space should be equally distributed before the first band and after the last band; *i.e.*, the bands should be centered within the range. A value of 0 or 1 may be used to shift the bands to one side, say to position them adjacent to an axis.
 
 <a name="band_bandwidth" href="#band_bandwidth">#</a> <i>band</i>.<b>bandwidth</b>()
 
@@ -677,11 +677,55 @@ Point scales are a variant of [band scales](#band-scales) with the bandwidth fix
 
 <a name="scalePoint" href="#scalePoint">#</a> d3.<b>scalePoint</b>()
 
-Constructs a new point scale with the empty [domain](#band_domain), the unit [range](#band_range) [0, 1], no [padding](#point_padding), no [rounding](#band_round) and center [alignment](#band_align).
+Constructs a new point scale with the empty [domain](#point_domain), the unit [range](#point_range) [0, 1], no [padding](#point_padding), no [rounding](#point_round) and center [alignment](#point_align).
+
+<a name="_point" href="#_point">#</a> <i>point</i>(*value*)
+
+Given a *value* in the input [domain](#point_domain), returns the corresponding point derived from the output [range](#point_range). If the given *value* is not in the scale’s domain, returns undefined.
+
+<a name="point_domain" href="#point_domain">#</a> <i>point</i>.<b>domain</b>([<i>domain</i>])
+
+If *domain* is specified, sets the domain to the specified array of values. The first element in *domain* will be mapped to the first point, the second domain value to the second point, and so on. Domain values are stored internally in a map from stringified value to index; the resulting index is then used to determine the point. Thus, a point scale’s values must be coercible to a string, and the stringified version of the domain value uniquely identifies the corresponding point. If *domain* is not specified, this method returns the current domain.
+
+<a name="point_range" href="#point_range">#</a> <i>point</i>.<b>range</b>([<i>range</i>])
+
+If *domain* is specified, sets the scale’s domain to the specified two-element array of numbers. If the elements in the given array are not numbers, they will be coerced to numbers. If *range* is not specified, returns the scale’s current range, which defaults to [0, 1].
+
+<a name="point_rangeRound" href="#point_rangeRound">#</a> <i>point</i>.<b>rangeRound</b>([<i>range</i>])
+
+Sets the scale’s [*range*](#point_range) to the specified two-element array of numbers while also enabling [rounding](#point_round). This is a convenience method equivalent to:
+
+```js
+point
+    .range(range)
+    .round(true);
+```
+
+Rounding is sometimes useful for avoiding antialiasing artifacts, though also consider the [shape-rendering](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering) “crispEdges” styles.
+
+<a name="point_round" href="#point_round">#</a> <i>point</i>.<b>round</b>([<i>round</i>])
+
+If *round* is specified, enables or disables rounding accordingly. If rounding is enabled, the position of each point will be integers. Rounding is sometimes useful for avoiding antialiasing artifacts, though also consider the [shape-rendering](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering) “crispEdges” styles. Note that if the width of the domain is not a multiple of the cardinality of the range, there may be leftover unused space, even without padding! Use [*point*.align](#point_align) to specify how the leftover space is distributed.
 
 <a name="point_padding" href="#point_padding">#</a> <i>point</i>.<b>padding</b>([<i>padding</i>])
 
-Equivalent to [*band*.paddingOuter](#band_paddingOuter).
+If *padding* is specified, sets the outer padding to the specified value which must be in the range [0, 1]. If *padding* is not specified, returns the current outer padding which defaults to 0. The outer padding determines the ratio of the range that is reserved for blank space before the first point and after the last point. Equivalent to [*band*.paddingOuter](#band_paddingOuter).
+
+<a name="point_align" href="#point_align">#</a> <i>point</i>.<b>align</b>([<i>align</i>])
+
+If *align* is specified, sets the alignment to the specified value which must be in the range [0, 1]. If *align* is not specified, returns the current alignment which defaults to 0.5. The alignment determines how any leftover unused space in the range is distributed. A value of 0.5 indicates that the leftover space should be equally distributed before the first point and after the last point; *i.e.*, the points should be centered within the range. A value of 0 or 1 may be used to shift the points to one side, say to position them adjacent to an axis.
+
+<a name="point_bandwidth" href="#point_bandwidth">#</a> <i>point</i>.<b>bandwidth</b>()
+
+Returns zero.
+
+<a name="point_step" href="#point_step">#</a> <i>point</i>.<b>step</b>()
+
+Returns the distance between the starts of adjacent points.
+
+<a name="point_copy" href="#point_copy">#</a> <i>point</i>.<b>copy</b>()
+
+Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
 
 ### Categorical Color Scales
 
