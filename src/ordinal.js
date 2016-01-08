@@ -1,7 +1,7 @@
 import {map} from "d3-collection";
 import {slice} from "./array";
 
-export var implicit = {};
+export var implicit = {name: "implicit"};
 
 export default function ordinal() {
   var index = map(),
