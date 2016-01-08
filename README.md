@@ -689,22 +689,22 @@ Equivalent to [*band*.paddingOuter](#band_paddingOuter).
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category10.png" width="100%" height="40" alt="category10">
 
-Constructs a new [ordinal scale](#ordinal) with a range of ten categorical colors.
+Constructs a new [ordinal scale](#ordinal-scales) with a range of ten categorical colors.
 
 <a name="scaleCategory20" href="#scaleCategory20">#</a> d3.<b>scaleCategory20</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category20.png" width="100%" height="40" alt="category20">
 
-Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical colors.
+Constructs a new [ordinal scale](#ordinal-scales) with a range of twenty categorical colors.
 
 <a name="scaleCategory20b" href="#scaleCategory20b">#</a> d3.<b>scaleCategory20b</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category20b.png" width="100%" height="40" alt="category20b">
 
-Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical colors.
+Constructs a new [ordinal scale](#ordinal-scales) with a range of twenty categorical colors.
 
 <a name="scaleCategory20c" href="#scaleCategory20c">#</a> d3.<b>scaleCategory20c</b>()
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category20c.png" width="100%" height="40" alt="category20c">
 
-Constructs a new [ordinal scale](#ordinal) with a range of twenty categorical colors. This color scale includes color specifications and designs developed by Cynthia Brewer ([colorbrewer2.org](http://colorbrewer2.org/)).
+Constructs a new [ordinal scale](#ordinal-scales) with a range of twenty categorical colors. This color scale includes color specifications and designs developed by Cynthia Brewer ([colorbrewer2.org](http://colorbrewer2.org/)).
