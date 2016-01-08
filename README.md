@@ -47,7 +47,7 @@ If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release]
 
 Continuous scales map a continuous, quantitative input [domain](#continuous_domain) to a continuous output [range](#continuous_range). If the range is also numeric, the mapping may be [inverted](#continuous_invert). A continuous scale is not constructed directly; instead, try a [linear](#linear), [power](#pow), [log](#log), [identity](#identity), [time](#time) or [sequential color](#sequential-color-scales) scale.
 
-<a name="continuous" href="#continuous">#</a> <i>continuous</i>(<i>value</i>)
+<a name="_continuous" href="#_continuous">#</a> <i>continuous</i>(<i>value</i>)
 
 Given a *value* from the [domain](#continuous_domain), returns the corresponding value from the [range](#continuous_range). If the given *value* is outside the domain, and [clamping](#continuous_clamp) is not enabled, the mapping may be extrapolated such that the returned value is outside the range. For example, to apply a position encoding:
 
@@ -213,9 +213,53 @@ Power scales are similar to [linear scales](#linear), except an exponential tran
 
 Constructs a new [continuous scale](#continuous-scales) with the unit [domain](#continuous_domain) [0, 1], the unit [range](#continuous_range) [0, 1], the [exponent](#pow_exponent) 1, the [default](https://github.com/d3/d3-interpolate#interpolate) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. (Note that this is effectively a [linear](#linear) scale until you set a different exponent.)
 
+<a name="pow" href="#_pow">#</a> <i>pow</i>(<i>value</i>)
+
+See [*continuous*](#_continuous).
+
+<a name="pow_invert" href="#pow_invert">#</a> <i>pow</i>.<b>invert</b>(<i>value</i>)
+
+See [*continuous*.invert](#continuous_invert).
+
 <a name="pow_exponent" href="#pow_exponent">#</a> <i>pow</i>.<b>exponent</b>([<i>exponent</i>])
 
 If *exponent* is specified, sets the current exponent to the given numeric value. If *exponent* is not specified, returns the current exponent, which defaults to 1. (Note that this is effectively a [linear](#linear) scale until you set a different exponent.)
+
+<a name="pow_domain" href="#pow_domain">#</a> <i>pow</i>.<b>domain</b>([<i>domain</i>])
+
+See [*continuous*.domain](#continuous_domain).
+
+<a name="pow_range" href="#pow_range">#</a> <i>pow</i>.<b>range</b>([<i>range</i>])
+
+See [*continuous*.range](#continuous_range).
+
+<a name="pow_rangeRound" href="#pow_rangeRound">#</a> <i>pow</i>.<b>rangeRound</b>([<i>range</i>])
+
+See [*continuous*.rangeRound](#continuous_rangeRound).
+
+<a name="pow_clamp" href="#pow_clamp">#</a> <i>pow</i>.<b>clamp</b>(<i>clamp</i>)
+
+See [*continuous*.clamp](#continuous_clamp).
+
+<a name="pow_interpolate" href="#pow_interpolate">#</a> <i>pow</i>.<b>interpolate</b>(<i>interpolate</i>[, <i>parameters…</i>])
+
+See [*continuous*.interpolate](#continuous_interpolate).
+
+<a name="pow_ticks" href="#pow_ticks">#</a> <i>pow</i>.<b>ticks</b>([<i>count</i>])
+
+See [*continuous*.ticks](#continuous_ticks).
+
+<a name="pow_tickFormat" href="#pow_tickFormat">#</a> <i>pow</i>.<b>tickFormat</b>([<i>count</i>[, <i>specifier</i>]])
+
+See [*continuous*.tickFormat](#continuous_tickFormat).
+
+<a name="pow_nice" href="#pow_nice">#</a> <i>pow</i>.<b>nice</b>([<i>count</i>])
+
+See [*continuous*.nice](#continuous_nice).
+
+<a name="pow_copy" href="#pow_copy">#</a> <i>pow</i>.<b>copy</b>()
+
+See [*continuous*.copy](#continuous_copy).
 
 <a name="scaleSqrt" href="#scaleSqrt">#</a> d3.<b>scaleSqrt</b>()
 
