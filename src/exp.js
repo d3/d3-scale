@@ -1,6 +1,6 @@
 import constant from "./constant";
 import {linearish} from "./linear";
-import { logp, powp } from "./log";
+import {logp, powp} from "./log";
 import {default as continuous, copy, deinterpolateLinear} from "./continuous";
 
 export default function exp() {
