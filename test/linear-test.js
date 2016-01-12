@@ -390,6 +390,13 @@ tape("linear.tickFormat(count, specifier) sets the appropriate prefix precision 
   test.end();
 });
 
+tape("linear.tickFormat() uses the default precision when the domain is invalid", function(test) {
+  var f = scale.scaleLinear().domain([0, NaN]).tickFormat();
+  test.equal(f + "", " >-,f");
+  test.equal(f(0.12), "0.120000");
+  test.end();
+});
+
 tape("linear.copy() returns a copy with changes to the domain are isolated", function(test) {
   var x = scale.scaleLinear(), y = x.copy();
   x.domain([1, 2]);
