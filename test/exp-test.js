@@ -18,10 +18,30 @@ tape("exp(x) maps a domain value x to a range value y", function(test) {
   test.equal(s(1), Math.E);
   test.equal(s(2), Math.E * Math.E);
 
-  s.domain([0, 2]).range([1, 100]);
-  test.equal(s(0), 1);
-  test.equal(s(1), 10);
-  test.equal(s(2), 100);
+  s = s.base(10);
+  s = s.domain([0, 5]).range([1e0, 1e5]);
+  test.equal(s(0), 1e0);
+  test.equal(s(1), 1e1);
+  test.equal(s(2), 1e2);
+  test.equal(s(3), 1e3);
+  test.equal(s(4), 1e4);
+  test.equal(s(5), 1e5);
+
+  s = s.domain([0, 5]).range([1e5, 1e10]);
+  test.equal(s(0), 1e5);
+  test.equal(s(1), 1e6);
+  test.equal(s(2), 1e7);
+  test.equal(s(3), 1e8);
+  test.equal(s(4), 1e9);
+  test.equal(s(5), 1e10);
+
+  s = s.domain([5, 10]).range([1e2, 1e7]);
+  test.equal(s(5), 1e2);
+  test.equal(s(6), 1e3);
+  test.equal(s(7), 1e4);
+  test.equal(s(8), 1e5);
+  test.equal(s(9), 1e6);
+  test.equal(s(10), 1e7);
 
   test.end();
 });

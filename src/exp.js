@@ -12,6 +12,7 @@ export default function exp() {
 
   function rescale() {
     log = logp(base);
+    pow = powp(base);
     return scale;
   }
 
