@@ -81,7 +81,11 @@ export default function log() {
 
     if (!(base % 1) && j - i < n) {
       i = Math.round(i) - 1, j = Math.round(j) + 1;
-      if (u > 0) for (; i < j; ++i) {
+      var testI = i;
+      while(pows(testI) * base < u) testI++;
+      if (v - u < pows(testI)) {
+        z = ticks(u, v, n);
+      } else if (u > 0) for (; i < j; ++i) {
         for (k = 1, p = pows(i); k < base; ++k) {
           t = p * k;
           if (t < u) continue;

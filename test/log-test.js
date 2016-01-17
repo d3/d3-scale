@@ -299,6 +299,14 @@ tape("log.ticks() generates the expected power-of-ten ticks for small domains", 
   test.end();
 });
 
+tape("log.ticks() generates linear ticks when the domain is small compared to the minimum value", function(test) {
+  var s = scale.scaleLog();
+  test.deepEqual(s.domain([41, 42]).ticks(), [41, 41.1, 41.2, 41.3, 41.4, 41.5, 41.6, 41.7, 41.8, 41.9, 42]);
+  test.deepEqual(s.domain([42, 41]).ticks(), [42, 41.9, 41.8, 41.7, 41.6, 41.5, 41.4, 41.3, 41.2, 41.1, 41]);
+  test.deepEqual(s.domain([1600, 1400]).ticks(), [1600, 1580, 1560, 1540, 1520, 1500, 1480, 1460, 1440, 1420, 1400]);
+  test.end();
+});
+
 tape("log.base(base).ticks() generates the expected power-of-base ticks", function(test) {
   var s = scale.scaleLog().base(Math.E);
   test.deepEqual(s.domain([0.1, 100]).ticks().map(round), [0.135335283237, 0.367879441171, 1, 2.718281828459, 7.389056098931, 20.085536923188, 54.598150033144]);
