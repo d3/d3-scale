@@ -43,4 +43,4 @@ export default function quantize() {
   };
 
   return linearish(scale);
-};
+}

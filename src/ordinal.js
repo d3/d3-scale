@@ -42,4 +42,4 @@ export default function ordinal() {
   };
 
   return scale;
-};
+}

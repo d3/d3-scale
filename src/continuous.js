@@ -10,7 +10,7 @@ export function deinterpolateLinear(a, b) {
   return (b -= (a = +a))
       ? function(x) { return (x - a) / b; }
       : constant(b);
-};
+}
 
 function deinterpolateClamp(deinterpolate) {
   return function(a, b) {
@@ -62,7 +62,7 @@ export function copy(source, target) {
       .range(source.range())
       .interpolate(source.interpolate())
       .clamp(source.clamp());
-};
+}
 
 // deinterpolate(a, b)(x) takes a domain value x in [a,b] and returns the corresponding parameter t in [0,1].
 // reinterpolate(a, b)(t) takes a parameter t in [0,1] and returns the corresponding domain value x in [a,b].
@@ -105,9 +105,9 @@ export default function continuous(deinterpolate, reinterpolate) {
     return arguments.length ? (clamp = !!_, rescale()) : clamp;
   };
 
-  scale.interpolate = function(_) {
+  scale.interpolate = function() {
     return arguments.length ? (interpolate = interpolateBind.apply(null, arguments), rescale()) : interpolate;
   };
 
   return rescale();
-};
+}

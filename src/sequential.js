@@ -23,4 +23,4 @@ export default function sequential(interpolate) {
   };
 
   return linearish(scale);
-};
+}

@@ -1,4 +1,4 @@
-import {map, slice} from "./array";
+import {map} from "./array";
 import {linearish} from "./linear";
 import number from "./number";
 
@@ -20,4 +20,4 @@ export default function identity() {
   };
 
   return linearish(scale);
-};
+}

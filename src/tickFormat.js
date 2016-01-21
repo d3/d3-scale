@@ -28,4 +28,4 @@ export default function(domain, count, specifier) {
     }
   }
   return format(specifier);
-};
+}

@@ -80,7 +80,7 @@ export default function band() {
   };
 
   return rescale();
-};
+}
 
 function pointish(scale) {
   var copy = scale.copy;
@@ -98,4 +98,4 @@ function pointish(scale) {
 
 export function point() {
   return pointish(band().paddingInner(1));
-};
+}

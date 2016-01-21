@@ -34,7 +34,7 @@ export function linearish(scale) {
   };
 
   return scale;
-};
+}
 
 export default function linear() {
   var scale = continuous(deinterpolate, reinterpolate);
@@ -44,4 +44,4 @@ export default function linear() {
   };
 
   return linearish(scale);
-};
+}

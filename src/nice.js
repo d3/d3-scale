@@ -15,4 +15,4 @@ export default function(domain, interval) {
   domain[i0] = interval.floor(x0);
   domain[i1] = interval.ceil(x1);
   return domain;
-};
+}

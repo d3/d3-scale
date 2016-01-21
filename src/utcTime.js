@@ -4,4 +4,4 @@ import {utcYear, utcMonth, utcWeek, utcDay, utcHour, utcMinute, utcSecond, utcMi
 
 export default function() {
   return calendar(utcYear, utcMonth, utcWeek, utcDay, utcHour, utcMinute, utcSecond, utcMillisecond, utcFormat).domain([Date.UTC(2000, 0, 1), Date.UTC(2000, 0, 2)]);
-};
+}

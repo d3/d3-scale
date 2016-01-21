@@ -21,12 +21,12 @@ function interpolateRainbow(t) {
 
 export function warm() {
   return sequential(interpolateWarm);
-};
+}
 
 export function cool() {
   return sequential(interpolateCool);
-};
+}
 
 export default function() {
   return sequential(interpolateRainbow);
-};
+}

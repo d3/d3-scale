@@ -14,16 +14,16 @@ function ramp(range) {
 
 export default function() {
   return ramp(rangeViridis);
-};
+}
 
 export function magma() {
   return ramp(rangeMagma);
-};
+}
 
 export function inferno() {
   return ramp(rangeInferno);
-};
+}
 
 export function plasma() {
   return ramp(rangePlasma);
-};
+}

@@ -31,8 +31,8 @@ export default function pow() {
   };
 
   return linearish(scale);
-};
+}
 
 export function sqrt() {
   return pow().exponent(0.5);
-};
+}
