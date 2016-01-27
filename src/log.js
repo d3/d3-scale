@@ -107,7 +107,8 @@ export default function log() {
   scale.tickFormat = function(count, specifier) {
     if (specifier == null) specifier = base === 10 ? tickFormat10 : tickFormatOther;
     else if (typeof specifier !== "function") specifier = format(specifier);
-    if (count == null) return specifier;
+    if (count === Infinity) return specifier;
+    if (count == null) count = 10;
     var k = Math.max(1, base * count / scale.ticks().length); // TODO fast estimate?
     return function(d) {
       var i = d / pows(Math.round(logs(d)));

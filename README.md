@@ -313,7 +313,7 @@ Like [*continuous*.ticks](#continuous_ticks), but customized for a log scale. If
 
 <a name="log_tickFormat" href="#log_tickFormat">#</a> <i>log</i>.<b>tickFormat</b>([<i>count</i>[, <i>specifier</i>]])
 
-Like [*continuous*.tickFormat](#continuous_tickFormat), but customized for a log scale. If a *count* is specified, then the formatter may return the empty string for some of the tick labels; this is useful if there is not enough room to fit all of the tick labels, but you still want to display the tick marks to show the log scale distortion. When specifying a count, you may also provide a format *specifier* or format function. For example, to get a tick formatter that will display 20 ticks of a currency, say `log.tickFormat(20, "$,f")`. If the specifier does not have a defined precision, the precision will be set automatically by the scale, returning the appropriate format. This provides a convenient, declarative way of specifying a format whose precision will be automatically set by the scale.
+Like [*continuous*.tickFormat](#continuous_tickFormat), but customized for a log scale. The specified *count* typically has the same value as the count that is used to generate the [tick values](#continuous_ticks). If there are too many ticks, the formatter may return the empty string for some of the tick labels; however, note that the ticks are still shown. To disable filtering, specify a *count* of Infinity. When specifying a count, you may also provide a format *specifier* or format function. For example, to get a tick formatter that will display 20 ticks of a currency, say `log.tickFormat(20, "$,f")`. If the specifier does not have a defined precision, the precision will be set automatically by the scale, returning the appropriate format. This provides a convenient way of specifying a format whose precision will be automatically set by the scale.
 
 <a name="log_nice" href="#log_nice">#</a> <i>log</i>.<b>nice</b>()
 
@@ -577,15 +577,15 @@ If *range* is specified, sets the scale’s range to the specified array of valu
 
 <a name="quantize_ticks" href="#quantize_ticks">#</a> <i>quantize</i>.<b>ticks</b>([<i>count</i>])
 
-Equivalent to [*linear*.ticks](#linear_ticks).
+Equivalent to [*continuous*.ticks](#continuous_ticks).
 
 <a name="quantize_tickFormat" href="#quantize_tickFormat">#</a> <i>quantize</i>.<b>tickFormat</b>([<i>count</i>[, <i>specifier</i>]])
 
-Equivalent to [*linear*.tickFormat](#linear_tickFormat).
+Equivalent to [*continuous*.tickFormat](#continuous_tickFormat).
 
 <a name="quantize_nice" href="#quantize_nice">#</a> <i>quantize</i>.<b>nice</b>()
 
-Equivalent to [*linear*.nice](#linear_nice).
+Equivalent to [*continuous*.nice](#continuous_nice).
 
 <a name="quantize_copy" href="#quantize_copy">#</a> <i>quantize</i>.<b>copy</b>()
 

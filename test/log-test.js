@@ -44,7 +44,7 @@ tape("log.domain(…) coerces values to numbers", function(test) {
 
 tape("log.domain(…) can take negative values", function(test) {
   var x = scale.scaleLog().domain([-100, -1]);
-  test.deepEqual(x.ticks().map(x.tickFormat()), [
+  test.deepEqual(x.ticks().map(x.tickFormat(Infinity)), [
     "-1e+2",
     "-9e+1", "-8e+1", "-7e+1", "-6e+1", "-5e+1", "-4e+1", "-3e+1", "-2e+1", "-1e+1",
     "-9e+0", "-8e+0", "-7e+0", "-6e+0", "-5e+0", "-4e+0", "-3e+0", "-2e+0", "-1e+0"
@@ -305,9 +305,9 @@ tape("log.base(base).ticks() generates the expected power-of-base ticks", functi
   test.end();
 });
 
-tape("log.tickFormat() returns the \".0e\" format", function(test) {
+tape("log.tickFormat() is equivalent to log.tickFormat(10)", function(test) {
   var s = scale.scaleLog();
-  test.deepEqual(s.domain([1e-1, 1e1]).ticks().map(s.tickFormat()), ["1e-1", "2e-1", "3e-1", "4e-1", "5e-1", "6e-1", "7e-1", "8e-1", "9e-1", "1e+0", "2e+0", "3e+0", "4e+0", "5e+0", "6e+0", "7e+0", "8e+0", "9e+0", "1e+1"]);
+  test.deepEqual(s.domain([1e-1, 1e1]).ticks().map(s.tickFormat()), ["1e-1", "2e-1", "3e-1", "4e-1", "5e-1", "", "", "", "", "1e+0", "2e+0", "3e+0", "4e+0", "5e+0", "", "", "", "", "1e+1"]);
   test.end();
 });
 
@@ -342,18 +342,18 @@ tape("log.base(base).tickFormat(count) returns a filtered \",\" format", functio
 
 tape("log.ticks() generates log ticks", function(test) {
   var x = scale.scaleLog();
-  test.deepEqual(x.ticks().map(x.tickFormat()), [
+  test.deepEqual(x.ticks().map(x.tickFormat(Infinity)), [
     "1e+0", "2e+0", "3e+0", "4e+0", "5e+0", "6e+0", "7e+0", "8e+0", "9e+0",
     "1e+1"
   ]);
   x.domain([100, 1]);
-  test.deepEqual(x.ticks().map(x.tickFormat()), [
+  test.deepEqual(x.ticks().map(x.tickFormat(Infinity)), [
     "1e+2",
     "9e+1", "8e+1", "7e+1", "6e+1", "5e+1", "4e+1", "3e+1", "2e+1", "1e+1",
     "9e+0", "8e+0", "7e+0", "6e+0", "5e+0", "4e+0", "3e+0", "2e+0", "1e+0",
   ]);
   x.domain([0.49999, 0.006029505943610648]);
-  test.deepEqual(x.ticks().map(x.tickFormat()), [
+  test.deepEqual(x.ticks().map(x.tickFormat(Infinity)), [
     "4e-1", "3e-1", "2e-1", "1e-1",
     "9e-2", "8e-2", "7e-2", "6e-2", "5e-2", "4e-2", "3e-2", "2e-2", "1e-2",
     "9e-3", "8e-3", "7e-3"
