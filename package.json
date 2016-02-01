@@ -1,6 +1,6 @@
 {
   "name": "d3-scale",
-  "version": "0.5.3",
+  "version": "0.6.0",
   "description": "Encodings that map abstract data to visual representation.",
   "keywords": [
     "d3",
@@ -23,14 +23,14 @@
     "pretest": "mkdir -p build && node -e 'process.stdout.write(\"var version = \\\"\" + require(\"./package.json\").version + \"\\\"; export * from \\\"../index\\\"; export {version};\");' > build/bundle.js && rollup -f umd -g d3-array:d3_array,d3-collection:d3_collection,d3-color:d3_color,d3-format:d3_format,d3-interpolate:d3_interpolate,d3-time:d3_time,d3-time-format:d3_time_format -n d3_scale -o build/d3-scale.js -- build/bundle.js",
     "test": "TZ=America/Los_Angeles faucet `find test -name '*-test.js'` && eslint index.js src",
     "prepublish": "npm run test && uglifyjs build/d3-scale.js -c -m -o build/d3-scale.min.js && rm -f build/d3-scale.zip && zip -j build/d3-scale.zip -- LICENSE README.md build/d3-scale.js build/d3-scale.min.js",
-    "postpublish": "VERSION=`node -e 'console.log(require(\"./package.json\").version)'`; git push && git tag -am \"Release $VERSION.\" v${VERSION} && git push --tags && cp build/d3-scale.js ../d3.github.com/d3-scale.v0.5.js && cp build/d3-scale.min.js ../d3.github.com/d3-scale.v0.5.min.js && cd ../d3.github.com && git add d3-scale.v0.5.js d3-scale.v0.5.min.js && git commit -m \"d3-scale ${VERSION}\" && git push"
+    "postpublish": "VERSION=`node -e 'console.log(require(\"./package.json\").version)'`; git push && git tag -am \"Release $VERSION.\" v${VERSION} && git push --tags && cp build/d3-scale.js ../d3.github.com/d3-scale.v0.6.js && cp build/d3-scale.min.js ../d3.github.com/d3-scale.v0.6.min.js && cd ../d3.github.com && git add d3-scale.v0.6.js d3-scale.v0.6.min.js && git commit -m \"d3-scale ${VERSION}\" && git push"
   },
   "dependencies": {
     "d3-array": "~0.7.0",
     "d3-collection": "~0.1.0",
     "d3-color": "~0.3.3",
     "d3-format": "~0.5.0",
-    "d3-interpolate": "~0.4.0",
+    "d3-interpolate": "~0.5.0",
     "d3-time": "~0.2.0",
     "d3-time-format": "~0.3.0"
   },

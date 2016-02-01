@@ -25,10 +25,10 @@ If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release]
 <script src="https://d3js.org/d3-collection.v0.1.min.js"></script>
 <script src="https://d3js.org/d3-color.v0.3.min.js"></script>
 <script src="https://d3js.org/d3-format.v0.5.min.js"></script>
-<script src="https://d3js.org/d3-interpolate.v0.4.min.js"></script>
+<script src="https://d3js.org/d3-interpolate.v0.5.min.js"></script>
 <script src="https://d3js.org/d3-time.v0.2.min.js"></script>
 <script src="https://d3js.org/d3-time-format.v0.3.min.js"></script>
-<script src="https://d3js.org/d3-scale.v0.5.min.js"></script>
+<script src="https://d3js.org/d3-scale.v0.6.min.js"></script>
 ```
 
 (If you’re not using [time scales](#time), you can omit d3-time and d3-time-format.) In a vanilla environment, a `d3_scale` global is exported. [Try d3-scale in your browser.](https://tonicdev.com/npm/d3-scale)
@@ -140,7 +140,7 @@ x.invert(-160); // 10, clamped to domain
 
 If *clamp* is not specified, returns whether or not the scale currently clamps values to within the range.
 
-<a name="continuous_interpolate" href="#continuous_interpolate">#</a> <i>continuous</i>.<b>interpolate</b>(<i>interpolate</i>[, <i>parameters…</i>])
+<a name="continuous_interpolate" href="#continuous_interpolate">#</a> <i>continuous</i>.<b>interpolate</b>(<i>interpolate</i>)
 
 If *interpolate* is specified, sets the scale’s [range](#continuous_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0, 1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s current interpolator factory, which defaults to [interpolate](https://github.com/d3/d3-interpolate#interpolate). See [d3-interpolate](https://github.com/d3/d3-interpolate) for more interpolators.
 
@@ -166,6 +166,15 @@ var color = d3.scaleLinear()
     .domain([10, 100])
     .range(["brown", "steelblue"])
     .interpolate(d3.interpolateHcl);
+```
+
+Or for [Cubehelix](https://github.com/d3/d3-interpolate#interpolateCubehelix) with a custom gamma:
+
+```js
+var color = d3.scaleLinear()
+    .domain([10, 100])
+    .range(["brown", "steelblue"])
+    .interpolate(d3.interpolateCubehelix.gamma(3));
 ```
 
 Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the range values are objects, then the value interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, this is typically acceptable (and desirable for performance); however, if you need to store the scale’s return value, you must specify your own interpolator or make a copy as appropriate.
@@ -241,7 +250,7 @@ See [*continuous*.rangeRound](#continuous_rangeRound).
 
 See [*continuous*.clamp](#continuous_clamp).
 
-<a name="pow_interpolate" href="#pow_interpolate">#</a> <i>pow</i>.<b>interpolate</b>(<i>interpolate</i>[, <i>parameters…</i>])
+<a name="pow_interpolate" href="#pow_interpolate">#</a> <i>pow</i>.<b>interpolate</b>(<i>interpolate</i>)
 
 See [*continuous*.interpolate](#continuous_interpolate).
 
@@ -303,7 +312,7 @@ See [*continuous*.rangeRound](#continuous_rangeRound).
 
 See [*continuous*.clamp](#continuous_clamp).
 
-<a name="log_interpolate" href="#log_interpolate">#</a> <i>log</i>.<b>interpolate</b>(<i>interpolate</i>[, <i>parameters…</i>])
+<a name="log_interpolate" href="#log_interpolate">#</a> <i>log</i>.<b>interpolate</b>(<i>interpolate</i>)
 
 See [*continuous*.interpolate](#continuous_interpolate).
 
@@ -378,7 +387,7 @@ See [*continuous*.rangeRound](#continuous_rangeRound).
 
 See [*continuous*.clamp](#continuous_clamp).
 
-<a name="time_interpolate" href="#time_interpolate">#</a> <i>time</i>.<b>interpolate</b>(<i>interpolate</i>[, <i>parameters…</i>])
+<a name="time_interpolate" href="#time_interpolate">#</a> <i>time</i>.<b>interpolate</b>(<i>interpolate</i>)
 
 See [*continuous*.interpolate](#continuous_interpolate).
 
