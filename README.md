@@ -318,7 +318,7 @@ See [*continuous*.interpolate](#continuous_interpolate).
 
 <a name="log_ticks" href="#log_ticks">#</a> <i>log</i>.<b>ticks</b>([<i>count</i>])
 
-Like [*continuous*.ticks](#continuous_ticks), but customized for a log scale. If the [base](#log_base) is an integer, the returned ticks are uniformly spaced within each integer power of base; otherwise, one tick per power of base is returned. The returned ticks are guaranteed to be within the extent of the domain. If the orders of magnitude in the [domain](#log_domain) is greater than *count*, then at most one tick per power is returned. Otherwise, the tick values are unfiltered, but note that you can use [*log*.tickFormat](#log_tickFormat) to filter the display of tick lables. If *count* is not specified, it defaults to 10.
+Like [*continuous*.ticks](#continuous_ticks), but customized for a log scale. If the [base](#log_base) is an integer, the returned ticks are uniformly spaced within each integer power of base; otherwise, one tick per power of base is returned. The returned ticks are guaranteed to be within the extent of the domain. If the orders of magnitude in the [domain](#log_domain) is greater than *count*, then at most one tick per power is returned. Otherwise, the tick values are unfiltered, but note that you can use [*log*.tickFormat](#log_tickFormat) to filter the display of tick labels. If *count* is not specified, it defaults to 10.
 
 <a name="log_tickFormat" href="#log_tickFormat">#</a> <i>log</i>.<b>tickFormat</b>([<i>count</i>[, <i>specifier</i>]])
 
@@ -541,7 +541,7 @@ Constructs a new quantize scale with the unit [domain](#quantize_domain) [0, 1] 
 
 <a name="_quantize" href="#_quantize">#</a> <i>quantize</i>(<i>value</i>)
 
-Given a *value* in the input [domain](#quantize_domain), returns the corresponding valuein the output [range](#quantize_range). For example, to apply a color encoding:
+Given a *value* in the input [domain](#quantize_domain), returns the corresponding value in the output [range](#quantize_range). For example, to apply a color encoding:
 
 ```js
 var color = d3.scaleQuantize()
