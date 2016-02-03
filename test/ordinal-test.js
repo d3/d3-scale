@@ -15,7 +15,7 @@ tape("ordinal(x) maps a unique name x in the domain to the corresponding value y
   var s = scale.scaleOrdinal().domain([0, 1]).range(["foo", "bar"]);
   test.equal(s(0), "foo");
   test.equal(s(1), "bar");
-  var s = scale.scaleOrdinal().range(["a", "b", "c"]);
+  s.range(["a", "b", "c"]);
   test.equal(s(0), "a");
   test.equal(s("0"), "a");
   test.equal(s([0]), "a");
