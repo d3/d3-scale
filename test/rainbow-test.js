@@ -5,18 +5,18 @@ tape("scaleRainbow() has the expected defaults", function(test) {
   var s = scale.scaleRainbow();
   test.deepEqual(s.domain(), [0, 1]);
   test.equal(s.clamp(), false);
-  test.equal(s(0.0), "#6e40aa");
-  test.equal(s(0.5), "#aff05b");
-  test.equal(s(1.0), "#6e40aa");
+  test.equal(s(0.0), "rgb(110, 64, 170)");
+  test.equal(s(0.5), "rgb(175, 240, 91)");
+  test.equal(s(1.0), "rgb(110, 64, 170)");
   test.end();
 });
 
 tape("rainbow(value) cycles by default", function(test) {
   var s = scale.scaleRainbow();
   for (var i = -2; i < 3; ++i) {
-    test.equal(s(i + 0.0), "#6e40aa");
-    test.equal(s(i + 0.5), "#aff05b");
-    test.equal(s(i + 1.0), "#6e40aa");
+    test.equal(s(i + 0.0), "rgb(110, 64, 170)");
+    test.equal(s(i + 0.5), "rgb(175, 240, 91)");
+    test.equal(s(i + 1.0), "rgb(110, 64, 170)");
   }
   test.end();
 });
@@ -24,20 +24,20 @@ tape("rainbow(value) cycles by default", function(test) {
 tape("rainbow.clamp(true) enables clamping", function(test) {
   var s = scale.scaleRainbow().clamp(true);
   test.equal(s.clamp(), true);
-  test.equal(s(-0.5), "#6e40aa");
-  test.equal(s( 0.0), "#6e40aa");
-  test.equal(s( 0.5), "#aff05b");
-  test.equal(s( 1.0), "#6e40aa");
-  test.equal(s( 1.5), "#6e40aa");
+  test.equal(s(-0.5), "rgb(110, 64, 170)");
+  test.equal(s( 0.0), "rgb(110, 64, 170)");
+  test.equal(s( 0.5), "rgb(175, 240, 91)");
+  test.equal(s( 1.0), "rgb(110, 64, 170)");
+  test.equal(s( 1.5), "rgb(110, 64, 170)");
   test.end();
 });
 
 tape("rainbow.domain() coerces domain values to numbers", function(test) {
   var s = scale.scaleRainbow().domain(["-1.20", "2.40"]);
   test.deepEqual(s.domain(), [-1.2, 2.4]);
-  test.equal(s(-1.2), "#6e40aa");
-  test.equal(s( 0.6), "#aff05b");
-  test.equal(s( 2.4), "#6e40aa");
+  test.equal(s(-1.2), "rgb(110, 64, 170)");
+  test.equal(s( 0.6), "rgb(175, 240, 91)");
+  test.equal(s( 2.4), "rgb(110, 64, 170)");
   test.end();
 });
 

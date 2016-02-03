@@ -7,7 +7,7 @@ tape("scaleLinear() has the expected defaults", function(test) {
   test.deepEqual(s.domain(), [0, 1]);
   test.deepEqual(s.range(), [0, 1]);
   test.equal(s.clamp(), false);
-  test.deepEqual(s.interpolate()({array: ["red"]}, {array: ["blue"]})(.5), {array: ["#800080"]});
+  test.deepEqual(s.interpolate()({array: ["red"]}, {array: ["blue"]})(.5), {array: ["rgb(128, 0, 128)"]});
   test.end();
 });
 
@@ -17,14 +17,14 @@ tape("linear(x) maps a domain value x to a range value y", function(test) {
 });
 
 tape("linear(x) ignores extra range values if the domain is smaller than the range", function(test) {
-  test.equal(scale.scaleLinear().domain([-10, 0]).range(["red", "white", "green"]).clamp(true)(-5), "#ff8080");
-  test.equal(scale.scaleLinear().domain([-10, 0]).range(["red", "white", "green"]).clamp(true)(50), "#ffffff");
+  test.equal(scale.scaleLinear().domain([-10, 0]).range(["red", "white", "green"]).clamp(true)(-5), "rgb(255, 128, 128)");
+  test.equal(scale.scaleLinear().domain([-10, 0]).range(["red", "white", "green"]).clamp(true)(50), "rgb(255, 255, 255)");
   test.end();
 });
 
 tape("linear(x) ignores extra domain values if the range is smaller than the domain", function(test) {
-  test.equal(scale.scaleLinear().domain([-10, 0, 100]).range(["red", "white"]).clamp(true)(-5), "#ff8080");
-  test.equal(scale.scaleLinear().domain([-10, 0, 100]).range(["red", "white"]).clamp(true)(50), "#ffffff");
+  test.equal(scale.scaleLinear().domain([-10, 0, 100]).range(["red", "white"]).clamp(true)(-5), "rgb(255, 128, 128)");
+  test.equal(scale.scaleLinear().domain([-10, 0, 100]).range(["red", "white"]).clamp(true)(50), "rgb(255, 255, 255)");
   test.end();
 });
 
@@ -53,9 +53,9 @@ tape("linear(x) can map a bilinear domain with two values to the corresponding r
 tape("linear(x) can map a polylinear domain with more than two values to the corresponding range", function(test) {
   var s = scale.scaleLinear().domain([-10, 0, 100]).range(["red", "white", "green"]);
   test.deepEqual(s.domain(), [-10, 0, 100]);
-  test.equal(s(-5), "#ff8080");
-  test.equal(s(50), "#80c080");
-  test.equal(s(75), "#40a040");
+  test.equal(s(-5), "rgb(255, 128, 128)");
+  test.equal(s(50), "rgb(128, 192, 128)");
+  test.equal(s(75), "rgb(64, 160, 64)");
   var s = scale.scaleLinear().domain([4, 2, 1]).range([1, 2, 4]);
   test.equal(s(1.5), 3);
   test.equal(s(3), 1.5);
@@ -131,18 +131,18 @@ tape("linear.range(range) does not coerce range to numbers", function(test) {
 });
 
 tape("linear.range(range) can accept range values as colors", function(test) {
-  test.equal(scale.scaleLinear().range(["red", "blue"])(.5), "#800080");
-  test.equal(scale.scaleLinear().range(["#ff0000", "#0000ff"])(.5), "#800080");
-  test.equal(scale.scaleLinear().range(["#f00", "#00f"])(.5), "#800080");
-  test.equal(scale.scaleLinear().range(["rgb(255,0,0)", "hsl(240,100%,50%)"])(.5), "#800080");
-  test.equal(scale.scaleLinear().range(["rgb(100%,0%,0%)", "hsl(240,100%,50%)"])(.5), "#800080");
-  test.equal(scale.scaleLinear().range(["hsl(0,100%,50%)", "hsl(240,100%,50%)"])(.5), "#800080");
+  test.equal(scale.scaleLinear().range(["red", "blue"])(.5), "rgb(128, 0, 128)");
+  test.equal(scale.scaleLinear().range(["#ff0000", "#0000ff"])(.5), "rgb(128, 0, 128)");
+  test.equal(scale.scaleLinear().range(["#f00", "#00f"])(.5), "rgb(128, 0, 128)");
+  test.equal(scale.scaleLinear().range(["rgb(255,0,0)", "hsl(240,100%,50%)"])(.5), "rgb(128, 0, 128)");
+  test.equal(scale.scaleLinear().range(["rgb(100%,0%,0%)", "hsl(240,100%,50%)"])(.5), "rgb(128, 0, 128)");
+  test.equal(scale.scaleLinear().range(["hsl(0,100%,50%)", "hsl(240,100%,50%)"])(.5), "rgb(128, 0, 128)");
   test.end();
 });
 
 tape("linear.range(range) can accept range values as arrays or objects", function(test) {
-  test.deepEqual(scale.scaleLinear().range([{color: "red"}, {color: "blue"}])(.5), {color: "#800080"});
-  test.deepEqual(scale.scaleLinear().range([["red"], ["blue"]])(.5), ["#800080"]);
+  test.deepEqual(scale.scaleLinear().range([{color: "red"}, {color: "blue"}])(.5), {color: "rgb(128, 0, 128)"});
+  test.deepEqual(scale.scaleLinear().range([["red"], ["blue"]])(.5), ["rgb(128, 0, 128)"]);
   test.end();
 });
 
@@ -437,7 +437,7 @@ tape("linear.copy() returns a copy with changes to the interpolator are isolated
   x.interpolate(i1);
   test.equal(y.interpolate(), i0);
   test.equal(x(0.5), "blue");
-  test.equal(y(0.5), "#800080");
+  test.equal(y(0.5), "rgb(128, 0, 128)");
   test.end();
 });
 

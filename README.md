@@ -23,7 +23,7 @@ If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release]
 ```html
 <script src="https://d3js.org/d3-array.v0.7.min.js"></script>
 <script src="https://d3js.org/d3-collection.v0.1.min.js"></script>
-<script src="https://d3js.org/d3-color.v0.3.min.js"></script>
+<script src="https://d3js.org/d3-color.v0.4.min.js"></script>
 <script src="https://d3js.org/d3-format.v0.5.min.js"></script>
 <script src="https://d3js.org/d3-interpolate.v0.5.min.js"></script>
 <script src="https://d3js.org/d3-time.v0.2.min.js"></script>
@@ -99,8 +99,8 @@ var color = d3.scaleLinear()
     .domain([-1, 0, 1])
     .range(["red", "white", "green"]);
 
-color(-0.5); // "#ff8080"
-color(+0.5); // "#80c080"
+color(-0.5); // "rgb(255, 128, 128)"
+color(+0.5); // "rgb(128, 192, 128)"
 ```
 
 Internally, a piecewise scale performs a [binary search](https://github.com/d3/d3-array#bisect) for the range interpolator corresponding to the given domain value. Thus, the domain must be in ascending or descending order. If the domain and range have different lengths *N* and *M*, only the first *min(N,M)* elements in each are observed.

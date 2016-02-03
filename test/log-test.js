@@ -13,7 +13,7 @@ tape("scaleLog() has the expected defaults", function(test) {
   test.equal(x.clamp(), false);
   test.equal(x.base(), 10);
   test.equal(x.interpolate(), interpolate.interpolate);
-  test.deepEqual(x.interpolate()({array: ["red"]}, {array: ["blue"]})(.5), {array: ["#800080"]});
+  test.deepEqual(x.interpolate()({array: ["red"]}, {array: ["blue"]})(.5), {array: ["rgb(128, 0, 128)"]});
   test.inDelta(x(5), 0.69897);
   test.inDelta(x.invert(0.69897), 5);
   test.inDelta(x(3.162278), 0.5);
@@ -55,9 +55,9 @@ tape("log.domain(…) can take negative values", function(test) {
 
 tape("log.domain(…).range(…) can take more than two values", function(test) {
   var x = scale.scaleLog().domain([0.1, 1, 100]).range(["red", "white", "green"]);
-  test.equal(x(0.5), "#ffb2b2");
-  test.equal(x(50), "#269326");
-  test.equal(x(75), "#108810");
+  test.equal(x(0.5), "rgb(255, 178, 178)");
+  test.equal(x(50), "rgb(38, 147, 38)");
+  test.equal(x(75), "rgb(16, 136, 16)");
   test.end();
 });
 
@@ -76,32 +76,32 @@ tape("log.range(…) does not coerce values to numbers", function(test) {
 
 tape("log.range(…) can take colors", function(test) {
   var x = scale.scaleLog().range(["red", "blue"]);
-  test.equal(x(5), "#4d00b2");
+  test.equal(x(5), "rgb(77, 0, 178)");
   x.range(["#ff0000", "#0000ff"]);
-  test.equal(x(5), "#4d00b2");
+  test.equal(x(5), "rgb(77, 0, 178)");
   x.range(["#f00", "#00f"]);
-  test.equal(x(5), "#4d00b2");
+  test.equal(x(5), "rgb(77, 0, 178)");
   x.range([color.rgb(255, 0, 0), color.hsl(240, 1, 0.5)]);
-  test.equal(x(5), "#4d00b2");
+  test.equal(x(5), "rgb(77, 0, 178)");
   x.range(["hsl(0,100%,50%)", "hsl(240,100%,50%)"]);
-  test.equal(x(5), "#4d00b2");
+  test.equal(x(5), "rgb(77, 0, 178)");
   test.end();
 });
 
 tape("log.range(…) can take arrays or objects", function(test) {
   var x = scale.scaleLog().range([{color: "red"}, {color: "blue"}]);
-  test.deepEqual(x(5), {color: "#4d00b2"});
+  test.deepEqual(x(5), {color: "rgb(77, 0, 178)"});
   x.range([["red"], ["blue"]]);
-  test.deepEqual(x(5), ["#4d00b2"]);
+  test.deepEqual(x(5), ["rgb(77, 0, 178)"]);
   test.end();
 });
 
 tape("log.interpolate(f) sets the interpolator", function(test) {
   var x = scale.scaleLog().range(["red", "blue"]);
   test.equal(x.interpolate(), interpolate.interpolate);
-  test.equal(x(5), "#4d00b2");
+  test.equal(x(5), "rgb(77, 0, 178)");
   x.interpolate(interpolate.interpolateHsl);
-  test.equal(x(5), "#9a00ff");
+  test.equal(x(5), "rgb(154, 0, 255)");
   test.end();
 });
 
@@ -254,8 +254,8 @@ tape("log.copy() isolates changes to the range", function(test) {
 tape("log.copy() isolates changes to the interpolator", function(test) {
   var x = scale.scaleLog().range(["red", "blue"]), y = x.copy();
   x.interpolate(interpolate.interpolateHsl);
-  test.equal(x(5), "#9a00ff");
-  test.equal(y(5), "#4d00b2");
+  test.equal(x(5), "rgb(154, 0, 255)");
+  test.equal(y(5), "rgb(77, 0, 178)");
   test.equal(y.interpolate(), interpolate.interpolate);
   test.end();
 });
