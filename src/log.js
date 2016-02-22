@@ -4,9 +4,6 @@ import constant from "./constant";
 import nice from "./nice";
 import {default as continuous, copy} from "./continuous";
 
-var tickFormat10 = format(".0e"),
-    tickFormatOther = format(",");
-
 function deinterpolate(a, b) {
   return (b = Math.log(b / a))
       ? function(x) { return Math.log(x / a) / b; }
@@ -105,8 +102,8 @@ export default function log() {
   };
 
   scale.tickFormat = function(count, specifier) {
-    if (specifier == null) specifier = base === 10 ? tickFormat10 : tickFormatOther;
-    else if (typeof specifier !== "function") specifier = format(specifier);
+    if (specifier == null) specifier = base === 10 ? ".0e" : ",";
+    if (typeof specifier !== "function") specifier = format(specifier);
     if (count === Infinity) return specifier;
     if (count == null) count = 10;
     var k = Math.max(1, base * count / scale.ticks().length); // TODO fast estimate?
