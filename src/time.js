@@ -5,14 +5,13 @@ import {timeFormat} from "d3-time-format";
 import nice from "./nice";
 import {default as continuous, copy, deinterpolateLinear as deinterpolate} from "./continuous";
 
-var millisecondsPerSecond = 1000,
-    millisecondsPerMinute = millisecondsPerSecond * 60,
-    millisecondsPerHour = millisecondsPerMinute * 60,
-    millisecondsPerDay = millisecondsPerHour * 24,
-    millisecondsPerWeek = millisecondsPerDay * 7,
-    millisecondsPerMonth = millisecondsPerDay * 30,
-    millisecondsPerYear = millisecondsPerDay * 365,
-    bisectTickIntervals = bisector(function(method) { return method[2]; }).right;
+var durationSecond = 1000,
+    durationMinute = durationSecond * 60,
+    durationHour = durationMinute * 60,
+    durationDay = durationHour * 24,
+    durationWeek = durationDay * 7,
+    durationMonth = durationDay * 30,
+    durationYear = durationDay * 365;
 
 function newDate(t) {
   return new Date(t);
@@ -33,24 +32,24 @@ export function calendar(year, month, week, day, hour, minute, second, milliseco
       formatYear = format("%Y");
 
   var tickIntervals = [
-    [second,  1,      millisecondsPerSecond],
-    [second,  5,  5 * millisecondsPerSecond],
-    [second, 15, 15 * millisecondsPerSecond],
-    [second, 30, 30 * millisecondsPerSecond],
-    [minute,  1,      millisecondsPerMinute],
-    [minute,  5,  5 * millisecondsPerMinute],
-    [minute, 15, 15 * millisecondsPerMinute],
-    [minute, 30, 30 * millisecondsPerMinute],
-    [  hour,  1,      millisecondsPerHour  ],
-    [  hour,  3,  3 * millisecondsPerHour  ],
-    [  hour,  6,  6 * millisecondsPerHour  ],
-    [  hour, 12, 12 * millisecondsPerHour  ],
-    [   day,  1,      millisecondsPerDay   ],
-    [   day,  2,  2 * millisecondsPerDay   ],
-    [  week,  1,      millisecondsPerWeek  ],
-    [ month,  1,      millisecondsPerMonth ],
-    [ month,  3,  3 * millisecondsPerMonth ],
-    [  year,  1,      millisecondsPerYear  ]
+    [second,  1,      durationSecond],
+    [second,  5,  5 * durationSecond],
+    [second, 15, 15 * durationSecond],
+    [second, 30, 30 * durationSecond],
+    [minute,  1,      durationMinute],
+    [minute,  5,  5 * durationMinute],
+    [minute, 15, 15 * durationMinute],
+    [minute, 30, 30 * durationMinute],
+    [  hour,  1,      durationHour  ],
+    [  hour,  3,  3 * durationHour  ],
+    [  hour,  6,  6 * durationHour  ],
+    [  hour, 12, 12 * durationHour  ],
+    [   day,  1,      durationDay   ],
+    [   day,  2,  2 * durationDay   ],
+    [  week,  1,      durationWeek  ],
+    [ month,  1,      durationMonth ],
+    [ month,  3,  3 * durationMonth ],
+    [  year,  1,      durationYear  ]
   ];
 
   function tickFormat(date) {
@@ -71,9 +70,9 @@ export function calendar(year, month, week, day, hour, minute, second, milliseco
     // Otherwise, assume interval is already a time interval and use it.
     if (typeof interval === "number") {
       var target = Math.abs(stop - start) / interval,
-          i = bisectTickIntervals(tickIntervals, target);
+          i = bisector(function(i) { return i[2]; }).right(tickIntervals, target);
       if (i === tickIntervals.length) {
-        step = tickStep(start / millisecondsPerYear, stop / millisecondsPerYear, interval);
+        step = tickStep(start / durationYear, stop / durationYear, interval);
         interval = year;
       } else if (i) {
         i = tickIntervals[target / tickIntervals[i - 1][2] < tickIntervals[i][2] / target ? i - 1 : i];
