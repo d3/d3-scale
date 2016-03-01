@@ -1,4 +1,8 @@
 export {
+  version
+} from "./build/version";
+
+export {
   default as scaleBand,
   point as scalePoint
 } from "./src/band";
