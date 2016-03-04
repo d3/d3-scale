@@ -22,8 +22,8 @@
   "scripts": {
     "pretest": "mkdir -p build && node -e 'process.stdout.write(\"export var version = \\\"\" + require(\"./package.json\").version + \"\\\";\\n\");' > build/version.js && rollup -f umd -g d3-array:d3_array,d3-collection:d3_collection,d3-color:d3_color,d3-format:d3_format,d3-interpolate:d3_interpolate,d3-time:d3_time,d3-time-format:d3_time_format -n d3_scale -o build/d3-scale.js -- index.js",
     "test": "TZ=America/Los_Angeles faucet `find test -name '*-test.js'` && eslint index.js src test",
-    "prepublish": "npm run test && uglifyjs build/d3-scale.js -c -m -o build/d3-scale.min.js && rm -f build/d3-scale.zip && zip -j build/d3-scale.zip -- LICENSE README.md build/d3-scale.js build/d3-scale.min.js",
-    "postpublish": "VERSION=`node -e 'console.log(require(\"./package.json\").version)'`; git push && git push --tags && cp build/d3-scale.js ../d3.github.com/d3-scale.v0.6.js && cp build/d3-scale.min.js ../d3.github.com/d3-scale.v0.6.min.js && cd ../d3.github.com && git add d3-scale.v0.6.js d3-scale.v0.6.min.js && git commit -m \"d3-scale ${VERSION}\" && git push"
+    "prepublish": "npm run test && uglifyjs build/d3-scale.js -c -m -o build/d3-scale.min.js && rm -f build/d3-scale.zip",
+    "postpublish": "VERSION=`node -e 'console.log(require(\"./package.json\").version)'`; git push && git push --tags && cp build/d3-scale.js ../d3.github.com/d3-scale.v0.6.js && cp build/d3-scale.min.js ../d3.github.com/d3-scale.v0.6.min.js && cd ../d3.github.com && git add d3-scale.v0.6.js d3-scale.v0.6.min.js && git commit -m \"d3-scale ${VERSION}\" && git push && zip -j build/d3-scale.zip -- LICENSE README.md build/d3-scale.js build/d3-scale.min.js"
   },
   "dependencies": {
     "d3-array": "~0.7.0",
