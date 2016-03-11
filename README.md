@@ -482,7 +482,7 @@ An optional tick *count* argument allows greater control over the step size used
 
 Nicing is useful if the domain is computed from data, say using [extent](https://github.com/d3/d3-array#extent), and may be irregular. For example, for a domain of [2009-07-13T00:02, 2009-07-13T23:48], the nice domain is [2009-07-13, 2009-07-14]. If the domain has more than two values, nicing the domain only affects the first and last value.
 
-<a name="scaleUtcTime" href="#scaleUtcTime">#</a> d3.<b>scaleUtcTime</b>()
+<a name="scaleUtc" href="#scaleUtc">#</a> d3.<b>scaleUtc</b>()
 
 Equivalent to [time](#time), but the returned time scale operates in [Coordinated Universal Time](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) rather than local time.
 
