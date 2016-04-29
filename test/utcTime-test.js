@@ -436,8 +436,8 @@ tape("scaleUtc.tickFormat()(date) otherwise, formats second", function(test) {
   test.end();
 });
 
-tape("scaleUtc.tickFormat(specifier) returns a time format for the specified specifier", function(test) {
-  var f = scale.scaleUtc().tickFormat("%c");
+tape("scaleUtc.tickFormat(count, specifier) returns a time format for the specified specifier", function(test) {
+  var f = scale.scaleUtc().tickFormat(10, "%c");
   test.equal(f(date.utc(2011, 1, 2, 12)), "Wed Feb  2 12:00:00 2011");
   test.end();
 });

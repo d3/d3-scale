@@ -443,8 +443,8 @@ tape("time.tickFormat()(date) otherwise, formats second", function(test) {
   test.end();
 });
 
-tape("time.tickFormat(specifier) returns a time format for the specified specifier", function(test) {
-  var f = scale.scaleTime().tickFormat("%c");
+tape("time.tickFormat(count, specifier) returns a time format for the specified specifier", function(test) {
+  var f = scale.scaleTime().tickFormat(10, "%c");
   test.equal(f(date.local(2011, 1, 2, 12)), "Wed Feb  2 12:00:00 2011");
   test.end();
 });
