@@ -71,22 +71,22 @@ export default function continuous(deinterpolate, reinterpolate) {
       range = unit,
       interpolate = interpolateValue,
       clamp = false,
+      piecewise,
       output,
       input;
 
   function rescale() {
-    var map = Math.min(domain.length, range.length) > 2 ? polymap : bimap;
-    output = map(domain, range, clamp ? deinterpolateClamp(deinterpolate) : deinterpolate, interpolate);
-    input = map(range, domain, deinterpolateLinear, clamp ? reinterpolateClamp(reinterpolate) : reinterpolate);
+    piecewise = Math.min(domain.length, range.length) > 2 ? polymap : bimap;
+    output = input = null;
     return scale;
   }
 
   function scale(x) {
-    return output(+x);
+    return (output || (output = piecewise(domain, range, clamp ? deinterpolateClamp(deinterpolate) : deinterpolate, interpolate)))(+x);
   }
 
   scale.invert = function(y) {
-    return input(+y);
+    return (input || (input = piecewise(range, domain, deinterpolateLinear, clamp ? reinterpolateClamp(reinterpolate) : reinterpolate)))(+y);
   };
 
   scale.domain = function(_) {
