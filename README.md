@@ -4,7 +4,7 @@ Scales are a convenient abstraction for a fundamental task in visualization: map
 
 For [continuous](#continuous-scales) quantitative data, you typically want a [linear scale](#linear-scales). (For time series data, a [time scale](#time-scales).) If the distribution calls for it, consider transforming data using a [power](#power-scales) or [log](#log-scales) scale. A [quantize scale](#quantize-scales) may aid differentiation by rounding continuous data to a fixed set of discrete values; similarly, a [quantile scale](#quantile-scales) computes quantiles from a sample population, and a [threshold scale](#threshold-scales) allows you to specify arbitrary breaks in continuous data. Several built-in [sequential color scales](#sequential-color-scales) are also provided. (If you don’t like these palettes, try [ColorBrewer](http://colorbrewer2.org/).)
 
-For discrete ordinal (ordered) or categorical (unordered) data, an [ordinal scale](#ordinal-scales) specifies an explicit mapping from a set of data values to a corresponding set of visual attributes (such as colors). The related [band](#band) and [point](#point) scales are useful for position-encoding ordinal data, such as bars in a bar chart or dots in an categorical scatterplot. Several built-in [categorical color scales](#categorical-color-scales) are also provided.
+For discrete ordinal (ordered) or categorical (unordered) data, an [ordinal scale](#ordinal-scales) specifies an explicit mapping from a set of data values to a corresponding set of visual attributes (such as colors). The related [band](#band) and [point](#point) scales are useful for position-encoding ordinal data, such as bars in a bar chart or dots in an categorical scatterplot. Several built-in [categorical color scales](#category-scales) are also provided.
 
 Scales have no intrinsic visual representation. However, most scales can [generate](#continuous_ticks) and [format](#continuous_tickFormat) ticks for reference marks to aid in the construction of axes.
 
@@ -41,12 +41,11 @@ var x = d3_scale.scaleLinear();
 ## API Reference
 
 * [Continuous](#continuous-scales) ([Linear](#linear-scales), [Power](#power-scales), [Log](#log-scales), [Identity](#identity-scales), [Time](#time-scales))
-* [Sequential Color](#sequential-color-scales)
+* [Sequential](#sequential-scales)
 * [Quantize](#quantize-scales)
 * [Quantile](#quantile-scales)
 * [Threshold](#threshold-scales)
-* [Ordinal](#ordinal-scales) ([Band](#band-scales), [Point](#point))
-* [Categorical Color](#categorical-color-scales)
+* [Ordinal](#ordinal-scales) ([Band](#band-scales), [Point](#point-scales), [Category](#category-scales))
 
 ### Continuous Scales
 
@@ -486,9 +485,37 @@ Nicing is useful if the domain is computed from data, say using [extent](https:/
 
 Equivalent to [time](#time), but the returned time scale operates in [Coordinated Universal Time](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) rather than local time.
 
-### Sequential Color Scales
+### Sequential Scales
 
-Sequential scales are similar to [continuous scales](#continuous-scales) in that they map a continuous, numeric input domain to a continuous output range. However, unlike continuous scales, the output range of a sequential color scale is fixed and not configurable. These scales do not expose [invert](#continuous_invert), [range](#continuous_range), [rangeRound](#continuous_rangeRound) and [interpolate](#continuous_interpolate) methods.
+Sequential scales are similar to [continuous scales](#continuous-scales) in that they map a continuous, numeric input domain to a continuous output range. However, unlike continuous scales, the output range of a sequential scale is fixed by its interpolator and not configurable. These scales do not expose [invert](#continuous_invert), [range](#continuous_range), [rangeRound](#continuous_rangeRound) and [interpolate](#continuous_interpolate) methods.
+
+<a name="scaleSequential" href="#scaleSequential">#</a> d3.<b>scaleSequential</b>(<i>interpolate</i>)
+
+Constructs a new sequential scale with the given *interpolate* function. When the scale is [applied](#_sequential), the interpolator will be invoked with a value typically in the range [0, 1], where 0 represents the start of the domain, and 1 represents the end of the domain. For example, to implement the ill-advised [HSL](https://github.com/d3/d3-color#hsl) rainbow scale:
+
+```js
+var rainbow = d3.scaleSequential(function(t) {
+  return d3.hsl(t * 360, 1, 0.5) + "";
+});
+```
+
+Use [d3.scaleRainbow](#scaleRainbow) for a more aesthetically-pleasing and perceptually-effective cyclical hue encoding.
+
+<a name="_sequential" href="#_sequential">#</a> <i>sequential</i>(<i>value</i>)
+
+See [*continuous*](#_continuous).
+
+<a name="sequential_domain" href="#sequential_domain">#</a> <i>sequential</i>.<b>domain</b>([<i>domain</i>])
+
+See [*continuous*.domain](#continuous_domain). Note that a sequential scale’s domain must be numeric and must contain exactly two values.
+
+<a name="sequential_clamp" href="#sequential_clamp">#</a> <i>sequential</i>.<b>clamp</b>([<i>clamp</i>])
+
+See [*continuous*.clamp](#continuous_clamp).
+
+<a name="sequential_copy" href="#sequential_copy">#</a> <i>sequential</i>.<b>copy</b>()
+
+See [*continuous*.copy](#continuous_copy).
 
 <a name="scaleViridis" href="#scaleViridis">#</a> d3.<b>scaleViridis</b>()
 
@@ -847,7 +874,7 @@ Returns the distance between the starts of adjacent points.
 
 Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
 
-### Categorical Color Scales
+#### Category Scales
 
 <a name="scaleCategory10" href="#scaleCategory10">#</a> d3.<b>scaleCategory10</b>()
 

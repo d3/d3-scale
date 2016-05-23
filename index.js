@@ -82,3 +82,6 @@ export {
   plasma as scalePlasma
 } from "./src/viridis";
 
+export {
+  default as scaleSequential
+} from "./src/sequential";
