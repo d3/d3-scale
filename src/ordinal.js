@@ -3,11 +3,12 @@ import {slice} from "./array";
 
 export var implicit = {name: "implicit"};
 
-export default function ordinal() {
+export default function ordinal(range) {
   var index = map(),
       domain = [],
-      range = [],
       unknown = implicit;
+
+  range = range == null ? [] : slice.call(range);
 
   function scale(d) {
     var key = d + "", i = index.get(key);

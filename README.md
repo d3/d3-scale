@@ -2,7 +2,7 @@
 
 Scales are a convenient abstraction for a fundamental task in visualization: mapping a dimension of abstract data to a visual representation. Although most often used for position-encoding quantitative data, such as mapping a measurement in meters to a position in pixels for dots in a scatterplot, scales can represent virtually any visual encoding, such as diverging colors, stroke widths, or symbol size. Scales can also be used with virtually any type of data, such as named categorical data or discrete data that requires sensible breaks.
 
-For [continuous](#continuous-scales) quantitative data, you typically want a [linear scale](#linear-scales). (For time series data, a [time scale](#time-scales).) If the distribution calls for it, consider transforming data using a [power](#power-scales) or [log](#log-scales) scale. A [quantize scale](#quantize-scales) may aid differentiation by rounding continuous data to a fixed set of discrete values; similarly, a [quantile scale](#quantile-scales) computes quantiles from a sample population, and a [threshold scale](#threshold-scales) allows you to specify arbitrary breaks in continuous data. Several built-in [sequential color scales](#sequential-scales) are also provided; see [d3-scale-chromatic](https://github.com/d3/d3-scale-chromatic) for more.
+For [continuous](#continuous-scales) quantitative data, you typically want a [linear scale](#linear-scales). (For time series data, a [time scale](#time-scales).) If the distribution calls for it, consider transforming data using a [power](#power-scales) or [log](#log-scales) scale. A [quantize scale](#quantize-scales) may aid differentiation by rounding continuous data to a fixed set of discrete values; similarly, a [quantile scale](#quantile-scales) computes quantiles from a sample population, and a [threshold scale](#threshold-scales) allows you to specify arbitrary breaks in continuous data. Several built-in [sequential color schemes](#sequential-scales) are also provided; see [d3-scale-chromatic](https://github.com/d3/d3-scale-chromatic) for more.
 
 For discrete ordinal (ordered) or categorical (unordered) data, an [ordinal scale](#ordinal-scales) specifies an explicit mapping from a set of data values to a corresponding set of visual attributes (such as colors). The related [band](#band) and [point](#point) scales are useful for position-encoding ordinal data, such as bars in a bar chart or dots in an categorical scatterplot. Several built-in [categorical color scales](#category-scales) are also provided.
 
@@ -489,8 +489,6 @@ Equivalent to [time](#time), but the returned time scale operates in [Coordinate
 
 Sequential scales are similar to [continuous scales](#continuous-scales) in that they map a continuous, numeric input domain to a continuous output range. However, unlike continuous scales, the output range of a sequential scale is fixed by its interpolator and not configurable. These scales do not expose [invert](#continuous_invert), [range](#continuous_range), [rangeRound](#continuous_rangeRound) and [interpolate](#continuous_interpolate) methods.
 
-For even more sequential scales, see [d3-scale-chromatic](https://github.com/d3/d3-scale-chromatic).
-
 <a name="scaleSequential" href="#scaleSequential">#</a> d3.<b>scaleSequential</b>(<i>interpolate</i>)
 
 Constructs a new sequential scale with the given *interpolate* function. When the scale is [applied](#_sequential), the interpolator will be invoked with a value typically in the range [0, 1], where 0 represents the start of the domain, and 1 represents the end of the domain. For example, to implement the ill-advised [HSL](https://github.com/d3/d3-color#hsl) rainbow scale:
@@ -501,7 +499,13 @@ var rainbow = d3.scaleSequential(function(t) {
 });
 ```
 
-Use [d3.scaleRainbow](#scaleRainbow) for a more aesthetically-pleasing and perceptually-effective cyclical hue encoding.
+A more aesthetically-pleasing and perceptually-effective cyclical hue encoding is to use [d3.interpolateRainbow](#interpolateRainbow):
+
+```js
+var rainbow = d3.scaleSequential(d3.interpolateRainbow);
+```
+
+For even more sequential color schemes, see [d3-scale-chromatic](https://github.com/d3/d3-scale-chromatic).
 
 <a name="_sequential" href="#_sequential">#</a> <i>sequential</i>(<i>value</i>)
 
@@ -515,77 +519,57 @@ See [*continuous*.domain](#continuous_domain). Note that a sequential scale’s 
 
 See [*continuous*.clamp](#continuous_clamp).
 
-<a name="sequential_quantize" href="#sequential_quantize">#</a> <i>sequential</i>.<b>quantize</b>(<i>n</i>)
-
-Returns *n* uniformly-spaced samples from scale’s interpolator. Equivalent to:
-
-```js
-function quantize(n) {
-  return d3.range(n).map(function(i) {
-    return interpolate(i / (n - 1));
-  });
-}
-```
-
-This method is useful for deriving a [quantize](#quantize-scales) or [quantile](#quantile-scales) scale from a sequential scale by discretizing the continous output. For example:
-
-```js
-var quantize = d3.scaleQuantize()
-    .domain([0, 100])
-    .range(d3.scaleRainbow().quantize(10));
-```
-
 <a name="sequential_copy" href="#sequential_copy">#</a> <i>sequential</i>.<b>copy</b>()
 
 See [*continuous*.copy](#continuous_copy).
 
-<a name="scaleViridis" href="#scaleViridis">#</a> d3.<b>scaleViridis</b>()
+<a name="interpolateViridis" href="#interpolateViridis">#</a> d3.<b>interpolateViridis</b>(<i>t</i>)
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/viridis.png" width="100%" height="40" alt="viridis">
 
-Constructs a new sequential scale with the unit [domain](#continuous_domain) [0, 1] and implementing the “viridis” perceptually-uniform color scheme designed by [van der Walt, Smith and Firing](https://bids.github.io/colormap/) for matplotlib.
+Given a number *t* in the range [0,1], returns the corresponding color from the “viridis” perceptually-uniform color scheme designed by [van der Walt, Smith and Firing](https://bids.github.io/colormap/) for matplotlib, represented as an RGB string.
 
-<a name="scaleInferno" href="#scaleInferno">#</a> d3.<b>scaleInferno</b>()
+<a name="interpolateInferno" href="#interpolateInferno">#</a> d3.<b>interpolateInferno</b>(<i>t</i>)
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/inferno.png" width="100%" height="40" alt="inferno">
 
-Constructs a new sequential scale with the unit [domain](#continuous_domain) [0, 1] and implementing the “inferno” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
+Given a number *t* in the range [0,1], returns the corresponding color from the “inferno” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib, represented as an RGB string.
 
-<a name="scaleMagma" href="#scaleMagma">#</a> d3.<b>scaleMagma</b>()
+<a name="interpolateMagma" href="#interpolateMagma">#</a> d3.<b>interpolateMagma</b>(<i>t</i>)
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/magma.png" width="100%" height="40" alt="magma">
 
-Constructs a new sequential scale with the unit [domain](#continuous_domain) [0, 1] and implementing the “magma” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
+Given a number *t* in the range [0,1], returns the corresponding color from the “magma” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib, represented as an RGB string.
 
-<a name="scalePlasma" href="#scalePlasma">#</a> d3.<b>scalePlasma</b>()
+<a name="interpolatePlasma" href="#interpolatePlasma">#</a> d3.<b>interpolatePlasma</b>(<i>t</i>)
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/plasma.png" width="100%" height="40" alt="plasma">
 
-Constructs a new sequential scale with the unit [domain](#continuous_domain) [0, 1] and implementing the “plasma” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib.
+Given a number *t* in the range [0,1], returns the corresponding color from the “plasma” perceptually-uniform color scheme designed by [van der Walt and Smith](https://bids.github.io/colormap/) for matplotlib, represented as an RGB string.
 
-<a name="scaleWarm" href="#scaleWarm">#</a> d3.<b>scaleWarm</b>()
+<a name="interpolateWarm" href="#interpolateWarm">#</a> d3.<b>interpolateWarm</b>(<i>t</i>)
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/warm.png" width="100%" height="40" alt="warm">
 
-Constructs a new sequential scale with the unit [domain](#continuous_domain) [0, 1] and approximately implementing a 180° rotation of [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/) color scheme using the Cubehelix color space.
+Given a number *t* in the range [0,1], returns the corresponding color from a 180° rotation of [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/), represented as an RGB string.
 
-<a name="scaleCool" href="#scaleCool">#</a> d3.<b>scaleCool</b>()
+<a name="interpolateCool" href="#interpolateCool">#</a> d3.<b>interpolateCool</b>(<i>t</i>)
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cool.png" width="100%" height="40" alt="cool">
 
-Constructs a new sequential scale with the unit [domain](#continuous_domain) [0, 1] and approximately implementing [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/) color scheme using the Cubehelix color space.
+Given a number *t* in the range [0,1], returns the corresponding color from [Niccoli’s perceptual rainbow](https://mycarta.wordpress.com/2013/02/21/perceptual-rainbow-palette-the-method/), represented as an RGB string.
 
-<a name="scaleRainbow" href="#scaleRainbow">#</a> d3.<b>scaleRainbow</b>()
+<a name="interpolateRainbow" href="#interpolateRainbow">#</a> d3.<b>interpolateRainbow</b>(<i>t</i>)
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/rainbow.png" width="100%" height="40" alt="rainbow">
 
-Constructs a new sequential scale with the unit [domain](#continuous_domain) [0, 1] combining the [warm](#warm) scale from [0.0, 0.5] followed by the [cool](#cool) scale from [0.5, 1.0], thus implementing the cyclical [less-angry rainbow](http://bl.ocks.org/mbostock/310c99e53880faec2434) color scheme.
+Given a number *t* in the range [0,1], returns the corresponding color from [d3.interpolateWarm](#interpolateWarm) scale from [0.0, 0.5] followed by the [d3.interpolateCool](#interpolateCool) scale from [0.5, 1.0], thus implementing the cyclical [less-angry rainbow](http://bl.ocks.org/mbostock/310c99e53880faec2434) color scheme.
 
-<a name="scaleCubehelix" href="#scaleCubehelix">#</a> d3.<b>scaleCubehelix</b>()
+<a name="interpolateCubehelixDefault" href="#interpolateCubehelixDefault">#</a> d3.<b>interpolateCubehelixDefault</b>(<i>t</i>)
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/cubehelix.png" width="100%" height="40" alt="cubehelix">
 
-Constructs a new [linear scale](#linear-scales) with the unit [domain](#continuous_domain) [0, 1] and implementing [Green’s default Cubehelix](https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/) color scheme. Note that this is a linear, not sequential scale, and thus you may override the [range](#continuous_range) and [interpolator](#continuous_interpolate).
+Given a number *t* in the range [0,1], returns the corresponding color from [Green’s default Cubehelix](https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/) represented as an RGB string.
 
 ### Quantize Scales
 
@@ -742,9 +726,9 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 Unlike [continuous scales](#continuous-scales), ordinal scales have a discrete domain and range. For example, an ordinal scale might map a set of named categories to a set of colors, or determine the horizontal positions of columns in a column chart.
 
-<a name="scaleOrdinal" href="#scaleOrdinal">#</a> d3.<b>scaleOrdinal</b>()
+<a name="scaleOrdinal" href="#scaleOrdinal">#</a> d3.<b>scaleOrdinal</b>([<i>range</i>])
 
-Constructs a new ordinal scale with an empty [domain](#ordinal_domain) and an empty [range](#ordinal_range). The ordinal scale always returns undefined until an output range is specified.
+Constructs a new ordinal scale with an empty [domain](#ordinal_domain) and the specified [*range*](#ordinal_range). If a *range* is not specified, it defaults to the empty array; an ordinal scale always returns undefined until a non-empty range is defined.
 
 <a name="_ordinal" href="#_ordinal">#</a> <i>ordinal</i>(<i>value</i>)
 
@@ -898,28 +882,34 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 #### Category Scales
 
+These color schemes are designed to work with [d3.scaleOrdinal](#scaleOrdinal). For example:
+
+```js
+var color = d3.scaleOrdinal(d3.schemeCategory10);
+```
+
 For even more category scales, see [d3-scale-chromatic](https://github.com/d3/d3-scale-chromatic).
 
-<a name="scaleCategory10" href="#scaleCategory10">#</a> d3.<b>scaleCategory10</b>()
+<a name="schemeCategory10" href="#schemeCategory10">#</a> d3.<b>schemeCategory10</b>
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category10.png" width="100%" height="40" alt="category10">
 
-Constructs a new [ordinal scale](#ordinal-scales) with a range of ten categorical colors.
+An array of ten categorical colors represented as RGB hexadecimal strings.
 
-<a name="scaleCategory20" href="#scaleCategory20">#</a> d3.<b>scaleCategory20</b>()
+<a name="schemeCategory20" href="#schemeCategory20">#</a> d3.<b>schemeCategory20</b>
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category20.png" width="100%" height="40" alt="category20">
 
-Constructs a new [ordinal scale](#ordinal-scales) with a range of twenty categorical colors.
+An array of twenty categorical colors represented as RGB hexadecimal strings.
 
-<a name="scaleCategory20b" href="#scaleCategory20b">#</a> d3.<b>scaleCategory20b</b>()
+<a name="schemeCategory20b" href="#schemeCategory20b">#</a> d3.<b>schemeCategory20b</b>
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category20b.png" width="100%" height="40" alt="category20b">
 
-Constructs a new [ordinal scale](#ordinal-scales) with a range of twenty categorical colors.
+An array of twenty categorical colors represented as RGB hexadecimal strings.
 
-<a name="scaleCategory20c" href="#scaleCategory20c">#</a> d3.<b>scaleCategory20c</b>()
+<a name="schemeCategory20c" href="#schemeCategory20c">#</a> d3.<b>schemeCategory20c</b>
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category20c.png" width="100%" height="40" alt="category20c">
 
-Constructs a new [ordinal scale](#ordinal-scales) with a range of twenty categorical colors. This color scale includes color specifications and designs developed by Cynthia Brewer ([colorbrewer2.org](http://colorbrewer2.org/)).
+An array of twenty categorical colors represented as RGB hexadecimal strings. This color scale includes color specifications and designs developed by Cynthia Brewer ([colorbrewer2.org](http://colorbrewer2.org/)).

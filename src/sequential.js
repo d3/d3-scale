@@ -1,4 +1,3 @@
-import {range} from "d3-array";
 import {linearish} from "./linear";
 
 export default function sequential(interpolate) {
@@ -17,10 +16,6 @@ export default function sequential(interpolate) {
 
   scale.clamp = function(_) {
     return arguments.length ? (clamp = !!_, scale) : clamp;
-  };
-
-  scale.quantize = function(n) {
-    return range(n--).map(function(i) { return interpolate(i / n); });
   };
 
   scale.copy = function() {
