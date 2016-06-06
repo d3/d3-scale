@@ -3,10 +3,9 @@ import sequential from "./sequential";
 
 function ramp(range) {
   var i = function(t) { return range[Math.max(0, Math.min(n - 1, Math.floor(t * n)))]; },
-      n = range.length,
-      s = sequential(i);
+      n = range.length;
   return function() {
-    return s.copy();
+    return sequential(i);
   };
 }
 
