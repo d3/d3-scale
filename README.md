@@ -489,6 +489,8 @@ Equivalent to [time](#time), but the returned time scale operates in [Coordinate
 
 Sequential scales are similar to [continuous scales](#continuous-scales) in that they map a continuous, numeric input domain to a continuous output range. However, unlike continuous scales, the output range of a sequential scale is fixed by its interpolator and not configurable. These scales do not expose [invert](#continuous_invert), [range](#continuous_range), [rangeRound](#continuous_rangeRound) and [interpolate](#continuous_interpolate) methods.
 
+For even more sequential scales, see [d3-scale-chromatic](https://github.com/d3/d3-scale-chromatic).
+
 <a name="scaleSequential" href="#scaleSequential">#</a> d3.<b>scaleSequential</b>(<i>interpolate</i>)
 
 Constructs a new sequential scale with the given *interpolate* function. When the scale is [applied](#_sequential), the interpolator will be invoked with a value typically in the range [0, 1], where 0 represents the start of the domain, and 1 represents the end of the domain. For example, to implement the ill-advised [HSL](https://github.com/d3/d3-color#hsl) rainbow scale:
@@ -875,6 +877,8 @@ Returns the distance between the starts of adjacent points.
 Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
 
 #### Category Scales
+
+For even more category scales, see [d3-scale-chromatic](https://github.com/d3/d3-scale-chromatic).
 
 <a name="scaleCategory10" href="#scaleCategory10">#</a> d3.<b>scaleCategory10</b>()
 
