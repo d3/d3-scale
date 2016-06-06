@@ -12,7 +12,6 @@ tape("scaleViridis() has the expected defaults", function(test) {
 
 tape("viridis(value) always clamps", function(test) {
   var s = scale.scaleViridis();
-  test.ok(!("clamp" in s));
   test.equal(s(-0.5), "#440154");
   test.equal(s( 0.0), "#440154");
   test.equal(s( 0.5), "#21918c");
