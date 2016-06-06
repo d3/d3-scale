@@ -1,6 +1,6 @@
 {
   "name": "d3-scale",
-  "version": "0.7.2",
+  "version": "0.8.0",
   "description": "Encodings that map abstract data to visual representation.",
   "keywords": [
     "d3",
