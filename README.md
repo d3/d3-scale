@@ -2,7 +2,7 @@
 
 Scales are a convenient abstraction for a fundamental task in visualization: mapping a dimension of abstract data to a visual representation. Although most often used for position-encoding quantitative data, such as mapping a measurement in meters to a position in pixels for dots in a scatterplot, scales can represent virtually any visual encoding, such as diverging colors, stroke widths, or symbol size. Scales can also be used with virtually any type of data, such as named categorical data or discrete data that requires sensible breaks.
 
-For [continuous](#continuous-scales) quantitative data, you typically want a [linear scale](#linear-scales). (For time series data, a [time scale](#time-scales).) If the distribution calls for it, consider transforming data using a [power](#power-scales) or [log](#log-scales) scale. A [quantize scale](#quantize-scales) may aid differentiation by rounding continuous data to a fixed set of discrete values; similarly, a [quantile scale](#quantile-scales) computes quantiles from a sample population, and a [threshold scale](#threshold-scales) allows you to specify arbitrary breaks in continuous data. Several built-in [sequential color scales](#sequential-color-scales) are also provided. (If you don’t like these palettes, try [ColorBrewer](http://colorbrewer2.org/).)
+For [continuous](#continuous-scales) quantitative data, you typically want a [linear scale](#linear-scales). (For time series data, a [time scale](#time-scales).) If the distribution calls for it, consider transforming data using a [power](#power-scales) or [log](#log-scales) scale. A [quantize scale](#quantize-scales) may aid differentiation by rounding continuous data to a fixed set of discrete values; similarly, a [quantile scale](#quantile-scales) computes quantiles from a sample population, and a [threshold scale](#threshold-scales) allows you to specify arbitrary breaks in continuous data. Several built-in [sequential color scales](#sequential-scales) are also provided; see [d3-scale-chromatic](https://github.com/d3/d3-scale-chromatic) for more.
 
 For discrete ordinal (ordered) or categorical (unordered) data, an [ordinal scale](#ordinal-scales) specifies an explicit mapping from a set of data values to a corresponding set of visual attributes (such as colors). The related [band](#band) and [point](#point) scales are useful for position-encoding ordinal data, such as bars in a bar chart or dots in an categorical scatterplot. Several built-in [categorical color scales](#category-scales) are also provided.
 
@@ -49,7 +49,7 @@ var x = d3_scale.scaleLinear();
 
 ### Continuous Scales
 
-Continuous scales map a continuous, quantitative input [domain](#continuous_domain) to a continuous output [range](#continuous_range). If the range is also numeric, the mapping may be [inverted](#continuous_invert). A continuous scale is not constructed directly; instead, try a [linear](#linear-scales), [power](#power-scales), [log](#log-scales), [identity](#identity-scales), [time](#time-scales) or [sequential color](#sequential-color-scales) scale.
+Continuous scales map a continuous, quantitative input [domain](#continuous_domain) to a continuous output [range](#continuous_range). If the range is also numeric, the mapping may be [inverted](#continuous_invert). A continuous scale is not constructed directly; instead, try a [linear](#linear-scales), [power](#power-scales), [log](#log-scales), [identity](#identity-scales), [time](#time-scales) or [sequential color](#sequential-scales) scale.
 
 <a name="_continuous" href="#_continuous">#</a> <i>continuous</i>(<i>value</i>)
 
@@ -514,6 +514,26 @@ See [*continuous*.domain](#continuous_domain). Note that a sequential scale’s 
 <a name="sequential_clamp" href="#sequential_clamp">#</a> <i>sequential</i>.<b>clamp</b>([<i>clamp</i>])
 
 See [*continuous*.clamp](#continuous_clamp).
+
+<a name="sequential_quantize" href="#sequential_quantize">#</a> <i>sequential</i>.<b>quantize</b>(<i>n</i>)
+
+Returns *n* uniformly-spaced samples from scale’s interpolator. Equivalent to:
+
+```js
+function quantize(n) {
+  return d3.range(n).map(function(i) {
+    return interpolate(i / (n - 1));
+  });
+}
+```
+
+This method is useful for deriving a [quantize](#quantize-scales) or [quantile](#quantile-scales) scale from a sequential scale by discretizing the continous output. For example:
+
+```js
+var quantize = d3.scaleQuantize()
+    .domain([0, 100])
+    .range(d3.scaleRainbow().quantize(10));
+```
 
 <a name="sequential_copy" href="#sequential_copy">#</a> <i>sequential</i>.<b>copy</b>()
 

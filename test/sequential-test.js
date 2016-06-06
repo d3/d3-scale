@@ -39,6 +39,12 @@ tape("sequential.domain() only considers the first and second element of the dom
   test.end();
 });
 
+tape("sequential.quantize(n) returns n uniformly-spaced samples from the output", function(test) {
+  var s = scale.scaleSequential(function(t) { return "out-" + t; });
+  test.deepEqual(s.quantize(5), ["out-0", "out-0.25", "out-0.5", "out-0.75", "out-1"]);
+  test.end();
+});
+
 tape("sequential.copy() returns an isolated copy of the scale", function(test) {
   var s1 = scale.scaleSequential(function(t) { return t; }).domain([1, 3]).clamp(true),
       s2 = s1.copy();
