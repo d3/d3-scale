@@ -7,7 +7,7 @@
     "scale",
     "visualization"
   ],
-  "homepage": "https://github.com/d3/d3-scale",
+  "homepage": "https://d3js.org/d3-scale/",
   "license": "BSD-3-Clause",
   "author": {
     "name": "Mike Bostock",
@@ -20,24 +20,24 @@
     "url": "https://github.com/d3/d3-scale.git"
   },
   "scripts": {
-    "pretest": "rm -rf build && mkdir build && json2module package.json > build/package.js && rollup -f umd -g d3-array:d3_array,d3-collection:d3_collection,d3-color:d3_color,d3-format:d3_format,d3-interpolate:d3_interpolate,d3-time:d3_time,d3-time-format:d3_time_format -n d3_scale -o build/d3-scale.js -- index.js",
+    "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -f umd -g d3-array:d3,d3-collection:d3,d3-color:d3,d3-format:d3,d3-interpolate:d3,d3-time:d3,d3-time-format:d3 -n d3 -o build/d3-scale.js -- index.js",
     "test": "TZ=America/Los_Angeles tape 'test/**/*-test.js' && eslint index.js src test",
-    "prepublish": "npm run test && uglifyjs build/d3-scale.js -c -m -o build/d3-scale.min.js",
-    "postpublish": "VERSION=`node -e 'console.log(require(\"./package.json\").version)'`; git push && git push --tags && cp build/d3-scale.js ../d3.github.com/d3-scale.v0.8.js && cp build/d3-scale.min.js ../d3.github.com/d3-scale.v0.8.min.js && cd ../d3.github.com && git add d3-scale.v0.8.js d3-scale.v0.8.min.js && git commit -m \"d3-scale ${VERSION}\" && git push && cd - && zip -j build/d3-scale.zip -- LICENSE README.md build/d3-scale.js build/d3-scale.min.js"
+    "prepublish": "npm run test && uglifyjs --preamble \"$(preamble)\" build/d3-scale.js -c -m -o build/d3-scale.min.js",
+    "postpublish": "VERSION=`node -e 'console.log(require(\"./package.json\").version)'`; git push && git push --tags && cp build/d3-scale.js ../d3.github.com/d3-scale.v0.9.js && cp build/d3-scale.min.js ../d3.github.com/d3-scale.v0.9.min.js && cd ../d3.github.com && git add d3-scale.v0.9.js d3-scale.v0.9.min.js && git commit -m \"d3-scale ${VERSION}\" && git push && cd - && zip -j build/d3-scale.zip -- LICENSE README.md build/d3-scale.js build/d3-scale.min.js"
   },
   "dependencies": {
-    "d3-array": "~0.7.0",
-    "d3-collection": "~0.2.0",
-    "d3-color": "~0.4.0",
-    "d3-format": "~0.5.0",
-    "d3-interpolate": "~0.8.0",
-    "d3-time": "~0.2.0",
-    "d3-time-format": "~0.3.0"
+    "d3-array": "~0.8.0",
+    "d3-collection": "~0.3.0",
+    "d3-color": "~0.5.0",
+    "d3-format": "~0.6.0",
+    "d3-interpolate": "~0.9.0",
+    "d3-time": "~0.3.0",
+    "d3-time-format": "~0.4.0"
   },
   "devDependencies": {
     "eslint": "2",
-    "json2module": "0.0",
-    "rollup": "0.26",
+    "package-preamble": "0.0",
+    "rollup": "0.27",
     "tape": "4",
     "uglify-js": "2"
   }
