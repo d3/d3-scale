@@ -2,8 +2,9 @@ import {bisector, tickStep} from "d3-array";
 import {interpolateNumber as reinterpolate} from "d3-interpolate";
 import {timeYear, timeMonth, timeWeek, timeDay, timeHour, timeMinute, timeSecond, timeMillisecond} from "d3-time";
 import {timeFormat} from "d3-time-format";
-import nice from "./nice";
+import {map} from "./array";
 import {default as continuous, copy, deinterpolateLinear as deinterpolate} from "./continuous";
+import nice from "./nice";
 
 var durationSecond = 1000,
     durationMinute = durationSecond * 60,
@@ -13,8 +14,12 @@ var durationSecond = 1000,
     durationMonth = durationDay * 30,
     durationYear = durationDay * 365;
 
-function newDate(t) {
+function date(t) {
   return new Date(t);
+}
+
+function number(t) {
+  return t instanceof Date ? +t : +new Date(+t);
 }
 
 export function calendar(year, month, week, day, hour, minute, second, millisecond, format) {
@@ -92,7 +97,7 @@ export function calendar(year, month, week, day, hour, minute, second, milliseco
   };
 
   scale.domain = function(_) {
-    return arguments.length ? domain(_) : domain().map(newDate);
+    return arguments.length ? domain(map.call(_, number)) : domain().map(date);
   };
 
   scale.ticks = function(interval, step) {

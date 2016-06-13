@@ -4,6 +4,14 @@ var tape = require("tape"),
     scale = require("../"),
     date = require("./date");
 
+tape("time.domain([-1e50, 1e50]) is equivalent to time.domain([NaN, NaN])", function(test) {
+  var x = scale.scaleTime().domain([-1e50, 1e50]);
+  test.equal(isNaN(x.domain()[0]), true); // Note: also coerced on retrieval, so insufficient test!
+  test.equal(isNaN(x.domain()[1]), true);
+  test.deepEqual(x.ticks(10), []);
+  test.end();
+});
+
 tape("time.nice() is an alias for time.nice(10)", function(test) {
   var x = scale.scaleTime().domain([date.local(2009, 0, 1, 0, 17), date.local(2009, 0, 1, 23, 42)]);
   test.deepEqual(x.nice().domain(), [date.local(2009, 0, 1), date.local(2009, 0, 2)]);
