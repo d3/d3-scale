@@ -4,6 +4,7 @@
   "description": "Encodings that map abstract data to visual representation.",
   "keywords": [
     "d3",
+    "d3-module",
     "scale",
     "visualization"
   ],
