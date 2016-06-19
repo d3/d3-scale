@@ -27,18 +27,18 @@
     "postpublish": "VERSION=`node -e 'console.log(require(\"./package.json\").version)'`; git push && git push --tags && cp build/d3-scale.js ../d3.github.com/d3-scale.v0.9.js && cp build/d3-scale.min.js ../d3.github.com/d3-scale.v0.9.min.js && cd ../d3.github.com && git add d3-scale.v0.9.js d3-scale.v0.9.min.js && git commit -m \"d3-scale ${VERSION}\" && git push && cd - && zip -j build/d3-scale.zip -- LICENSE README.md build/d3-scale.js build/d3-scale.min.js"
   },
   "dependencies": {
-    "d3-array": "~0.8.0",
-    "d3-collection": "~0.3.0",
-    "d3-color": "~0.5.0",
+    "d3-array": "1",
+    "d3-collection": "1",
+    "d3-color": "1",
     "d3-format": "~0.6.0",
-    "d3-interpolate": "~0.9.0",
-    "d3-time": "~0.3.0",
-    "d3-time-format": "~0.4.0"
+    "d3-interpolate": "1",
+    "d3-time": "1",
+    "d3-time-format": "1"
   },
   "devDependencies": {
     "eslint": "2",
     "package-preamble": "0.0",
-    "rollup": "0.27",
+    "rollup": "0.31",
     "tape": "4",
     "uglify-js": "2"
   }
