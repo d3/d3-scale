@@ -1,9 +1,11 @@
 var tape = require("tape"),
     scale = require("../");
 
-tape("scaleSequential(interpolate) has the expected defaults", function(test) {
-  var s = scale.scaleSequential(function(t) { return t; });
+tape("scaleSequential(interpolator) has the expected defaults", function(test) {
+  var i = function(t) { return t; },
+      s = scale.scaleSequential(i);
   test.deepEqual(s.domain(), [0, 1]);
+  test.equal(s.interpolator(), i);
   test.equal(s.clamp(), false);
   test.equal(s(-0.5), -0.5);
   test.equal(s( 0.0),  0.0);
@@ -55,13 +57,15 @@ tape("sequential.copy() returns an isolated copy of the scale", function(test) {
   test.end();
 });
 
-tape("scaleSequential.interpolator(interpolator) takes a custom interpolator function", function(test) {
-  function interpolator(t) { return t * 2; }
-  var s = scale.scaleSequential(function(t) { return t; })
-    .interpolator(interpolator);
-  test.equal(s.interpolator(), interpolator);
-  test.equal(s(-0.5), -1);
+tape("scaleSequential.interpolator(interpolator) sets the interpolator", function(test) {
+  var i0 = function(t) { return t; },
+      i1 = function(t) { return t * 2; },
+      s = scale.scaleSequential(i0);
+  test.equal(s.interpolator(), i0);
+  test.equal(s.interpolator(i1), s);
+  test.equal(s.interpolator(), i1);
+  test.equal(s(-0.5), -1.0);
   test.equal(s( 0.0),  0.0);
-  test.equal(s( 0.5),  1);
+  test.equal(s( 0.5),  1.0);
   test.end();
 });
