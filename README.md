@@ -493,7 +493,7 @@ Sequential scales are similar to [continuous scales](#continuous-scales) in that
 
 <a name="scaleSequential" href="#scaleSequential">#</a> d3.<b>scaleSequential</b>(<i>interpolate</i>)
 
-Constructs a new sequential scale with the given *interpolate* function. When the scale is [applied](#_sequential), the interpolator will be invoked with a value typically in the range [0, 1], where 0 represents the start of the domain, and 1 represents the end of the domain. For example, to implement the ill-advised [HSL](https://github.com/d3/d3-color#hsl) rainbow scale:
+Constructs a new sequential scale with the given [*interpolate*](#sequential_interpolate) function. When the scale is [applied](#_sequential), the interpolator will be invoked with a value typically in the range [0, 1], where 0 represents the start of the domain, and 1 represents the end of the domain. For example, to implement the ill-advised [HSL](https://github.com/d3/d3-color#hsl) rainbow scale:
 
 ```js
 var rainbow = d3.scaleSequential(function(t) {
@@ -523,7 +523,7 @@ See [*continuous*.clamp](#continuous_clamp).
 
 <a name="sequential_interpolate" href="#sequential_interpolate">#</a> <i>sequential</i>.<b>interpolate</b>([<i>interpolate</i>])
 
-See [*continuous*.interpolate](#continuous_interpolate).
+If *interpolate* is specified, sets the scale’s range interpolator function. If *interpolate* is not specified, returns the scale’s current range interpolator function.
 
 <a name="sequential_copy" href="#sequential_copy">#</a> <i>sequential</i>.<b>copy</b>()
 
