@@ -18,6 +18,10 @@ export default function sequential(interpolate) {
     return arguments.length ? (clamp = !!_, scale) : clamp;
   };
 
+  scale.interpolate = function(_) {
+    return arguments.length ? (interpolate = _, scale) : interpolate;
+  };
+
   scale.copy = function() {
     return sequential(interpolate).domain([x0, x1]).clamp(clamp);
   };
