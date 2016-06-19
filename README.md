@@ -523,7 +523,7 @@ See [*continuous*.clamp](#continuous_clamp).
 
 <a name="sequential_interpolator" href="#sequential_interpolator">#</a> <i>sequential</i>.<b>interpolator</b>([<i>interpolator</i>])
 
-If *interpolator* is specified, sets the scale’s range interpolator function. If *interpolator* is not specified, returns the scale’s current range interpolator function.
+If *interpolator* is specified, sets the scale’s interpolator to the specified function. If *interpolator* is not specified, returns the scale’s current interpolator.
 
 <a name="sequential_copy" href="#sequential_copy">#</a> <i>sequential</i>.<b>copy</b>()
 
