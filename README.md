@@ -521,6 +521,10 @@ See [*continuous*.domain](#continuous_domain). Note that a sequential scale’s 
 
 See [*continuous*.clamp](#continuous_clamp).
 
+<a name="sequential_interpolate" href="#sequential_interpolate">#</a> <i>sequential</i>.<b>interpolate</b>([<i>interpolate</i>])
+
+See [*continuous*.interpolate](#continuous_interpolate).
+
 <a name="sequential_copy" href="#sequential_copy">#</a> <i>sequential</i>.<b>copy</b>()
 
 See [*continuous*.copy](#continuous_copy).
