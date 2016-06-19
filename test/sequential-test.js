@@ -55,11 +55,11 @@ tape("sequential.copy() returns an isolated copy of the scale", function(test) {
   test.end();
 });
 
-tape("scaleSequential.interpolate(interpolate) takes a custom interpolator function", function(test) {
-  function interpolate(t) { return t * 2; }
+tape("scaleSequential.interpolator(interpolator) takes a custom interpolator function", function(test) {
+  function interpolator(t) { return t * 2; }
   var s = scale.scaleSequential(function(t) { return t; })
-    .interpolate(interpolate);
-  test.equal(s.interpolate(), interpolate);
+    .interpolator(interpolator);
+  test.equal(s.interpolator(), interpolator);
   test.equal(s(-0.5), -1);
   test.equal(s( 0.0),  0.0);
   test.equal(s( 0.5),  1);

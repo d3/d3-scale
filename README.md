@@ -491,9 +491,9 @@ Equivalent to [time](#time), but the returned time scale operates in [Coordinate
 
 Sequential scales are similar to [continuous scales](#continuous-scales) in that they map a continuous, numeric input domain to a continuous output range. However, unlike continuous scales, the output range of a sequential scale is fixed by its interpolator and not configurable. These scales do not expose [invert](#continuous_invert), [range](#continuous_range), [rangeRound](#continuous_rangeRound) and [interpolate](#continuous_interpolate) methods.
 
-<a name="scaleSequential" href="#scaleSequential">#</a> d3.<b>scaleSequential</b>(<i>interpolate</i>)
+<a name="scaleSequential" href="#scaleSequential">#</a> d3.<b>scaleSequential</b>(<i>interpolator</i>)
 
-Constructs a new sequential scale with the given [*interpolate*](#sequential_interpolate) function. When the scale is [applied](#_sequential), the interpolator will be invoked with a value typically in the range [0, 1], where 0 represents the start of the domain, and 1 represents the end of the domain. For example, to implement the ill-advised [HSL](https://github.com/d3/d3-color#hsl) rainbow scale:
+Constructs a new sequential scale with the given [*interpolator*](#sequential_interpolator) function. When the scale is [applied](#_sequential), the interpolator will be invoked with a value typically in the range [0, 1], where 0 represents the start of the domain, and 1 represents the end of the domain. For example, to implement the ill-advised [HSL](https://github.com/d3/d3-color#hsl) rainbow scale:
 
 ```js
 var rainbow = d3.scaleSequential(function(t) {
@@ -521,9 +521,9 @@ See [*continuous*.domain](#continuous_domain). Note that a sequential scale’s 
 
 See [*continuous*.clamp](#continuous_clamp).
 
-<a name="sequential_interpolate" href="#sequential_interpolate">#</a> <i>sequential</i>.<b>interpolate</b>([<i>interpolate</i>])
+<a name="sequential_interpolator" href="#sequential_interpolator">#</a> <i>sequential</i>.<b>interpolator</b>([<i>interpolator</i>])
 
-If *interpolate* is specified, sets the scale’s range interpolator function. If *interpolate* is not specified, returns the scale’s current range interpolator function.
+If *interpolator* is specified, sets the scale’s range interpolator function. If *interpolator* is not specified, returns the scale’s current range interpolator function.
 
 <a name="sequential_copy" href="#sequential_copy">#</a> <i>sequential</i>.<b>copy</b>()
 
