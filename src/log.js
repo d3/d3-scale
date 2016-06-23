@@ -93,12 +93,11 @@ export default function log() {
           z.push(t);
         }
       }
-      if (r) z.reverse();
     } else {
       z = ticks(i, j, Math.min(j - i, n)).map(pows);
     }
 
-    return z;
+    return r ? z.reverse() : z;
   };
 
   scale.tickFormat = function(count, specifier) {
