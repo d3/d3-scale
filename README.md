@@ -18,17 +18,17 @@ For a longer introduction, see these recommended tutorials:
 
 ## Installing
 
-If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release](https://github.com/d3/d3-scale/releases/latest). You can also load directly from [d3js.org](https://d3js.org), either as a [standalone library](https://d3js.org/d3-scale.v0.9.min.js) or as part of [D3 4.0](https://github.com/d3/d3). AMD, CommonJS, and vanilla environments are supported. In vanilla, a `d3` global is exported:
+If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release](https://github.com/d3/d3-scale/releases/latest). You can also load directly from [d3js.org](https://d3js.org), either as a [standalone library](https://d3js.org/d3-scale.v1.min.js) or as part of [D3 4.0](https://github.com/d3/d3). AMD, CommonJS, and vanilla environments are supported. In vanilla, a `d3` global is exported:
 
 ```html
 <script src="https://d3js.org/d3-array.v1.min.js"></script>
 <script src="https://d3js.org/d3-collection.v1.min.js"></script>
 <script src="https://d3js.org/d3-color.v1.min.js"></script>
-<script src="https://d3js.org/d3-format.v0.6.min.js"></script>
+<script src="https://d3js.org/d3-format.v1.min.js"></script>
 <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
 <script src="https://d3js.org/d3-time.v1.min.js"></script>
-<script src="https://d3js.org/d3-time-format.v1.min.js"></script>
-<script src="https://d3js.org/d3-scale.v0.9.min.js"></script>
+<script src="https://d3js.org/d3-time-format.v2.min.js"></script>
+<script src="https://d3js.org/d3-scale.v1.min.js"></script>
 <script>
 
 var x = d3.scaleLinear();
