@@ -400,7 +400,7 @@ See [*continuous*.clamp](#continuous_clamp).
 See [*continuous*.interpolate](#continuous_interpolate).
 
 <a name="time_ticks" href="#time_ticks">#</a> <i>time</i>.<b>ticks</b>([<i>count</i>])
-<br><a name="time_ticks" href="#time_ticks">#</a> <i>time</i>.<b>ticks</b>([<i>interval</i>[, <i>step</i>]])
+<br><a name="time_ticks" href="#time_ticks">#</a> <i>time</i>.<b>ticks</b>([<i>interval</i>])
 
 Returns representative dates from the scale’s [domain](#time_domain). The returned tick values are uniformly-spaced (mostly), have sensible values (such as every day at midnight), and are guaranteed to be within the extent of the domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data.
 
@@ -431,13 +431,13 @@ The following time intervals are considered for automatic ticks:
 * 1- and 3-month.
 * 1-year.
 
-In lieu of a *count*, a [time *interval*](https://github.com/d3/d3-time#intervals) may be explicitly specified. If an *interval* is specified, an optional *step* may also be specified to prune generated ticks. For example, `time.ticks(d3.timeMinute, 15)` will generate ticks at 15-minute intervals:
+In lieu of a *count*, a [time *interval*](https://github.com/d3/d3-time#intervals) may be explicitly specified. To prune the generated ticks for a given time *interval*, use [*interval*.every](https://github.com/d3/d3-time#interval_every). For example, to generate ticks at 15-[minute](https://github.com/d3/d3-time#minute) intervals:
 
 ```js
 var x = d3.scaleTime()
     .domain([new Date(2000, 0, 1, 0), new Date(2000, 0, 1, 2)]);
 
-x.ticks(d3.timeMinute, 15);
+x.ticks(d3.timeMinute.every(15));
 // [Sat Jan 01 2000 00:00:00 GMT-0800 (PST),
 //  Sat Jan 01 2000 00:15:00 GMT-0800 (PST),
 //  Sat Jan 01 2000 00:30:00 GMT-0800 (PST),
@@ -449,7 +449,7 @@ x.ticks(d3.timeMinute, 15);
 //  Sat Jan 01 2000 02:00:00 GMT-0800 (PST)]
 ```
 
-This is equivalent to using [minute](https://github.com/d3/d3-time#minute).[every](https://github.com/d3/d3-time#interval_every)(15), or minute.[filter](https://github.com/d3/d3-time#interval_filter) with the following test function:
+Alternatively, pass a test function to [*interval*.filter](https://github.com/d3/d3-time#interval_filter):
 
 ```js
 x.ticks(d3.timeMinute.filter(function(d) {
@@ -460,8 +460,9 @@ x.ticks(d3.timeMinute.filter(function(d) {
 Note: in some cases, such as with day ticks, specifying a *step* can result in irregular spacing of ticks because time intervals have varying length.
 
 <a name="time_tickFormat" href="#time_tickFormat">#</a> <i>time</i>.<b>tickFormat</b>([<i>count</i>[, <i>specifier</i>]])
+<br><a href="#time_tickFormat">#</a> <i>time</i>.<b>tickFormat</b>([<i>interval</i>[, <i>specifier</i>]])
 
-Returns a time format function suitable for displaying [tick](#time_ticks) values. The specified *count* is currently ignored, but is accepted for consistency with other scales such as [*continuous*.tickFormat](#continuous_tickFormat). If a format *specifier* is specified, this method is equivalent to [format](https://github.com/d3/d3-time-format#format). If *specifier* is not specified, the default time format is returned. The default multi-scale time format chooses a human-readable representation based on the specified date as follows:
+Returns a time format function suitable for displaying [tick](#time_ticks) values. The specified *count* or *interval* is currently ignored, but is accepted for consistency with other scales such as [*continuous*.tickFormat](#continuous_tickFormat). If a format *specifier* is specified, this method is equivalent to [format](https://github.com/d3/d3-time-format#format). If *specifier* is not specified, the default time format is returned. The default multi-scale time format chooses a human-readable representation based on the specified date as follows:
 
 * `%Y` - for year boundaries, such as `2011`.
 * `%B` - for month boundaries, such as `February`.
