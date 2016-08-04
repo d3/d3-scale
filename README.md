@@ -36,7 +36,7 @@ var x = d3.scaleLinear();
 </script>
 ```
 
-(You can omit d3-time and d3-time-format if you’re not use [d3.scaleTime](#scaleTime) or [d3.scaleUtc](#scaleUtc).)
+(You can omit d3-time and d3-time-format if you’re not using [d3.scaleTime](#scaleTime) or [d3.scaleUtc](#scaleUtc).)
 
 [Try d3-scale in your browser.](https://tonicdev.com/npm/d3-scale)
 
