@@ -202,3 +202,13 @@ tape("ordinal.copy() changes to the range are isolated", function(test) {
   test.deepEqual(s2.range(), ["foo", "baz"]);
   test.end();
 });
+
+tape("ordinal.invert(x) returns first matching domain value", function(test) {
+  var s = scale.scaleOrdinal().domain(["foo", "bar", "baz", "oof"]).range(["a", "b", "", "a"]);
+  test.equal(s.invert(), undefined);
+  test.equal(s.invert("a"), "foo");
+  test.equal(s.invert("b"), "bar");
+  test.equal(s.invert(""), "baz");
+  test.equal(s.invert("c"), undefined);
+  test.end();
+});

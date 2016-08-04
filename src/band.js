@@ -14,6 +14,7 @@ export default function band() {
       align = 0.5;
 
   delete scale.unknown;
+  delete scale.invert;
 
   function rescale() {
     var n = domain().length,

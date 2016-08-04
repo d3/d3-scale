@@ -741,6 +741,19 @@ Constructs a new ordinal scale with an empty [domain](#ordinal_domain) and the s
 
 Given a *value* in the input [domain](#ordinal_domain), returns the corresponding value in the output [range](#ordinal_range). If the given *value* is not in the scale’s [domain](#ordinal_domain), returns the [unknown](#ordinal_value); or, if the unknown value is [implicit](#implicit) (the default), then the *value* is implicitly added to the domain and the next-available value in the range is assigned to *value*, such that this and subsequent invocations of the scale given the same input *value* return the same output value.
 
+<a name="ordinal_invert" href="#ordinal_invert">#</a> <i>ordinal</i>.<b>invert</b>(<i>value</i>)
+
+Given a *value* from the [range](#ordinal_range), returns the first corresponding value from the [domain](#ordinal_domain). If the range includes duplicate values, this method returns the corresponding value with the lowest index in the domain array. For example:
+
+```js
+var ordinal = d3.scaleOrdinal()
+    .domain(["a", "b", "c"])
+    .range(["red", "white", "red"]);
+
+ordinal.invert("red"); // "a"
+ordinal.invert("white"); // "b"
+```
+
 <a name="ordinal_domain" href="#ordinal_domain">#</a> <i>ordinal</i>.<b>domain</b>([<i>domain</i>])
 
 If *domain* is specified, sets the domain to the specified array of values. The first element in *domain* will be mapped to the first element in the range, the second domain value to the second range value, and so on. Domain values are stored internally in a map from stringified value to index; the resulting index is then used to retrieve a value from the range. Thus, an ordinal scale’s values must be coercible to a string, and the stringified version of the domain value uniquely identifies the corresponding range value. If *domain* is not specified, this method returns the current domain.
