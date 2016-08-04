@@ -777,6 +777,10 @@ Constructs a new band scale with the empty [domain](#band_domain), the unit [ran
 
 Given a *value* in the input [domain](#band_domain), returns the start of the corresponding band derived from the output [range](#band_range). If the given *value* is not in the scale’s domain, returns undefined.
 
+<a name="band_invertExtent" href="#band_invertExtent">#</a> <i>band</i>.<b>invertExtent</b>(<i>r0</i>[, <i>r1</i>])
+
+Given a range of values from the [range](#band_range), returns an array of corresponding values from the [domain](#band_domain), respecting the scale [padding](#band_padding) and [bandwidth](#band_bandwidth). If two arguments *r0* and *r1* are provided, returns an array of the domain values contained within that range. If only a single argument *r0* is provided, returns an array containing the ordinal value under that point, if found. If no domain values are within the specified range, returns undefined.
+
 <a name="band_domain" href="#band_domain">#</a> <i>band</i>.<b>domain</b>([<i>domain</i>])
 
 If *domain* is specified, sets the domain to the specified array of values. The first element in *domain* will be mapped to the first band, the second domain value to the second band, and so on. Domain values are stored internally in a map from stringified value to index; the resulting index is then used to determine the band. Thus, a band scale’s values must be coercible to a string, and the stringified version of the domain value uniquely identifies the corresponding band. If *domain* is not specified, this method returns the current domain.
@@ -842,6 +846,10 @@ Constructs a new point scale with the empty [domain](#point_domain), the unit [r
 <a name="_point" href="#_point">#</a> <i>point</i>(*value*)
 
 Given a *value* in the input [domain](#point_domain), returns the corresponding point derived from the output [range](#point_range). If the given *value* is not in the scale’s domain, returns undefined.
+
+<a name="point_invertExtent" href="#point_invertExtent">#</a> <i>point</i>.<b>invertExtent</b>(<i>r0</i>[, <i>r1</i>])
+
+Given a range of values from the [range](#point_range), returns an array of corresponding values from the [domain](#point_domain), respecting the scale [padding](#point_padding) and [bandwidth](#point_bandwidth). If two arguments *r0* and *r1* are provided, returns an array of the domain values contained within that range. If only a single argument *r0* is provided, returns an array containing the ordinal value under that point, if found. If no domain values are within the specified range, returns undefined.
 
 <a name="point_domain" href="#point_domain">#</a> <i>point</i>.<b>domain</b>([<i>domain</i>])
 
