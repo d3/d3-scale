@@ -401,8 +401,8 @@ See [*continuous*.clamp](#continuous_clamp).
 
 See [*continuous*.interpolate](#continuous_interpolate).
 
-<a name="time_ticks" href="#time_ticks">#</a> <i>time</i>.<b>ticks</b>([<i>count</i>])
-<br><a name="time_ticks" href="#time_ticks">#</a> <i>time</i>.<b>ticks</b>([<i>interval</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/time.js#L103 "Source")
+<a name="time_ticks" href="#time_ticks">#</a> <i>time</i>.<b>ticks</b>([<i>count</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/time.js#L103 "Source")
+<br><a name="time_ticks" href="#time_ticks">#</a> <i>time</i>.<b>ticks</b>([<i>interval</i>])
 
 Returns representative dates from the scale’s [domain](#time_domain). The returned tick values are uniformly-spaced (mostly), have sensible values (such as every day at midnight), and are guaranteed to be within the extent of the domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data.
 
