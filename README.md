@@ -851,7 +851,7 @@ If *domain* is specified, sets the domain to the specified array of values. The 
 
 <a name="point_range" href="#point_range">#</a> <i>point</i>.<b>range</b>([<i>range</i>])
 
-If *domain* is specified, sets the scale’s domain to the specified two-element array of numbers. If the elements in the given array are not numbers, they will be coerced to numbers. If *range* is not specified, returns the scale’s current range, which defaults to [0, 1].
+If *range* is specified, sets the scale’s range to the specified two-element array of numbers. If the elements in the given array are not numbers, they will be coerced to numbers. If *range* is not specified, returns the scale’s current range, which defaults to [0, 1].
 
 <a name="point_rangeRound" href="#point_rangeRound">#</a> <i>point</i>.<b>rangeRound</b>([<i>range</i>])
 
