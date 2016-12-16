@@ -30,6 +30,10 @@ export {
 } from "./pow.js";
 
 export {
+  default as scaleRadial
+} from "./radial.js";
+
+export {
   default as scaleQuantile
 } from "./quantile.js";
 
