@@ -81,3 +81,12 @@ export {
 export {
   default as scaleSequential
 } from "./src/sequential";
+
+export {
+  default as scaleSequentialPow,
+  default as scaleSequentialSqrt
+} from "./src/sequentialPow";
+
+export {
+  default as scaleSequentialLog
+} from "./src/sequentialLog";

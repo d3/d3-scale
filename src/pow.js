@@ -2,7 +2,7 @@ import constant from "./constant";
 import {linearish} from "./linear";
 import {default as continuous, copy} from "./continuous";
 
-function raise(x, exponent) {
+export function raise(x, exponent) {
   return x < 0 ? -Math.pow(-x, exponent) : Math.pow(x, exponent);
 }
 

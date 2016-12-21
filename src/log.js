@@ -39,9 +39,8 @@ function reflect(f) {
   };
 }
 
-export default function log() {
-  var scale = continuous(deinterpolate, reinterpolate).domain([1, 10]),
-      domain = scale.domain,
+export function loggish(scale) {
+  var domain = scale.domain,
       base = 10,
       logs = logp(10),
       pows = powp(10);
@@ -120,9 +119,15 @@ export default function log() {
     }));
   };
 
+  return scale;
+}
+
+export default function log() {
+  var scale = continuous(deinterpolate, reinterpolate).domain([1, 10]);
+
   scale.copy = function() {
-    return copy(scale, log().base(base));
+    return copy(scale, log().base(scale.base()));
   };
 
-  return scale;
+  return loggish(scale);
 }
