@@ -90,3 +90,7 @@ export {
 export {
   default as scaleSequentialLog
 } from "./src/sequentialLog";
+
+export {
+  default as scaleSequentialQuantile
+} from "./src/sequentialQuantile";
