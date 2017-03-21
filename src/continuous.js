@@ -90,15 +90,15 @@ export default function continuous(deinterpolate, reinterpolate) {
   };
 
   scale.domain = function(_) {
-    return arguments.length ? (domain = map.call(_, number), rescale()) : domain.slice();
+    return arguments.length ? (domain = map.apply(_, [number]), rescale()) : domain.slice();
   };
 
   scale.range = function(_) {
-    return arguments.length ? (range = slice.call(_), rescale()) : range.slice();
+    return arguments.length ? (range = slice.apply(_), rescale()) : range.slice();
   };
 
   scale.rangeRound = function(_) {
-    return range = slice.call(_), interpolate = interpolateRound, rescale();
+    return range = slice.apply(_), interpolate = interpolateRound, rescale();
   };
 
   scale.clamp = function(_) {
