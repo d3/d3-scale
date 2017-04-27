@@ -187,11 +187,11 @@ tape("band.paddingOuter(p) specifies the outer padding p", function(test) {
   test.end();
 });
 
-tape("band.paddingOuter(p) coerces p to a number in [0, 1]", function(test) {
+tape("band.paddingOuter(p) coerces p to a number in [0, Infinity]", function(test) {
   var s = scale.scaleBand();
   test.equal(s.paddingOuter("1.0").paddingOuter(), 1);
   test.equal(s.paddingOuter("-1.0").paddingOuter(), 0);
-  test.equal(s.paddingOuter("2.0").paddingOuter(), 1);
+  test.equal(s.paddingOuter("2.0").paddingOuter(), 2);
   test.ok(Number.isNaN(s.paddingOuter(NaN).paddingOuter()));
   test.end();
 });

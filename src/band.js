@@ -62,7 +62,7 @@ export default function band() {
   };
 
   scale.paddingOuter = function(_) {
-    return arguments.length ? (paddingOuter = Math.max(0, Math.min(1, _)), rescale()) : paddingOuter;
+    return arguments.length ? (paddingOuter = Math.max(0, _), rescale()) : paddingOuter;
   };
 
   scale.align = function(_) {
