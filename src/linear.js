@@ -19,12 +19,12 @@ export function linearish(scale) {
     var d = domain(),
         i = d.length - 1,
         n = count == null ? 10 : count,
-        start = d[0],
-        stop = d[i],
-        step = tickStep(start, stop, n);
+        step = tickStep(d[0], d[i], n),
+        start = Math.floor(d[0] / step) * step,
+        stop = Math.ceil(d[i] / step) * step;
 
     if (step) {
-      step = tickStep(Math.floor(start / step) * step, Math.ceil(stop / step) * step, n);
+      step = tickStep(start, stop, n);
       d[0] = Math.floor(start / step) * step;
       d[i] = Math.ceil(stop / step) * step;
       domain(d);
