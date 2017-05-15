@@ -12,7 +12,7 @@ export default function identity() {
   scale.invert = scale;
 
   scale.domain = scale.range = function(_) {
-    return arguments.length ? (domain = map.call(_, number), scale) : domain.slice();
+    return arguments.length ? (domain = map.apply(_, [number]), scale) : domain.slice();
   };
 
   scale.copy = function() {

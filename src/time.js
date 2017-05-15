@@ -97,7 +97,7 @@ export function calendar(year, month, week, day, hour, minute, second, milliseco
   };
 
   scale.domain = function(_) {
-    return arguments.length ? domain(map.call(_, number)) : domain().map(date);
+    return arguments.length ? domain(map.apply(_, [number])) : domain().map(date);
   };
 
   scale.ticks = function(interval, step) {

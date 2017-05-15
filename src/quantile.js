@@ -34,7 +34,7 @@ export default function quantile() {
   };
 
   scale.range = function(_) {
-    return arguments.length ? (range = slice.call(_), rescale()) : range.slice();
+    return arguments.length ? (range = slice.apply(_), rescale()) : range.slice();
   };
 
   scale.quantiles = function() {

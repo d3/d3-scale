@@ -25,7 +25,7 @@ export default function quantize() {
   };
 
   scale.range = function(_) {
-    return arguments.length ? (n = (range = slice.call(_)).length - 1, rescale()) : range.slice();
+    return arguments.length ? (n = (range = slice.apply(_)).length - 1, rescale()) : range.slice();
   };
 
   scale.invertExtent = function(y) {

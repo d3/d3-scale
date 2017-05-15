@@ -8,7 +8,7 @@ export default function ordinal(range) {
       domain = [],
       unknown = implicit;
 
-  range = range == null ? [] : slice.call(range);
+  range = range == null ? [] : slice.apply(range);
 
   function scale(d) {
     var key = d + "", i = index.get(key);
@@ -28,7 +28,7 @@ export default function ordinal(range) {
   };
 
   scale.range = function(_) {
-    return arguments.length ? (range = slice.call(_), scale) : range.slice();
+    return arguments.length ? (range = slice.apply(_), scale) : range.slice();
   };
 
   scale.unknown = function(_) {
