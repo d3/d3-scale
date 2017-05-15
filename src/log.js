@@ -20,18 +20,18 @@ function pow10(x) {
   return isFinite(x) ? +("1e" + x) : x < 0 ? 0 : x;
 }
 
-function powp(base) {
+export function powp(base) {
   return base === 10 ? pow10
       : base === Math.E ? Math.exp
       : function(x) { return Math.pow(base, x); };
 }
 
-function logp(base) {
+export function logp(base) {
   return base === Math.E ? Math.log
       : base === 10 && Math.log10
       || base === 2 && Math.log2
       || (base = Math.log(base), function(x) { return Math.log(x) / base; });
-}
+};
 
 function reflect(f) {
   return function(x) {

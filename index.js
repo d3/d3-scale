@@ -4,6 +4,10 @@ export {
 } from "./src/band";
 
 export {
+  default as scaleExp
+} from "./src/exp";
+
+export {
   default as scaleIdentity
 } from "./src/identity";
 
