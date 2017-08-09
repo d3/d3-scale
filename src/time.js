@@ -84,7 +84,7 @@ export function calendar(year, month, week, day, hour, minute, second, milliseco
         step = i[1];
         interval = i[0];
       } else {
-        step = tickStep(start, stop, interval);
+        step = Math.max(tickStep(start, stop, interval), 1);
         interval = millisecond;
       }
     }
