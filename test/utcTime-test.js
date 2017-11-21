@@ -374,9 +374,9 @@ tape("scaleUtc.ticks(count) can generate multi-year ticks", function(test) {
   test.end();
 });
 
-tape("scaleUtc.ticks(count) returns no ticks for an empty domain", function(test) {
+tape("scaleUtc.ticks(count) returns one tick for an empty domain", function(test) {
   var x = scale.scaleUtc().domain([date.utc(2014, 2, 2), date.utc(2014, 2, 2)]);
-  test.deepEqual(x.ticks(6), []);
+  test.deepEqual(x.ticks(6), [date.utc(2014, 2, 2)]);
   test.end();
 });
 

@@ -382,9 +382,9 @@ tape("time.ticks(count) can generate multi-year ticks", function(test) {
   test.end();
 });
 
-tape("time.ticks(count) returns no ticks for an empty domain", function(test) {
+tape("time.ticks(count) returns one tick for an empty domain", function(test) {
   var x = scale.scaleTime().domain([date.local(2014, 2, 2), date.local(2014, 2, 2)]);
-  test.deepEqual(x.ticks(6), []);
+  test.deepEqual(x.ticks(6), [date.local(2014, 2, 2)]);
   test.end();
 });
 
