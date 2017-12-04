@@ -449,6 +449,13 @@ tape("log.ticks() returns the empty array when the domain is degenerate", functi
   test.end();
 });
 
+tape("log.ticks() generates ticks for small domains", function(test) {
+  var x = scale.scaleLog();
+  test.deepEqual(x.domain([42, 43]).ticks(10), [42, 43]);
+  test.deepEqual(x.domain([42.44, 42.7]).ticks(10), [42.5, 42.6, 42.7]);  
+  test.end();
+});
+
 function round(x) {
   return Math.round(x * 1e12) / 1e12;
 }

@@ -74,12 +74,18 @@ export default function log() {
         k,
         t,
         n = count == null ? 10 : +count,
-        z = [];
+        z = [],
+        sameBase = Math.floor(i) === Math.floor(j);
 
     if (!(base % 1) && j - i < n) {
-      i = Math.round(i) - 1, j = Math.round(j) + 1;
+      if (sameBase) {
+        i = Math.floor(logs(v - u));
+        j = i + 1;
+      } else {
+        i = Math.round(i) - 1, j = Math.round(j) + 1;
+      }
       if (u > 0) for (; i < j; ++i) {
-        for (k = 1, p = pows(i); k < base; ++k) {
+        for (k = 1, p = pows(i); sameBase || k < base; ++k) {
           t = p * k;
           if (t < u) continue;
           if (t > v) break;
