@@ -73,30 +73,37 @@ export default function log() {
         p,
         k,
         t,
+        s,
         n = count == null ? 10 : +count,
-        z = [],
-        sameBase = Math.floor(i) === Math.floor(j);
+        z = [];
 
     if (!(base % 1) && j - i < n) {
-      if (sameBase) {
-        i = Math.floor(logs(v - u));
-        j = i + 1;
-      } else {
-        i = Math.round(i) - 1, j = Math.round(j) + 1;
-      }
-      if (u > 0) for (; i < j; ++i) {
-        for (k = 1, p = pows(i); sameBase || k < base; ++k) {
-          t = p * k;
+      if (Math.floor(i) === Math.floor(j)) {
+        i = Math.floor(logs(u > 0 ? (v - u) : (u - v)));
+        s = Math.floor(u);
+        p = u > 0 ? pows(i) : -pows(i);
+        for (k = 0; ; ++k) {
+          t = s + p * k;
           if (t < u) continue;
           if (t > v) break;
           z.push(t);
         }
-      } else for (; i < j; ++i) {
-        for (k = base - 1, p = pows(i); k >= 1; --k) {
-          t = p * k;
-          if (t < u) continue;
-          if (t > v) break;
-          z.push(t);
+      } else {
+        i = Math.round(i) - 1, j = Math.round(j) + 1;
+        if (u > 0) for (; i < j; ++i) {
+          for (k = 1, p = pows(i); k < base; ++k) {
+            t = p * k;
+            if (t < u) continue;
+            if (t > v) break;
+            z.push(t);
+          }
+        } else for (; i < j; ++i) {
+          for (k = base - 1, p = pows(i); k >= 1; --k) {
+            t = p * k;
+            if (t < u) continue;
+            if (t > v) break;
+            z.push(t);
+          }
         }
       }
     } else {
