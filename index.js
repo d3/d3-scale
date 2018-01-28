@@ -46,38 +46,5 @@ export {
 } from "./src/utcTime";
 
 export {
-  default as schemeCategory10
-} from "./src/category10";
-
-export {
-  default as schemeCategory20b
-} from "./src/category20b";
-
-export {
-  default as schemeCategory20c
-} from "./src/category20c";
-
-export {
-  default as schemeCategory20
-} from "./src/category20";
-
-export {
-  default as interpolateCubehelixDefault
-} from "./src/cubehelix";
-
-export {
-  default as interpolateRainbow,
-  warm as interpolateWarm,
-  cool as interpolateCool
-} from "./src/rainbow";
-
-export {
-  default as interpolateViridis,
-  magma as interpolateMagma,
-  inferno as interpolateInferno,
-  plasma as interpolatePlasma
-} from "./src/viridis";
-
-export {
   default as scaleSequential
 } from "./src/sequential";
