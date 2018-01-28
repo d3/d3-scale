@@ -47,7 +47,7 @@ var x = d3.scaleLinear();
 * [Quantize](#quantize-scales)
 * [Quantile](#quantile-scales)
 * [Threshold](#threshold-scales)
-* [Ordinal](#ordinal-scales) ([Band](#band-scales), [Point](#point-scales), [Category](#category-scales))
+* [Ordinal](#ordinal-scales) ([Band](#band-scales), [Point](#point-scales))
 
 ### Continuous Scales
 
