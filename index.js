@@ -50,15 +50,15 @@ export {
 } from "./src/category10";
 
 export {
-  default as schemeCategory20b
+  default as schemeCategory20b // deprecated
 } from "./src/category20b";
 
 export {
-  default as schemeCategory20c
+  default as schemeCategory20c // deprecated
 } from "./src/category20c";
 
 export {
-  default as schemeCategory20
+  default as schemeCategory20 // deprecated
 } from "./src/category20";
 
 export {

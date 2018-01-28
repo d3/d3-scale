@@ -904,21 +904,3 @@ For even more category scales, see [d3-scale-chromatic](https://github.com/d3/d3
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category10.png" width="100%" height="40" alt="category10">
 
 An array of ten categorical colors represented as RGB hexadecimal strings.
-
-<a name="schemeCategory20" href="#schemeCategory20">#</a> d3.<b>schemeCategory20</b> [<>](https://github.com/d3/d3-scale/blob/master/src/category20.js "Source")
-
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category20.png" width="100%" height="40" alt="category20">
-
-An array of twenty categorical colors represented as RGB hexadecimal strings.
-
-<a name="schemeCategory20b" href="#schemeCategory20b">#</a> d3.<b>schemeCategory20b</b> [<>](https://github.com/d3/d3-scale/blob/master/src/category20b.js "Source")
-
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category20b.png" width="100%" height="40" alt="category20b">
-
-An array of twenty categorical colors represented as RGB hexadecimal strings.
-
-<a name="schemeCategory20c" href="#schemeCategory20c">#</a> d3.<b>schemeCategory20c</b> [<>](https://github.com/d3/d3-scale/blob/master/src/category20c.js "Source")
-
-<img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category20c.png" width="100%" height="40" alt="category20c">
-
-An array of twenty categorical colors represented as RGB hexadecimal strings. This color scale includes color specifications and designs developed by Cynthia Brewer ([colorbrewer2.org](http://colorbrewer2.org/)).
