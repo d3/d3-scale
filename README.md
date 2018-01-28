@@ -903,22 +903,25 @@ For even more category scales, see [d3-scale-chromatic](https://github.com/d3/d3
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category10.png" width="100%" height="40" alt="category10">
 
-An array of ten categorical colors represented as RGB hexadecimal strings.
+A ten-color categorical color scheme, represented as an array of RGB hexadecimal strings.
 
-<a name="schemeCategory20" href="#schemeCategory20">#</a> d3.<b>schemeCategory20</b> [<>](https://github.com/d3/d3-scale/blob/master/src/category20.js "Source")
+<a name="schemeCategory20" href="#schemeCategory20">#</a> d3.<b>schemeCategory20</b> [<>](https://github.com/d3/d3-scale/blob/master/src/category20.js "Source") *(Deprecated)*
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category20.png" width="100%" height="40" alt="category20">
 
-An array of twenty categorical colors represented as RGB hexadecimal strings.
+A twenty-color paired color scheme, represented as an array of RGB hexadecimal strings, containing the ten base hues in the `category10` scheme along with a lighter variant of each one.
 
-<a name="schemeCategory20b" href="#schemeCategory20b">#</a> d3.<b>schemeCategory20b</b> [<>](https://github.com/d3/d3-scale/blob/master/src/category20b.js "Source")
+<a name="schemeCategory20b" href="#schemeCategory20b">#</a> d3.<b>schemeCategory20b</b> [<>](https://github.com/d3/d3-scale/blob/master/src/category20b.js "Source") *(Deprecated)*
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category20b.png" width="100%" height="40" alt="category20b">
 
-An array of twenty categorical colors represented as RGB hexadecimal strings.
+A twenty-color scheme, represented as an array of RGB hexadecimal strings, with five base hues and four lightness variants of each one.
 
-<a name="schemeCategory20c" href="#schemeCategory20c">#</a> d3.<b>schemeCategory20c</b> [<>](https://github.com/d3/d3-scale/blob/master/src/category20c.js "Source")
+<a name="schemeCategory20c" href="#schemeCategory20c">#</a> d3.<b>schemeCategory20c</b> [<>](https://github.com/d3/d3-scale/blob/master/src/category20c.js "Source") *(Deprecated)*
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/category20c.png" width="100%" height="40" alt="category20c">
 
-An array of twenty categorical colors represented as RGB hexadecimal strings. This color scale includes color specifications and designs developed by Cynthia Brewer ([colorbrewer2.org](http://colorbrewer2.org/)).
+A twenty-color scheme, represented as an array of RGB hexadecimal strings, with five base hues and four lightness variants of each one. This scheme was formed by concatenating samples from five of Cynthia Brewer's sequential color scales. See [colorbrewer2.org](http://colorbrewer2.org/) for more details.
+
+*Deprecation note*: `schemeCategory10` is appropriate for encoding categorical variables with 10 values or less, and in general it is difficult to make effective visualizations which encode more than 10 categorical values using color. `schemeCategory20`, `schemeCategory20b` and `schemeCategory20c` are deprecated, as using them to visualize categorical data runs the risk of falsely implying non-existent relationships in the data. For example, graphical elements sharing a hue can imply that the data they represent share some value, and the relative lightness of graphical elements can imply an ordinal relationship in the data.
+
