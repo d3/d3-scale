@@ -14,7 +14,7 @@
     "name": "Mike Bostock",
     "url": "http://bost.ocks.org/mike"
   },
-  "main": "build/d3-scale.js",
+  "main": "dist/d3-scale.js",
   "module": "index",
   "jsnext:main": "index",
   "repository": {
@@ -22,10 +22,10 @@
     "url": "https://github.com/d3/d3-scale.git"
   },
   "scripts": {
-    "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -f umd -g d3-array:d3,d3-collection:d3,d3-color:d3,d3-format:d3,d3-interpolate:d3,d3-time:d3,d3-time-format:d3 -n d3 -o build/d3-scale.js -- index.js",
+    "pretest": "rm -rf dist && mkdir dist && rollup -c --banner \"$(preamble)\"",
     "test": "TZ=America/Los_Angeles tape 'test/**/*-test.js' && eslint index.js src test",
-    "prepublish": "npm run test && uglifyjs --preamble \"$(preamble)\" build/d3-scale.js -c -m -o build/d3-scale.min.js",
-    "postpublish": "git push && git push --tags && cd ../d3.github.com && git pull && cp ../d3-scale/build/d3-scale.js d3-scale.v1.js && cp ../d3-scale/build/d3-scale.min.js d3-scale.v1.min.js && git add d3-scale.v1.js d3-scale.v1.min.js && git commit -m \"d3-scale ${npm_package_version}\" && git push && cd - && zip -j build/d3-scale.zip -- LICENSE README.md build/d3-scale.js build/d3-scale.min.js"
+    "prepublishOnly": "npm run test && uglifyjs -b beautify=false,preamble=\"'$(preamble)'\" dist/d3-scale.js -c -m -o dist/d3-scale.min.js",
+    "postpublish": "git push && git push --tags && cd ../d3.github.com && git pull && cp ../d3-scale/dist/d3-scale.js d3-scale.v1.js && cp ../d3-scale/dist/d3-scale.min.js d3-scale.v1.min.js && git add d3-scale.v1.js d3-scale.v1.min.js && git commit -m \"d3-scale ${npm_package_version}\" && git push && cd - && zip -j dist/d3-scale.zip -- LICENSE README.md dist/d3-scale.js dist/d3-scale.min.js"
   },
   "dependencies": {
     "d3-array": "^1.2.0",
@@ -37,10 +37,10 @@
     "d3-time-format": "2"
   },
   "devDependencies": {
-    "eslint": "3",
+    "eslint": "4",
     "package-preamble": "0.1",
-    "rollup": "0.41",
+    "rollup": "0.52",
     "tape": "4",
-    "uglify-js": "^2.8.11"
+    "uglify-js": "3.2"
   }
 }
