@@ -4,6 +4,10 @@ export {
 } from "./src/band";
 
 export {
+  default as scaleCompound
+} from "./src/compound";
+
+export {
   default as scaleIdentity
 } from "./src/identity";
 
@@ -32,6 +36,10 @@ export {
 export {
   default as scaleQuantize
 } from "./src/quantize";
+
+export {
+  default as scaleSymlog
+} from "./src/symlog";
 
 export {
   default as scaleThreshold
