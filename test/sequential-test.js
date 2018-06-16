@@ -35,6 +35,25 @@ tape("sequential.domain() coerces domain values to numbers", function(test) {
   test.end();
 });
 
+tape("sequential.domain() handles a degenerate domain", function(test) {
+  var s = scale.scaleSequential(function(t) { return t; }).domain([2, 2]);
+  test.deepEqual(s.domain(), [2, 2]);
+  test.equal(s(-1.2), 0.0);
+  test.equal(s( 0.6), 0.0);
+  test.equal(s( 2.4), 0.0);
+  test.end();
+});
+
+tape("sequential.domain() handles a non-numeric domain", function(test) {
+  var s = scale.scaleSequential(function(t) { return t; }).domain([NaN, 2]);
+  test.equal(isNaN(s.domain()[0]), true);
+  test.equal(s.domain()[1], 2);
+  test.equal(isNaN(s(-1.2)), true);
+  test.equal(isNaN(s( 0.6)), true);
+  test.equal(isNaN(s( 2.4)), true);
+  test.end();
+});
+
 tape("sequential.domain() only considers the first and second element of the domain", function(test) {
   var s = scale.scaleSequential(function(t) { return t; }).domain([-1, 100, 200]);
   test.deepEqual(s.domain(), [-1, 100]);
