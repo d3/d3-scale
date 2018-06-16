@@ -3,16 +3,16 @@ import {linearish} from "./linear";
 export default function sequential(interpolator) {
   var x0 = 0,
       x1 = 1,
-      x10 = 1,
+      k10 = 1,
       clamp = false;
 
   function scale(x) {
-    var t = x10 && (x - x0) / x10;
+    var t = k10 * (x - x0);
     return interpolator(clamp ? Math.max(0, Math.min(1, t)) : t);
   }
 
   scale.domain = function(_) {
-    return arguments.length ? (x10 = (x1 = +_[1]) - (x0 = +_[0]), scale) : [x0, x1];
+    return arguments.length ? (x0 = +_[0], x1 = +_[1], k10 = x0 === x1 ? 0 : 1 / (x1 - x0), scale) : [x0, x1];
   };
 
   scale.clamp = function(_) {

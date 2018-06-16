@@ -35,6 +35,40 @@ tape("diverging.domain() coerces domain values to numbers", function(test) {
   test.end();
 });
 
+tape("diverging.domain() handles a degenerate domain", function(test) {
+  var s = scale.scaleDiverging(function(t) { return t; }).domain([2, 2, 3]);
+  test.deepEqual(s.domain(), [2, 2, 3]);
+  test.equal(s(-1.2), 0.5);
+  test.equal(s( 0.6), 0.5);
+  test.equal(s( 2.4), 0.7);
+  test.deepEqual(s.domain([1, 2, 2]).domain(), [1, 2, 2]);
+  test.equal(s(-1.0), -1);
+  test.equal(s( 0.5), -0.25);
+  test.equal(s( 2.4), 0.5);
+  test.deepEqual(s.domain([2, 2, 2]).domain(), [2, 2, 2]);
+  test.equal(s(-1.0), 0.5);
+  test.equal(s( 0.5), 0.5);
+  test.equal(s( 2.4), 0.5);
+  test.end();
+});
+
+tape("diverging.domain() handles a non-numeric domain", function(test) {
+  var s = scale.scaleDiverging(function(t) { return t; }).domain([NaN, 2, 3]);
+  test.equal(isNaN(s.domain()[0]), true);
+  test.equal(isNaN(s(-1.2)), true);
+  test.equal(isNaN(s( 0.6)), true);
+  test.equal(s( 2.4), 0.7);
+  test.equal(isNaN(s.domain([1, NaN, 2]).domain()[1]), true);
+  test.equal(isNaN(s(-1.0)), true);
+  test.equal(isNaN(s( 0.5)), true);
+  test.equal(isNaN(s( 2.4)), true);
+  test.equal(isNaN(s.domain([0, 1, NaN]).domain()[2]), true);
+  test.equal(s(-1.0), -0.5);
+  test.equal(s( 0.5), 0.25);
+  test.equal(isNaN(s( 2.4)), true);
+  test.end();
+});
+
 tape("diverging.domain() only considers the first three elements of the domain", function(test) {
   var s = scale.scaleDiverging(function(t) { return t; }).domain([-1, 100, 200, 3]);
   test.deepEqual(s.domain(), [-1, 100, 200]);
