@@ -48,3 +48,7 @@ export {
 export {
   default as scaleSequential
 } from "./src/sequential";
+
+export {
+  default as scaleDiverging
+} from "./src/diverging";
