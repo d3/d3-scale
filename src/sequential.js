@@ -7,7 +7,7 @@ export default function sequential(interpolator) {
       clamp = false;
 
   function scale(x) {
-    var t = k10 * (x - x0);
+    var t = (x - x0) * k10;
     return interpolator(clamp ? Math.max(0, Math.min(1, t)) : t);
   }
 
