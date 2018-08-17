@@ -48,6 +48,7 @@ var x = d3.scaleLinear();
 * [Quantile](#quantile-scales)
 * [Threshold](#threshold-scales)
 * [Ordinal](#ordinal-scales) ([Band](#band-scales), [Point](#point-scales))
+* [Compound](#compound-scales) ([Symlog](#symlog-scales))
 
 ### Continuous Scales
 
@@ -838,3 +839,41 @@ Returns the distance between the starts of adjacent points.
 <a name="point_copy" href="#point_copy">#</a> <i>point</i>.<b>copy</b>()
 
 Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
+
+### Compound Scales
+
+A compound scale is a scale that delegates to any number of other scales. Its range and domain are inclusive to each provided scale.
+
+Compound scales may be used as building blocks to create scales that behave differently over different portions of the input domain, such as [symlog scales](#symlog-scales).
+
+<a name="scaleCompound" href="#scaleCompound">#</a> d3.<b>scaleCompound</b>(<i>[scale, ...]</i>) [<>](https://github.com/d3/d3-scale/blob/master/src/compound.js "Source")
+
+Constructs a new [compound scale](#compound-scales), delegating to the provided scales. Returns null if no scales provided.
+
+<a name="compound_domain" href="#compound_domain">#</a> <i>compound</i>.<b>domain</b>() [<>](https://github.com/d3/d3-scale/blob/master/src/compound.js#L18 "Source")
+
+Returns the domain inclusive of the [min, max] of all delegated scales.
+
+<a name="compound_range" href="#compound_range">#</a> <i>compound</i>.<b>range</b>() [<>](https://github.com/d3/d3-scale/blob/master/src/compound.js#L28 "Source")
+
+Returns the range inclusive of the [min, max] of all delegated scales.
+
+#### Symlog Scales
+
+Inspired by [symlog scales in Matplotlib](https://matplotlib.org/gallery/scales/symlog_demo.html), a symlog scale is a compound scale that delegates to the following scales:
+
+* Log scale over domain [-Infinity, -1]
+* Linear scale over domain [-1, 1]
+* Log scale over domain [1, Infinity]
+
+<a name="scaleSymlog" href="#scaleCompound">#</a> d3.<b>scaleSymlog</b>() [<>](https://github.com/d3/d3-scale/blob/master/src/symlog.js "Source")
+
+Constructs a new [symlog scale](#symlog-scales), defaulting to a [linear scale](#linear-scales) over domain [0, 1] and range [0, 1].
+
+<a name="symlog_domain" href="#symlog_domain">#</a> <i>symlog</i>.<b>domain</b>([<i>domain</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/symlog.js#L75 "Source")
+
+If *domain* is specified, sets the scale’s domain to the specified array of numbers. If *domain* is not specified, returns the [compound domain](#compound_domain) of this scale.
+
+<a name="symlog_range" href="#symlog_range">#</a> <i>symlog</i>.<b>range</b>([<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/symlog.js#L79 "Source")
+
+If *range* is specified, sets the scale’s range to the specified array of numbers. If *range* is not specified, returns the [compound range](#compound_range) of this scale.
