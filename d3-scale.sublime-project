@@ -8,8 +8,8 @@
   ],
   "build_systems": [
     {
-      "name": "npm test",
-      "cmd": ["npm", "test"],
+      "name": "yarn test",
+      "cmd": ["yarn", "test"],
       "file_regex": "\\((...*?):([0-9]*):([0-9]*)\\)",
       "working_dir": "$project_path"
     }
