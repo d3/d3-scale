@@ -1,54 +1,54 @@
 export {
   default as scaleBand,
   point as scalePoint
-} from "./src/band";
+} from "./band";
 
 export {
   default as scaleIdentity
-} from "./src/identity";
+} from "./identity";
 
 export {
   default as scaleLinear
-} from "./src/linear";
+} from "./linear";
 
 export {
   default as scaleLog
-} from "./src/log";
+} from "./log";
 
 export {
   default as scaleOrdinal,
   implicit as scaleImplicit
-} from "./src/ordinal";
+} from "./ordinal";
 
 export {
   default as scalePow,
   sqrt as scaleSqrt
-} from "./src/pow";
+} from "./pow";
 
 export {
   default as scaleQuantile
-} from "./src/quantile";
+} from "./quantile";
 
 export {
   default as scaleQuantize
-} from "./src/quantize";
+} from "./quantize";
 
 export {
   default as scaleThreshold
-} from "./src/threshold";
+} from "./threshold";
 
 export {
   default as scaleTime
-} from "./src/time";
+} from "./time";
 
 export {
   default as scaleUtc
-} from "./src/utcTime";
+} from "./utcTime";
 
 export {
   default as scaleSequential
-} from "./src/sequential";
+} from "./sequential";
 
 export {
   default as scaleDiverging
-} from "./src/diverging";
+} from "./diverging";
