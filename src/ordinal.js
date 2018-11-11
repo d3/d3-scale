@@ -1,10 +1,9 @@
-import {map} from "d3-collection";
 import {slice} from "./array";
 
 export var implicit = {name: "implicit"};
 
 export default function ordinal(range) {
-  var index = map(),
+  var index = new Map(),
       domain = [],
       unknown = implicit;
 
