@@ -3,5 +3,5 @@ export default function symlog(x) {
 }
 
 symlog.invert = function(x) {
-  return x < -1 ? -Math.exp(-x - 1) : x > 1 ? Math.exp(x - 1) : x;
+  return x < -1 ? -Math.exp(-x - 1) : x > 1 ? Math.exp(x - 1) : x;
 };
