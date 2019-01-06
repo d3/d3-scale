@@ -3,8 +3,13 @@ import {format} from "d3-format";
 import nice from "./nice";
 import {default as continuous, copy} from "./continuous";
 
+function pow10(x) {
+  return isFinite(x) ? +("1e" + x) : x < 0 ? 0 : x;
+}
+
 function powp(base) {
-  return base === Math.E ? Math.exp
+  return base === 10 ? pow10
+      : base === Math.E ? Math.exp
       : function(x) { return Math.pow(base, x); };
 }
 
@@ -25,20 +30,26 @@ export default function log() {
   var scale = continuous(transform).domain([1, 10]),
       domain = scale.domain,
       base = 10,
+      logt = Math.log,
+      powt = Math.exp,
       logs = logp(10),
       pows = powp(10);
 
   function transform(x) {
-    return logs(x);
+    return logt(x);
   }
 
   transform.invert = function(x) {
-    return pows(x);
+    return powt(x);
   };
 
   function rescale() {
+    logt = Math.log, powt = Math.exp;
     logs = logp(base), pows = powp(base);
-    if (domain()[0] < 0) logs = reflect(logs), pows = reflect(pows);
+    if (domain()[0] < 0) {
+      logt = reflect(logt), powt = reflect(powt);
+      logs = reflect(logs), pows = reflect(pows);
+    }
     return scale;
   }
 
