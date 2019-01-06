@@ -16,3 +16,4 @@ export {default as transformLog} from "./transform/log";
 export {default as transformLogn} from "./transform/logn";
 export {default as transformPow} from "./transform/pow";
 export {default as transformSqrt} from "./transform/sqrt";
+export {default as transformSymlog} from "./transform/symlog";
