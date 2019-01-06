@@ -1,28 +1,10 @@
 import {ticks} from "d3-array";
 import {format} from "d3-format";
-import constant from "./constant";
 import nice from "./nice";
 import {default as continuous, copy} from "./continuous";
 
-function deinterpolate(a, b) {
-  return (b = Math.log(b / a))
-      ? function(x) { return Math.log(x / a) / b; }
-      : constant(b);
-}
-
-function reinterpolate(a, b) {
-  return a < 0
-      ? function(t) { return -Math.pow(-b, t) * Math.pow(-a, 1 - t); }
-      : function(t) { return Math.pow(b, t) * Math.pow(a, 1 - t); };
-}
-
-function pow10(x) {
-  return isFinite(x) ? +("1e" + x) : x < 0 ? 0 : x;
-}
-
 function powp(base) {
-  return base === 10 ? pow10
-      : base === Math.E ? Math.exp
+  return base === Math.E ? Math.exp
       : function(x) { return Math.pow(base, x); };
 }
 
@@ -40,11 +22,19 @@ function reflect(f) {
 }
 
 export default function log() {
-  var scale = continuous(deinterpolate, reinterpolate).domain([1, 10]),
+  var scale = continuous(transform).domain([1, 10]),
       domain = scale.domain,
       base = 10,
       logs = logp(10),
       pows = powp(10);
+
+  function transform(x) {
+    return logs(x);
+  }
+
+  transform.invert = function(x) {
+    return pows(x);
+  };
 
   function rescale() {
     logs = logp(base), pows = powp(base);

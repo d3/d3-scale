@@ -1,9 +1,8 @@
 import {bisector, tickStep} from "d3-array";
-import {interpolateNumber as reinterpolate} from "d3-interpolate";
 import {timeYear, timeMonth, timeWeek, timeDay, timeHour, timeMinute, timeSecond, timeMillisecond} from "d3-time";
 import {timeFormat} from "d3-time-format";
 import {map} from "./array";
-import {default as continuous, copy, deinterpolateLinear as deinterpolate} from "./continuous";
+import {default as continuous, copy} from "./continuous";
 import nice from "./nice";
 
 var durationSecond = 1000,
@@ -23,7 +22,7 @@ function number(t) {
 }
 
 export function calendar(year, month, week, day, hour, minute, second, millisecond, format) {
-  var scale = continuous(deinterpolate, reinterpolate),
+  var scale = continuous(),
       invert = scale.invert,
       domain = scale.domain;
 

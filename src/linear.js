@@ -1,6 +1,5 @@
 import {ticks, tickIncrement} from "d3-array";
-import {interpolateNumber as reinterpolate} from "d3-interpolate";
-import {default as continuous, copy, deinterpolateLinear as deinterpolate} from "./continuous";
+import {default as continuous, copy} from "./continuous";
 import tickFormat from "./tickFormat";
 
 export function linearish(scale) {
@@ -59,7 +58,7 @@ export function linearish(scale) {
 }
 
 export default function linear() {
-  var scale = continuous(deinterpolate, reinterpolate);
+  var scale = continuous();
 
   scale.copy = function() {
     return copy(scale, linear());
