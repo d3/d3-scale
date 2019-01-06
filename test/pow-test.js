@@ -4,13 +4,19 @@ var tape = require("tape"),
 
 require("./inDelta");
 
-tape("scalePow(1) has the expected defaults", function(test) {
-  var s = scale.scalePow(1);
+tape("scalePow() has the expected defaults", function(test) {
+  var s = scale.scalePow();
   test.deepEqual(s.domain(), [0, 1]);
   test.deepEqual(s.range(), [0, 1]);
   test.equal(s.clamp(), false);
   test.equal(s.exponent(), 1);
   test.deepEqual(s.interpolate()({array: ["red"]}, {array: ["blue"]})(0.5), {array: ["rgb(128, 0, 128)"]});
+  test.end();
+});
+
+tape("scalePow(exponent) coerces the exponent to a number", function(test) {
+  var s = scale.scalePow("2");
+  test.strictEqual(s.exponent(), 2);
   test.end();
 });
 
