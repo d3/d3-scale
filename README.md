@@ -282,7 +282,7 @@ See [*continuous*.copy](#continuous_copy).
 
 <a name="scaleSqrt" href="#scaleSqrt">#</a> d3.<b>scaleSqrt</b>() [<>](https://github.com/d3/d3-scale/blob/master/src/pow.js "Source")
 
-Constructs a new [continuous](#continuous-scales) [power scale](#power-scales) with the unit [domain](#continuous_domain) [0, 1], the unit [range](#continuous_range) [0, 1], the [exponent](#pow_exponent) 0.5, the [default](https://github.com/d3/d3-interpolate#interpolate) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. This is a convenience method equivalent to `d3.scalePow().exponent(0.5)`.
+Constructs a new [continuous](#continuous-scales) [power scale](#power-scales) with the unit [domain](#continuous_domain) [0, 1], the unit [range](#continuous_range) [0, 1], the [exponent](#pow_exponent) 0.5, the [default](https://github.com/d3/d3-interpolate#interpolate) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. This is a convenience method equivalent to `d3.scalePow(0.5)`.
 
 #### Log Scales
 

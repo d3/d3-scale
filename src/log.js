@@ -2,6 +2,8 @@ import {ticks} from "d3-array";
 import {format} from "d3-format";
 import nice from "./nice";
 import {default as continuous, copy} from "./continuous";
+import transformLog from "./transform/log";
+import transformLogn from "./transform/logn";
 
 function pow10(x) {
   return isFinite(x) ? +("1e" + x) : x < 0 ? 0 : x;
@@ -27,28 +29,19 @@ function reflect(f) {
 }
 
 export default function log() {
-  var scale = continuous(transform).domain([1, 10]),
+  var scale = continuous(transformLog).domain([1, 10]),
       domain = scale.domain,
       base = 10,
-      logt = Math.log,
-      powt = Math.exp,
       logs = logp(10),
       pows = powp(10);
 
-  function transform(x) {
-    return logt(x);
-  }
-
-  transform.invert = function(x) {
-    return powt(x);
-  };
-
   function rescale() {
-    logt = Math.log, powt = Math.exp;
     logs = logp(base), pows = powp(base);
     if (domain()[0] < 0) {
-      logt = reflect(logt), powt = reflect(powt);
       logs = reflect(logs), pows = reflect(pows);
+      scale.transform(transformLogn);
+    } else {
+      scale.transform(transformLog);
     }
     return scale;
   }

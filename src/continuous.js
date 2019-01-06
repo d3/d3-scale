@@ -3,14 +3,9 @@ import {interpolate as interpolateValue, interpolateNumber, interpolateRound} fr
 import {map, slice} from "./array";
 import constant from "./constant";
 import number from "./number";
+import identity from "./transform/identity";
 
 var unit = [0, 1];
-
-function identity(x) {
-  return x;
-}
-
-identity.invert = identity;
 
 function normalize(a, b) {
   return (b -= (a = +a))
@@ -60,6 +55,7 @@ export function copy(source, target) {
   return target
       .domain(source.domain())
       .range(source.range())
+      .transform(source.transform())
       .interpolate(source.interpolate())
       .clamp(source.clamp());
 }
@@ -101,6 +97,10 @@ export default function continuous(transform = identity) {
 
   scale.clamp = function(_) {
     return arguments.length ? (clamp = _ ? clamper(domain) : identity, scale) : clamp !== identity;
+  };
+
+  scale.transform = function(_) {
+    return arguments.length ? (transform = _, rescale()) : transform;
   };
 
   scale.interpolate = function(_) {
