@@ -48,7 +48,7 @@ export default function sequential(interpolator) {
 }
 
 export function sequentialLog(interpolator, base) {
-  var scale = loggish(transformer(interpolator));
+  var scale = loggish(transformer(interpolator)).domain([1, 10]);
 
   scale.copy = function() {
     return sequentialLog(scale.interpolator(), scale.base())

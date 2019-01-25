@@ -51,7 +51,7 @@ export default function diverging(interpolator) {
 }
 
 export function divergingLog(interpolator, base) {
-  var scale = loggish(transformer(interpolator));
+  var scale = loggish(transformer(interpolator)).domain([0.1, 1, 10]);
 
   scale.copy = function() {
     return divergingLog(scale.interpolator(), scale.base())

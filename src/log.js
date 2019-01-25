@@ -43,11 +43,11 @@ function reflect(f) {
 }
 
 export function loggish(transform) {
-  var scale = transform(transformLog, transformExp).domain([1, 10]),
+  var scale = transform(transformLog, transformExp),
       domain = scale.domain,
       base = 10,
-      logs = logp(10),
-      pows = powp(10);
+      logs,
+      pows;
 
   function rescale() {
     logs = logp(base), pows = powp(base);
@@ -132,7 +132,7 @@ export function loggish(transform) {
 }
 
 export default function log(base) {
-  var scale = loggish(transformer());
+  var scale = loggish(transformer()).domain([1, 10]);
 
   scale.copy = function() {
     return copy(scale, log(scale.base()));
