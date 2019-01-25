@@ -1,7 +1,7 @@
 import {identity} from "./continuous";
 import {linearish} from "./linear";
 import {loggish} from "./log";
-import {symlogTransform} from "./symlog";
+import {symlogish} from "./symlog";
 import {powish} from "./pow";
 
 function transformer(interpolator) {
@@ -47,25 +47,41 @@ export function copy(source, target) {
 
 export default function sequential(interpolator) {
   var scale = linearish(transformer(interpolator)(identity));
-  scale.copy = function() { return copy(scale, sequential()); };
+
+  scale.copy = function() {
+    return copy(scale, sequential());
+  };
+
   return scale;
 }
 
 export function sequentialLog(interpolator) {
   var scale = loggish(transformer(interpolator)).domain([1, 10]);
-  scale.copy = function() { return copy(scale, sequentialLog()).base(scale.base()); };
+
+  scale.copy = function() {
+    return copy(scale, sequentialLog()).base(scale.base());
+  };
+
   return scale;
 }
 
 export function sequentialSymlog(interpolator) {
-  var scale = linearish(transformer(interpolator)(symlogTransform));
-  scale.copy = function() { return copy(scale, sequentialSymlog()); };
+  var scale = symlogish(transformer(interpolator));
+
+  scale.copy = function() {
+    return copy(scale, sequentialSymlog()).constant(scale.constant());
+  };
+
   return scale;
 }
 
 export function sequentialPow(interpolator) {
   var scale = powish(transformer(interpolator));
-  scale.copy = function() { return copy(scale, sequentialPow()).exponent(scale.exponent()); };
+
+  scale.copy = function() {
+    return copy(scale, sequentialPow()).exponent(scale.exponent());
+  };
+
   return scale;
 }
 

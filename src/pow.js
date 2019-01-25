@@ -36,7 +36,7 @@ export default function pow() {
   var scale = powish(transformer());
 
   scale.copy = function() {
-    return copy(scale, pow(scale.exponent()));
+    return copy(scale, pow()).exponent(scale.exponent());
   };
 
   return scale;

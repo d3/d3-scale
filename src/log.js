@@ -135,7 +135,7 @@ export default function log() {
   var scale = loggish(transformer()).domain([1, 10]);
 
   scale.copy = function() {
-    return copy(scale, log(scale.base()));
+    return copy(scale, log()).base(scale.base());
   };
 
   return scale;
