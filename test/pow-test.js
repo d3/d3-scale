@@ -488,3 +488,11 @@ tape("pow().clamp(true).invert(x) cannot return a value outside the domain", fun
   test.equal(x.invert(1), 20);
   test.end();
 });
+
+tape("scaleSqrt() is an alias for pow().exponent(0.5)", function(test) {
+  var s = scale.scaleSqrt();
+  test.equal(s.exponent(), 0.5);
+  test.inDelta(s(0.5), Math.SQRT1_2, 1e-6);
+  test.inDelta(s.invert(Math.SQRT1_2), 0.5, 1e-6);
+  test.end();
+});
