@@ -50,7 +50,7 @@ export default function diverging(interpolator) {
   return scale;
 }
 
-export function divergingLog(interpolator, base) {
+export function divergingLog(interpolator) {
   var scale = loggish(transformer(interpolator)).domain([0.1, 1, 10]);
 
   scale.copy = function() {
@@ -59,10 +59,10 @@ export function divergingLog(interpolator, base) {
         .clamp(scale.clamp());
   };
 
-  return base === undefined ? scale : scale.base(base);
+  return scale;
 }
 
-export function divergingPow(interpolator, exponent) {
+export function divergingPow(interpolator) {
   var scale = powish(transformer(interpolator));
 
   scale.copy = function() {
@@ -71,9 +71,9 @@ export function divergingPow(interpolator, exponent) {
         .clamp(scale.clamp());
   };
 
-  return exponent === undefined ? scale : scale.exponent(exponent);
+  return scale;
 }
 
 export function divergingSqrt(interpolator) {
-  return divergingPow(interpolator, 0.5);
+  return divergingPow(interpolator).exponent(0.5);
 }

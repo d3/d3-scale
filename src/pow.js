@@ -32,16 +32,16 @@ export function powish(transform) {
   return linearish(scale);
 }
 
-export default function pow(exponent) {
+export default function pow() {
   var scale = powish(transformer());
 
   scale.copy = function() {
     return copy(scale, pow(scale.exponent()));
   };
 
-  return exponent === undefined ? scale : scale.exponent(exponent);
+  return scale;
 }
 
 export function sqrt() {
-  return pow(0.5);
+  return pow().exponent(0.5);
 }

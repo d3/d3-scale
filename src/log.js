@@ -131,12 +131,12 @@ export function loggish(transform) {
   return scale;
 }
 
-export default function log(base) {
+export default function log() {
   var scale = loggish(transformer()).domain([1, 10]);
 
   scale.copy = function() {
     return copy(scale, log(scale.base()));
   };
 
-  return base === undefined ? scale : scale.base(base);
+  return scale;
 }

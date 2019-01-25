@@ -47,7 +47,7 @@ export default function sequential(interpolator) {
   return scale;
 }
 
-export function sequentialLog(interpolator, base) {
+export function sequentialLog(interpolator) {
   var scale = loggish(transformer(interpolator)).domain([1, 10]);
 
   scale.copy = function() {
@@ -56,10 +56,10 @@ export function sequentialLog(interpolator, base) {
         .clamp(scale.clamp());
   };
 
-  return base === undefined ? scale : scale.base(base);
+  return scale;
 }
 
-export function sequentialPow(interpolator, exponent) {
+export function sequentialPow(interpolator) {
   var scale = powish(transformer(interpolator));
 
   scale.copy = function() {
@@ -68,9 +68,9 @@ export function sequentialPow(interpolator, exponent) {
         .clamp(scale.clamp());
   };
 
-  return exponent === undefined ? scale : scale.exponent(exponent);
+  return scale;
 }
 
 export function sequentialSqrt(interpolator) {
-  return sequentialPow(interpolator, 0.5);
+  return sequentialPow(interpolator).exponent(0.5);
 }
