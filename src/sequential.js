@@ -12,6 +12,8 @@ function transformer(interpolator) {
       transform,
       clamp = false;
 
+  if (interpolator == null) interpolator = identity;
+
   function scale(x) {
     var t = (transform(x) - t0) * k10;
     return interpolator(clamp ? Math.max(0, Math.min(1, t)) : t);

@@ -1,11 +1,10 @@
 var tape = require("tape"),
     scale = require("../");
 
-tape("scaleSequential(interpolator) has the expected defaults", function(test) {
-  var i = function(t) { return t; },
-      s = scale.scaleSequential(i);
+tape("scaleSequential() has the expected defaults", function(test) {
+  var s = scale.scaleSequential();
   test.deepEqual(s.domain(), [0, 1]);
-  test.equal(s.interpolator(), i);
+  test.equal(s.interpolator()(0.42), 0.42);
   test.equal(s.clamp(), false);
   test.equal(s(-0.5), -0.5);
   test.equal(s( 0.0),  0.0);
@@ -16,7 +15,7 @@ tape("scaleSequential(interpolator) has the expected defaults", function(test) {
 });
 
 tape("sequential.clamp(true) enables clamping", function(test) {
-  var s = scale.scaleSequential(function(t) { return t; }).clamp(true);
+  var s = scale.scaleSequential().clamp(true);
   test.equal(s.clamp(), true);
   test.equal(s(-0.5), 0.0);
   test.equal(s( 0.0), 0.0);
@@ -27,7 +26,7 @@ tape("sequential.clamp(true) enables clamping", function(test) {
 });
 
 tape("sequential.domain() coerces domain values to numbers", function(test) {
-  var s = scale.scaleSequential(function(t) { return t; }).domain(["-1.20", "2.40"]);
+  var s = scale.scaleSequential().domain(["-1.20", "2.40"]);
   test.deepEqual(s.domain(), [-1.2, 2.4]);
   test.equal(s(-1.2), 0.0);
   test.equal(s( 0.6), 0.5);
@@ -36,7 +35,7 @@ tape("sequential.domain() coerces domain values to numbers", function(test) {
 });
 
 tape("sequential.domain() handles a degenerate domain", function(test) {
-  var s = scale.scaleSequential(function(t) { return t; }).domain([2, 2]);
+  var s = scale.scaleSequential().domain([2, 2]);
   test.deepEqual(s.domain(), [2, 2]);
   test.equal(s(-1.2), 0.0);
   test.equal(s( 0.6), 0.0);
@@ -45,7 +44,7 @@ tape("sequential.domain() handles a degenerate domain", function(test) {
 });
 
 tape("sequential.domain() handles a non-numeric domain", function(test) {
-  var s = scale.scaleSequential(function(t) { return t; }).domain([NaN, 2]);
+  var s = scale.scaleSequential().domain([NaN, 2]);
   test.equal(isNaN(s.domain()[0]), true);
   test.equal(s.domain()[1], 2);
   test.equal(isNaN(s(-1.2)), true);
@@ -55,13 +54,13 @@ tape("sequential.domain() handles a non-numeric domain", function(test) {
 });
 
 tape("sequential.domain() only considers the first and second element of the domain", function(test) {
-  var s = scale.scaleSequential(function(t) { return t; }).domain([-1, 100, 200]);
+  var s = scale.scaleSequential().domain([-1, 100, 200]);
   test.deepEqual(s.domain(), [-1, 100]);
   test.end();
 });
 
 tape("sequential.copy() returns an isolated copy of the scale", function(test) {
-  var s1 = scale.scaleSequential(function(t) { return t; }).domain([1, 3]).clamp(true),
+  var s1 = scale.scaleSequential().domain([1, 3]).clamp(true),
       s2 = s1.copy();
   test.deepEqual(s2.domain(), [1, 3]);
   test.equal(s2.clamp(), true);

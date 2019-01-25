@@ -1,11 +1,10 @@
 var tape = require("tape"),
     scale = require("../");
 
-tape("scaleDiverging(interpolator) has the expected defaults", function(test) {
-  var i = function(t) { return t; },
-      s = scale.scaleDiverging(i);
+tape("scaleDiverging() has the expected defaults", function(test) {
+  var s = scale.scaleDiverging();
   test.deepEqual(s.domain(), [0, 0.5, 1]);
-  test.equal(s.interpolator(), i);
+  test.equal(s.interpolator()(0.42), 0.42);
   test.equal(s.clamp(), false);
   test.equal(s(-0.5), -0.5);
   test.equal(s( 0.0),  0.0);
@@ -16,7 +15,7 @@ tape("scaleDiverging(interpolator) has the expected defaults", function(test) {
 });
 
 tape("diverging.clamp(true) enables clamping", function(test) {
-  var s = scale.scaleDiverging(function(t) { return t; }).clamp(true);
+  var s = scale.scaleDiverging().clamp(true);
   test.equal(s.clamp(), true);
   test.equal(s(-0.5), 0.0);
   test.equal(s( 0.0), 0.0);
@@ -27,7 +26,7 @@ tape("diverging.clamp(true) enables clamping", function(test) {
 });
 
 tape("diverging.domain() coerces domain values to numbers", function(test) {
-  var s = scale.scaleDiverging(function(t) { return t; }).domain(["-1.20", " 0", "2.40"]);
+  var s = scale.scaleDiverging().domain(["-1.20", " 0", "2.40"]);
   test.deepEqual(s.domain(), [-1.2, 0, 2.4]);
   test.equal(s(-1.2), 0.000);
   test.equal(s( 0.6), 0.625);
@@ -36,7 +35,7 @@ tape("diverging.domain() coerces domain values to numbers", function(test) {
 });
 
 tape("diverging.domain() handles a degenerate domain", function(test) {
-  var s = scale.scaleDiverging(function(t) { return t; }).domain([2, 2, 3]);
+  var s = scale.scaleDiverging().domain([2, 2, 3]);
   test.deepEqual(s.domain(), [2, 2, 3]);
   test.equal(s(-1.2), 0.5);
   test.equal(s( 0.6), 0.5);
@@ -53,7 +52,7 @@ tape("diverging.domain() handles a degenerate domain", function(test) {
 });
 
 tape("diverging.domain() handles a non-numeric domain", function(test) {
-  var s = scale.scaleDiverging(function(t) { return t; }).domain([NaN, 2, 3]);
+  var s = scale.scaleDiverging().domain([NaN, 2, 3]);
   test.equal(isNaN(s.domain()[0]), true);
   test.equal(isNaN(s(-1.2)), true);
   test.equal(isNaN(s( 0.6)), true);
@@ -70,13 +69,13 @@ tape("diverging.domain() handles a non-numeric domain", function(test) {
 });
 
 tape("diverging.domain() only considers the first three elements of the domain", function(test) {
-  var s = scale.scaleDiverging(function(t) { return t; }).domain([-1, 100, 200, 3]);
+  var s = scale.scaleDiverging().domain([-1, 100, 200, 3]);
   test.deepEqual(s.domain(), [-1, 100, 200]);
   test.end();
 });
 
 tape("diverging.copy() returns an isolated copy of the scale", function(test) {
-  var s1 = scale.scaleDiverging(function(t) { return t; }).domain([1, 2, 3]).clamp(true),
+  var s1 = scale.scaleDiverging().domain([1, 2, 3]).clamp(true),
       s2 = s1.copy();
   test.deepEqual(s2.domain(), [1, 2, 3]);
   test.equal(s2.clamp(), true);
