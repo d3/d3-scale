@@ -1,7 +1,9 @@
 import {identity} from "./continuous";
 import {linearish} from "./linear";
+import {loggish} from "./log";
+import {powish} from "./pow";
 
-export function transformer(interpolator) {
+function transformer(interpolator) {
   var x0 = 0,
       x1 = 1,
       t0,
@@ -43,4 +45,32 @@ export default function sequential(interpolator) {
   };
 
   return scale;
+}
+
+export function sequentialLog(interpolator, base) {
+  var scale = loggish(transformer(interpolator));
+
+  scale.copy = function() {
+    return sequentialLog(scale.interpolator(), scale.base())
+        .domain(scale.domain())
+        .clamp(scale.clamp());
+  };
+
+  return base === undefined ? scale : scale.base(base);
+}
+
+export function sequentialPow(interpolator, exponent) {
+  var scale = powish(transformer(interpolator));
+
+  scale.copy = function() {
+    return sequentialPow(scale.interpolator(), scale.exponent())
+        .domain(scale.domain())
+        .clamp(scale.clamp());
+  };
+
+  return exponent === undefined ? scale : scale.exponent(exponent);
+}
+
+export function sequentialSqrt(interpolator) {
+  return sequentialPow(interpolator, 0.5);
 }
