@@ -60,7 +60,7 @@ export function copy(source, target) {
       .clamp(source.clamp());
 }
 
-export default function continuous(transform = identity) {
+export default function continuous(transform) {
   var domain = unit,
       range = unit,
       interpolate = interpolateValue,
