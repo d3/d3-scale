@@ -494,9 +494,9 @@ Equivalent to [time](#time), but the returned time scale operates in [Coordinate
 
 Sequential scales, like [diverging scales](#diverging-scales), are similar to [continuous scales](#continuous-scales) in that they map a continuous, numeric input domain to a continuous output range. However, unlike continuous scales, the output range of a sequential scale is fixed by its interpolator and not configurable. These scales do not expose [invert](#continuous_invert), [range](#continuous_range), [rangeRound](#continuous_rangeRound) and [interpolate](#continuous_interpolate) methods.
 
-<a name="scaleSequential" href="#scaleSequential">#</a> d3.<b>scaleSequential</b>(<i>interpolator</i>) [<>](https://github.com/d3/d3-scale/blob/master/src/sequential.js "Source")
+<a name="scaleSequential" href="#scaleSequential">#</a> d3.<b>scaleSequential</b>([<i>interpolator</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/sequential.js "Source")
 
-Constructs a new sequential scale with the given [*interpolator*](#sequential_interpolator) function. When the scale is [applied](#_sequential), the interpolator will be invoked with a value typically in the range [0, 1], where 0 represents the minimum value and 1 represents the maximum value. For example, to implement the ill-advised [HSL](https://github.com/d3/d3-color#hsl) rainbow scale:
+Constructs a new sequential scale with the given [*interpolator*](#sequential_interpolator) function. If *interpolator* is not specified, it defaults to the identity function. When the scale is [applied](#_sequential), the interpolator will be invoked with a value typically in the range [0, 1], where 0 represents the minimum value and 1 represents the maximum value. For example, to implement the ill-advised [HSL](https://github.com/d3/d3-color#hsl) rainbow scale:
 
 ```js
 var rainbow = d3.scaleSequential(function(t) {
@@ -534,9 +534,9 @@ See [*continuous*.copy](#continuous_copy).
 
 Diverging scales, like [sequential scales](#sequential-scales), are similar to [continuous scales](#continuous-scales) in that they map a continuous, numeric input domain to a continuous output range. However, unlike continuous scales, the output range of a diverging scale is fixed by its interpolator and not configurable. These scales do not expose [invert](#continuous_invert), [range](#continuous_range), [rangeRound](#continuous_rangeRound) and [interpolate](#continuous_interpolate) methods.
 
-<a name="scaleDiverging" href="#scaleDiverging">#</a> d3.<b>scaleDiverging</b>(<i>interpolator</i>) [<>](https://github.com/d3/d3-scale/blob/master/src/diverging.js "Source")
+<a name="scaleDiverging" href="#scaleDiverging">#</a> d3.<b>scaleDiverging</b>([<i>interpolator</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/diverging.js "Source")
 
-Constructs a new diverging scale with the given [*interpolator*](#diverging_interpolator) function. When the scale is [applied](#_diverging), the interpolator will be invoked with a value typically in the range [0, 1], where 0 represents the extreme negative value, 0.5 represents the neutral value, and 1 represents the extreme positive value. For example, using [d3.interpolateSpectral](https://github.com/d3/d3-scale-chromatic/blob/master/README.md#interpolateSpectral):
+Constructs a new diverging scale with the given [*interpolator*](#diverging_interpolator) function. If *interpolator* is not specified, it defaults to the identity function. When the scale is [applied](#_diverging), the interpolator will be invoked with a value typically in the range [0, 1], where 0 represents the extreme negative value, 0.5 represents the neutral value, and 1 represents the extreme positive value. For example, using [d3.interpolateSpectral](https://github.com/d3/d3-scale-chromatic/blob/master/README.md#interpolateSpectral):
 
 ```js
 var spectral = d3.scaleDiverging(d3.interpolateSpectral);
