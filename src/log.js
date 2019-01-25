@@ -7,17 +7,17 @@ function transformLog(x) {
   return Math.log(x);
 }
 
-transformLog.invert = function(x) {
+function transformExp(x) {
   return Math.exp(x);
-};
+}
 
 function transformLogn(x) {
   return -Math.log(-x);
 }
 
-transformLogn.invert = function(x) {
+function transformExpn(x) {
   return -Math.exp(-x);
-};
+}
 
 function pow10(x) {
   return isFinite(x) ? +("1e" + x) : x < 0 ? 0 : x;
@@ -44,7 +44,7 @@ function reflect(f) {
 
 export default function log() {
   var transform = transformer(),
-      scale = transform(transformLog).domain([1, 10]),
+      scale = transform(transformLog, transformExp).domain([1, 10]),
       domain = scale.domain,
       base = 10,
       logs = logp(10),
@@ -54,9 +54,9 @@ export default function log() {
     logs = logp(base), pows = powp(base);
     if (domain()[0] < 0) {
       logs = reflect(logs), pows = reflect(pows);
-      transform(transformLogn);
+      transform(transformLogn, transformExpn);
     } else {
-      transform(transformLog);
+      transform(transformLog, transformExp);
     }
     return scale;
   }

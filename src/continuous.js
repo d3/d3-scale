@@ -10,8 +10,6 @@ function identity(x) {
   return x;
 }
 
-identity.invert = identity;
-
 function normalize(a, b) {
   return (b -= (a = +a))
       ? function(x) { return (x - a) / b; }
@@ -69,6 +67,7 @@ export function transformer() {
       range = unit,
       interpolate = interpolateValue,
       transform,
+      untransform,
       clamp = identity,
       piecewise,
       output,
@@ -85,7 +84,7 @@ export function transformer() {
   }
 
   scale.invert = function(y) {
-    return clamp(+transform.invert((input || (input = piecewise(range, domain.map(transform), interpolateNumber)))(y)));
+    return clamp(+untransform((input || (input = piecewise(range, domain.map(transform), interpolateNumber)))(y)));
   };
 
   scale.domain = function(_) {
@@ -108,12 +107,13 @@ export function transformer() {
     return arguments.length ? (interpolate = _, rescale()) : interpolate;
   };
 
-  return function(_) {
-    transform = _ == null ? identity : _;
+  return function(t, u) {
+    transform = t == null ? identity : t;
+    untransform = u == null ? identity : u;
     return rescale();
   };
 }
 
-export default function continuous(transform) {
-  return transformer()(transform);
+export default function continuous(transform, untransform) {
+  return transformer()(transform, untransform);
 }
