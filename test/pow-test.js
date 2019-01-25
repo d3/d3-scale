@@ -449,12 +449,6 @@ tape("pow.copy() returns a copy with changes to the domain are isolated", functi
   test.end();
 });
 
-tape("pow.copy() copies the transform", function(test) {
-  test.equal(scale.scalePow(2).domain([1.5, 50]).copy().transform()(2), 4);
-  test.equal(scale.scalePow(2).domain([-1.5, -50]).copy().transform()(-2), -4);
-  test.end();
-});
-
 tape("pow.copy() returns a copy with changes to the range are isolated", function(test) {
   var x = scale.scalePow(1), y = x.copy();
   x.range([1, 2]);

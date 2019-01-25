@@ -1,7 +1,6 @@
 import {ticks, tickIncrement} from "d3-array";
-import {default as continuous, copy} from "./continuous";
+import continuous, {copy} from "./continuous";
 import tickFormat from "./tickFormat";
-import identity from "./transform/identity";
 
 export function linearish(scale) {
   var domain = scale.domain;
@@ -59,7 +58,7 @@ export function linearish(scale) {
 }
 
 export default function linear() {
-  var scale = continuous(identity);
+  var scale = continuous();
 
   scale.copy = function() {
     return copy(scale, linear());

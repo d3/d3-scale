@@ -222,12 +222,6 @@ tape("log.copy() isolates changes to the domain", function(test) {
   test.end();
 });
 
-tape("log.copy() copies the transform", function(test) {
-  test.equal(scale.scaleLog().domain([1.5, 50]).copy().transform(), scale.transformLog);
-  test.equal(scale.scaleLog().domain([-1.5, -50]).copy().transform(), scale.transformLogn);
-  test.end();
-});
-
 tape("log.copy() isolates changes to the domain via nice", function(test) {
   var x = scale.scaleLog().domain([1.5, 50]), y = x.copy().nice();
   test.deepEqual(x.domain(), [1.5, 50]);

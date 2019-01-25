@@ -2,9 +2,8 @@ import {bisector, tickStep} from "d3-array";
 import {timeYear, timeMonth, timeWeek, timeDay, timeHour, timeMinute, timeSecond, timeMillisecond} from "d3-time";
 import {timeFormat} from "d3-time-format";
 import {map} from "./array";
-import {default as continuous, copy} from "./continuous";
+import continuous, {copy} from "./continuous";
 import nice from "./nice";
-import identity from "./transform/identity";
 
 var durationSecond = 1000,
     durationMinute = durationSecond * 60,
@@ -23,7 +22,7 @@ function number(t) {
 }
 
 export function calendar(year, month, week, day, hour, minute, second, millisecond, format) {
-  var scale = continuous(identity),
+  var scale = continuous(),
       invert = scale.invert,
       domain = scale.domain;
 
