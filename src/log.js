@@ -42,9 +42,8 @@ function reflect(f) {
   };
 }
 
-export default function log() {
-  var transform = transformer(),
-      scale = transform(transformLog, transformExp).domain([1, 10]),
+export function loggish(transform) {
+  var scale = transform(transformLog, transformExp).domain([1, 10]),
       domain = scale.domain,
       base = 10,
       logs = logp(10),
@@ -129,9 +128,15 @@ export default function log() {
     }));
   };
 
+  return scale;
+}
+
+export default function log(base) {
+  var scale = loggish(transformer());
+
   scale.copy = function() {
-    return copy(scale, log().base(base));
+    return copy(scale, log(scale.base()));
   };
 
-  return scale;
+  return base === undefined ? scale : scale.base(base);
 }

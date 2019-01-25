@@ -10,4 +10,6 @@ export {default as scaleThreshold} from "./threshold";
 export {default as scaleTime} from "./time";
 export {default as scaleUtc} from "./utcTime";
 export {default as scaleSequential} from "./sequential";
+export {default as scaleSequentialLog} from "./sequentialLog";
+export {default as scaleSequentialPow, sequentialSqrt as scaleSequentialSqrt} from "./sequentialPow";
 export {default as scaleDiverging} from "./diverging";

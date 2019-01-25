@@ -1,5 +1,5 @@
 import {linearish} from "./linear";
-import {transformer, copy} from "./continuous";
+import {copy, identity, transformer} from "./continuous";
 
 function transformPow(exponent) {
   return function(x) {
@@ -15,25 +15,31 @@ function transformSquare(x) {
   return x < 0 ? -x * x : x * x;
 }
 
-export default function pow(exponent) {
-  var transform = transformer(),
-      scale = retransform(exponent = exponent === undefined ? 1 : +exponent);
+export function powish(transform) {
+  var scale = transform(identity, identity),
+      exponent = 1;
 
-  function retransform(exponent) {
-    return exponent === 1 ? transform()
+  function rescale() {
+    return exponent === 1 ? transform(identity, identity)
         : exponent === 0.5 ? transform(transformSqrt, transformSquare)
         : transform(transformPow(exponent), transformPow(1 / exponent));
   }
 
   scale.exponent = function(_) {
-    return arguments.length ? retransform(exponent = +_) : exponent;
-  };
-
-  scale.copy = function() {
-    return copy(scale, pow(exponent));
+    return arguments.length ? (exponent = +_, rescale()) : exponent;
   };
 
   return linearish(scale);
+}
+
+export default function pow(exponent) {
+  var scale = powish(transformer());
+
+  scale.copy = function() {
+    return copy(scale, pow(scale.exponent()));
+  };
+
+  return exponent === undefined ? scale : scale.exponent(exponent);
 }
 
 export function sqrt() {

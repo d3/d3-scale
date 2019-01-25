@@ -6,7 +6,7 @@ import number from "./number";
 
 var unit = [0, 1];
 
-function identity(x) {
+export function identity(x) {
   return x;
 }
 
@@ -108,8 +108,7 @@ export function transformer() {
   };
 
   return function(t, u) {
-    transform = t == null ? identity : t;
-    untransform = u == null ? identity : u;
+    transform = t, untransform = u;
     return rescale();
   };
 }
