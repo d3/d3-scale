@@ -1,6 +1,8 @@
 import {identity} from "./continuous";
 import {linearish} from "./linear";
 import {loggish} from "./log";
+import {copy} from "./sequential";
+import {symlogTransform} from "./symlog";
 import {powish} from "./pow";
 
 function transformer(interpolator) {
@@ -42,37 +44,25 @@ function transformer(interpolator) {
 
 export default function diverging(interpolator) {
   var scale = linearish(transformer(interpolator)(identity));
-
-  scale.copy = function() {
-    return diverging(scale.interpolator())
-        .domain(scale.domain())
-        .clamp(scale.clamp());
-  };
-
+  scale.copy = function() { return copy(scale, diverging()); };
   return scale;
 }
 
 export function divergingLog(interpolator) {
   var scale = loggish(transformer(interpolator)).domain([0.1, 1, 10]);
+  scale.copy = function() { return copy(scale, divergingLog()).base(scale.base()); };
+  return scale;
+}
 
-  scale.copy = function() {
-    return divergingLog(scale.interpolator(), scale.base())
-        .domain(scale.domain())
-        .clamp(scale.clamp());
-  };
-
+export function divergingSymlog(interpolator) {
+  var scale = linearish(transformer(interpolator)(symlogTransform));
+  scale.copy = function() { return copy(scale, divergingSymlog()); };
   return scale;
 }
 
 export function divergingPow(interpolator) {
   var scale = powish(transformer(interpolator));
-
-  scale.copy = function() {
-    return divergingPow(scale.interpolator(), scale.exponent())
-        .domain(scale.domain())
-        .clamp(scale.clamp());
-  };
-
+  scale.copy = function() { return copy(scale, divergingPow()).exponent(scale.exponent()); };
   return scale;
 }
 

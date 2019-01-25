@@ -16,6 +16,10 @@ export {
 } from "./log";
 
 export {
+  default as scaleSymlog
+} from "./symlog";
+
+export {
   default as scaleOrdinal,
   implicit as scaleImplicit
 } from "./ordinal";
