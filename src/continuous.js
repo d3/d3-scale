@@ -80,11 +80,11 @@ export function transformer() {
   }
 
   function scale(x) {
-    return (output || (output = piecewise(domain.map(transform), range, interpolate)))(+transform(clamp(x)));
+    return (output || (output = piecewise(domain.map(transform), range, interpolate)))(transform(clamp(x)));
   }
 
   scale.invert = function(y) {
-    return clamp(+untransform((input || (input = piecewise(range, domain.map(transform), interpolateNumber)))(y)));
+    return clamp(untransform((input || (input = piecewise(range, domain.map(transform), interpolateNumber)))(y)));
   };
 
   scale.domain = function(_) {
