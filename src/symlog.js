@@ -1,24 +1,23 @@
 import {linearish} from "./linear";
 import {copy, transformer} from "./continuous";
 
-function transformSymlog(C) {
+function transformSymlog(c) {
   return function(x) {
-    return Math.sign(x) * Math.log10(1 + Math.abs(x / C));
+    return Math.sign(x) * Math.log1p(Math.abs(x / c));
   };
 }
 
-function transformSymexp(C) {
+function transformSymexp(c) {
   return function(x) {
-    return Math.sign(x) * C * (Math.pow(10, Math.abs(x)) - 1);
+    return Math.sign(x) * Math.expm1(Math.abs(x)) * c;
   };
 }
 
 export function symlogish(transform) {
-  var C = 1 / Math.log(10),
-      scale = transform(transformSymlog(C), transformSymexp(C));
+  var c = 1, scale = transform(transformSymlog(c), transformSymexp(c));
 
   scale.constant = function(_) {
-    return arguments.length ? transform(transformSymlog(C = +_), transformSymexp(C)) : C;
+    return arguments.length ? transform(transformSymlog(c = +_), transformSymexp(c)) : c;
   };
 
   return linearish(scale);
