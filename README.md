@@ -215,6 +215,8 @@ ticks.map(tickFormat); // ["-100%", "-50%", "+0%", "+50%", "+100%"]
 
 If *specifier* uses the format type `s`, the scale will return a [SI-prefix format](https://github.com/d3/d3-format#locale_formatPrefix) based on the largest value in the domain. If the *specifier* already specifies a precision, this method is equivalent to [*locale*.format](https://github.com/d3/d3-format#locale_format).
 
+See also [d3.tickFormat](#tickFormat).
+
 <a name="continuous_nice" href="#continuous_nice">#</a> <i>continuous</i>.<b>nice</b>([<i>count</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/nice.js "Source")
 
 Extends the [domain](#continuous_domain) so that it starts and ends on nice round values. This method typically modifies the scale’s domain, and may only extend the bounds to the nearest round value. An optional tick *count* argument allows greater control over the step size used to extend the bounds, guaranteeing that the returned [ticks](#continuous_ticks) will exactly cover the domain. Nicing is useful if the domain is computed from data, say using [extent](https://github.com/d3/d3-array#extent), and may be irregular. For example, for a domain of [0.201479…, 0.996679…], a nice domain might be [0.2, 1.0]. If the domain has more than two values, nicing the domain only affects the first and last value. See also d3-array’s [tickStep](https://github.com/d3/d3-array#tickStep).
@@ -224,6 +226,20 @@ Nicing a scale only modifies the current domain; it does not automatically nice 
 <a name="continuous_copy" href="#continuous_copy">#</a> <i>continuous</i>.<b>copy</b>() [<>](https://github.com/d3/d3-scale/blob/master/src/continuous.js "Source")
 
 Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
+
+<a name="tickFormat" href='#tickFormat'>#</a> d3.<b>tickFormat</b>(<i>start</i>, <i>stop</i>, <i>count</i>[, <i>specifier</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/tickFormat.js "Source")
+
+Returns a [number format](https://github.com/d3/d3-format) function suitable for displaying a tick value, automatically computing the appropriate precision based on the fixed interval between tick values, as determined by [d3.tickStep](https://github.com/d3/d3-array/blob/master/README.md#tickStep).
+
+An optional *specifier* allows a [custom format](https://github.com/d3/d3-format#locale_format) where the precision of the format is automatically set by the scale as appropriate for the tick interval. For example, to format percentage change, you might say:
+
+```js
+var tickFormat = d3.tickFormat(-1, 1, 5, "+%");
+
+tickFormat(-0.5); // "-50%"
+```
+
+If *specifier* uses the format type `s`, the scale will return a [SI-prefix format](https://github.com/d3/d3-format#locale_formatPrefix) based on the larger absolute value of *start* and *stop*. If the *specifier* already specifies a precision, this method is equivalent to [*locale*.format](https://github.com/d3/d3-format#locale_format).
 
 #### Linear Scales
 

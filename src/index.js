@@ -66,3 +66,7 @@ export {
   divergingPow as scaleDivergingPow,
   divergingSqrt as scaleDivergingSqrt
 } from "./diverging";
+
+export {
+  default as tickFormat
+} from "./tickFormat";
