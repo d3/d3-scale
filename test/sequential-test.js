@@ -48,9 +48,9 @@ tape("sequential.domain() coerces domain values to numbers", function(test) {
 tape("sequential.domain() handles a degenerate domain", function(test) {
   var s = scale.scaleSequential().domain([2, 2]);
   test.deepEqual(s.domain(), [2, 2]);
-  test.equal(s(-1.2), 0.0);
-  test.equal(s( 0.6), 0.0);
-  test.equal(s( 2.4), 0.0);
+  test.equal(s(-1.2), 0.5);
+  test.equal(s( 0.6), 0.5);
+  test.equal(s( 2.4), 0.5);
   test.end();
 });
 
