@@ -924,7 +924,7 @@ If *round* is specified, enables or disables rounding accordingly. If rounding i
 
 <a name="point_padding" href="#point_padding">#</a> <i>point</i>.<b>padding</b>([<i>padding</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/band.js "Source")
 
-If *padding* is specified, sets the outer padding to the specified value which must be in the range [0, 1]. If *padding* is not specified, returns the current outer padding which defaults to 0. The outer padding specifies the proportion of the range that is reserved for blank space before the first point and after the last point. Equivalent to [*band*.paddingOuter](#band_paddingOuter).
+If *padding* is specified, sets the outer padding to the specified number which is typically in the range [0, 1]. If *padding* is not specified, returns the current outer padding which defaults to 0. The outer padding specifies the amount of blank space, in terms of multiples of the [step](#band_step), to reserve before the first point and after the last point. Equivalent to [*band*.paddingOuter](#band_paddingOuter).
 
 <a name="point_align" href="#point_align">#</a> <i>point</i>.<b>align</b>([<i>align</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/band.js "Source")
 
