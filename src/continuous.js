@@ -59,7 +59,8 @@ export function copy(source, target) {
       .domain(source.domain())
       .range(source.range())
       .interpolate(source.interpolate())
-      .clamp(source.clamp());
+      .clamp(source.clamp())
+      .unknown(source.unknown());
 }
 
 export function transformer() {
@@ -68,6 +69,7 @@ export function transformer() {
       interpolate = interpolateValue,
       transform,
       untransform,
+      unknown,
       clamp = identity,
       piecewise,
       output,
@@ -80,7 +82,7 @@ export function transformer() {
   }
 
   function scale(x) {
-    return (output || (output = piecewise(domain.map(transform), range, interpolate)))(transform(clamp(x)));
+    return isNaN(x = +x) ? unknown : (output || (output = piecewise(domain.map(transform), range, interpolate)))(transform(clamp(x)));
   }
 
   scale.invert = function(y) {
@@ -105,6 +107,10 @@ export function transformer() {
 
   scale.interpolate = function(_) {
     return arguments.length ? (interpolate = _, rescale()) : interpolate;
+  };
+
+  scale.unknown = function(_) {
+    return arguments.length ? (unknown = _, scale) : unknown;
   };
 
   return function(t, u) {

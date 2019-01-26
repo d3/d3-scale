@@ -17,11 +17,11 @@ function transformer() {
       k21,
       interpolator = identity,
       transform,
-      clamp = false;
+      clamp = false,
+      unknown;
 
   function scale(x) {
-    var t = 0.5 + ((x = +transform(x)) - t1) * (x < t1 ? k10 : k21);
-    return interpolator(clamp ? Math.max(0, Math.min(1, t)) : t);
+    return isNaN(x = +x) ? unknown : (x = 0.5 + ((x = +transform(x)) - t1) * (x < t1 ? k10 : k21), interpolator(clamp ? Math.max(0, Math.min(1, x)) : x));
   }
 
   scale.domain = function(_) {
@@ -34,6 +34,10 @@ function transformer() {
 
   scale.interpolator = function(_) {
     return arguments.length ? (interpolator = _, scale) : interpolator;
+  };
+
+  scale.unknown = function(_) {
+    return arguments.length ? (unknown = _, scale) : unknown;
   };
 
   return function(t) {

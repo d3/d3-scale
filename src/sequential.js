@@ -13,11 +13,11 @@ function transformer() {
       k10,
       transform,
       interpolator = identity,
-      clamp = false;
+      clamp = false,
+      unknown;
 
   function scale(x) {
-    var t = (transform(x) - t0) * k10;
-    return interpolator(clamp ? Math.max(0, Math.min(1, t)) : t);
+    return isNaN(x = +x) ? unknown : (x = (transform(x) - t0) * k10, interpolator(clamp ? Math.max(0, Math.min(1, x)) : x));
   }
 
   scale.domain = function(_) {
@@ -32,6 +32,10 @@ function transformer() {
     return arguments.length ? (interpolator = _, scale) : interpolator;
   };
 
+  scale.unknown = function(_) {
+    return arguments.length ? (unknown = _, scale) : unknown;
+  };
+
   return function(t) {
     transform = t, t0 = t(x0), t1 = t(x1), k10 = t0 === t1 ? 0 : 1 / (t1 - t0);
     return scale;
@@ -42,7 +46,8 @@ export function copy(source, target) {
   return target
       .domain(source.domain())
       .interpolator(source.interpolator())
-      .clamp(source.clamp());
+      .clamp(source.clamp())
+      .unknown(source.unknown());
 }
 
 export default function sequential() {

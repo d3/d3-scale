@@ -6,6 +6,7 @@ tape("scaleSequential() has the expected defaults", function(test) {
   test.deepEqual(s.domain(), [0, 1]);
   test.equal(s.interpolator()(0.42), 0.42);
   test.equal(s.clamp(), false);
+  test.equal(s.unknown(), undefined);
   test.equal(s(-0.5), -0.5);
   test.equal(s( 0.0),  0.0);
   test.equal(s( 0.5),  0.5);
@@ -22,6 +23,16 @@ tape("sequential.clamp(true) enables clamping", function(test) {
   test.equal(s( 0.5), 0.5);
   test.equal(s( 1.0), 1.0);
   test.equal(s( 1.5), 1.0);
+  test.end();
+});
+
+tape("sequential.unknown(value) sets the return value for undefined and NaN input", function(test) {
+  var s = scale.scaleSequential().unknown(-1);
+  test.equal(s.unknown(), -1);
+  test.equal(s(undefined), -1);
+  test.equal(s(NaN), -1);
+  test.equal(s("N/A"), -1);
+  test.equal(s(0.4), 0.4);
   test.end();
 });
 

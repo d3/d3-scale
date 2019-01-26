@@ -8,10 +8,11 @@ export default function quantize() {
       x1 = 1,
       n = 1,
       domain = [0.5],
-      range = [0, 1];
+      range = [0, 1],
+      unknown;
 
   function scale(x) {
-    if (x <= x) return range[bisect(domain, x, 0, n)];
+    return x <= x ? range[bisect(domain, x, 0, n)] : unknown;
   }
 
   function rescale() {
@@ -37,10 +38,15 @@ export default function quantize() {
         : [domain[i - 1], domain[i]];
   };
 
+  scale.unknown = function(_) {
+    return arguments.length ? (unknown = _, scale) : scale;
+  };
+
   scale.copy = function() {
     return quantize()
         .domain([x0, x1])
-        .range(range);
+        .range(range)
+        .unknown(unknown);
   };
 
   return initRange.apply(linearish(scale), arguments);

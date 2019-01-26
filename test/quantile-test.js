@@ -5,6 +5,7 @@ tape("scaleQuantile() has the expected default", function(test) {
   var s = scale.scaleQuantile();
   test.deepEqual(s.domain(), []);
   test.deepEqual(s.range(), []);
+  test.equal(s.unknown(), undefined);
   test.end();
 });
 
@@ -113,5 +114,16 @@ tape("quantile.invertExtent() returns the first match if duplicate values exist 
   test.deepEqual(s.invertExtent(0), [3, 7.25]);
   test.deepEqual(s.invertExtent(1), [7.25, 9]);
   test.deepEqual(s.invertExtent(2), [9, 14.5]);
+  test.end();
+});
+
+tape("quantile.unknown(value) sets the return value for undefined and NaN input", function(test) {
+  var s = scale.scaleQuantile().domain([3, 6, 7, 8, 8, 10, 13, 15, 16, 20]).range([0, 1, 2, 3]).unknown(-1);
+  test.equal(s(undefined), -1);
+  test.equal(s(NaN), -1);
+  test.equal(s("N/A"), -1);
+  test.equal(s(2), 0);
+  test.equal(s(3), 0);
+  test.equal(s(21), 3);
   test.end();
 });

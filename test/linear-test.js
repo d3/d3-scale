@@ -7,6 +7,7 @@ tape("scaleLinear() has the expected defaults", function(test) {
   test.deepEqual(s.domain(), [0, 1]);
   test.deepEqual(s.range(), [0, 1]);
   test.equal(s.clamp(), false);
+  test.equal(s.unknown(), undefined);
   test.deepEqual(s.interpolate()({array: ["red"]}, {array: ["blue"]})(0.5), {array: ["rgb(128, 0, 128)"]});
   test.end();
 });
@@ -181,6 +182,15 @@ tape("linear.range() returns a copy of range values", function(test) {
 
 tape("linear.rangeRound(range) is an alias for linear.range(range).interpolate(interpolateRound)", function(test) {
   test.equal(scale.scaleLinear().rangeRound([0, 10])(0.59), 6);
+  test.end();
+});
+
+tape("linear.unknown(value) sets the return value for undefined and NaN input", function(test) {
+  var s = scale.scaleLinear().unknown(-1);
+  test.equal(s(undefined), -1);
+  test.equal(s(NaN), -1);
+  test.equal(s("N/A"), -1);
+  test.equal(s(0.4), 0.4);
   test.end();
 });
 
@@ -469,5 +479,18 @@ tape("linear.copy() returns a copy with changes to clamping are isolated", funct
   test.equal(x(2), 2);
   test.equal(y(2), 2);
   test.equal(x.clamp(), false);
+  test.end();
+});
+
+tape("linear.copy() returns a copy with changes to the unknown value are isolated", function(test) {
+  var x = scale.scaleLinear(), y = x.copy();
+  x.unknown(2);
+  test.equal(x(NaN), 2);
+  test.equal(isNaN(y(NaN)), true);
+  test.equal(y.unknown(), undefined);
+  y.unknown(3);
+  test.equal(x(NaN), 2);
+  test.equal(y(NaN), 3);
+  test.equal(x.unknown(), 2);
   test.end();
 });

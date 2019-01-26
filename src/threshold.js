@@ -5,10 +5,11 @@ import {initRange} from "./init";
 export default function threshold() {
   var domain = [0.5],
       range = [0, 1],
+      unknown,
       n = 1;
 
   function scale(x) {
-    if (x <= x) return range[bisect(domain, x, 0, n)];
+    return x <= x ? range[bisect(domain, x, 0, n)] : unknown;
   }
 
   scale.domain = function(_) {
@@ -24,10 +25,15 @@ export default function threshold() {
     return [domain[i - 1], domain[i]];
   };
 
+  scale.unknown = function(_) {
+    return arguments.length ? (unknown = _, scale) : unknown;
+  };
+
   scale.copy = function() {
     return threshold()
         .domain(domain)
-        .range(range);
+        .range(range)
+        .unknown(unknown);
   };
 
   return initRange.apply(scale, arguments);

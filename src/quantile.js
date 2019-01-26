@@ -5,7 +5,8 @@ import {initRange} from "./init";
 export default function quantile() {
   var domain = [],
       range = [],
-      thresholds = [];
+      thresholds = [],
+      unknown;
 
   function rescale() {
     var i = 0, n = Math.max(1, range.length);
@@ -15,7 +16,7 @@ export default function quantile() {
   }
 
   function scale(x) {
-    if (!isNaN(x = +x)) return range[bisect(thresholds, x)];
+    return isNaN(x = +x) ? unknown : range[bisect(thresholds, x)];
   }
 
   scale.invertExtent = function(y) {
@@ -38,6 +39,10 @@ export default function quantile() {
     return arguments.length ? (range = slice.call(_), rescale()) : range.slice();
   };
 
+  scale.unknown = function(_) {
+    return arguments.length ? (unknown = _, scale) : unknown;
+  };
+
   scale.quantiles = function() {
     return thresholds.slice();
   };
@@ -45,7 +50,8 @@ export default function quantile() {
   scale.copy = function() {
     return quantile()
         .domain(domain)
-        .range(range);
+        .range(range)
+        .unknown(unknown);
   };
 
   return initRange.apply(scale, arguments);
