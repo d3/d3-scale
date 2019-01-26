@@ -8,6 +8,13 @@ tape("scaleIdentity() has the expected defaults", function(test) {
   test.end();
 });
 
+tape("scaleIdentity(range) sets the domain and range", function(test) {
+  var s = scale.scaleIdentity([1, 2]);
+  test.deepEqual(s.domain(), [1, 2]);
+  test.deepEqual(s.range(), [1, 2]);
+  test.end();
+});
+
 tape("identity(x) is the identity function", function(test) {
   var s = scale.scaleIdentity().domain([1, 2]);
   test.equal(s(0.5), 0.5);
