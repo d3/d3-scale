@@ -77,9 +77,10 @@ color(20); // "#9a3439"
 color(50); // "#7b5167"
 ```
 
-In shortand:
+Or, in shortand:
 
 ```js
+var x = d3.scaleLinear([10, 130], [0, 960]);
 var color = d3.scaleLinear([10, 100], ["brown", "steelblue"]);
 ```
 
