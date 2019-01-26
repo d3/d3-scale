@@ -11,6 +11,22 @@ tape("scaleLinear() has the expected defaults", function(test) {
   test.end();
 });
 
+tape("scaleLinear(range) sets the range", function(test) {
+  var s = scale.scaleLinear([1, 2]);
+  test.deepEqual(s.domain(), [0, 1]);
+  test.deepEqual(s.range(), [1, 2]);
+  test.equal(s(0.5), 1.5);
+  test.end();
+});
+
+tape("scaleLinear(domain, range) sets the domain and range", function(test) {
+  var s = scale.scaleLinear([1, 2], [3, 4]);
+  test.deepEqual(s.domain(), [1, 2]);
+  test.deepEqual(s.range(), [3, 4]);
+  test.equal(s(1.5), 3.5);
+  test.end();
+});
+
 tape("linear(x) maps a domain value x to a range value y", function(test) {
   test.equal(scale.scaleLinear().range([1, 2])(0.5), 1.5);
   test.end();

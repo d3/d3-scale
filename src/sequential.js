@@ -1,19 +1,19 @@
 import {identity} from "./continuous";
+import {initInterpolator} from "./init";
 import {linearish} from "./linear";
 import {loggish} from "./log";
 import {symlogish} from "./symlog";
 import {powish} from "./pow";
 
-function transformer(interpolator) {
+function transformer() {
   var x0 = 0,
       x1 = 1,
       t0,
       t1,
       k10,
       transform,
+      interpolator = identity,
       clamp = false;
-
-  if (interpolator == null) interpolator = identity;
 
   function scale(x) {
     var t = (transform(x) - t0) * k10;
@@ -45,46 +45,46 @@ export function copy(source, target) {
       .clamp(source.clamp());
 }
 
-export default function sequential(interpolator) {
-  var scale = linearish(transformer(interpolator)(identity));
+export default function sequential() {
+  var scale = linearish(transformer()(identity));
 
   scale.copy = function() {
     return copy(scale, sequential());
   };
 
-  return scale;
+  return initInterpolator.apply(scale, arguments);
 }
 
-export function sequentialLog(interpolator) {
-  var scale = loggish(transformer(interpolator)).domain([1, 10]);
+export function sequentialLog() {
+  var scale = loggish(transformer()).domain([1, 10]);
 
   scale.copy = function() {
     return copy(scale, sequentialLog()).base(scale.base());
   };
 
-  return scale;
+  return initInterpolator.apply(scale, arguments);
 }
 
-export function sequentialSymlog(interpolator) {
-  var scale = symlogish(transformer(interpolator));
+export function sequentialSymlog() {
+  var scale = symlogish(transformer());
 
   scale.copy = function() {
     return copy(scale, sequentialSymlog()).constant(scale.constant());
   };
 
-  return scale;
+  return initInterpolator.apply(scale, arguments);
 }
 
-export function sequentialPow(interpolator) {
-  var scale = powish(transformer(interpolator));
+export function sequentialPow() {
+  var scale = powish(transformer());
 
   scale.copy = function() {
     return copy(scale, sequentialPow()).exponent(scale.exponent());
   };
 
-  return scale;
+  return initInterpolator.apply(scale, arguments);
 }
 
-export function sequentialSqrt(interpolator) {
-  return sequentialPow(interpolator).exponent(0.5);
+export function sequentialSqrt() {
+  return sequentialPow.apply(null, arguments).exponent(0.5);
 }

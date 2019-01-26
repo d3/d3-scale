@@ -1,5 +1,6 @@
 import {bisect} from "d3-array";
 import {slice} from "./array";
+import {initRange} from "./init";
 
 export default function threshold() {
   var domain = [0.5],
@@ -29,5 +30,5 @@ export default function threshold() {
         .range(range);
   };
 
-  return scale;
+  return initRange.apply(scale, arguments);
 }

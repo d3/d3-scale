@@ -3,6 +3,7 @@ import {timeYear, timeMonth, timeWeek, timeDay, timeHour, timeMinute, timeSecond
 import {timeFormat} from "d3-time-format";
 import {map} from "./array";
 import continuous, {copy, identity} from "./continuous";
+import {initRange} from "./init";
 import nice from "./nice";
 
 var durationSecond = 1000,
@@ -130,5 +131,5 @@ export function calendar(year, month, week, day, hour, minute, second, milliseco
 }
 
 export default function() {
-  return calendar(timeYear, timeMonth, timeWeek, timeDay, timeHour, timeMinute, timeSecond, timeMillisecond, timeFormat).domain([new Date(2000, 0, 1), new Date(2000, 0, 2)]);
+  return initRange.apply(calendar(timeYear, timeMonth, timeWeek, timeDay, timeHour, timeMinute, timeSecond, timeMillisecond, timeFormat).domain([new Date(2000, 0, 1), new Date(2000, 0, 2)]), arguments);
 }

@@ -1,7 +1,10 @@
 import {ascending, bisect} from "d3-array";
+import {identity} from "./continuous";
+import {initInterpolator} from "./init";
 
-export default function sequentialQuantile(interpolator) {
-  var domain = [];
+export default function sequentialQuantile() {
+  var domain = [],
+      interpolator = identity;
 
   function scale(x) {
     if (!isNaN(x = +x)) return interpolator((bisect(domain, x) - 1) / (domain.length - 1));
@@ -23,5 +26,5 @@ export default function sequentialQuantile(interpolator) {
     return sequentialQuantile(interpolator).domain(domain);
   };
 
-  return scale;
+  return initInterpolator.apply(scale, arguments);
 }

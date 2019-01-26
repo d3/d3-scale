@@ -1,5 +1,6 @@
 import {ascending, bisect, quantile as threshold} from "d3-array";
 import {slice} from "./array";
+import {initRange} from "./init";
 
 export default function quantile() {
   var domain = [],
@@ -47,5 +48,5 @@ export default function quantile() {
         .range(range);
   };
 
-  return scale;
+  return initRange.apply(scale, arguments);
 }

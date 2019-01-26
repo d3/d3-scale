@@ -1,5 +1,6 @@
 import {linearish} from "./linear";
 import {copy, transformer} from "./continuous";
+import {initRange} from "./init";
 
 function transformSymlog(c) {
   return function(x) {
@@ -29,6 +30,8 @@ export default function symlog() {
   scale.copy = function() {
     return copy(scale, symlog()).constant(scale.constant());
   };
+
+  initRange.apply(scale, arguments);
 
   return scale;
 }

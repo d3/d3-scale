@@ -1,6 +1,7 @@
 import {bisect} from "d3-array";
 import {slice} from "./array";
 import {linearish} from "./linear";
+import {initRange} from "./init";
 
 export default function quantize() {
   var x0 = 0,
@@ -42,5 +43,5 @@ export default function quantize() {
         .range(range);
   };
 
-  return linearish(scale);
+  return initRange.apply(linearish(scale), arguments);
 }

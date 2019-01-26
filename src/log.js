@@ -1,7 +1,8 @@
 import {ticks} from "d3-array";
 import {format} from "d3-format";
 import nice from "./nice";
-import {transformer, copy} from "./continuous";
+import {copy, transformer} from "./continuous";
+import {initRange} from "./init";
 
 function transformLog(x) {
   return Math.log(x);
@@ -137,6 +138,8 @@ export default function log() {
   scale.copy = function() {
     return copy(scale, log()).base(scale.base());
   };
+
+  initRange.apply(scale, arguments);
 
   return scale;
 }

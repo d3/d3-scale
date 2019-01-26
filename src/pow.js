@@ -1,5 +1,6 @@
 import {linearish} from "./linear";
 import {copy, identity, transformer} from "./continuous";
+import {initRange} from "./init";
 
 function transformPow(exponent) {
   return function(x) {
@@ -39,9 +40,11 @@ export default function pow() {
     return copy(scale, pow()).exponent(scale.exponent());
   };
 
+  initRange.apply(scale, arguments);
+
   return scale;
 }
 
 export function sqrt() {
-  return pow().exponent(0.5);
+  return pow.apply(null, arguments).exponent(0.5);
 }

@@ -1,9 +1,12 @@
 import {slice} from "./array";
+import {initRange} from "./init";
 
 export var implicit = {name: "implicit"};
 
-export default function ordinal(domain, range) {
-  var index,
+export default function ordinal() {
+  var index = new Map,
+      domain = [],
+      range = [],
       unknown = implicit;
 
   function scale(d) {
@@ -35,11 +38,7 @@ export default function ordinal(domain, range) {
     return ordinal(domain, range).unknown(unknown);
   };
 
-  switch (arguments.length) {
-    case 0: range = [], domain = [], index = new Map; break;
-    case 1: range = slice.call(domain), domain = [], index = new Map; break;
-    default: range = slice.call(range), scale.domain(domain); break;
-  }
+  initRange.apply(scale, arguments);
 
   return scale;
 }

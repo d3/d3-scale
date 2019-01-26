@@ -1,11 +1,12 @@
 import {identity} from "./continuous";
+import {initInterpolator} from "./init";
 import {linearish} from "./linear";
 import {loggish} from "./log";
 import {copy} from "./sequential";
 import {symlogish} from "./symlog";
 import {powish} from "./pow";
 
-function transformer(interpolator) {
+function transformer() {
   var x0 = 0,
       x1 = 0.5,
       x2 = 1,
@@ -14,10 +15,9 @@ function transformer(interpolator) {
       t2,
       k10,
       k21,
+      interpolator = identity,
       transform,
       clamp = false;
-
-  if (interpolator == null) interpolator = identity;
 
   function scale(x) {
     var t = 0.5 + ((x = +transform(x)) - t1) * (x < t1 ? k10 : k21);
@@ -42,46 +42,46 @@ function transformer(interpolator) {
   };
 }
 
-export default function diverging(interpolator) {
-  var scale = linearish(transformer(interpolator)(identity));
+export default function diverging() {
+  var scale = linearish(transformer()(identity));
 
   scale.copy = function() {
     return copy(scale, diverging());
   };
 
-  return scale;
+  return initInterpolator.apply(scale, arguments);
 }
 
-export function divergingLog(interpolator) {
-  var scale = loggish(transformer(interpolator)).domain([0.1, 1, 10]);
+export function divergingLog() {
+  var scale = loggish(transformer()).domain([0.1, 1, 10]);
 
   scale.copy = function() {
     return copy(scale, divergingLog()).base(scale.base());
   };
 
-  return scale;
+  return initInterpolator.apply(scale, arguments);
 }
 
-export function divergingSymlog(interpolator) {
-  var scale = symlogish(transformer(interpolator));
+export function divergingSymlog() {
+  var scale = symlogish(transformer());
 
   scale.copy = function() {
     return copy(scale, divergingSymlog()).constant(scale.constant());
   };
 
-  return scale;
+  return initInterpolator.apply(scale, arguments);
 }
 
-export function divergingPow(interpolator) {
-  var scale = powish(transformer(interpolator));
+export function divergingPow() {
+  var scale = powish(transformer());
 
   scale.copy = function() {
     return copy(scale, divergingPow()).exponent(scale.exponent());
   };
 
-  return scale;
+  return initInterpolator.apply(scale, arguments);
 }
 
-export function divergingSqrt(interpolator) {
-  return divergingPow(interpolator).exponent(0.5);
+export function divergingSqrt() {
+  return divergingPow.apply(null, arguments).exponent(0.5);
 }
