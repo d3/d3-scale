@@ -2,12 +2,9 @@ import {slice} from "./array";
 
 export var implicit = {name: "implicit"};
 
-export default function ordinal(range) {
-  var index = new Map(),
-      domain = [],
+export default function ordinal(domain, range) {
+  var index,
       unknown = implicit;
-
-  range = range == null ? [] : slice.call(range);
 
   function scale(d) {
     var key = d + "", i = index.get(key);
@@ -35,11 +32,14 @@ export default function ordinal(range) {
   };
 
   scale.copy = function() {
-    return ordinal()
-        .domain(domain)
-        .range(range)
-        .unknown(unknown);
+    return ordinal(domain, range).unknown(unknown);
   };
+
+  switch (arguments.length) {
+    case 0: range = [], domain = [], index = new Map; break;
+    case 1: range = slice.call(domain), domain = [], index = new Map; break;
+    default: range = slice.call(range), scale.domain(domain); break;
+  }
 
   return scale;
 }

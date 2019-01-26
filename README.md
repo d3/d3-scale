@@ -717,9 +717,9 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 Unlike [continuous scales](#continuous-scales), ordinal scales have a discrete domain and range. For example, an ordinal scale might map a set of named categories to a set of colors, or determine the horizontal positions of columns in a column chart.
 
-<a name="scaleOrdinal" href="#scaleOrdinal">#</a> d3.<b>scaleOrdinal</b>([<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/ordinal.js "Source")
+<a name="scaleOrdinal" href="#scaleOrdinal">#</a> d3.<b>scaleOrdinal</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/ordinal.js "Source")
 
-Constructs a new ordinal scale with an empty [domain](#ordinal_domain) and the specified [*range*](#ordinal_range). If a *range* is not specified, it defaults to the empty array; an ordinal scale always returns undefined until a non-empty range is defined.
+Constructs a new ordinal scale with the specified [domain](#ordinal_domain) and [*range*](#ordinal_range). If *domain* is not specified, it defaults to the empty array. If *range* is not specified, it defaults to the empty array; an ordinal scale always returns undefined until a non-empty range is defined.
 
 <a name="_ordinal" href="#_ordinal">#</a> <i>ordinal</i>(<i>value</i>) [<>](https://github.com/d3/d3-scale/blob/master/src/ordinal.js "Source")
 
@@ -753,9 +753,9 @@ Band scales are like [ordinal scales](#ordinal-scales) except the output range i
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/band.png" width="751" height="238" alt="band">
 
-<a name="scaleBand" href="#scaleBand">#</a> d3.<b>scaleBand</b>() [<>](https://github.com/d3/d3-scale/blob/master/src/band.js "Source")
+<a name="scaleBand" href="#scaleBand">#</a> d3.<b>scaleBand</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/band.js "Source")
 
-Constructs a new band scale with the empty [domain](#band_domain), the unit [range](#band_range) [0, 1], no [padding](#band_padding), no [rounding](#band_round) and center [alignment](#band_align).
+Constructs a new band scale with the specified [domain](#band_domain) and [range](#band_range), no [padding](#band_padding), no [rounding](#band_round) and center [alignment](#band_align). If *domain* is not specified, it defaults to the empty domain. If *range* is not specified, it defaults to the unit range [0, 1].
 
 <a name="_band" href="#_band">#</a> <i>band</i>(*value*) [<>](https://github.com/d3/d3-scale/blob/master/src/band.js "Source")
 
@@ -819,9 +819,9 @@ Point scales are a variant of [band scales](#band-scales) with the bandwidth fix
 
 <img src="https://raw.githubusercontent.com/d3/d3-scale/master/img/point.png" width="648" height="155" alt="point">
 
-<a name="scalePoint" href="#scalePoint">#</a> d3.<b>scalePoint</b>() [<>](https://github.com/d3/d3-scale/blob/master/src/band.js "Source")
+<a name="scalePoint" href="#scalePoint">#</a> d3.<b>scalePoint</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/band.js "Source")
 
-Constructs a new point scale with the empty [domain](#point_domain), the unit [range](#point_range) [0, 1], no [padding](#point_padding), no [rounding](#point_round) and center [alignment](#point_align).
+Constructs a new point scale with the specified [domain](#point_domain) and [range](#point_range), no [padding](#point_padding), no [rounding](#point_round) and center [alignment](#point_align). If *domain* is not specified, it defaults to the empty domain. If *range* is not specified, it defaults to the unit range [0, 1].
 
 <a name="_point" href="#_point">#</a> <i>point</i>(*value*) [<>](https://github.com/d3/d3-scale/blob/master/src/band.js "Source")
 

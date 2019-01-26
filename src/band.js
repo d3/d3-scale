@@ -1,11 +1,11 @@
 import {range as sequence} from "d3-array";
 import ordinal from "./ordinal";
 
-export default function band() {
+export default function band(initDomain, initRange) {
   var scale = ordinal().unknown(undefined),
       domain = scale.domain,
       ordinalRange = scale.range,
-      range = [0, 1],
+      range,
       step,
       bandwidth,
       round = false,
@@ -70,14 +70,18 @@ export default function band() {
   };
 
   scale.copy = function() {
-    return band()
-        .domain(domain())
-        .range(range)
+    return band(domain(), range)
         .round(round)
         .paddingInner(paddingInner)
         .paddingOuter(paddingOuter)
         .align(align);
   };
+
+  switch (arguments.length) {
+    case 0: range = [0, 1]; break;
+    case 1: range = [+initDomain[0], +initDomain[1]]; break;
+    default: range = [+initRange[0], +initRange[1]], domain(initDomain); break;
+  }
 
   return rescale();
 }
@@ -97,5 +101,5 @@ function pointish(scale) {
 }
 
 export function point() {
-  return pointish(band().paddingInner(1));
+  return pointish(band.apply(null, arguments).paddingInner(1));
 }

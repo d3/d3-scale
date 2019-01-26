@@ -15,7 +15,7 @@ tape("scaleBand() has the expected defaults", function(test) {
 });
 
 tape("band(value) computes discrete bands in a continuous range", function(test) {
-  var s = scale.scaleBand().range([0, 960]);
+  var s = scale.scaleBand([0, 960]);
   test.equal(s("foo"), undefined);
   s.domain(["foo", "bar"]);
   test.equal(s("foo"), 0);
@@ -30,7 +30,7 @@ tape("band(value) computes discrete bands in a continuous range", function(test)
 });
 
 tape("band(value) returns undefined for values outside the domain", function(test) {
-  var s = scale.scaleBand().domain(["a", "b", "c"]);
+  var s = scale.scaleBand(["a", "b", "c"], [0, 1]);
   test.equal(s("d"), undefined);
   test.equal(s("e"), undefined);
   test.equal(s("f"), undefined);
@@ -38,7 +38,7 @@ tape("band(value) returns undefined for values outside the domain", function(tes
 });
 
 tape("band(value) does not implicitly add values to the domain", function(test) {
-  var s = scale.scaleBand().domain(["a", "b", "c"]);
+  var s = scale.scaleBand(["a", "b", "c"], [0, 1]);
   s("d");
   s("e");
   test.deepEqual(s.domain(), ["a", "b", "c"]);
@@ -46,7 +46,7 @@ tape("band(value) does not implicitly add values to the domain", function(test) 
 });
 
 tape("band.step() returns the distance between the starts of adjacent bands", function(test) {
-  var s = scale.scaleBand().range([0, 960]);
+  var s = scale.scaleBand([0, 960]);
   test.equal(s.domain(["foo"]).step(), 960);
   test.equal(s.domain(["foo", "bar"]).step(), 480);
   test.equal(s.domain(["foo", "bar", "baz"]).step(), 320);
@@ -57,7 +57,7 @@ tape("band.step() returns the distance between the starts of adjacent bands", fu
 });
 
 tape("band.bandwidth() returns the width of the band", function(test) {
-  var s = scale.scaleBand().range([0, 960]);
+  var s = scale.scaleBand([0, 960]);
   test.equal(s.domain([]).bandwidth(), 960);
   test.equal(s.domain(["foo"]).bandwidth(), 960);
   test.equal(s.domain(["foo", "bar"]).bandwidth(), 480);
@@ -70,7 +70,7 @@ tape("band.bandwidth() returns the width of the band", function(test) {
 });
 
 tape("band.domain([]) computes reasonable band and step values", function(test) {
-  var s = scale.scaleBand().domain([]).range([0, 960]);
+  var s = scale.scaleBand([0, 960]).domain([]);
   test.equal(s.step(), 960);
   test.equal(s.bandwidth(), 960);
   s.padding(0.5);
@@ -83,7 +83,7 @@ tape("band.domain([]) computes reasonable band and step values", function(test) 
 });
 
 tape("band.domain([value]) computes a reasonable singleton band, even with padding", function(test) {
-  var s = scale.scaleBand().domain(["foo"]).range([0, 960]);
+  var s = scale.scaleBand([0, 960]).domain(["foo"]);
   test.equal(s("foo"), 0);
   test.equal(s.step(), 960);
   test.equal(s.bandwidth(), 960);
