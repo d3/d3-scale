@@ -45,9 +45,9 @@ tape("linear(x) ignores extra domain values if the range is smaller than the dom
   test.end();
 });
 
-tape("linear(x) maps an empty domain to the range start", function(test) {
-  test.equal(scale.scaleLinear().domain([0, 0]).range([1, 2])(0), 1);
-  test.equal(scale.scaleLinear().domain([0, 0]).range([2, 1])(1), 2);
+tape("linear(x) maps an empty domain to the middle of the range", function(test) {
+  test.equal(scale.scaleLinear().domain([0, 0]).range([1, 2])(0), 1.5);
+  test.equal(scale.scaleLinear().domain([0, 0]).range([2, 1])(1), 1.5);
   test.end();
 });
 
@@ -91,9 +91,9 @@ tape("linear.invert(y) maps a range value y to a domain value x", function(test)
   test.end();
 });
 
-tape("linear.invert(y) maps an empty range to the domain start", function(test) {
-  test.equal(scale.scaleLinear().domain([1, 2]).range([0, 0]).invert(0), 1);
-  test.equal(scale.scaleLinear().domain([2, 1]).range([0, 0]).invert(1), 2);
+tape("linear.invert(y) maps an empty range to the middle of the domain", function(test) {
+  test.equal(scale.scaleLinear().domain([1, 2]).range([0, 0]).invert(0), 1.5);
+  test.equal(scale.scaleLinear().domain([2, 1]).range([0, 0]).invert(1), 1.5);
   test.end();
 });
 

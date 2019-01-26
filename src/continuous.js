@@ -13,7 +13,7 @@ export function identity(x) {
 function normalize(a, b) {
   return (b -= (a = +a))
       ? function(x) { return (x - a) / b; }
-      : constant(b);
+      : constant(isNaN(b) ? NaN : 0.5);
 }
 
 function clamper(domain) {
