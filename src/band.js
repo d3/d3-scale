@@ -20,11 +20,12 @@ export default function band() {
     var n = domain().length,
         reverse = range[1] < range[0],
         start = range[reverse - 0],
-        stop = range[1 - reverse];
-    step = (stop - start) / Math.max(1, n - paddingInner + paddingOuter * 2);
+        stop = range[1 - reverse],
+        gap = n > 1 || paddingInner === 1 ? paddingInner : 0;
+    step = (stop - start) / Math.max(1, n - gap + paddingOuter * 2);
     if (round) step = Math.floor(step);
-    start += (stop - start - step * (n - paddingInner)) * align;
-    bandwidth = step * (1 - paddingInner);
+    start += (stop - start - step * (n - gap)) * align;
+    bandwidth = step * (1 - gap);
     if (round) start = Math.round(start), bandwidth = Math.round(bandwidth);
     var values = sequence(n).map(function(i) { return start + step * i; });
     return ordinalRange(reverse ? values.reverse() : values);
