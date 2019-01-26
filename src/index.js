@@ -53,7 +53,8 @@ export {
   default as scaleSequential,
   sequentialLog as scaleSequentialLog,
   sequentialPow as scaleSequentialPow,
-  sequentialSqrt as scaleSequentialSqrt
+  sequentialSqrt as scaleSequentialSqrt,
+  sequentialSymlog as scaleSequentialSymlog
 } from "./sequential";
 
 export {

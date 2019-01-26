@@ -629,10 +629,6 @@ See [*continuous*.copy](#continuous_copy).
 
 …
 
-<a name="scaleDivergingSymlog" href="#scaleDivergingSymlog">#</a> d3.<b>scaleDivergingSymlog</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/diverging.js "Source")
-
-…
-
 ### Quantize Scales
 
 Quantize scales are similar to [linear scales](#linear-scales), except they use a discrete rather than continuous range. The continuous input domain is divided into uniform segments based on the number of values in (*i.e.*, the cardinality of) the output range. Each range value *y* can be expressed as a quantized linear function of the domain value *x*: *y* = *m round(x)* + *b*. See [bl.ocks.org/4060606](http://bl.ocks.org/mbostock/4060606) for an example.
