@@ -694,6 +694,10 @@ Equivalent to [*continuous*.tickFormat](#continuous_tickFormat).
 
 Equivalent to [*continuous*.nice](#continuous_nice).
 
+<a name="quantize_thresholds" href="#quantize_thresholds">#</a> <i>quantize</i>.<b>thresholds</b>() [<>](https://github.com/d3/d3-scale/blob/master/src/quantize.js "Source")
+
+Returns the array of computed thresholds within the [domain](#quantize_domain).
+
 <a name="quantize_copy" href="#quantize_copy">#</a> <i>quantize</i>.<b>copy</b>() [<>](https://github.com/d3/d3-scale/blob/master/src/quantize.js "Source")
 
 Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.

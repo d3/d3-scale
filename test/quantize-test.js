@@ -8,6 +8,7 @@ tape("scaleQuantize() has the expected defaults", function(test) {
   var s = scale.scaleQuantize();
   test.deepEqual(s.domain(), [0, 1]);
   test.deepEqual(s.range(), [0, 1]);
+  test.deepEqual(s.thresholds(), [0.5]);
   test.equal(s(0.25), 0);
   test.equal(s(0.75), 1);
   test.end();
@@ -15,6 +16,7 @@ tape("scaleQuantize() has the expected defaults", function(test) {
 
 tape("quantize(value) maps a number to a discrete value in the range", function(test) {
   var s = scale.scaleQuantize().range([0, 1, 2]);
+  test.deepEqual(s.thresholds(), [1 / 3, 2 / 3]);
   test.equal(s(0.0), 0);
   test.equal(s(0.2), 0);
   test.equal(s(0.4), 1);

@@ -42,6 +42,10 @@ export default function quantize() {
     return arguments.length ? (unknown = _, scale) : scale;
   };
 
+  scale.thresholds = function() {
+    return domain.slice();
+  };
+
   scale.copy = function() {
     return quantize()
         .domain([x0, x1])
