@@ -1,10 +1,11 @@
+import {map} from "d3-collection";
 import {slice} from "./array";
 import {initRange} from "./init";
 
 export var implicit = {name: "implicit"};
 
 export default function ordinal() {
-  var index = new Map,
+  var index = map(),
       domain = [],
       range = [],
       unknown = implicit;
@@ -20,7 +21,7 @@ export default function ordinal() {
 
   scale.domain = function(_) {
     if (!arguments.length) return domain.slice();
-    domain = [], index = new Map();
+    domain = [], index = map();
     var i = -1, n = _.length, d, key;
     while (++i < n) if (!index.has(key = (d = _[i]) + "")) index.set(key, domain.push(d));
     return scale;
