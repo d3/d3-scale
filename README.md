@@ -153,6 +153,10 @@ x.invert(-160); // 10, clamped to domain
 
 If *clamp* is not specified, returns whether or not the scale currently clamps values to within the range.
 
+<a name="continuous_unknown" href="#continuous_unknown">#</a> <i>continuous</i>.<b>unknown</b>([<i>value</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/continuous.js "Source")
+
+If *value* is specified, sets the output value of the scale for undefined (or NaN) input values and returns this scale. If *value* is not specified, returns the current unknown value, which defaults to undefined.
+
 <a name="continuous_interpolate" href="#continuous_interpolate">#</a> <i>continuous</i>.<b>interpolate</b>(<i>interpolate</i>) [<>](https://github.com/d3/d3-scale/blob/master/src/continuous.js "Source")
 
 If *interpolate* is specified, sets the scale’s [range](#continuous_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0, 1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s current interpolator factory, which defaults to [interpolate](https://github.com/d3/d3-interpolate#interpolate). See [d3-interpolate](https://github.com/d3/d3-interpolate) for more interpolators.
