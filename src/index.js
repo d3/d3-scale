@@ -65,7 +65,8 @@ export {
   default as scaleDiverging,
   divergingLog as scaleDivergingLog,
   divergingPow as scaleDivergingPow,
-  divergingSqrt as scaleDivergingSqrt
+  divergingSqrt as scaleDivergingSqrt,
+  divergingSymlog as scaleDivergingSymlog
 } from "./diverging";
 
 export {
