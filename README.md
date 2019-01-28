@@ -367,7 +367,7 @@ See [*continuous*.copy](#continuous_copy).
 
 #### Symlog Scales
 
-See [A bi-symmetric log transformation for wide-range data](https://www.researchgate.net/publication/233967063_A_bi-symmetric_log_transformation_for_wide-range_data) by Webber for more.
+See [A bi-symmetric log transformation for wide-range data](https://www.researchgate.net/profile/John_Webber4/publication/233967063_A_bi-symmetric_log_transformation_for_wide-range_data/links/0fcfd50d791c85082e000000.pdf) by Webber for more.
 
 <a name="scaleSymlog" href="#scaleSymlog">#</a> d3.<b>scaleSymlog</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/symlog.js "Source")
 
