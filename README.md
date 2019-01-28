@@ -623,15 +623,19 @@ See [*continuous*.copy](#continuous_copy).
 
 <a name="scaleDivergingLog" href="#scaleDivergingLog">#</a> d3.<b>scaleDivergingLog</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/diverging.js "Source")
 
-…
+A [diverging scale](#diverging-scales) with a logarithmic transform, analagous to a [log scale](#log-scales).
 
 <a name="scaleDivergingPow" href="#scaleDivergingPow">#</a> d3.<b>scaleDivergingPow</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/diverging.js "Source")
 
-…
+A [diverging scale](#diverging-scales) with a exponential transform, analagous to a [power scale](#pow-scales).
 
 <a name="scaleDivergingSqrt" href="#scaleDivergingSqrt">#</a> d3.<b>scaleDivergingSqrt</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/diverging.js "Source")
 
-…
+A [diverging scale](#diverging-scales) with a square-root transform, analagous to a [d3.scaleSqrt](#scaleSqrt).
+
+<a name="scaleDivergingSymlog" href="#scaleDivergingSymlog">#</a> d3.<b>scaleDivergingSymlog</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/diverging.js "Source")
+
+A [diverging scale](#diverging-scales) with a symmetric logarithmic transform, analagous to a [symlog scale](#symlog-scales).
 
 ### Quantize Scales
 
