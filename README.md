@@ -571,23 +571,23 @@ See [*continuous*.copy](#continuous_copy).
 
 <a name="scaleSequentialLog" href="#scaleSequentialLog">#</a> d3.<b>scaleSequentialLog</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/sequential.js "Source")
 
-…
+A [sequential scale](#sequential-scales) with a logarithmic transform, analagous to a [log scale](#log-scales).
 
 <a name="scaleSequentialPow" href="#scaleSequentialPow">#</a> d3.<b>scaleSequentialPow</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/sequential.js "Source")
 
-…
+A [sequential scale](#sequential-scales) with a exponential transform, analagous to a [power scale](#pow-scales).
 
 <a name="scaleSequentialSqrt" href="#scaleSequentialSqrt">#</a> d3.<b>scaleSequentialSqrt</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/sequential.js "Source")
 
-…
+A [sequential scale](#sequential-scales) with a square-root transform, analagous to a [d3.scaleSqrt](#scaleSqrt).
 
 <a name="scaleSequentialSymlog" href="#scaleSequentialSymlog">#</a> d3.<b>scaleSequentialSymlog</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/sequential.js "Source")
 
-…
+A [sequential scale](#sequential-scales) with a symmetric logarithmic transform, analagous to a [symlog scale](#symlog-scales).
 
 <a name="scaleSequentialQuantile" href="#scaleSequentialQuantile">#</a> d3.<b>scaleSequentialQuantile</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/sequentialQuantile.js "Source")
 
-…
+A [sequential scale](#sequential-scales) using a *p*-quantile transform, analagous to a [quantile scale](#quantile-scales).
 
 ### Diverging Scales
 
