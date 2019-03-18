@@ -24,7 +24,6 @@ If you use NPM, `npm install d3-scale`. Otherwise, download the [latest release]
 
 ```html
 <script src="https://d3js.org/d3-array.v1.min.js"></script>
-<script src="https://d3js.org/d3-collection.v1.min.js"></script>
 <script src="https://d3js.org/d3-color.v1.min.js"></script>
 <script src="https://d3js.org/d3-format.v1.min.js"></script>
 <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
