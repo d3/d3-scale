@@ -34,6 +34,12 @@ tape("diverging.domain() coerces domain values to numbers", function(test) {
   test.end();
 });
 
+tape("diverging.domain() accepts an iterable", function(test) {
+  var s = scale.scaleDiverging().domain(new Set([-1.2, 0, 2.4]));
+  test.deepEqual(s.domain(), [-1.2, 0, 2.4]);
+  test.end();
+});
+
 tape("diverging.domain() handles a degenerate domain", function(test) {
   var s = scale.scaleDiverging().domain([2, 2, 3]);
   test.deepEqual(s.domain(), [2, 2, 3]);

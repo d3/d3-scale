@@ -6,7 +6,8 @@ export default function band() {
   var scale = ordinal().unknown(undefined),
       domain = scale.domain,
       ordinalRange = scale.range,
-      range = [0, 1],
+      r0 = 0,
+      r1 = 1,
       step,
       bandwidth,
       round = false,
@@ -18,9 +19,9 @@ export default function band() {
 
   function rescale() {
     var n = domain().length,
-        reverse = range[1] < range[0],
-        start = range[reverse - 0],
-        stop = range[1 - reverse];
+        reverse = r1 < r0,
+        start = reverse ? r1 : r0,
+        stop = reverse ? r0 : r1;
     step = (stop - start) / Math.max(1, n - paddingInner + paddingOuter * 2);
     if (round) step = Math.floor(step);
     start += (stop - start - step * (n - paddingInner)) * align;
@@ -35,11 +36,11 @@ export default function band() {
   };
 
   scale.range = function(_) {
-    return arguments.length ? (range = [+_[0], +_[1]], rescale()) : range.slice();
+    return arguments.length ? ([r0, r1] = _, r0 = +r0, r1 = +r1, rescale()) : [r0, r1];
   };
 
   scale.rangeRound = function(_) {
-    return range = [+_[0], +_[1]], round = true, rescale();
+    return [r0, r1] = _, r0 = +r0, r1 = +r1, round = true, rescale();
   };
 
   scale.bandwidth = function() {
@@ -71,7 +72,7 @@ export default function band() {
   };
 
   scale.copy = function() {
-    return band(domain(), range)
+    return band(domain(), [r0, r1])
         .round(round)
         .paddingInner(paddingInner)
         .paddingOuter(paddingOuter)

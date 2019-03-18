@@ -1,4 +1,3 @@
-import {map} from "./array";
 import {linearish} from "./linear";
 import number from "./number";
 
@@ -12,7 +11,7 @@ export default function identity(domain) {
   scale.invert = scale;
 
   scale.domain = scale.range = function(_) {
-    return arguments.length ? (domain = map.call(_, number), scale) : domain.slice();
+    return arguments.length ? (domain = Array.from(_, number), scale) : domain.slice();
   };
 
   scale.unknown = function(_) {
@@ -23,7 +22,7 @@ export default function identity(domain) {
     return identity(domain).unknown(unknown);
   };
 
-  domain = arguments.length ? map.call(domain, number) : [0, 1];
+  domain = arguments.length ? Array.from(domain, number) : [0, 1];
 
   return linearish(scale);
 }

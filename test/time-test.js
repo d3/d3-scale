@@ -12,6 +12,12 @@ tape("time.domain([-1e50, 1e50]) is equivalent to time.domain([NaN, NaN])", func
   test.end();
 });
 
+tape("time.domain(domain) accepts an iterable", function(test) {
+  var x = scale.scaleTime().domain(new Set([date.local(2009), date.local(2010)]));
+  test.deepEqual(x.domain(), [date.local(2009), date.local(2010)]);
+  test.end();
+});
+
 tape("time.nice() is an alias for time.nice(10)", function(test) {
   var x = scale.scaleTime().domain([date.local(2009, 0, 1, 0, 17), date.local(2009, 0, 1, 23, 42)]);
   test.deepEqual(x.nice().domain(), [date.local(2009, 0, 1), date.local(2009, 0, 2)]);

@@ -1,5 +1,4 @@
 import {ascending, bisect, quantile as threshold} from "d3-array";
-import {slice} from "./array";
 import {initRange} from "./init";
 
 export default function quantile() {
@@ -30,13 +29,13 @@ export default function quantile() {
   scale.domain = function(_) {
     if (!arguments.length) return domain.slice();
     domain = [];
-    for (var i = 0, n = _.length, d; i < n; ++i) if (d = _[i], d != null && !isNaN(d = +d)) domain.push(d);
+    for (let d of _) if (d != null && !isNaN(d = +d)) domain.push(d);
     domain.sort(ascending);
     return rescale();
   };
 
   scale.range = function(_) {
-    return arguments.length ? (range = slice.call(_), rescale()) : range.slice();
+    return arguments.length ? (range = Array.from(_), rescale()) : range.slice();
   };
 
   scale.unknown = function(_) {

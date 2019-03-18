@@ -1,7 +1,6 @@
 import {bisector, tickStep} from "d3-array";
 import {timeYear, timeMonth, timeWeek, timeDay, timeHour, timeMinute, timeSecond, timeMillisecond} from "d3-time";
 import {timeFormat} from "d3-time-format";
-import {map} from "./array";
 import continuous, {copy, identity} from "./continuous";
 import {initRange} from "./init";
 import nice from "./nice";
@@ -97,7 +96,7 @@ export function calendar(year, month, week, day, hour, minute, second, milliseco
   };
 
   scale.domain = function(_) {
-    return arguments.length ? domain(map.call(_, number)) : domain().map(date);
+    return arguments.length ? domain(Array.from(_, number)) : domain().map(date);
   };
 
   scale.ticks = function(interval, step) {

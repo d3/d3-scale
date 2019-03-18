@@ -40,6 +40,12 @@ tape("threshold.domain(…) supports arbitrary orderable values", function(test)
   test.end();
 });
 
+tape("threshold.domain(…) accepts an iterable", function(test) {
+  var x = scale.scaleThreshold().domain(new Set(["10", "2"])).range([0, 1, 2]);
+  test.deepEqual(x.domain(), ["10", "2"]);
+  test.end();
+});
+
 tape("threshold.range(…) supports arbitrary values", function(test) {
   var a = {}, b = {}, c = {}, x = scale.scaleThreshold().domain([1/3, 2/3]).range([a, b, c]);
   test.equal(x(0), a);
@@ -48,6 +54,12 @@ tape("threshold.range(…) supports arbitrary values", function(test) {
   test.equal(x(0.6), b);
   test.equal(x(0.8), c);
   test.equal(x(1), c);
+  test.end();
+});
+
+tape("threshold.range(…) accepts an iterable", function(test) {
+  var x = scale.scaleThreshold().domain(["10", "2"]).range(new Set([0, 1, 2]));
+  test.deepEqual(x.range(), [0, 1, 2]);
   test.end();
 });
 

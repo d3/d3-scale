@@ -1,6 +1,5 @@
 import {bisect} from "d3-array";
 import {interpolate as interpolateValue, interpolateNumber, interpolateRound} from "d3-interpolate";
-import {map, slice} from "./array";
 import constant from "./constant";
 import number from "./number";
 
@@ -90,15 +89,15 @@ export function transformer() {
   };
 
   scale.domain = function(_) {
-    return arguments.length ? (domain = map.call(_, number), clamp === identity || (clamp = clamper(domain)), rescale()) : domain.slice();
+    return arguments.length ? (domain = Array.from(_, number), clamp === identity || (clamp = clamper(domain)), rescale()) : domain.slice();
   };
 
   scale.range = function(_) {
-    return arguments.length ? (range = slice.call(_), rescale()) : range.slice();
+    return arguments.length ? (range = Array.from(_), rescale()) : range.slice();
   };
 
   scale.rangeRound = function(_) {
-    return range = slice.call(_), interpolate = interpolateRound, rescale();
+    return range = Array.from(_), interpolate = interpolateRound, rescale();
   };
 
   scale.clamp = function(_) {

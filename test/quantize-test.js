@@ -46,6 +46,12 @@ tape("quantize.domain() coerces domain values to numbers", function(test) {
   test.end();
 });
 
+tape("quantize.domain() accepts an iterable", function(test) {
+  var s = scale.scaleQuantize().domain(new Set([1, 2]));
+  test.deepEqual(s.domain(), [1, 2]);
+  test.end();
+});
+
 tape("quantize.domain() only considers the first and second element of the domain", function(test) {
   var s = scale.scaleQuantize().domain([-1, 100, 200]);
   test.deepEqual(s.domain(), [-1, 100]);

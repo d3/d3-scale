@@ -53,6 +53,12 @@ tape("ordinal.domain() returns a copy of the domain", function(test) {
   test.end();
 });
 
+tape("ordinal.domain() accepts an iterable", function(test) {
+  var s = scale.scaleOrdinal().domain(new Set(["red", "green"]));
+  test.deepEqual(s.domain(), ["red", "green"]);
+  test.end();
+});
+
 tape("ordinal.domain() replaces previous domain values", function(test) {
   var s = scale.scaleOrdinal().range(["foo", "bar"]);
   test.equal(s(1), "foo");
@@ -111,6 +117,12 @@ tape("ordinal.range(x) makes a copy of the range", function(test) {
   var range = ["red", "green"],
       s = scale.scaleOrdinal().range(range);
   range.push("blue");
+  test.deepEqual(s.range(), ["red", "green"]);
+  test.end();
+});
+
+tape("ordinal.range() accepts an iterable", function(test) {
+  var s = scale.scaleOrdinal().range(new Set(["red", "green"]));
   test.deepEqual(s.range(), ["red", "green"]);
   test.end();
 });

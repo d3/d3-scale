@@ -1,5 +1,4 @@
 import {bisect} from "d3-array";
-import {slice} from "./array";
 import {linearish} from "./linear";
 import {initRange} from "./init";
 
@@ -23,11 +22,11 @@ export default function quantize() {
   }
 
   scale.domain = function(_) {
-    return arguments.length ? (x0 = +_[0], x1 = +_[1], rescale()) : [x0, x1];
+    return arguments.length ? ([x0, x1] = _, x0 = +x0, x1 = +x1, rescale()) : [x0, x1];
   };
 
   scale.range = function(_) {
-    return arguments.length ? (n = (range = slice.call(_)).length - 1, rescale()) : range.slice();
+    return arguments.length ? (n = (range = Array.from(_)).length - 1, rescale()) : range.slice();
   };
 
   scale.invertExtent = function(y) {

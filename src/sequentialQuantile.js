@@ -13,7 +13,7 @@ export default function sequentialQuantile() {
   scale.domain = function(_) {
     if (!arguments.length) return domain.slice();
     domain = [];
-    for (var i = 0, n = _.length, d; i < n; ++i) if (d = _[i], d != null && !isNaN(d = +d)) domain.push(d);
+    for (let d of _) if (d != null && !isNaN(d = +d)) domain.push(d);
     domain.sort(ascending);
     return scale;
   };

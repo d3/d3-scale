@@ -41,6 +41,12 @@ tape("quantile.domain() values are coerced to numbers", function(test) {
   test.end();
 });
 
+tape("quantile.domain() accepts an iterable", function(test) {
+  var s = scale.scaleQuantile().domain(new Set([6, 13, 20]));
+  test.deepEqual(s.domain(), [6, 13, 20]);
+  test.end();
+});
+
 tape("quantile.domain() values are allowed to be zero", function(test) {
   var s = scale.scaleQuantile().domain([1, 2, 0, 0, null]);
   test.deepEqual(s.domain(), [0, 0, 1, 2]);
@@ -67,6 +73,12 @@ tape("quantile.range() cardinality determines the number of quantiles", function
   test.deepEqual(s.range([0, 1]).quantiles(), [9]);
   test.deepEqual(s.range([,,,,,]).quantiles(), [6.8, 8, 11.2, 15.2]);
   test.deepEqual(s.range([,,,,,,]).quantiles(), [6.5, 8, 9, 13, 15.5]);
+  test.end();
+});
+
+tape("quantile.range() accepts an iterable", function(test) {
+  var s = scale.scaleQuantile().domain([3, 6, 7, 8, 8, 10, 13, 15, 16, 20]).range(new Set([0, 1, 2, 3]));
+  test.deepEqual(s.range(), [0, 1, 2, 3]);
   test.end();
 });
 

@@ -110,6 +110,13 @@ tape("identity.domain() coerces values to numbers", function(test) {
   test.end();
 });
 
+tape("identity.domain() accepts an iterable", function(test) {
+  var s = scale.scaleIdentity().domain(new Set([1, 2]));
+  test.deepEqual(s.domain(), [1, 2]);
+  test.deepEqual(s.range(), [1, 2]);
+  test.end();
+});
+
 tape("identity.domain() can specify a polyidentity domain and range", function(test) {
   var s = scale.scaleIdentity().domain([-10, 0, 100]);
   test.deepEqual(s.domain(), [-10, 0, 100]);

@@ -1,5 +1,4 @@
 import {bisect} from "d3-array";
-import {slice} from "./array";
 import {initRange} from "./init";
 
 export default function threshold() {
@@ -13,11 +12,11 @@ export default function threshold() {
   }
 
   scale.domain = function(_) {
-    return arguments.length ? (domain = slice.call(_), n = Math.min(domain.length, range.length - 1), scale) : domain.slice();
+    return arguments.length ? (domain = Array.from(_), n = Math.min(domain.length, range.length - 1), scale) : domain.slice();
   };
 
   scale.range = function(_) {
-    return arguments.length ? (range = slice.call(_), n = Math.min(domain.length, range.length - 1), scale) : range.slice();
+    return arguments.length ? (range = Array.from(_), n = Math.min(domain.length, range.length - 1), scale) : range.slice();
   };
 
   scale.invertExtent = function(y) {

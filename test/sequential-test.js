@@ -45,6 +45,12 @@ tape("sequential.domain() coerces domain values to numbers", function(test) {
   test.end();
 });
 
+tape("sequential.domain() accepts an iterable", function(test) {
+  var s = scale.scaleSequential().domain(new Set(["-1.20", "2.40"]));
+  test.deepEqual(s.domain(), [-1.2, 2.4]);
+  test.end();
+});
+
 tape("sequential.domain() handles a degenerate domain", function(test) {
   var s = scale.scaleSequential().domain([2, 2]);
   test.deepEqual(s.domain(), [2, 2]);

@@ -108,6 +108,11 @@ tape("band.domain(values) recomputes the bands", function(test) {
   test.end();
 });
 
+tape("band.domain(domain) accepts an iterable", function(test) {
+  test.deepEqual(scale.scaleBand().domain(new Set(["a", "b", "c"])).domain(), ["a", "b", "c"]);
+  test.end();
+});
+
 tape("band.domain(values) makes a copy of the specified domain values", function(test) {
   var domain = ["red", "green"],
       s = scale.scaleBand().domain(domain);
@@ -152,8 +157,26 @@ tape("band.range() returns a copy of the range", function(test) {
   test.end();
 });
 
-tape("band.range(values) coerces values[0] and values[1] to numbers", function(test) {
-  var s = scale.scaleBand().range({0: "1.0", 1: "2.0", length: 2});
+tape("band.range(values) accepts an iterable", function(test) {
+  var s = scale.scaleBand().range(new Set([1, 2]));
+  test.deepEqual(s.range(), [1, 2]);
+  test.end();
+});
+
+tape("band.rangeRound(values) accepts an iterable", function(test) {
+  var s = scale.scaleBand().rangeRound(new Set([1, 2]));
+  test.deepEqual(s.range(), [1, 2]);
+  test.end();
+});
+
+tape("band.range(values) coerces values to numbers", function(test) {
+  var s = scale.scaleBand().range(["1.0", "2.0"]);
+  test.deepEqual(s.range(), [1, 2]);
+  test.end();
+});
+
+tape("band.rangeRound(values) coerces values to numbers", function(test) {
+  var s = scale.scaleBand().rangeRound(["1.0", "2.0"]);
   test.deepEqual(s.range(), [1, 2]);
   test.end();
 });

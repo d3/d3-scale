@@ -123,6 +123,11 @@ tape("linear.domain(domain) coerces domain values to numbers", function(test) {
   test.end();
 });
 
+tape("linear.domain(domain) accepts an iterable", function(test) {
+  test.deepEqual(scale.scaleLinear().domain(new Set([1, 2])).domain(), [1, 2]);
+  test.end();
+});
+
 tape("linear.domain(domain) makes a copy of domain values", function(test) {
   var d = [1, 2], s = scale.scaleLinear().domain(d);
   test.deepEqual(s.domain(), [1, 2]);
@@ -144,6 +149,11 @@ tape("linear.range(range) does not coerce range to numbers", function(test) {
   var s = scale.scaleLinear().range(["0px", "2px"]);
   test.deepEqual(s.range(), ["0px", "2px"]);
   test.equal(s(0.5), "1px");
+  test.end();
+});
+
+tape("linear.range(range) accepts an iterable", function(test) {
+  test.deepEqual(scale.scaleLinear().range(new Set([1, 2])).range(), [1, 2]);
   test.end();
 });
 
@@ -182,6 +192,11 @@ tape("linear.range() returns a copy of range values", function(test) {
 
 tape("linear.rangeRound(range) is an alias for linear.range(range).interpolate(interpolateRound)", function(test) {
   test.equal(scale.scaleLinear().rangeRound([0, 10])(0.59), 6);
+  test.end();
+});
+
+tape("linear.rangeRound(range) accepts an iterable", function(test) {
+  test.deepEqual(scale.scaleLinear().rangeRound(new Set([1, 2])).range(), [1, 2]);
   test.end();
 });
 
