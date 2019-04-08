@@ -527,7 +527,7 @@ Nicing is useful if the domain is computed from data, say using [extent](https:/
 
 <a name="scaleUtc" href="#scaleUtc">#</a> d3.<b>scaleUtc</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/utcTime.js "Source")
 
-Equivalent to [time](#time), but the returned time scale operates in [Coordinated Universal Time](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) rather than local time.
+Equivalent to [scaleTime](#scaleTime), but the returned time scale operates in [Coordinated Universal Time](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) rather than local time.
 
 ### Sequential Scales
 
