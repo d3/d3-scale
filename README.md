@@ -748,7 +748,7 @@ Threshold scales are similar to [quantize scales](#quantize-scales), except they
 
 <a name="scaleThreshold" href="#scaleThreshold">#</a> d3.<b>scaleThreshold</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/threshold.js "Source")
 
-Constructs a new threshold scale with the specified [*domain*](#threshold_domain) and [*range*](#threshold_range). It *domain* is not specified, it defaulst to [0.5]. If *range* is not specified, it defaults to [0, 1]. Thus, the default threshold scale is equivalent to the [Math.round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function for numbers; for example threshold(0.49) returns 0, and threshold(0.51) returns 1.
+Constructs a new threshold scale with the specified [*domain*](#threshold_domain) and [*range*](#threshold_range). It *domain* is not specified, it defaults to [0.5]. If *range* is not specified, it defaults to [0, 1]. Thus, the default threshold scale is equivalent to the [Math.round](https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/round) function for numbers; for example threshold(0.49) returns 0, and threshold(0.51) returns 1.
 
 <a name="_threshold" href="#_threshold">#</a> <i>threshold</i>(<i>value</i>) [<>](https://github.com/d3/d3-scale/blob/master/src/threshold.js "Source")
 
