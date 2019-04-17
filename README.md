@@ -571,23 +571,23 @@ See [*continuous*.copy](#continuous_copy).
 
 <a name="scaleSequentialLog" href="#scaleSequentialLog">#</a> d3.<b>scaleSequentialLog</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/sequential.js "Source")
 
-A [sequential scale](#sequential-scales) with a logarithmic transform, analagous to a [log scale](#log-scales).
+A [sequential scale](#sequential-scales) with a logarithmic transform, analogous to a [log scale](#log-scales).
 
 <a name="scaleSequentialPow" href="#scaleSequentialPow">#</a> d3.<b>scaleSequentialPow</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/sequential.js "Source")
 
-A [sequential scale](#sequential-scales) with a exponential transform, analagous to a [power scale](#pow-scales).
+A [sequential scale](#sequential-scales) with an exponential transform, analogous to a [power scale](#pow-scales).
 
 <a name="scaleSequentialSqrt" href="#scaleSequentialSqrt">#</a> d3.<b>scaleSequentialSqrt</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/sequential.js "Source")
 
-A [sequential scale](#sequential-scales) with a square-root transform, analagous to a [d3.scaleSqrt](#scaleSqrt).
+A [sequential scale](#sequential-scales) with a square-root transform, analogous to a [d3.scaleSqrt](#scaleSqrt).
 
 <a name="scaleSequentialSymlog" href="#scaleSequentialSymlog">#</a> d3.<b>scaleSequentialSymlog</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/sequential.js "Source")
 
-A [sequential scale](#sequential-scales) with a symmetric logarithmic transform, analagous to a [symlog scale](#symlog-scales).
+A [sequential scale](#sequential-scales) with a symmetric logarithmic transform, analogous to a [symlog scale](#symlog-scales).
 
 <a name="scaleSequentialQuantile" href="#scaleSequentialQuantile">#</a> d3.<b>scaleSequentialQuantile</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/sequentialQuantile.js "Source")
 
-A [sequential scale](#sequential-scales) using a *p*-quantile transform, analagous to a [quantile scale](#quantile-scales).
+A [sequential scale](#sequential-scales) using a *p*-quantile transform, analogous to a [quantile scale](#quantile-scales).
 
 ### Diverging Scales
 
@@ -623,19 +623,19 @@ See [*continuous*.copy](#continuous_copy).
 
 <a name="scaleDivergingLog" href="#scaleDivergingLog">#</a> d3.<b>scaleDivergingLog</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/diverging.js "Source")
 
-A [diverging scale](#diverging-scales) with a logarithmic transform, analagous to a [log scale](#log-scales).
+A [diverging scale](#diverging-scales) with a logarithmic transform, analogous to a [log scale](#log-scales).
 
 <a name="scaleDivergingPow" href="#scaleDivergingPow">#</a> d3.<b>scaleDivergingPow</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/diverging.js "Source")
 
-A [diverging scale](#diverging-scales) with a exponential transform, analagous to a [power scale](#pow-scales).
+A [diverging scale](#diverging-scales) with an exponential transform, analogous to a [power scale](#pow-scales).
 
 <a name="scaleDivergingSqrt" href="#scaleDivergingSqrt">#</a> d3.<b>scaleDivergingSqrt</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/diverging.js "Source")
 
-A [diverging scale](#diverging-scales) with a square-root transform, analagous to a [d3.scaleSqrt](#scaleSqrt).
+A [diverging scale](#diverging-scales) with a square-root transform, analogous to a [d3.scaleSqrt](#scaleSqrt).
 
 <a name="scaleDivergingSymlog" href="#scaleDivergingSymlog">#</a> d3.<b>scaleDivergingSymlog</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/diverging.js "Source")
 
-A [diverging scale](#diverging-scales) with a symmetric logarithmic transform, analagous to a [symlog scale](#symlog-scales).
+A [diverging scale](#diverging-scales) with a symmetric logarithmic transform, analogous to a [symlog scale](#symlog-scales).
 
 ### Quantize Scales
 
