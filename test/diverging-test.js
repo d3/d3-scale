@@ -57,6 +57,15 @@ tape("diverging.domain() handles a degenerate domain", function(test) {
   test.end();
 });
 
+tape("diverging.domain() handles a descending domain", function(test) {
+  var s = scale.scaleDiverging().domain([4, 2, 1]);
+  test.deepEqual(s.domain(), [4, 2, 1]);
+  test.equal(s( 1.2), 0.9);
+  test.equal(s( 2.0), 0.5);
+  test.equal(s( 3.0), 0.25);
+  test.end();
+});
+
 tape("diverging.domain() handles a non-numeric domain", function(test) {
   var s = scale.scaleDiverging().domain([NaN, 2, 3]);
   test.equal(isNaN(s.domain()[0]), true);
