@@ -621,6 +621,10 @@ If *interpolator* is specified, sets the scale’s interpolator to the specified
 
 See [*continuous*.copy](#continuous_copy).
 
+<a name="diverging_unknown" href="#diverging_unknown">#</a> <i>diverging</i>.<b>unknown</b>() [<>](https://github.com/d3/d3-scale/blob/master/src/diverging.js "Source")
+
+See [*continuous*.unknown](#continuous_unknown).
+
 <a name="scaleDivergingLog" href="#scaleDivergingLog">#</a> d3.<b>scaleDivergingLog</b>([[<i>domain</i>, ]<i>range</i>]) [<>](https://github.com/d3/d3-scale/blob/master/src/diverging.js "Source")
 
 A [diverging scale](#diverging-scales) with a logarithmic transform, analogous to a [log scale](#log-scales).
