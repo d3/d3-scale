@@ -77,7 +77,7 @@ color(20); // "#9a3439"
 color(50); // "#7b5167"
 ```
 
-Or, in shortand:
+Or, in shorthand:
 
 ```js
 var x = d3.scaleLinear([10, 130], [0, 960]);
