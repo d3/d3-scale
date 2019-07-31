@@ -70,12 +70,12 @@ tape("time.nice(interval) can nice a polylinear domain, only affecting its exten
   test.end();
 });
 
-tape("time.nice(interval, step) nices using the specified time interval and step", function(test) {
+tape("time.nice(interval.every(step)) nices using the specified time interval and step", function(test) {
   var x = scale.scaleTime().domain([date.local(2009, 0, 1, 0, 12), date.local(2009, 0, 1, 23, 48)]);
-  test.deepEqual(x.nice(time.timeDay, 3).domain(), [date.local(2009, 0, 1), date.local(2009, 0, 4)]);
-  test.deepEqual(x.nice(time.timeWeek, 2).domain(), [date.local(2008, 11, 21), date.local(2009, 0, 4)]);
-  test.deepEqual(x.nice(time.timeMonth, 3).domain(), [date.local(2008, 9, 1), date.local(2009, 3, 1)]);
-  test.deepEqual(x.nice(time.timeYear, 10).domain(), [date.local(2000, 0, 1), date.local(2010, 0, 1)]);
+  test.deepEqual(x.nice(time.timeDay.every(3)).domain(), [date.local(2009, 0, 1), date.local(2009, 0, 4)]);
+  test.deepEqual(x.nice(time.timeWeek.every(2)).domain(), [date.local(2008, 11, 21), date.local(2009, 0, 4)]);
+  test.deepEqual(x.nice(time.timeMonth.every(3)).domain(), [date.local(2008, 9, 1), date.local(2009, 3, 1)]);
+  test.deepEqual(x.nice(time.timeYear.every(10)).domain(), [date.local(2000, 0, 1), date.local(2010, 0, 1)]);
   test.end();
 });
 
@@ -153,9 +153,9 @@ tape("time.ticks(interval) observes the specified tick interval", function(test)
   test.end();
 });
 
-tape("time.ticks(interval, step) observes the specified tick interval and step", function(test) {
+tape("time.ticks(interval.every(step)) observes the specified tick interval and step", function(test) {
   var x = scale.scaleTime().domain([date.local(2011, 0, 1, 12, 0, 0), date.local(2011, 0, 1, 12, 33, 4)]);
-  test.deepEqual(x.ticks(time.timeMinute, 10), [
+  test.deepEqual(x.ticks(time.timeMinute.every(10)), [
     date.local(2011, 0, 1, 12, 0),
     date.local(2011, 0, 1, 12, 10),
     date.local(2011, 0, 1, 12, 20),
