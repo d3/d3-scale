@@ -22,6 +22,10 @@
     "type": "git",
     "url": "https://github.com/d3/d3-scale.git"
   },
+  "files": [
+    "dist/**/*.js",
+    "src/**/*.js"
+  ],
   "scripts": {
     "pretest": "rollup -c",
     "test": "TZ=America/Los_Angeles tape 'test/**/*-test.js' && eslint src",
