@@ -1,6 +1,6 @@
 import {ascending, bisect} from "d3-array";
-import {identity} from "./continuous";
-import {initInterpolator} from "./init";
+import {identity} from "./continuous.js";
+import {initInterpolator} from "./init.js";
 
 export default function sequentialQuantile() {
   var domain = [],

@@ -1,53 +1,53 @@
 export {
   default as scaleBand,
   point as scalePoint
-} from "./band";
+} from "./band.js";
 
 export {
   default as scaleIdentity
-} from "./identity";
+} from "./identity.js";
 
 export {
   default as scaleLinear
-} from "./linear";
+} from "./linear.js";
 
 export {
   default as scaleLog
-} from "./log";
+} from "./log.js";
 
 export {
   default as scaleSymlog
-} from "./symlog";
+} from "./symlog.js";
 
 export {
   default as scaleOrdinal,
   implicit as scaleImplicit
-} from "./ordinal";
+} from "./ordinal.js";
 
 export {
   default as scalePow,
   sqrt as scaleSqrt
-} from "./pow";
+} from "./pow.js";
 
 export {
   default as scaleQuantile
-} from "./quantile";
+} from "./quantile.js";
 
 export {
   default as scaleQuantize
-} from "./quantize";
+} from "./quantize.js";
 
 export {
   default as scaleThreshold
-} from "./threshold";
+} from "./threshold.js";
 
 export {
   default as scaleTime
-} from "./time";
+} from "./time.js";
 
 export {
   default as scaleUtc
-} from "./utcTime";
+} from "./utcTime.js";
 
 export {
   default as scaleSequential,
@@ -55,11 +55,11 @@ export {
   sequentialPow as scaleSequentialPow,
   sequentialSqrt as scaleSequentialSqrt,
   sequentialSymlog as scaleSequentialSymlog
-} from "./sequential";
+} from "./sequential.js";
 
 export {
   default as scaleSequentialQuantile
-} from "./sequentialQuantile";
+} from "./sequentialQuantile.js";
 
 export {
   default as scaleDiverging,
@@ -67,8 +67,8 @@ export {
   divergingPow as scaleDivergingPow,
   divergingSqrt as scaleDivergingSqrt,
   divergingSymlog as scaleDivergingSymlog
-} from "./diverging";
+} from "./diverging.js";
 
 export {
   default as tickFormat
-} from "./tickFormat";
+} from "./tickFormat.js";

@@ -1,6 +1,6 @@
 import {range as sequence} from "d3-array";
-import {initRange} from "./init";
-import ordinal from "./ordinal";
+import {initRange} from "./init.js";
+import ordinal from "./ordinal.js";
 
 export default function band() {
   var scale = ordinal().unknown(undefined),

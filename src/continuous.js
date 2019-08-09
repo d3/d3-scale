@@ -1,7 +1,7 @@
 import {bisect} from "d3-array";
 import {interpolate as interpolateValue, interpolateNumber, interpolateRound} from "d3-interpolate";
-import constant from "./constant";
-import number from "./number";
+import constant from "./constant.js";
+import number from "./number.js";
 
 var unit = [0, 1];
 

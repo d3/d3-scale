@@ -1,5 +1,5 @@
 import {ascending, bisect, quantile as threshold} from "d3-array";
-import {initRange} from "./init";
+import {initRange} from "./init.js";
 
 export default function quantile() {
   var domain = [],

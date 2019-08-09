@@ -1,6 +1,6 @@
-import {linearish} from "./linear";
-import {copy, transformer} from "./continuous";
-import {initRange} from "./init";
+import {linearish} from "./linear.js";
+import {copy, transformer} from "./continuous.js";
+import {initRange} from "./init.js";
 
 function transformSymlog(c) {
   return function(x) {

@@ -1,6 +1,6 @@
-import {linearish} from "./linear";
-import {copy, identity, transformer} from "./continuous";
-import {initRange} from "./init";
+import {linearish} from "./linear.js";
+import {copy, identity, transformer} from "./continuous.js";
+import {initRange} from "./init.js";
 
 function transformPow(exponent) {
   return function(x) {

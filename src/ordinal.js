@@ -1,4 +1,4 @@
-import {initRange} from "./init";
+import {initRange} from "./init.js";
 
 export const implicit = Symbol("implicit");
 
