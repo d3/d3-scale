@@ -1,5 +1,5 @@
 import {bisect} from "d3-array";
-import {initRange} from "./init";
+import {initRange} from "./init.js";
 
 export default function threshold() {
   var domain = [0.5],

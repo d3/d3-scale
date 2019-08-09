@@ -1,9 +1,9 @@
 import {bisector, tickStep} from "d3-array";
 import {timeYear, timeMonth, timeWeek, timeDay, timeHour, timeMinute, timeSecond, timeMillisecond} from "d3-time";
 import {timeFormat} from "d3-time-format";
-import continuous, {copy, identity} from "./continuous";
-import {initRange} from "./init";
-import nice from "./nice";
+import continuous, {copy, identity} from "./continuous.js";
+import {initRange} from "./init.js";
+import nice from "./nice.js";
 
 var durationSecond = 1000,
     durationMinute = durationSecond * 60,

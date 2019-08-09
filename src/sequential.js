@@ -1,9 +1,9 @@
-import {identity} from "./continuous";
-import {initInterpolator} from "./init";
-import {linearish} from "./linear";
-import {loggish} from "./log";
-import {symlogish} from "./symlog";
-import {powish} from "./pow";
+import {identity} from "./continuous.js";
+import {initInterpolator} from "./init.js";
+import {linearish} from "./linear.js";
+import {loggish} from "./log.js";
+import {symlogish} from "./symlog.js";
+import {powish} from "./pow.js";
 
 function transformer() {
   var x0 = 0,

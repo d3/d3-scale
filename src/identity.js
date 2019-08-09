@@ -1,5 +1,5 @@
-import {linearish} from "./linear";
-import number from "./number";
+import {linearish} from "./linear.js";
+import number from "./number.js";
 
 export default function identity(domain) {
   var unknown;

@@ -1,6 +1,6 @@
 import {bisect} from "d3-array";
-import {linearish} from "./linear";
-import {initRange} from "./init";
+import {linearish} from "./linear.js";
+import {initRange} from "./init.js";
 
 export default function quantize() {
   var x0 = 0,
