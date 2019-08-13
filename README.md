@@ -820,7 +820,7 @@ If *range* is specified, sets the range of the ordinal scale to the specified ar
 
 <a name="ordinal_unknown" href="#ordinal_unknown">#</a> <i>ordinal</i>.<b>unknown</b>([<i>value</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/ordinal.js), [Examples](https://observablehq.com/@d3/d3-scaleordinal)
 
-If *value* is specified, sets the output value of the scale for unknown input values and returns this scale. If *value* is not specified, returns the current unknown value, which defaults to [implicit](#implicit). The implicit value enables implicit domain construction; see [*ordinal*.domain](#ordinal_domain).
+If *value* is specified, sets the output value of the scale for unknown input values and returns this scale. If *value* is not specified, returns the current unknown value, which defaults to [implicit](#scaleImplicit). The implicit value enables implicit domain construction; see [*ordinal*.domain](#ordinal_domain).
 
 <a name="ordinal_copy" href="#ordinal_copy">#</a> <i>ordinal</i>.<b>copy</b>() · [Source](https://github.com/d3/d3-scale/blob/master/src/ordinal.js), [Examples](https://observablehq.com/@d3/d3-scaleordinal)
 
