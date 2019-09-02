@@ -104,3 +104,13 @@ tape("scaleSequential.interpolator(interpolator) sets the interpolator", functio
   test.equal(s( 0.5),  1.0);
   test.end();
 });
+
+tape("scaleSequentialQuantile() clamps", function(test) {
+  var s = scale.scaleSequentialQuantile().domain([0, 1, 2, 3, 10]);
+  test.equal(s(-1), 0);
+  test.equal(s(0), 0);
+  test.equal(s(1), 0.25);
+  test.equal(s(10), 1);
+  test.equal(s(20), 1);
+  test.end();
+});
