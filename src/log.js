@@ -86,15 +86,15 @@ export function loggish(transform) {
         z = [];
 
     if (!(base % 1) && j - i < n) {
-      i = Math.round(i) - 1, j = Math.round(j) + 1;
-      if (u > 0) for (; i < j; ++i) {
+      i = Math.floor(i), j = Math.ceil(j);
+      if (u > 0) for (; i <= j; ++i) {
         for (k = 1, p = pows(i); k < base; ++k) {
           t = p * k;
           if (t < u) continue;
           if (t > v) break;
           z.push(t);
         }
-      } else for (; i < j; ++i) {
+      } else for (; i <= j; ++i) {
         for (k = base - 1, p = pows(i); k >= 1; --k) {
           t = p * k;
           if (t < u) continue;
@@ -102,6 +102,7 @@ export function loggish(transform) {
           z.push(t);
         }
       }
+      if (!z.length) z = ticks(u, v, n);
     } else {
       z = ticks(i, j, Math.min(j - i, n)).map(pows);
     }
