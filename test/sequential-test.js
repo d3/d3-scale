@@ -92,7 +92,7 @@ tape("sequential.copy() returns an isolated copy of the scale", function(test) {
   test.end();
 });
 
-tape("scaleSequential.interpolator(interpolator) sets the interpolator", function(test) {
+tape("sequential.interpolator(interpolator) sets the interpolator", function(test) {
   var i0 = function(t) { return t; },
       i1 = function(t) { return t * 2; },
       s = scale.scaleSequential(i0);
@@ -105,12 +105,8 @@ tape("scaleSequential.interpolator(interpolator) sets the interpolator", functio
   test.end();
 });
 
-tape("scaleSequentialQuantile() clamps", function(test) {
-  var s = scale.scaleSequentialQuantile().domain([0, 1, 2, 3, 10]);
-  test.equal(s(-1), 0);
-  test.equal(s(0), 0);
-  test.equal(s(1), 0.25);
-  test.equal(s(10), 1);
-  test.equal(s(20), 1);
+tape("sequential.range() returns the computed range", function(test) {
+  var s = scale.scaleSequential(function(t) { return t * 2 + 1; });
+  test.deepEqual(s.range(), [1, 3]);
   test.end();
 });

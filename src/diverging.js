@@ -37,6 +37,10 @@ function transformer() {
     return arguments.length ? (interpolator = _, scale) : interpolator;
   };
 
+  scale.range = function() {
+    return [interpolator(0), interpolator(0.5), interpolator(1)];
+  };
+
   scale.unknown = function(_) {
     return arguments.length ? (unknown = _, scale) : unknown;
   };

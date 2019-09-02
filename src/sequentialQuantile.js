@@ -22,6 +22,10 @@ export default function sequentialQuantile() {
     return arguments.length ? (interpolator = _, scale) : interpolator;
   };
 
+  scale.range = function() {
+    return domain.map((d, i) => interpolator(i / (domain.length - 1)));
+  };
+
   scale.copy = function() {
     return sequentialQuantile(interpolator).domain(domain);
   };

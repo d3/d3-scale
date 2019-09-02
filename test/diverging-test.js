@@ -123,7 +123,13 @@ tape("diverging.copy() returns an isolated copy of the scale", function(test) {
   test.end();
 });
 
-tape("scaleDiverging.interpolator(interpolator) sets the interpolator", function(test) {
+tape("diverging.range() returns the computed range", function(test) {
+  var s = scale.scaleDiverging(function(t) { return t * 2 + 1; });
+  test.deepEqual(s.range(), [1, 2, 3]);
+  test.end();
+});
+
+tape("diverging.interpolator(interpolator) sets the interpolator", function(test) {
   var i0 = function(t) { return t; },
       i1 = function(t) { return t * 2; },
       s = scale.scaleDiverging(i0);
