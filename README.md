@@ -391,7 +391,7 @@ Constructs a new identity scale with the specified [domain](#continuous_domain) 
 
 #### Radial Scales
 
-Radial scales are a variant of [linear scales](#linear-scales) where the range is internally squared, so that an input value corresponds linearly to the squared output value. These scales are useful when you want the input value to correspond to the area of a graphical mark, and the mark is specified by radius, as in a radial bar chart. Radial scales do not support [interpolate](#continuous_interpolate).
+Radial scales are a variant of [linear scales](#linear-scales) where the range is internally squared so that an input value corresponds linearly to the squared output value. These scales are useful when you want the input value to correspond to the area of a graphical mark and the mark is specified by radius, as in a radial bar chart. Radial scales do not support [interpolate](#continuous_interpolate).
 
 <a name="scaleRadial" href="#scaleRadial">#</a> d3.<b>scaleRadial</b>([[<i>domain</i>, ]<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/radial.js), [Examples](https://observablehq.com/@d3/radial-stacked-bar-chart)
 
