@@ -1,22 +1,25 @@
-import linear, {linearish} from "./linear.js";
+import continuous from "./continuous.js";
+import {initRange} from "./init.js";
+import {linearish} from "./linear.js";
 import number from "./number.js";
 
 function square(x) {
-  return (x < 0 ? -1 : 1) * x * x;
+  return Math.sign(x) * x * x;
 }
 
 function unsquare(x) {
-  return (x < 0 ? -1 : 1) * Math.sqrt(Math.abs(x));
+  return Math.sign(x) * Math.sqrt(Math.abs(x));
 }
 
 export default function radial() {
-  var squared = linear(),
+  var squared = continuous(),
       range = [0, 1],
-      round = false;
+      round = false,
+      unknown;
 
   function scale(x) {
     var y = unsquare(squared(x));
-    return round ? Math.round(y) : y;
+    return isNaN(y) ? unknown : round ? Math.round(y) : y;
   }
 
   scale.invert = function(y) {
@@ -39,13 +42,18 @@ export default function radial() {
     return arguments.length ? (squared.clamp(_), scale) : squared.clamp();
   };
 
-  scale.copy = function() {
-    return radial()
-        .domain(squared.domain())
-        .range(range)
-        .round(round)
-        .clamp(squared.clamp());
+  scale.unknown = function(_) {
+    return arguments.length ? (unknown = _, scale) : unknown;
   };
+
+  scale.copy = function() {
+    return radial(squared.domain(), range)
+        .round(round)
+        .clamp(squared.clamp())
+        .unknown(unknown);
+  };
+
+  initRange.apply(scale, arguments);
 
   return linearish(scale);
 }

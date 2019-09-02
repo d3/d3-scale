@@ -10,6 +10,22 @@ tape("scaleRadial() has the expected defaults", function(test) {
   test.end();
 });
 
+tape("scaleRadial(range) sets the range", function(test) {
+  var s = scale.scaleRadial([100, 200]);
+  test.deepEqual(s.domain(), [0, 1]);
+  test.deepEqual(s.range(), [100, 200]);
+  test.equal(s(0.5), 158.11388300841898);
+  test.end();
+});
+
+tape("scaleRadial(domain, range) sets the range", function(test) {
+  var s = scale.scaleRadial([1, 2], [10, 20]);
+  test.deepEqual(s.domain(), [1, 2]);
+  test.deepEqual(s.range(), [10, 20]);
+  test.equal(s(1.5), 15.811388300841896);
+  test.end();
+});
+
 tape("radial(x) maps a domain value x to a range value y", function(test) {
   test.equal(scale.scaleRadial().range([1, 2])(0.5), 1.5811388300841898);
   test.end();
@@ -46,5 +62,19 @@ tape("radial(x) can map a bilinear domain with two values to the corresponding r
   test.equal(s.invert( 0.5), 1.25);
   test.equal(s.invert( 1.0), 2.0);
   test.equal(s.invert( 1.5), 3.25);
+  test.end();
+});
+
+tape("radial(NaN) returns undefined", function(test) {
+  var s = scale.scaleRadial();
+  test.strictEqual(s(NaN), undefined);
+  test.strictEqual(s(undefined), undefined);
+  test.strictEqual(s("foo"), undefined);
+  test.strictEqual(s({}), undefined);
+  test.end();
+});
+
+tape("radial.unknown(unknown)(NaN) returns the specified unknown value", function(test) {
+  test.strictEqual(scale.scaleRadial().unknown("foo")(NaN), "foo");
   test.end();
 });

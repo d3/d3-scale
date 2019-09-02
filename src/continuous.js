@@ -120,6 +120,6 @@ export function transformer() {
   };
 }
 
-export default function continuous(transform, untransform) {
-  return transformer()(transform, untransform);
+export default function continuous() {
+  return transformer()(identity, identity);
 }
