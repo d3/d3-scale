@@ -27,7 +27,7 @@ tape("scaleRadial(domain, range) sets the range", function(test) {
 });
 
 tape("radial(x) maps a domain value x to a range value y", function(test) {
-  test.equal(scale.scaleRadial().range([1, 2])(0.5), 1.5811388300841898);
+  test.equal(scale.scaleRadial([1, 2])(0.5), 1.5811388300841898);
   test.end();
 });
 
@@ -76,5 +76,17 @@ tape("radial(NaN) returns undefined", function(test) {
 
 tape("radial.unknown(unknown)(NaN) returns the specified unknown value", function(test) {
   test.strictEqual(scale.scaleRadial().unknown("foo")(NaN), "foo");
+  test.end();
+});
+
+tape("radial(x) can handle a negative range", function(test) {
+  test.equal(scale.scaleRadial([-1, -2])(0.5), -1.5811388300841898);
+  test.end();
+});
+
+tape("radial(x) can clamp negative values", function(test) {
+  test.equal(scale.scaleRadial([-1, -2]).clamp(true)(-0.5), -1);
+  test.equal(scale.scaleRadial().clamp(true)(-0.5), 0);
+  test.equal(scale.scaleRadial([-0.25, 0], [1, 2]).clamp(true)(-0.5), 1);
   test.end();
 });
