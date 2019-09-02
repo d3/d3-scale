@@ -41,7 +41,7 @@ var x = d3.scaleLinear();
 
 ## API Reference
 
-* [Continuous](#continuous-scales) ([Linear](#linear-scales), [Power](#power-scales), [Log](#log-scales), [Identity](#identity-scales), [Time](#time-scales))
+* [Continuous](#continuous-scales) ([Linear](#linear-scales), [Power](#power-scales), [Log](#log-scales), [Identity](#identity-scales), [Time](#time-scales), [Radial](#radial-scales))
 * [Sequential](#sequential-scales)
 * [Diverging](#diverging-scales)
 * [Quantize](#quantize-scales)
@@ -51,7 +51,7 @@ var x = d3.scaleLinear();
 
 ### Continuous Scales
 
-Continuous scales map a continuous, quantitative input [domain](#continuous_domain) to a continuous output [range](#continuous_range). If the range is also numeric, the mapping may be [inverted](#continuous_invert). A continuous scale is not constructed directly; instead, try a [linear](#linear-scales), [power](#power-scales), [log](#log-scales), [identity](#identity-scales), [time](#time-scales) or [sequential color](#sequential-scales) scale.
+Continuous scales map a continuous, quantitative input [domain](#continuous_domain) to a continuous output [range](#continuous_range). If the range is also numeric, the mapping may be [inverted](#continuous_invert). A continuous scale is not constructed directly; instead, try a [linear](#linear-scales), [power](#power-scales), [log](#log-scales), [identity](#identity-scales), [radial](#radial-scales), [time](#time-scales) or [sequential color](#sequential-scales) scale.
 
 <a name="_continuous" href="#_continuous">#</a> <i>continuous</i>(<i>value</i>) · [Source](https://github.com/d3/d3-scale/blob/master/src/continuous.js), [Examples](https://observablehq.com/@d3/continuous-scales)
 
@@ -388,6 +388,14 @@ Identity scales are a special case of [linear scales](#linear-scales) where the 
 <a name="scaleIdentity" href="#scaleIdentity">#</a> d3.<b>scaleIdentity</b>([<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/identity.js), [Examples](https://observablehq.com/@d3/d3-scalelinear)
 
 Constructs a new identity scale with the specified [domain](#continuous_domain) and [range](#continuous_range). If *range* is not specified, it defaults to [0, 1].
+
+#### Radial Scales
+
+Radial scales are a variant of [linear scales](#linear-scales) where the range is internally squared, so that an input value corresponds linearly to the squared output value. These scales are useful when you want the input value to correspond to the area of a graphical mark, and the mark is specified by radius, as in a radial bar chart. Radial scales do not support [interpolate](#continuous_interpolate).
+
+<a name="scaleRadial" href="#scaleRadial">#</a> d3.<b>scaleRadial</b>([[<i>domain</i>, ]<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/radial.js), [Examples](https://observablehq.com/@d3/radial-stacked-bar-chart)
+
+Constructs a new radial scale with the specified [domain](#continuous_domain) and [range](#continuous_range). If *domain* or *range* is not specified, each defaults to [0, 1].
 
 #### Time Scales
 

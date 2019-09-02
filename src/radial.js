@@ -34,6 +34,10 @@ export default function radial() {
     return arguments.length ? (squared.range((range = Array.from(_, number)).map(square)), scale) : range.slice();
   };
 
+  scale.rangeRound = function(_) {
+    return scale.range(_).round(true);
+  };
+
   scale.round = function(_) {
     return arguments.length ? (round = !!_, scale) : round;
   };
