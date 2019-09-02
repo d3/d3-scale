@@ -15,8 +15,8 @@ function normalize(a, b) {
       : constant(isNaN(b) ? NaN : 0.5);
 }
 
-function clamper(domain) {
-  var a = domain[0], b = domain[domain.length - 1], t;
+function clamper(a, b) {
+  var t;
   if (a > b) t = a, a = b, b = t;
   return function(x) { return Math.max(a, Math.min(b, x)); };
 }
@@ -75,7 +75,9 @@ export function transformer() {
       input;
 
   function rescale() {
-    piecewise = Math.min(domain.length, range.length) > 2 ? polymap : bimap;
+    var n = Math.min(domain.length, range.length);
+    if (clamp !== identity) clamp = clamper(domain[0], domain[n - 1]);
+    piecewise = n > 2 ? polymap : bimap;
     output = input = null;
     return scale;
   }
@@ -89,7 +91,7 @@ export function transformer() {
   };
 
   scale.domain = function(_) {
-    return arguments.length ? (domain = Array.from(_, number), clamp === identity || (clamp = clamper(domain)), rescale()) : domain.slice();
+    return arguments.length ? (domain = Array.from(_, number), rescale()) : domain.slice();
   };
 
   scale.range = function(_) {
@@ -101,7 +103,7 @@ export function transformer() {
   };
 
   scale.clamp = function(_) {
-    return arguments.length ? (clamp = _ ? clamper(domain) : identity, scale) : clamp !== identity;
+    return arguments.length ? (clamp = _ ? true : identity, rescale()) : clamp !== identity;
   };
 
   scale.interpolate = function(_) {

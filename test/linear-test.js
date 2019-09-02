@@ -34,14 +34,14 @@ tape("linear(x) maps a domain value x to a range value y", function(test) {
 });
 
 tape("linear(x) ignores extra range values if the domain is smaller than the range", function(test) {
-  test.equal(scale.scaleLinear().domain([-10, 0]).range(["red", "white", "green"]).clamp(true)(-5), "rgb(255, 128, 128)");
-  test.equal(scale.scaleLinear().domain([-10, 0]).range(["red", "white", "green"]).clamp(true)(50), "rgb(255, 255, 255)");
+  test.equal(scale.scaleLinear().domain([-10, 0]).range([0, 1, 2]).clamp(true)(-5), 0.5);
+  test.equal(scale.scaleLinear().domain([-10, 0]).range([0, 1, 2]).clamp(true)(50), 1);
   test.end();
 });
 
 tape("linear(x) ignores extra domain values if the range is smaller than the domain", function(test) {
-  test.equal(scale.scaleLinear().domain([-10, 0, 100]).range(["red", "white"]).clamp(true)(-5), "rgb(255, 128, 128)");
-  test.equal(scale.scaleLinear().domain([-10, 0, 100]).range(["red", "white"]).clamp(true)(50), "rgb(255, 255, 255)");
+  test.equal(scale.scaleLinear().domain([-10, 0, 100]).range([0, 1]).clamp(true)(-5), 0.5);
+  test.equal(scale.scaleLinear().domain([-10, 0, 100]).range([0, 1]).clamp(true)(50), 1);
   test.end();
 });
 
