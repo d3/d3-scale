@@ -22,3 +22,9 @@ tape("sequentialQuantile().range() returns the computed range", function(test) {
   test.deepEqual(s.range(), [0 / 4, 1 / 4, 2 / 4, 3 / 4, 4 / 4]);
   test.end();
 });
+
+tape("sequentialQuantile().quantiles(n) computes n + 1 quantiles", function(test) {
+  var s = scale.scaleSequentialQuantile().domain(Array.from({length: 2000}, (_, i) => 2 * i / 1999));
+  test.deepEqual(s.quantiles(4), [0, 0.5, 1, 1.5, 2]);
+  test.end();
+});

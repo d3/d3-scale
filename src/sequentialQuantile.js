@@ -1,4 +1,4 @@
-import {ascending, bisect} from "d3-array";
+import {ascending, bisect, quantile} from "d3-array";
 import {identity} from "./continuous.js";
 import {initInterpolator} from "./init.js";
 
@@ -24,6 +24,10 @@ export default function sequentialQuantile() {
 
   scale.range = function() {
     return domain.map((d, i) => interpolator(i / (domain.length - 1)));
+  };
+
+  scale.quantiles = function(n) {
+    return Array.from({length: n + 1}, (_, i) => quantile(domain, i / n));
   };
 
   scale.copy = function() {

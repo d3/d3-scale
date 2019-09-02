@@ -601,6 +601,10 @@ A [sequential scale](#sequential-scales) with a symmetric logarithmic transform,
 
 A [sequential scale](#sequential-scales) using a *p*-quantile transform, analogous to a [quantile scale](#quantile-scales).
 
+<a name="sequentialQuantile_quantiles" href="#sequentialQuantile_quantiles">#</a> <i>sequentialQuantile</i>.<b>quantiles</b>(<i>n</i>) · [Source](https://github.com/d3/d3-scale/blob/master/src/sequentialQuantile.js), [Examples](https://observablehq.com/@d3/sequential-scales)
+
+Returns an array of *n* + 1 quantiles. For example, if *n* = 4, returns an array of five numbers: the minimum value, the first quartile, the median, the third quartile, and the maximum.
+
 ### Diverging Scales
 
 Diverging scales, like [sequential scales](#sequential-scales), are similar to [continuous scales](#continuous-scales) in that they map a continuous, numeric input domain to a continuous output range. However, unlike continuous scales, the output range of a diverging scale is fixed by its interpolator and not configurable. These scales do not expose [invert](#continuous_invert), [range](#continuous_range), [rangeRound](#continuous_rangeRound) and [interpolate](#continuous_interpolate) methods.
