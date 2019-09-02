@@ -539,7 +539,7 @@ Equivalent to [scaleTime](#scaleTime), but the returned time scale operates in [
 
 ### Sequential Scales
 
-Sequential scales, like [diverging scales](#diverging-scales), are similar to [continuous scales](#continuous-scales) in that they map a continuous, numeric input domain to a continuous output range. However, unlike continuous scales, the output range of a sequential scale is fixed by its interpolator and not configurable. These scales do not expose [invert](#continuous_invert), [range](#continuous_range), [rangeRound](#continuous_rangeRound) and [interpolate](#continuous_interpolate) methods.
+Sequential scales, like [diverging scales](#diverging-scales), are similar to [continuous scales](#continuous-scales) in that they map a continuous, numeric input domain to a continuous output range. However, unlike continuous scales, the input domain and output range of a sequential scale always has exactly two elements, and the output range is typically specified as an interpolator rather than an array of values. These scales do not expose [invert](#continuous_invert) and [interpolate](#continuous_interpolate) methods.
 
 <a name="scaleSequential" href="#scaleSequential">#</a> d3.<b>scaleSequential</b>([[<i>domain</i>, ]<i>interpolator</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/sequential.js), [Examples](https://observablehq.com/@d3/sequential-scales)
 
@@ -573,9 +573,13 @@ See [*continuous*.clamp](#continuous_clamp).
 
 If *interpolator* is specified, sets the scale’s interpolator to the specified function. If *interpolator* is not specified, returns the scale’s current interpolator.
 
-<a name="sequential_range" href="#sequential_range">#</a> <i>sequential</i>.<b>range</b>() · [Source](https://github.com/d3/d3-scale/blob/master/src/sequential.js), [Examples](https://observablehq.com/@d3/sequential-scales)
+<a name="sequential_range" href="#sequential_range">#</a> <i>sequential</i>.<b>range</b>([<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/sequential.js), [Examples](https://observablehq.com/@d3/sequential-scales)
 
-See [*continuous*.range](#continuous_range). Note that a sequential scale’s range is read-only, as it is determined by its [interpolator](#sequential_interpolator).
+See [*continuous*.range](#continuous_range).
+
+<a name="sequential_rangeRound" href="#sequential_rangeRound">#</a> <i>sequential</i>.<b>rangeRound</b>([<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/sequential.js), [Examples](https://observablehq.com/@d3/sequential-scales)
+
+See [*continuous*.rangeRound](#continuous_rangeRound).
 
 <a name="sequential_copy" href="#sequential_copy">#</a> <i>sequential</i>.<b>copy</b>() · [Source](https://github.com/d3/d3-scale/blob/master/src/sequential.js), [Examples](https://observablehq.com/@d3/sequential-scales)
 
@@ -607,7 +611,7 @@ Returns an array of *n* + 1 quantiles. For example, if *n* = 4, returns an array
 
 ### Diverging Scales
 
-Diverging scales, like [sequential scales](#sequential-scales), are similar to [continuous scales](#continuous-scales) in that they map a continuous, numeric input domain to a continuous output range. However, unlike continuous scales, the output range of a diverging scale is fixed by its interpolator and not configurable. These scales do not expose [invert](#continuous_invert), [range](#continuous_range), [rangeRound](#continuous_rangeRound) and [interpolate](#continuous_interpolate) methods.
+Diverging scales, like [sequential scales](#sequential-scales), are similar to [continuous scales](#continuous-scales) in that they map a continuous, numeric input domain to a continuous output range. However, unlike continuous scales, the input domain and output range of a diverging scale always has exactly three elements, and the output range is typically specified as an interpolator rather than an array of values. These scales do not expose [invert](#continuous_invert) and [interpolate](#continuous_interpolate) methods.
 
 <a name="scaleDiverging" href="#scaleDiverging">#</a> d3.<b>scaleDiverging</b>([[<i>domain</i>, ]<i>interpolator</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/diverging.js), [Examples](https://observablehq.com/@d3/diverging-scales)
 
@@ -633,9 +637,13 @@ See [*continuous*.clamp](#continuous_clamp).
 
 If *interpolator* is specified, sets the scale’s interpolator to the specified function. If *interpolator* is not specified, returns the scale’s current interpolator.
 
-<a name="diverging_range" href="#diverging_range">#</a> <i>diverging</i>.<b>range</b>() · [Source](https://github.com/d3/d3-scale/blob/master/src/diverging.js), [Examples](https://observablehq.com/@d3/diverging-scales)
+<a name="diverging_range" href="#diverging_range">#</a> <i>diverging</i>.<b>range</b>([<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/diverging.js), [Examples](https://observablehq.com/@d3/diverging-scales)
 
-See [*continuous*.range](#continuous_range). Note that a diverging scale’s range is read-only, as it is determined by its [interpolator](#diverging_interpolator).
+See [*continuous*.range](#continuous_range).
+
+<a name="diverging_rangeRound" href="#diverging_rangeRound">#</a> <i>diverging</i>.<b>rangeRound</b>([<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/diverging.js), [Examples](https://observablehq.com/@d3/diverging-scales)
+
+See [*continuous*.range](#continuous_rangeRound).
 
 <a name="diverging_copy" href="#diverging_copy">#</a> <i>diverging</i>.<b>copy</b>() · [Source](https://github.com/d3/d3-scale/blob/master/src/diverging.js), [Examples](https://observablehq.com/@d3/diverging-scales)
 

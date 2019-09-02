@@ -141,3 +141,24 @@ tape("diverging.interpolator(interpolator) sets the interpolator", function(test
   test.equal(s( 0.5),  1.0);
   test.end();
 });
+
+tape("diverging.range(range) sets the interpolator", function(test) {
+  var s = scale.scaleDiverging().range([1, 3, 10]);
+  test.equal(s.interpolator()(0.5), 3);
+  test.deepEqual(s.range(), [1, 3, 10]);
+  test.end();
+});
+
+tape("diverging.range(range) ignores additional values", function(test) {
+  var s = scale.scaleDiverging().range([1, 3, 10, 20]);
+  test.equal(s.interpolator()(0.5), 3);
+  test.deepEqual(s.range(), [1, 3, 10]);
+  test.end();
+});
+
+tape("scaleDiverging(range) sets the interpolator", function(test) {
+  var s = scale.scaleDiverging([1, 3, 10]);
+  test.equal(s.interpolator()(0.5), 3);
+  test.deepEqual(s.range(), [1, 3, 10]);
+  test.end();
+});

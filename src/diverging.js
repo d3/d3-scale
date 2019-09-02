@@ -1,3 +1,4 @@
+import {interpolate, interpolateRound, piecewise} from "d3-interpolate";
 import {identity} from "./continuous.js";
 import {initInterpolator} from "./init.js";
 import {linearish} from "./linear.js";
@@ -37,9 +38,16 @@ function transformer() {
     return arguments.length ? (interpolator = _, scale) : interpolator;
   };
 
-  scale.range = function() {
-    return [interpolator(0), interpolator(0.5), interpolator(1)];
-  };
+  function range(interpolate) {
+    return function(_) {
+      var r0, r1, r2;
+      return arguments.length ? ([r0, r1, r2] = _, interpolator = piecewise(interpolate, [r0, r1, r2]), scale) : [interpolator(0), interpolator(0.5), interpolator(1)];
+    };
+  }
+
+  scale.range = range(interpolate);
+
+  scale.rangeRound = range(interpolateRound);
 
   scale.unknown = function(_) {
     return arguments.length ? (unknown = _, scale) : unknown;

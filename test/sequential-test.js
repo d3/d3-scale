@@ -110,3 +110,24 @@ tape("sequential.range() returns the computed range", function(test) {
   test.deepEqual(s.range(), [1, 3]);
   test.end();
 });
+
+tape("sequential.range(range) sets the interpolator", function(test) {
+  var s = scale.scaleSequential().range([1, 3]);
+  test.equal(s.interpolator()(0.5), 2);
+  test.deepEqual(s.range(), [1, 3]);
+  test.end();
+});
+
+tape("sequential.range(range) ignores additional values", function(test) {
+  var s = scale.scaleSequential().range([1, 3, 10]);
+  test.equal(s.interpolator()(0.5), 2);
+  test.deepEqual(s.range(), [1, 3]);
+  test.end();
+});
+
+tape("scaleSequential(range) sets the interpolator", function(test) {
+  var s = scale.scaleSequential([1, 3]);
+  test.equal(s.interpolator()(0.5), 2);
+  test.deepEqual(s.range(), [1, 3]);
+  test.end();
+});
