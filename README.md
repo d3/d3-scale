@@ -116,7 +116,7 @@ color(-0.5); // "rgb(255, 128, 128)"
 color(+0.5); // "rgb(128, 192, 128)"
 ```
 
-Internally, a piecewise scale performs a [binary search](https://github.com/d3/d3-array#bisect) for the range interpolator corresponding to the given domain value. Thus, the domain must be in ascending or descending order. If the domain and range have different lengths *N* and *M*, only the first *min(N,M)* elements in each are observed.
+Internally, a piecewise scale performs a [binary search](https://github.com/d3/d3-array/blob/master/README.md#bisect) for the range interpolator corresponding to the given domain value. Thus, the domain must be in ascending or descending order. If the domain and range have different lengths *N* and *M*, only the first *min(N,M)* elements in each are observed.
 
 <a name="continuous_range" href="#continuous_range">#</a> <i>continuous</i>.<b>range</b>([<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/continuous.js), [Examples](https://observablehq.com/@d3/continuous-scales)
 
@@ -124,7 +124,7 @@ If *range* is specified, sets the scale’s range to the specified array of valu
 
 <a name="continuous_rangeRound" href="#continuous_rangeRound">#</a> <i>continuous</i>.<b>rangeRound</b>([<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/continuous.js), [Examples](https://observablehq.com/@d3/continuous-scales)
 
-Sets the scale’s [*range*](#continuous_range) to the specified array of values while also setting the scale’s [interpolator](#continuous_interpolate) to [interpolateRound](https://github.com/d3/d3-interpolate#interpolateRound). This is a convenience method equivalent to:
+Sets the scale’s [*range*](#continuous_range) to the specified array of values while also setting the scale’s [interpolator](#continuous_interpolate) to [interpolateRound](https://github.com/d3/d3-interpolate/blob/master/README.md#interpolateRound). This is a convenience method equivalent to:
 
 ```js
 continuous
@@ -159,7 +159,7 @@ If *value* is specified, sets the output value of the scale for undefined (or Na
 
 <a name="continuous_interpolate" href="#continuous_interpolate">#</a> <i>continuous</i>.<b>interpolate</b>(<i>interpolate</i>) · [Source](https://github.com/d3/d3-scale/blob/master/src/continuous.js), [Examples](https://observablehq.com/@d3/continuous-scales)
 
-If *interpolate* is specified, sets the scale’s [range](#continuous_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0, 1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s current interpolator factory, which defaults to [interpolate](https://github.com/d3/d3-interpolate#interpolate). See [d3-interpolate](https://github.com/d3/d3-interpolate) for more interpolators.
+If *interpolate* is specified, sets the scale’s [range](#continuous_range) interpolator factory. This interpolator factory is used to create interpolators for each adjacent pair of values from the range; these interpolators then map a normalized domain parameter *t* in [0, 1] to the corresponding value in the range. If *factory* is not specified, returns the scale’s current interpolator factory, which defaults to [d3.interpolate](https://github.com/d3/d3-interpolate/blob/master/README.md#interpolate). See [d3-interpolate](https://github.com/d3/d3-interpolate) for more interpolators.
 
 For example, consider a diverging color scale with three colors in the range:
 
@@ -176,7 +176,7 @@ var i0 = d3.interpolate("red", "white"),
     i1 = d3.interpolate("white", "green");
 ```
 
-A common reason to specify a custom interpolator is to change the color space of interpolation. For example, to use [HCL](https://github.com/d3/d3-interpolate#interpolateHcl):
+A common reason to specify a custom interpolator is to change the color space of interpolation. For example, to use [HCL](https://github.com/d3/d3-interpolate/blob/master/README.md#interpolateHcl):
 
 ```js
 var color = d3.scaleLinear()
@@ -185,7 +185,7 @@ var color = d3.scaleLinear()
     .interpolate(d3.interpolateHcl);
 ```
 
-Or for [Cubehelix](https://github.com/d3/d3-interpolate#interpolateCubehelix) with a custom gamma:
+Or for [Cubehelix](https://github.com/d3/d3-interpolate/blob/master/README.md#interpolateCubehelix) with a custom gamma:
 
 ```js
 var color = d3.scaleLinear()
@@ -194,17 +194,17 @@ var color = d3.scaleLinear()
     .interpolate(d3.interpolateCubehelix.gamma(3));
 ```
 
-Note: the [default interpolator](https://github.com/d3/d3-interpolate#interpolate) **may reuse return values**. For example, if the range values are objects, then the value interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, this is typically acceptable (and desirable for performance); however, if you need to store the scale’s return value, you must specify your own interpolator or make a copy as appropriate.
+Note: the [default interpolator](https://github.com/d3/d3-interpolate/blob/master/README.md#interpolate) **may reuse return values**. For example, if the range values are objects, then the value interpolator always returns the same object, modifying it in-place. If the scale is used to set an attribute or style, this is typically acceptable (and desirable for performance); however, if you need to store the scale’s return value, you must specify your own interpolator or make a copy as appropriate.
 
 <a name="continuous_ticks" href="#continuous_ticks">#</a> <i>continuous</i>.<b>ticks</b>([<i>count</i>])
 
-Returns approximately *count* representative values from the scale’s [domain](#continuous_domain). If *count* is not specified, it defaults to 10. The returned tick values are uniformly spaced, have human-readable values (such as multiples of powers of 10), and are guaranteed to be within the extent of the domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data. The specified *count* is only a hint; the scale may return more or fewer values depending on the domain. See also d3-array’s [ticks](https://github.com/d3/d3-array#ticks).
+Returns approximately *count* representative values from the scale’s [domain](#continuous_domain). If *count* is not specified, it defaults to 10. The returned tick values are uniformly spaced, have human-readable values (such as multiples of powers of 10), and are guaranteed to be within the extent of the domain. Ticks are often used to display reference lines, or tick marks, in conjunction with the visualized data. The specified *count* is only a hint; the scale may return more or fewer values depending on the domain. See also d3-array’s [ticks](https://github.com/d3/d3-array/blob/master/README.md#ticks).
 
 <a name="continuous_tickFormat" href="#continuous_tickFormat">#</a> <i>continuous</i>.<b>tickFormat</b>([<i>count</i>[, <i>specifier</i>]]) · [Source](https://github.com/d3/d3-scale/blob/master/src/tickFormat.js), [Examples](https://observablehq.com/@d3/scale-ticks)
 
 Returns a [number format](https://github.com/d3/d3-format) function suitable for displaying a tick value, automatically computing the appropriate precision based on the fixed interval between tick values. The specified *count* should have the same value as the count that is used to generate the [tick values](#continuous_ticks).
 
-An optional *specifier* allows a [custom format](https://github.com/d3/d3-format#locale_format) where the precision of the format is automatically set by the scale as appropriate for the tick interval. For example, to format percentage change, you might say:
+An optional *specifier* allows a [custom format](https://github.com/d3/d3-format/blob/master/README.md#locale_format) where the precision of the format is automatically set by the scale as appropriate for the tick interval. For example, to format percentage change, you might say:
 
 ```js
 var x = d3.scaleLinear()
@@ -217,13 +217,13 @@ var ticks = x.ticks(5),
 ticks.map(tickFormat); // ["-100%", "-50%", "+0%", "+50%", "+100%"]
 ```
 
-If *specifier* uses the format type `s`, the scale will return a [SI-prefix format](https://github.com/d3/d3-format#locale_formatPrefix) based on the largest value in the domain. If the *specifier* already specifies a precision, this method is equivalent to [*locale*.format](https://github.com/d3/d3-format#locale_format).
+If *specifier* uses the format type `s`, the scale will return a [SI-prefix format](https://github.com/d3/d3-format/blob/master/README.md#locale_formatPrefix) based on the largest value in the domain. If the *specifier* already specifies a precision, this method is equivalent to [*locale*.format](https://github.com/d3/d3-format/blob/master/README.md#locale_format).
 
 See also [d3.tickFormat](#tickFormat).
 
 <a name="continuous_nice" href="#continuous_nice">#</a> <i>continuous</i>.<b>nice</b>([<i>count</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/nice.js), [Examples](https://observablehq.com/@d3/d3-scalelinear)
 
-Extends the [domain](#continuous_domain) so that it starts and ends on nice round values. This method typically modifies the scale’s domain, and may only extend the bounds to the nearest round value. An optional tick *count* argument allows greater control over the step size used to extend the bounds, guaranteeing that the returned [ticks](#continuous_ticks) will exactly cover the domain. Nicing is useful if the domain is computed from data, say using [extent](https://github.com/d3/d3-array#extent), and may be irregular. For example, for a domain of [0.201479…, 0.996679…], a nice domain might be [0.2, 1.0]. If the domain has more than two values, nicing the domain only affects the first and last value. See also d3-array’s [tickStep](https://github.com/d3/d3-array#tickStep).
+Extends the [domain](#continuous_domain) so that it starts and ends on nice round values. This method typically modifies the scale’s domain, and may only extend the bounds to the nearest round value. An optional tick *count* argument allows greater control over the step size used to extend the bounds, guaranteeing that the returned [ticks](#continuous_ticks) will exactly cover the domain. Nicing is useful if the domain is computed from data, say using [extent](https://github.com/d3/d3-array/blob/master/README.md#extent), and may be irregular. For example, for a domain of [0.201479…, 0.996679…], a nice domain might be [0.2, 1.0]. If the domain has more than two values, nicing the domain only affects the first and last value. See also d3-array’s [tickStep](https://github.com/d3/d3-array/blob/master/README.md#tickStep).
 
 Nicing a scale only modifies the current domain; it does not automatically nice domains that are subsequently set using [*continuous*.domain](#continuous_domain). You must re-nice the scale after setting the new domain, if desired.
 
@@ -235,7 +235,7 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 Returns a [number format](https://github.com/d3/d3-format) function suitable for displaying a tick value, automatically computing the appropriate precision based on the fixed interval between tick values, as determined by [d3.tickStep](https://github.com/d3/d3-array/blob/master/README.md#tickStep).
 
-An optional *specifier* allows a [custom format](https://github.com/d3/d3-format#locale_format) where the precision of the format is automatically set by the scale as appropriate for the tick interval. For example, to format percentage change, you might say:
+An optional *specifier* allows a [custom format](https://github.com/d3/d3-format/blob/master/README.md#locale_format) where the precision of the format is automatically set by the scale as appropriate for the tick interval. For example, to format percentage change, you might say:
 
 ```js
 var tickFormat = d3.tickFormat(-1, 1, 5, "+%");
@@ -243,13 +243,13 @@ var tickFormat = d3.tickFormat(-1, 1, 5, "+%");
 tickFormat(-0.5); // "-50%"
 ```
 
-If *specifier* uses the format type `s`, the scale will return a [SI-prefix format](https://github.com/d3/d3-format#locale_formatPrefix) based on the larger absolute value of *start* and *stop*. If the *specifier* already specifies a precision, this method is equivalent to [*locale*.format](https://github.com/d3/d3-format#locale_format).
+If *specifier* uses the format type `s`, the scale will return a [SI-prefix format](https://github.com/d3/d3-format/blob/master/README.md#locale_formatPrefix) based on the larger absolute value of *start* and *stop*. If the *specifier* already specifies a precision, this method is equivalent to [*locale*.format](https://github.com/d3/d3-format/blob/master/README.md#locale_format).
 
 #### Linear Scales
 
 <a name="scaleLinear" href="#scaleLinear">#</a> d3.<b>scaleLinear</b>([[<i>domain</i>, ]<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/linear.js), [Examples](https://observablehq.com/@d3/d3-scalelinear)
 
-Constructs a new [continuous scale](#continuous-scales) with the specified [domain](#continuous_domain) and [range](#continuous_range), the [default](https://github.com/d3/d3-interpolate#interpolate) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. If either *domain* or *range* are not specified, each defaults to [0, 1]. Linear scales are a good default choice for continuous quantitative data because they preserve proportional differences. Each range value *y* can be expressed as a function of the domain value *x*: *y* = *mx* + *b*.
+Constructs a new [continuous scale](#continuous-scales) with the specified [domain](#continuous_domain) and [range](#continuous_range), the [default](https://github.com/d3/d3-interpolate/blob/master/README.md#interpolate) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. If either *domain* or *range* are not specified, each defaults to [0, 1]. Linear scales are a good default choice for continuous quantitative data because they preserve proportional differences. Each range value *y* can be expressed as a function of the domain value *x*: *y* = *mx* + *b*.
 
 #### Power Scales
 
@@ -257,7 +257,7 @@ Power scales are similar to [linear scales](#linear-scales), except an exponenti
 
 <a name="scalePow" href="#scalePow">#</a> d3.<b>scalePow</b>([[<i>domain</i>, ]<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/pow.js), [Examples](https://observablehq.com/@d3/continuous-scales)
 
-Constructs a new [continuous scale](#continuous-scales) with the specified [domain](#continuous_domain) and [range](#continuous_range), the [exponent](#pow_exponent) 1, the [default](https://github.com/d3/d3-interpolate#interpolate) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. If either *domain* or *range* are not specified, each defaults to [0, 1]. (Note that this is effectively a [linear](#linear-scales) scale until you set a different exponent.)
+Constructs a new [continuous scale](#continuous-scales) with the specified [domain](#continuous_domain) and [range](#continuous_range), the [exponent](#pow_exponent) 1, the [default](https://github.com/d3/d3-interpolate/blob/master/README.md#interpolate) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. If either *domain* or *range* are not specified, each defaults to [0, 1]. (Note that this is effectively a [linear](#linear-scales) scale until you set a different exponent.)
 
 <a name="_pow" href="#_pow">#</a> <i>pow</i>(<i>value</i>) · [Source](https://github.com/d3/d3-scale/blob/master/src/pow.js), [Examples](https://observablehq.com/@d3/continuous-scales)
 
@@ -309,7 +309,7 @@ See [*continuous*.copy](#continuous_copy).
 
 <a name="scaleSqrt" href="#scaleSqrt">#</a> d3.<b>scaleSqrt</b>([[<i>domain</i>, ]<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/pow.js), [Examples](https://observablehq.com/@d3/continuous-scales)
 
-Constructs a new [continuous](#continuous-scales) [power scale](#power-scales) with the specified [domain](#continuous_domain) and [range](#continuous_range), the [exponent](#pow_exponent) 0.5, the [default](https://github.com/d3/d3-interpolate#interpolate) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. If either *domain* or *range* are not specified, each defaults to [0, 1]. This is a convenience method equivalent to `d3.scalePow(…).exponent(0.5)`.
+Constructs a new [continuous](#continuous-scales) [power scale](#power-scales) with the specified [domain](#continuous_domain) and [range](#continuous_range), the [exponent](#pow_exponent) 0.5, the [default](https://github.com/d3/d3-interpolate/blob/master/README.md#interpolate) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. If either *domain* or *range* are not specified, each defaults to [0, 1]. This is a convenience method equivalent to `d3.scalePow(…).exponent(0.5)`.
 
 #### Log Scales
 
@@ -319,7 +319,7 @@ As log(0) = -∞, a log scale domain must be **strictly-positive or strictly-neg
 
 <a name="scaleLog" href="#scaleLog">#</a> d3.<b>scaleLog</b>([[<i>domain</i>, ]<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/log.js), [Examples](https://observablehq.com/@d3/continuous-scales)
 
-Constructs a new [continuous scale](#continuous-scales) with the specified [domain](#log_domain) and [range](#log_range), the [base](#log_base) 10, the [default](https://github.com/d3/d3-interpolate#interpolate) [interpolator](#log_interpolate) and [clamping](#log_clamp) disabled. If *domain* is not specified, it defaults to [1, 10]. If *range* is not specified, it defaults to [0, 1].
+Constructs a new [continuous scale](#continuous-scales) with the specified [domain](#log_domain) and [range](#log_range), the [base](#log_base) 10, the [default](https://github.com/d3/d3-interpolate/blob/master/README.md#interpolate) [interpolator](#log_interpolate) and [clamping](#log_clamp) disabled. If *domain* is not specified, it defaults to [1, 10]. If *range* is not specified, it defaults to [0, 1].
 
 <a name="_log" href="#_log">#</a> <i>log</i>(<i>value</i>) · [Source](https://github.com/d3/d3-scale/blob/master/src/log.js), [Examples](https://observablehq.com/@d3/continuous-scales)
 
@@ -375,7 +375,7 @@ See [A bi-symmetric log transformation for wide-range data](https://www.research
 
 <a name="scaleSymlog" href="#scaleSymlog">#</a> d3.<b>scaleSymlog</b>([[<i>domain</i>, ]<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/symlog.js), [Examples](https://observablehq.com/@d3/continuous-scales)
 
-Constructs a new [continuous scale](#continuous-scales) with the specified [domain](#continuous_domain) and [range](#continuous_range), the [constant](#symlog_constant) 1, the [default](https://github.com/d3/d3-interpolate#interpolate) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. If *domain* is not specified, it defaults to [0, 1]. If *range* is not specified, it defaults to [0, 1].
+Constructs a new [continuous scale](#continuous-scales) with the specified [domain](#continuous_domain) and [range](#continuous_range), the [constant](#symlog_constant) 1, the [default](https://github.com/d3/d3-interpolate/blob/master/README.md#interpolate) [interpolator](#continuous_interpolate) and [clamping](#continuous_clamp) disabled. If *domain* is not specified, it defaults to [0, 1]. If *range* is not specified, it defaults to [0, 1].
 
 <a name="symlog_constant" href="#symlog_constant">#</a> <i>symlog</i>.<b>constant</b>([<i>constant</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/symlog.js), [Examples](https://observablehq.com/@d3/continuous-scales)
 
@@ -418,7 +418,7 @@ For a valid value *y* in the range, <i>time</i>(<i>time</i>.invert(<i>y</i>)) eq
 
 <a name="scaleTime" href="#scaleTime">#</a> d3.<b>scaleTime</b>([[<i>domain</i>, ]<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/time.js), [Examples](https://observablehq.com/@d3/d3-scaletime)
 
-Constructs a new time scale with the specified [domain](#time_domain) and [range](#time_range), the [default](https://github.com/d3/d3-interpolate#interpolate) [interpolator](#time_interpolate) and [clamping](#time_clamp) disabled. If *domain* is not specified, it defaults to [2000-01-01, 2000-01-02]. If *range* is not specified, it defaults to [0, 1].
+Constructs a new time scale with the specified [domain](#time_domain) and [range](#time_range), the [default](https://github.com/d3/d3-interpolate/blob/master/README.md#interpolate) [interpolator](#time_interpolate) and [clamping](#time_clamp) disabled. If *domain* is not specified, it defaults to [2000-01-01, 2000-01-02]. If *range* is not specified, it defaults to [0, 1].
 
 <a name="_time" href="#_time">#</a> <i>time</i>(<i>value</i>) · [Source](https://github.com/d3/d3-scale/blob/master/src/time.js), [Examples](https://observablehq.com/@d3/d3-scaletime)
 
@@ -480,7 +480,7 @@ The following time intervals are considered for automatic ticks:
 * 1- and 3-month.
 * 1-year.
 
-In lieu of a *count*, a [time *interval*](https://github.com/d3/d3-time#intervals) may be explicitly specified. To prune the generated ticks for a given time *interval*, use [*interval*.every](https://github.com/d3/d3-time#interval_every). For example, to generate ticks at 15-[minute](https://github.com/d3/d3-time#minute) intervals:
+In lieu of a *count*, a [time *interval*](https://github.com/d3/d3-time/blob/master/README.md#intervals) may be explicitly specified. To prune the generated ticks for a given time *interval*, use [*interval*.every](https://github.com/d3/d3-time/blob/master/README.md#interval_every). For example, to generate ticks at 15-[minute](https://github.com/d3/d3-time/blob/master/README.md#minute) intervals:
 
 ```js
 var x = d3.scaleTime()
@@ -498,7 +498,7 @@ x.ticks(d3.timeMinute.every(15));
 //  Sat Jan 01 2000 02:00:00 GMT-0800 (PST)]
 ```
 
-Alternatively, pass a test function to [*interval*.filter](https://github.com/d3/d3-time#interval_filter):
+Alternatively, pass a test function to [*interval*.filter](https://github.com/d3/d3-time/blob/master/README.md#interval_filter):
 
 ```js
 x.ticks(d3.timeMinute.filter(function(d) {
@@ -511,7 +511,7 @@ Note: in some cases, such as with day ticks, specifying a *step* can result in i
 <a name="time_tickFormat" href="#time_tickFormat">#</a> <i>time</i>.<b>tickFormat</b>([<i>count</i>[, <i>specifier</i>]]) · [Source](https://github.com/d3/d3-scale/blob/master/src/time.js), [Examples](https://observablehq.com/@d3/scale-ticks)
 <br><a href="#time_tickFormat">#</a> <i>time</i>.<b>tickFormat</b>([<i>interval</i>[, <i>specifier</i>]])
 
-Returns a time format function suitable for displaying [tick](#time_ticks) values. The specified *count* or *interval* is currently ignored, but is accepted for consistency with other scales such as [*continuous*.tickFormat](#continuous_tickFormat). If a format *specifier* is specified, this method is equivalent to [format](https://github.com/d3/d3-time-format#format). If *specifier* is not specified, the default time format is returned. The default multi-scale time format chooses a human-readable representation based on the specified date as follows:
+Returns a time format function suitable for displaying [tick](#time_ticks) values. The specified *count* or *interval* is currently ignored, but is accepted for consistency with other scales such as [*continuous*.tickFormat](#continuous_tickFormat). If a format *specifier* is specified, this method is equivalent to [format](https://github.com/d3/d3-time-format/blob/master/README.md#format). If *specifier* is not specified, the default time format is returned. The default multi-scale time format chooses a human-readable representation based on the specified date as follows:
 
 * `%Y` - for year boundaries, such as `2011`.
 * `%B` - for month boundaries, such as `February`.
@@ -529,9 +529,9 @@ Although somewhat unusual, this default behavior has the benefit of providing bo
 
 Extends the [domain](#time_domain) so that it starts and ends on nice round values. This method typically modifies the scale’s domain, and may only extend the bounds to the nearest round value. See [*continuous*.nice](#continuous_nice) for more.
 
-An optional tick *count* argument allows greater control over the step size used to extend the bounds, guaranteeing that the returned [ticks](#time_ticks) will exactly cover the domain. Alternatively, a [time *interval*](https://github.com/d3/d3-time#intervals) may be specified to explicitly set the ticks. If an *interval* is specified, an optional *step* may also be specified to skip some ticks. For example, `time.nice(d3.timeSecond.every(10))` will extend the domain to an even ten seconds (0, 10, 20, <i>etc.</i>). See [*time*.ticks](#time_ticks) and [*interval*.every](https://github.com/d3/d3-time#interval_every) for further detail.
+An optional tick *count* argument allows greater control over the step size used to extend the bounds, guaranteeing that the returned [ticks](#time_ticks) will exactly cover the domain. Alternatively, a [time *interval*](https://github.com/d3/d3-time/blob/master/README.md#intervals) may be specified to explicitly set the ticks. If an *interval* is specified, an optional *step* may also be specified to skip some ticks. For example, `time.nice(d3.timeSecond.every(10))` will extend the domain to an even ten seconds (0, 10, 20, <i>etc.</i>). See [*time*.ticks](#time_ticks) and [*interval*.every](https://github.com/d3/d3-time/blob/master/README.md#interval_every) for further detail.
 
-Nicing is useful if the domain is computed from data, say using [extent](https://github.com/d3/d3-array#extent), and may be irregular. For example, for a domain of [2009-07-13T00:02, 2009-07-13T23:48], the nice domain is [2009-07-13, 2009-07-14]. If the domain has more than two values, nicing the domain only affects the first and last value.
+Nicing is useful if the domain is computed from data, say using [extent](https://github.com/d3/d3-array/blob/master/README.md#extent), and may be irregular. For example, for a domain of [2009-07-13T00:02, 2009-07-13T23:48], the nice domain is [2009-07-13, 2009-07-14]. If the domain has more than two values, nicing the domain only affects the first and last value.
 
 <a name="scaleUtc" href="#scaleUtc">#</a> d3.<b>scaleUtc</b>([[<i>domain</i>, ]<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/utcTime.js), [Examples](https://observablehq.com/@d3/d3-scaletime)
 
@@ -543,7 +543,7 @@ Sequential scales, like [diverging scales](#diverging-scales), are similar to [c
 
 <a name="scaleSequential" href="#scaleSequential">#</a> d3.<b>scaleSequential</b>([[<i>domain</i>, ]<i>interpolator</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/sequential.js), [Examples](https://observablehq.com/@d3/sequential-scales)
 
-Constructs a new sequential scale with the specified [*domain*](#sequential_domain) and [*interpolator*](#sequential_interpolator) function. If *domain* is not specified, it defaults to [0, 1]. If *interpolator* is not specified, it defaults to the identity function. When the scale is [applied](#_sequential), the interpolator will be invoked with a value typically in the range [0, 1], where 0 represents the minimum value and 1 represents the maximum value. For example, to implement the ill-advised [HSL](https://github.com/d3/d3-color#hsl) rainbow scale:
+Constructs a new sequential scale with the specified [*domain*](#sequential_domain) and [*interpolator*](#sequential_interpolator) function. If *domain* is not specified, it defaults to [0, 1]. If *interpolator* is not specified, it defaults to the identity function. When the scale is [applied](#_sequential), the interpolator will be invoked with a value typically in the range [0, 1], where 0 represents the minimum value and 1 represents the maximum value. For example, to implement the ill-advised [HSL](https://github.com/d3/d3-color/blob/master/README.md#hsl) rainbow scale:
 
 ```js
 var rainbow = d3.scaleSequential(function(t) {
@@ -744,7 +744,7 @@ Returns an exact copy of this scale. Changes to this scale will not affect the r
 
 ### Quantile Scales
 
-Quantile scales map a sampled input domain to a discrete range. The domain is considered continuous and thus the scale will accept any reasonable input value; however, the domain is specified as a discrete set of sample values. The number of values in (the cardinality of) the output range determines the number of quantiles that will be computed from the domain. To compute the quantiles, the domain is sorted, and treated as a [population of discrete values](https://en.wikipedia.org/wiki/Quantile#Quantiles_of_a_population); see d3-array’s [quantile](https://github.com/d3/d3-array#quantile). See [this quantile choropleth](https://observablehq.com/@d3/quantile-choropleth) for an example.
+Quantile scales map a sampled input domain to a discrete range. The domain is considered continuous and thus the scale will accept any reasonable input value; however, the domain is specified as a discrete set of sample values. The number of values in (the cardinality of) the output range determines the number of quantiles that will be computed from the domain. To compute the quantiles, the domain is sorted, and treated as a [population of discrete values](https://en.wikipedia.org/wiki/Quantile#Quantiles_of_a_population); see d3-array’s [quantile](https://github.com/d3/d3-array/blob/master/README.md#quantile). See [this quantile choropleth](https://observablehq.com/@d3/quantile-choropleth) for an example.
 
 <a name="scaleQuantile" href="#scaleQuantile">#</a> d3.<b>scaleQuantile</b>([[<i>domain</i>, ]<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/quantile.js), [Examples](https://observablehq.com/@d3/quantile-quantize-and-threshold-scales)
 
@@ -768,7 +768,7 @@ If *range* is specified, sets the discrete values in the range. The array must n
 
 <a name="quantile_quantiles" href="#quantile_quantiles">#</a> <i>quantile</i>.<b>quantiles</b>() · [Source](https://github.com/d3/d3-scale/blob/master/src/quantile.js), [Examples](https://observablehq.com/@d3/quantile-quantize-and-threshold-scales)
 
-Returns the quantile thresholds. If the [range](#quantile_range) contains *n* discrete values, the returned array will contain *n* - 1 thresholds. Values less than the first threshold are considered in the first quantile; values greater than or equal to the first threshold but less than the second threshold are in the second quantile, and so on. Internally, the thresholds array is used with [bisect](https://github.com/d3/d3-array#bisect) to find the output quantile associated with the given input value.
+Returns the quantile thresholds. If the [range](#quantile_range) contains *n* discrete values, the returned array will contain *n* - 1 thresholds. Values less than the first threshold are considered in the first quantile; values greater than or equal to the first threshold but less than the second threshold are in the second quantile, and so on. Internally, the thresholds array is used with [bisect](https://github.com/d3/d3-array/blob/master/README.md#bisect) to find the output quantile associated with the given input value.
 
 <a name="quantile_copy" href="#quantile_copy">#</a> <i>quantile</i>.<b>copy</b>() · [Source](https://github.com/d3/d3-scale/blob/master/src/quantile.js), [Examples](https://observablehq.com/@d3/quantile-quantize-and-threshold-scales)
 
