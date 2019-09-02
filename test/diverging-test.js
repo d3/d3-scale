@@ -60,9 +60,27 @@ tape("diverging.domain() handles a degenerate domain", function(test) {
 tape("diverging.domain() handles a descending domain", function(test) {
   var s = scale.scaleDiverging().domain([4, 2, 1]);
   test.deepEqual(s.domain(), [4, 2, 1]);
-  test.equal(s( 1.2), 0.9);
-  test.equal(s( 2.0), 0.5);
-  test.equal(s( 3.0), 0.25);
+  test.equal(s(1.2), 0.9);
+  test.equal(s(2.0), 0.5);
+  test.equal(s(3.0), 0.25);
+  test.end();
+});
+
+tape("divergingLog.domain() handles a descending domain", function(test) {
+  var s = scale.scaleDivergingLog().domain([3, 2, 1]);
+  test.deepEqual(s.domain(), [3, 2, 1]);
+  test.equal(s(1.2), 1 - 0.1315172029168969);
+  test.equal(s(2.0), 1 - 0.5000000000000000);
+  test.equal(s(2.8), 1 - 0.9149213210862197);
+  test.end();
+});
+
+tape("divergingLog.domain() handles a descending negative domain", function(test) {
+  var s = scale.scaleDivergingLog().domain([-1, -2, -3]);
+  test.deepEqual(s.domain(), [-1, -2, -3]);
+  test.equal(s(-1.2), 0.1315172029168969);
+  test.equal(s(-2.0), 0.5000000000000000);
+  test.equal(s(-2.8), 0.9149213210862197);
   test.end();
 });
 
