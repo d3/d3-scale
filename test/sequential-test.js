@@ -105,14 +105,12 @@ tape("scaleSequential.interpolator(interpolator) sets the interpolator", functio
   test.end();
 });
 
-
 tape("scaleSequentialQuantile() clamps", function(test) {
-  // (identity interpolator)
-  var s = scale.scaleSequentialQuantile().domain([0,1,2,3,10]);
-  test.equal(s(-1),  0);
+  var s = scale.scaleSequentialQuantile().domain([0, 1, 2, 3, 10]);
+  test.equal(s(-1), 0);
   test.equal(s(0), 0);
-  test.equal(s(1),  0.25);
-  test.equal(s(10),  1);
-  test.equal(s(20),  1);
+  test.equal(s(1), 0.25);
+  test.equal(s(10), 1);
+  test.equal(s(20), 1);
   test.end();
 });
