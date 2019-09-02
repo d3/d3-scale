@@ -573,6 +573,10 @@ See [*continuous*.clamp](#continuous_clamp).
 
 If *interpolator* is specified, sets the scale’s interpolator to the specified function. If *interpolator* is not specified, returns the scale’s current interpolator.
 
+<a name="sequential_range" href="#sequential_range">#</a> <i>sequential</i>.<b>range</b>() · [Source](https://github.com/d3/d3-scale/blob/master/src/sequential.js), [Examples](https://observablehq.com/@d3/sequential-scales)
+
+See [*continuous*.range](#continuous_range). Note that a sequential scale’s range is read-only, as it is determined by its [interpolator](#sequential_interpolator).
+
 <a name="sequential_copy" href="#sequential_copy">#</a> <i>sequential</i>.<b>copy</b>() · [Source](https://github.com/d3/d3-scale/blob/master/src/sequential.js), [Examples](https://observablehq.com/@d3/sequential-scales)
 
 See [*continuous*.copy](#continuous_copy).
@@ -624,6 +628,10 @@ See [*continuous*.clamp](#continuous_clamp).
 <a name="diverging_interpolator" href="#diverging_interpolator">#</a> <i>diverging</i>.<b>interpolator</b>([<i>interpolator</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/diverging.js), [Examples](https://observablehq.com/@d3/diverging-scales)
 
 If *interpolator* is specified, sets the scale’s interpolator to the specified function. If *interpolator* is not specified, returns the scale’s current interpolator.
+
+<a name="diverging_range" href="#diverging_range">#</a> <i>diverging</i>.<b>range</b>() · [Source](https://github.com/d3/d3-scale/blob/master/src/diverging.js), [Examples](https://observablehq.com/@d3/diverging-scales)
+
+See [*continuous*.range](#continuous_range). Note that a diverging scale’s range is read-only, as it is determined by its [interpolator](#diverging_interpolator).
 
 <a name="diverging_copy" href="#diverging_copy">#</a> <i>diverging</i>.<b>copy</b>() · [Source](https://github.com/d3/d3-scale/blob/master/src/diverging.js), [Examples](https://observablehq.com/@d3/diverging-scales)
 
