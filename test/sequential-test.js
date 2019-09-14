@@ -131,3 +131,28 @@ tape("scaleSequential(range) sets the interpolator", function(test) {
   test.deepEqual(s.range(), [1, 3]);
   test.end();
 });
+
+tape("scaleSequential.invert(value) inverts interpolation fractions", function(test) {
+  var s = scale.scaleSequential().domain([1,5]);
+  test.equal(s.invert(0), 1);
+  test.equal(s.invert(0.25), 2);
+  test.equal(s.invert(0.50), 3);
+  test.equal(s.invert(0.75), 4);
+  test.equal(s.invert(1), 5);
+  test.equal(s.invert(-1), -3);
+  test.equal(s.invert(2), 9);
+  test.end();
+});
+
+tape("scaleSequentialLog.invert(value) inverts interpolation fractions", function(test) {
+  var d = [1, 100];
+  var s = scale.scaleSequentialLog().domain(d);
+  test.equal(s.invert(0), d[0]);
+  test.equal(s.invert(0.25), Math.exp(Math.log(d[0]) + 0.25 * (Math.log(d[1]) - Math.log(d[0]))));
+  test.equal(s.invert(0.50), Math.exp(Math.log(d[0]) + 0.50 * (Math.log(d[1]) - Math.log(d[0]))));
+  test.equal(s.invert(0.75), Math.exp(Math.log(d[0]) + 0.75 * (Math.log(d[1]) - Math.log(d[0]))));
+  test.equal(s.invert(1), d[1]);
+  test.inDelta(s.invert(-1), d[0] / d[1]);
+  test.inDelta(s.invert(2), d[1] * d[1]);
+  test.end();
+});
