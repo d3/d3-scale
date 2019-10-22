@@ -539,7 +539,7 @@ Equivalent to [scaleTime](#scaleTime), but the returned time scale operates in [
 
 ### Sequential Scales
 
-Sequential scales, like [diverging scales](#diverging-scales), are similar to [continuous scales](#continuous-scales) in that they map a continuous, numeric input domain to a continuous output range. However, unlike continuous scales, the input domain and output range of a sequential scale always has exactly two elements, and the output range is typically specified as an interpolator rather than an array of values. These scales do not expose [invert](#continuous_invert) and [interpolate](#continuous_interpolate) methods.
+Sequential scales, like [diverging scales](#diverging-scales), are similar to [continuous scales](#continuous-scales) in that they map a continuous, numeric input domain to a continuous output range. However, unlike continuous scales, the input domain of a sequential scale always has exactly two elements, and the output range is typically specified as an interpolator rather than an array of values. These scales do not expose [invert](#continuous_invert) and [interpolate](#continuous_interpolate) methods.
 
 <a name="scaleSequential" href="#scaleSequential">#</a> d3.<b>scaleSequential</b>([[<i>domain</i>, ]<i>interpolator</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/sequential.js), [Examples](https://observablehq.com/@d3/sequential-scales)
 
