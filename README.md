@@ -543,7 +543,7 @@ Sequential scales, like [diverging scales](#diverging-scales), are similar to [c
 
 <a name="scaleSequential" href="#scaleSequential">#</a> d3.<b>scaleSequential</b>([[<i>domain</i>, ]<i>interpolator</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/sequential.js), [Examples](https://observablehq.com/@d3/sequential-scales)
 
-Constructs a new sequential scale with the specified [*domain*](#sequential_domain) and [*interpolator*](#sequential_interpolator) function. If *domain* is not specified, it defaults to [0, 1]. If *interpolator* is not specified, it defaults to the identity function. When the scale is [applied](#_sequential), the interpolator will be invoked with a value typically in the range [0, 1], where 0 represents the minimum value and 1 represents the maximum value. For example, to implement the ill-advised [HSL](https://github.com/d3/d3-color/blob/master/README.md#hsl) rainbow scale:
+Constructs a new sequential scale with the specified [*domain*](#sequential_domain) and [*interpolator*](#sequential_interpolator) function or array. If *domain* is not specified, it defaults to [0, 1]. If *interpolator* is not specified, it defaults to the identity function. When the scale is [applied](#_sequential), the interpolator will be invoked with a value typically in the range [0, 1], where 0 represents the minimum value and 1 represents the maximum value. For example, to implement the ill-advised [HSL](https://github.com/d3/d3-color/blob/master/README.md#hsl) rainbow scale:
 
 ```js
 var rainbow = d3.scaleSequential(function(t) {
@@ -556,6 +556,8 @@ A more aesthetically-pleasing and perceptually-effective cyclical hue encoding i
 ```js
 var rainbow = d3.scaleSequential(d3.interpolateRainbow);
 ```
+
+If *interpolator* is an array, it represents the scale’s two-element output range and is converted to an interpolator function using [d3.interpolate](https://github.com/d3/d3-interpolate/blob/master/README.md#interpolate).
 
 <a name="_sequential" href="#_sequential">#</a> <i>sequential</i>(<i>value</i>) · [Source](https://github.com/d3/d3-scale/blob/master/src/sequential.js), [Examples](https://observablehq.com/@d3/sequential-scales)
 
@@ -575,7 +577,7 @@ If *interpolator* is specified, sets the scale’s interpolator to the specified
 
 <a name="sequential_range" href="#sequential_range">#</a> <i>sequential</i>.<b>range</b>([<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/sequential.js), [Examples](https://observablehq.com/@d3/sequential-scales)
 
-See [*continuous*.range](#continuous_range). If *range* is specified, implicitly uses [d3.interpolate](https://github.com/d3/d3-interpolate/blob/master/README.md#interpolate) as the interpolator.
+See [*continuous*.range](#continuous_range). If *range* is specified, the given two-element array and is converted to an interpolator function using [d3.interpolate](https://github.com/d3/d3-interpolate/blob/master/README.md#interpolate).
 
 <a name="sequential_rangeRound" href="#sequential_rangeRound">#</a> <i>sequential</i>.<b>rangeRound</b>([<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/sequential.js), [Examples](https://observablehq.com/@d3/sequential-scales)
 
@@ -615,11 +617,13 @@ Diverging scales, like [sequential scales](#sequential-scales), are similar to [
 
 <a name="scaleDiverging" href="#scaleDiverging">#</a> d3.<b>scaleDiverging</b>([[<i>domain</i>, ]<i>interpolator</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/diverging.js), [Examples](https://observablehq.com/@d3/diverging-scales)
 
-Constructs a new diverging scale with the specified [*domain*](#diverging_domain) and [*interpolator*](#diverging_interpolator) function. If *domain* is not specified, it defaults to [0, 1]. If *interpolator* is not specified, it defaults to the identity function. When the scale is [applied](#_diverging), the interpolator will be invoked with a value typically in the range [0, 1], where 0 represents the extreme negative value, 0.5 represents the neutral value, and 1 represents the extreme positive value. For example, using [d3.interpolateSpectral](https://github.com/d3/d3-scale-chromatic/blob/master/README.md#interpolateSpectral):
+Constructs a new diverging scale with the specified [*domain*](#diverging_domain) and [*interpolator*](#diverging_interpolator) function or array. If *domain* is not specified, it defaults to [0, 1]. If *interpolator* is not specified, it defaults to the identity function. When the scale is [applied](#_diverging), the interpolator will be invoked with a value typically in the range [0, 1], where 0 represents the extreme negative value, 0.5 represents the neutral value, and 1 represents the extreme positive value. For example, using [d3.interpolateSpectral](https://github.com/d3/d3-scale-chromatic/blob/master/README.md#interpolateSpectral):
 
 ```js
 var spectral = d3.scaleDiverging(d3.interpolateSpectral);
 ```
+
+If *interpolator* is an array, it represents the scale’s three-element output range and is converted to an interpolator function using [d3.interpolate](https://github.com/d3/d3-interpolate/blob/master/README.md#interpolate) and [d3.piecewise](https://github.com/d3/d3-interpolate/blob/master/README.md#piecewise).
 
 <a name="_diverging" href="#_diverging">#</a> <i>diverging</i>(<i>value</i>) · [Source](https://github.com/d3/d3-scale/blob/master/src/diverging.js), [Examples](https://observablehq.com/@d3/diverging-scales)
 
@@ -639,7 +643,7 @@ If *interpolator* is specified, sets the scale’s interpolator to the specified
 
 <a name="diverging_range" href="#diverging_range">#</a> <i>diverging</i>.<b>range</b>([<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/diverging.js), [Examples](https://observablehq.com/@d3/diverging-scales)
 
-See [*continuous*.range](#continuous_range). If *range* is specified, implicitly uses [d3.interpolate](https://github.com/d3/d3-interpolate/blob/master/README.md#interpolate) as the interpolator.
+See [*continuous*.range](#continuous_range). If *range* is specified, the given three-element array and is converted to an interpolator function using [d3.interpolate](https://github.com/d3/d3-interpolate/blob/master/README.md#interpolate) and [d3.piecewise](https://github.com/d3/d3-interpolate/blob/master/README.md#piecewise).
 
 <a name="diverging_rangeRound" href="#diverging_rangeRound">#</a> <i>diverging</i>.<b>rangeRound</b>([<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/diverging.js), [Examples](https://observablehq.com/@d3/diverging-scales)
 
