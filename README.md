@@ -577,7 +577,7 @@ If *interpolator* is specified, sets the scale’s interpolator to the specified
 
 <a name="sequential_range" href="#sequential_range">#</a> <i>sequential</i>.<b>range</b>([<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/sequential.js), [Examples](https://observablehq.com/@d3/sequential-scales)
 
-See [*continuous*.range](#continuous_range). If *range* is specified, the given two-element array and is converted to an interpolator function using [d3.interpolate](https://github.com/d3/d3-interpolate/blob/master/README.md#interpolate).
+See [*continuous*.range](#continuous_range). If *range* is specified, the given two-element array is converted to an interpolator function using [d3.interpolate](https://github.com/d3/d3-interpolate/blob/master/README.md#interpolate).
 
 <a name="sequential_rangeRound" href="#sequential_rangeRound">#</a> <i>sequential</i>.<b>rangeRound</b>([<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/sequential.js), [Examples](https://observablehq.com/@d3/sequential-scales)
 
@@ -643,7 +643,7 @@ If *interpolator* is specified, sets the scale’s interpolator to the specified
 
 <a name="diverging_range" href="#diverging_range">#</a> <i>diverging</i>.<b>range</b>([<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/diverging.js), [Examples](https://observablehq.com/@d3/diverging-scales)
 
-See [*continuous*.range](#continuous_range). If *range* is specified, the given three-element array and is converted to an interpolator function using [d3.interpolate](https://github.com/d3/d3-interpolate/blob/master/README.md#interpolate) and [d3.piecewise](https://github.com/d3/d3-interpolate/blob/master/README.md#piecewise).
+See [*continuous*.range](#continuous_range). If *range* is specified, the given three-element array is converted to an interpolator function using [d3.interpolate](https://github.com/d3/d3-interpolate/blob/master/README.md#interpolate) and [d3.piecewise](https://github.com/d3/d3-interpolate/blob/master/README.md#piecewise).
 
 <a name="diverging_rangeRound" href="#diverging_rangeRound">#</a> <i>diverging</i>.<b>rangeRound</b>([<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/diverging.js), [Examples](https://observablehq.com/@d3/diverging-scales)
 
