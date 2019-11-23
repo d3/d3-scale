@@ -296,6 +296,11 @@ tape("log.ticks() generates the expected power-of-ten ticks for small domains", 
   test.deepEqual(s.domain([5, 1]).ticks(), [5, 4, 3, 2, 1]);
   test.deepEqual(s.domain([-1, -5]).ticks(), [-1, -2, -3, -4, -5]);
   test.deepEqual(s.domain([-5, -1]).ticks(), [-5, -4, -3, -2, -1]);
+  test.deepEqual(s.domain([286.9252014, 329.4978332]).ticks(1), [300]);
+  test.deepEqual(s.domain([286.9252014, 329.4978332]).ticks(2), [300]);
+  test.deepEqual(s.domain([286.9252014, 329.4978332]).ticks(3), [300, 320]);
+  test.deepEqual(s.domain([286.9252014, 329.4978332]).ticks(4), [290, 300, 310, 320]);
+  test.deepEqual(s.domain([286.9252014, 329.4978332]).ticks(), [290, 295, 300, 305, 310, 315, 320, 325]);
   test.end();
 });
 

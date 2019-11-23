@@ -102,7 +102,7 @@ export function loggish(transform) {
           z.push(t);
         }
       }
-      if (!z.length) z = ticks(u, v, n);
+      if (z.length * 2 < n) z = ticks(u, v, n);
     } else {
       z = ticks(i, j, Math.min(j - i, n)).map(pows);
     }
