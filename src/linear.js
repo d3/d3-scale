@@ -26,14 +26,14 @@ export function linearish(scale) {
     let stop = d[i1];
     let prestep;
     let step;
+    let maxIter = 10;
 
     if (stop < start) {
       step = start, start = stop, stop = step;
       step = i0, i0 = i1, i1 = step;
     }
     
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
+    while (maxIter-- > 0) {
       const step = tickIncrement(start, stop, count);
       if (step === prestep) {
         d[i0] = start
@@ -46,10 +46,12 @@ export function linearish(scale) {
         start = Math.ceil(start * step) / step;
         stop = Math.floor(stop * step) / step;
       } else {
-        return scale;
+        break;
       }
       prestep = step;
     }
+
+    return scale;
   };
 
   return scale;
