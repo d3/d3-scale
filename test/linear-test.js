@@ -373,6 +373,36 @@ tape("linear.ticks(count) returns the expected ticks for a polylinear domain", f
   test.end();
 });
 
+tape("linear.ticks(X) spans linear.nice(X).domain()", function(test) {
+  function check(domain, count) {
+    var s = scale.scaleLinear().domain(domain).nice(count);
+    var ticks = s.ticks(count);
+    test.deepEqual([ticks[0], ticks[ticks.length - 1]], s.domain());
+  }
+  
+  check([1, 9], 2);
+  check([1, 9], 3);
+  check([1, 9], 4);
+
+  check([8, 9], 2);
+  check([8, 9], 3);
+  check([8, 9], 4);
+
+  check([1, 21], 2);
+  check([2, 21], 2);
+  check([3, 21], 2);
+  check([4, 21], 2);
+  check([5, 21], 2);
+  check([6, 21], 2);
+  check([7, 21], 2);
+  check([8, 21], 2);
+  check([9, 21], 2);
+  check([10, 21], 2);
+  check([11, 21], 2);
+
+  test.end();
+})
+
 tape("linear.ticks(count) returns the empty array if count is not a positive integer", function(test) {
   var s = scale.scaleLinear();
   test.deepEqual(s.ticks(NaN), []);
