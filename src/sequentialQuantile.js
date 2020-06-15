@@ -3,8 +3,8 @@ import {identity} from "./continuous.js";
 import {initInterpolator} from "./init.js";
 
 export default function sequentialQuantile() {
-  var domain = [],
-      interpolator = identity;
+  let domain = [];
+  let interpolator = identity;
 
   function scale(x) {
     if (!isNaN(x = +x)) return interpolator((bisect(domain, x, 1) - 1) / (domain.length - 1));

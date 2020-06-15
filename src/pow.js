@@ -17,8 +17,8 @@ function transformSquare(x) {
 }
 
 export function powish(transform) {
-  var scale = transform(identity, identity),
-      exponent = 1;
+  const scale = transform(identity, identity);
+  let exponent = 1;
 
   function rescale() {
     return exponent === 1 ? transform(identity, identity)
@@ -34,7 +34,7 @@ export function powish(transform) {
 }
 
 export default function pow() {
-  var scale = powish(transformer());
+  const scale = powish(transformer());
 
   scale.copy = function() {
     return copy(scale, pow()).exponent(scale.exponent());

@@ -1,11 +1,11 @@
 export default function(domain, interval) {
   domain = domain.slice();
 
-  var i0 = 0,
-      i1 = domain.length - 1,
-      x0 = domain[i0],
-      x1 = domain[i1],
-      t;
+  let i0 = 0;
+  let i1 = domain.length - 1;
+  let x0 = domain[i0];
+  let x1 = domain[i1];
+  let t;
 
   if (x1 < x0) {
     t = i0, i0 = i1, i1 = t;

@@ -2,7 +2,7 @@ import {linearish} from "./linear.js";
 import number from "./number.js";
 
 export default function identity(domain) {
-  var unknown;
+  let unknown;
 
   function scale(x) {
     return isNaN(x = +x) ? unknown : x;

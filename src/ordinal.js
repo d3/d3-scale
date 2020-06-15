@@ -3,13 +3,14 @@ import {initRange} from "./init.js";
 export const implicit = Symbol("implicit");
 
 export default function ordinal() {
-  var index = new Map(),
-      domain = [],
-      range = [],
-      unknown = implicit;
+  let index = new Map();
+  let domain = [];
+  let range = [];
+  let unknown = implicit;
 
   function scale(d) {
-    var key = d + "", i = index.get(key);
+    const key = d + "";
+    let i = index.get(key);
     if (!i) {
       if (unknown !== implicit) return unknown;
       index.set(key, i = domain.push(d));

@@ -5,13 +5,13 @@ import continuous, {copy} from "./continuous.js";
 import {initRange} from "./init.js";
 import nice from "./nice.js";
 
-var durationSecond = 1000,
-    durationMinute = durationSecond * 60,
-    durationHour = durationMinute * 60,
-    durationDay = durationHour * 24,
-    durationWeek = durationDay * 7,
-    durationMonth = durationDay * 30,
-    durationYear = durationDay * 365;
+const durationSecond = 1000;
+const durationMinute = durationSecond * 60;
+const durationHour = durationMinute * 60;
+const durationDay = durationHour * 24;
+const durationWeek = durationDay * 7;
+const durationMonth = durationDay * 30;
+const durationYear = durationDay * 365;
 
 function date(t) {
   return new Date(t);
@@ -22,20 +22,20 @@ function number(t) {
 }
 
 export function calendar(year, month, week, day, hour, minute, second, millisecond, format) {
-  var scale = continuous(),
-      invert = scale.invert,
-      domain = scale.domain;
+  const scale = continuous();
+  const invert = scale.invert;
+  const domain = scale.domain;
 
-  var formatMillisecond = format(".%L"),
-      formatSecond = format(":%S"),
-      formatMinute = format("%I:%M"),
-      formatHour = format("%I %p"),
-      formatDay = format("%a %d"),
-      formatWeek = format("%b %d"),
-      formatMonth = format("%B"),
-      formatYear = format("%Y");
+  const formatMillisecond = format(".%L");
+  const formatSecond = format(":%S");
+  const formatMinute = format("%I:%M");
+  const formatHour = format("%I %p");
+  const formatDay = format("%a %d");
+  const formatWeek = format("%b %d");
+  const formatMonth = format("%B");
+  const formatYear = format("%Y");
 
-  var tickIntervals = [
+  const tickIntervals = [
     [second,  1,      durationSecond],
     [second,  5,  5 * durationSecond],
     [second, 15, 15 * durationSecond],
@@ -73,9 +73,9 @@ export function calendar(year, month, week, day, hour, minute, second, milliseco
     // based on the extent of the domain and a rough estimate of tick size.
     // Otherwise, assume interval is already a time interval and use it.
     if (typeof interval === "number") {
-      var target = Math.abs(stop - start) / interval,
-          i = bisector(function(i) { return i[2]; }).right(tickIntervals, target),
-          step;
+      const target = Math.abs(stop - start) / interval;
+      let i = bisector(function(i) { return i[2]; }).right(tickIntervals, target);
+      let step;
       if (i === tickIntervals.length) {
         step = tickStep(start / durationYear, stop / durationYear, interval);
         interval = year;
@@ -102,11 +102,11 @@ export function calendar(year, month, week, day, hour, minute, second, milliseco
   };
 
   scale.ticks = function(interval) {
-    var d = domain(),
-        t0 = d[0],
-        t1 = d[d.length - 1],
-        r = t1 < t0,
-        t;
+    const d = domain();
+    let t0 = d[0];
+    let t1 = d[d.length - 1];
+    const r = t1 < t0;
+    let t;
     if (r) t = t0, t0 = t1, t1 = t;
     t = tickInterval(interval, t0, t1);
     t = t ? t.range(t0, t1 + 1) : []; // inclusive stop
@@ -118,7 +118,7 @@ export function calendar(year, month, week, day, hour, minute, second, milliseco
   };
 
   scale.nice = function(interval) {
-    var d = domain();
+    const d = domain();
     return (interval = tickInterval(interval, d[0], d[d.length - 1]))
         ? domain(nice(d, interval))
         : scale;

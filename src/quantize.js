@@ -3,19 +3,19 @@ import {linearish} from "./linear.js";
 import {initRange} from "./init.js";
 
 export default function quantize() {
-  var x0 = 0,
-      x1 = 1,
-      n = 1,
-      domain = [0.5],
-      range = [0, 1],
-      unknown;
+  let x0 = 0;
+  let x1 = 1;
+  let n = 1;
+  let domain = [0.5];
+  let range = [0, 1];
+  let unknown;
 
   function scale(x) {
     return x <= x ? range[bisect(domain, x, 0, n)] : unknown;
   }
 
   function rescale() {
-    var i = -1;
+    let i = -1;
     domain = new Array(n);
     while (++i < n) domain[i] = ((i + 1) * x1 - (i - n) * x0) / (n + 1);
     return scale;
@@ -30,7 +30,7 @@ export default function quantize() {
   };
 
   scale.invertExtent = function(y) {
-    var i = range.indexOf(y);
+    let i = range.indexOf(y);
     return i < 0 ? [NaN, NaN]
         : i < 1 ? [x0, domain[0]]
         : i >= n ? [domain[n - 1], x1]
