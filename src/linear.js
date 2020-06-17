@@ -72,6 +72,6 @@ export default function linear() {
 }
 
 export function pad([x0, x1], k) {
-  const dx = (x1 - x0) * k / 2;
+  var dx = (x1 - x0) * k / 2;
   return [x0 - dx, x1 + dx];
 }
