@@ -510,7 +510,7 @@ tape("linear.copy() returns a copy with changes to the unknown value are isolate
   test.end();
 });
 
-tape.only("padLinear returns a padded domain array", function(test) {
+tape("padLinear returns a padded domain array", function(test) {
   test.deepEqual(scale.padLinear([0, 8], 0.5), [-2, 10])
   test.deepEqual(scale.padLinear([0, 8], 0.25), [-1, 9])
   test.end();
