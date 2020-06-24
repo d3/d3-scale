@@ -617,7 +617,7 @@ Diverging scales, like [sequential scales](#sequential-scales), are similar to [
 
 <a name="scaleDiverging" href="#scaleDiverging">#</a> d3.<b>scaleDiverging</b>([[<i>domain</i>, ]<i>interpolator</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/diverging.js), [Examples](https://observablehq.com/@d3/diverging-scales)
 
-Constructs a new diverging scale with the specified [*domain*](#diverging_domain) and [*interpolator*](#diverging_interpolator) function or array. If *domain* is not specified, it defaults to [0, 1]. If *interpolator* is not specified, it defaults to the identity function. When the scale is [applied](#_diverging), the interpolator will be invoked with a value typically in the range [0, 1], where 0 represents the extreme negative value, 0.5 represents the neutral value, and 1 represents the extreme positive value. For example, using [d3.interpolateSpectral](https://github.com/d3/d3-scale-chromatic/blob/master/README.md#interpolateSpectral):
+Constructs a new diverging scale with the specified [*domain*](#diverging_domain) and [*interpolator*](#diverging_interpolator) function or array. If *domain* is not specified, it defaults to [0, 0.5, 1]. If *interpolator* is not specified, it defaults to the identity function. When the scale is [applied](#_diverging), the interpolator will be invoked with a value typically in the range [0, 1], where 0 represents the extreme negative value, 0.5 represents the neutral value, and 1 represents the extreme positive value. For example, using [d3.interpolateSpectral](https://github.com/d3/d3-scale-chromatic/blob/master/README.md#interpolateSpectral):
 
 ```js
 var spectral = d3.scaleDiverging(d3.interpolateSpectral);
