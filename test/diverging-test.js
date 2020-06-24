@@ -57,6 +57,27 @@ tape("diverging.domain() handles a degenerate domain", function(test) {
   test.end();
 });
 
+tape("diverging.domain() handles a two-values domain with a pivot", function(test) {
+  var s = scale.scaleDiverging().domain([2, 3]);
+  test.deepEqual(s.domain(), [0, 0, 3]);
+  s.domain([-2, -1]);
+  test.deepEqual(s.domain(), [-2, 0, 0]);
+  s.domain([-5, 1256], 100);
+  test.deepEqual(s.domain(), [-5, 100, 1256]);
+  test.end();
+});
+
+tape("diverging.domain() handles a two-values descending domain", function(test) {
+  var s = scale.scaleDiverging();
+  s.domain([2, -2]);
+  test.deepEqual(s.domain(), [2, 0, -2]);
+  s.domain([2, -2], 1);
+  test.deepEqual(s.domain(), [2, 1, -2]);
+  s.domain([2, -2], -3);
+  test.deepEqual(s.domain(), [2, -3, -3]);
+  test.end();
+});
+
 tape("diverging.domain() handles a descending domain", function(test) {
   var s = scale.scaleDiverging().domain([4, 2, 1]);
   test.deepEqual(s.domain(), [4, 2, 1]);
