@@ -1,4 +1,4 @@
-export default function(domain, interval) {
+export default function nice(domain, interval) {
   domain = domain.slice();
 
   var i0 = 0,
