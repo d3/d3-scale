@@ -1,7 +1,7 @@
 import {tickStep} from "d3-array";
 import {format, formatPrefix, formatSpecifier, precisionFixed, precisionPrefix, precisionRound} from "d3-format";
 
-export default function(start, stop, count, specifier) {
+export default function tickFormat(start, stop, count, specifier) {
   var step = tickStep(start, stop, count),
       precision;
   specifier = formatSpecifier(specifier == null ? ",f" : specifier);
