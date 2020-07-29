@@ -131,6 +131,6 @@ export function calendar(year, month, week, day, hour, minute, second, milliseco
   return scale;
 }
 
-export default function() {
+export default function time() {
   return initRange.apply(calendar(timeYear, timeMonth, timeWeek, timeDay, timeHour, timeMinute, timeSecond, timeMillisecond, timeFormat).domain([new Date(2000, 0, 1), new Date(2000, 0, 2)]), arguments);
 }
