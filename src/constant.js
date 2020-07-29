@@ -1,4 +1,4 @@
-export default function(x) {
+export default function constants(x) {
   return function() {
     return x;
   };
