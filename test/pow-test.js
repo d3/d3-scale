@@ -1,6 +1,15 @@
 var tape = require("tape"),
     scale = require("../"),
+    format = require("d3-format"),
     roundEpsilon = require("./roundEpsilon");
+
+format.formatDefaultLocale({
+  decimal: ".",
+  thousands: ",",
+  grouping: [3],
+  currency: ["$", ""],
+  minus: "-"
+});
 
 require("./inDelta");
 

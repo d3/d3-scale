@@ -6,6 +6,14 @@ var tape = require("tape"),
 
 require("./inDelta");
 
+format.formatDefaultLocale({
+  decimal: ".",
+  thousands: ",",
+  grouping: [3],
+  currency: ["$", ""],
+  minus: "-"
+});
+
 tape("scaleLog() has the expected defaults", function(test) {
   var x = scale.scaleLog();
   test.deepEqual(x.domain(), [1, 10]);

@@ -35,13 +35,13 @@
   "sideEffects": false,
   "dependencies": {
     "d3-array": "1.2.0 - 2",
-    "d3-format": "1",
-    "d3-interpolate": "^1.2.0",
-    "d3-time": "1",
-    "d3-time-format": "2"
+    "d3-format": "1 - 2",
+    "d3-interpolate": "1.2.0 - 2",
+    "d3-time": "1 - 2",
+    "d3-time-format": "2 - 3"
   },
   "devDependencies": {
-    "d3-color": "1",
+    "d3-color": "1 - 2",
     "eslint": "6",
     "rollup": "1",
     "rollup-plugin-terser": "5",

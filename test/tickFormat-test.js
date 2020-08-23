@@ -1,5 +1,14 @@
 var tape = require("tape"),
-    scale = require("../");
+    scale = require("../"),
+    format = require("d3-format");
+
+format.formatDefaultLocale({
+  decimal: ".",
+  thousands: ",",
+  grouping: [3],
+  currency: ["$", ""],
+  minus: "-"
+});
 
 tape("d3.tickFormat(start, stop, count) returns a format suitable for the ticks", function(test) {
   test.equal(scale.tickFormat(0, 1, 10)(0.2), "0.2");
