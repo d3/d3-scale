@@ -3,31 +3,31 @@ import {initRange} from "./init.js";
 import ordinal from "./ordinal.js";
 
 export default function band() {
-  var scale = ordinal().unknown(undefined),
-      domain = scale.domain,
-      ordinalRange = scale.range,
-      r0 = 0,
-      r1 = 1,
-      step,
-      bandwidth,
-      round = false,
-      paddingInner = 0,
-      paddingOuter = 0,
-      align = 0.5;
+  const scale = ordinal().unknown(undefined);
+  const domain = scale.domain;
+  const ordinalRange = scale.range;
+  let r0 = 0;
+  let r1 = 1;
+  let step;
+  let bandwidth;
+  let round = false;
+  let paddingInner = 0;
+  let paddingOuter = 0;
+  let align = 0.5;
 
   delete scale.unknown;
 
   function rescale() {
-    var n = domain().length,
-        reverse = r1 < r0,
-        start = reverse ? r1 : r0,
-        stop = reverse ? r0 : r1;
+    const n = domain().length;
+    const reverse = r1 < r0;
+    let start = reverse ? r1 : r0;
+    const stop = reverse ? r0 : r1;
     step = (stop - start) / Math.max(1, n - paddingInner + paddingOuter * 2);
     if (round) step = Math.floor(step);
     start += (stop - start - step * (n - paddingInner)) * align;
     bandwidth = step * (1 - paddingInner);
     if (round) start = Math.round(start), bandwidth = Math.round(bandwidth);
-    var values = sequence(n).map(function(i) { return start + step * i; });
+    const values = sequence(n).map(function(i) { return start + step * i; });
     return ordinalRange(reverse ? values.reverse() : values);
   }
 
@@ -83,7 +83,7 @@ export default function band() {
 }
 
 function pointish(scale) {
-  var copy = scale.copy;
+  const copy = scale.copy;
 
   scale.padding = scale.paddingOuter;
   delete scale.paddingInner;

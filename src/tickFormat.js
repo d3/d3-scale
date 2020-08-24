@@ -2,12 +2,12 @@ import {tickStep} from "d3-array";
 import {format, formatPrefix, formatSpecifier, precisionFixed, precisionPrefix, precisionRound} from "d3-format";
 
 export default function(start, stop, count, specifier) {
-  var step = tickStep(start, stop, count),
-      precision;
+  const step = tickStep(start, stop, count);
+  let precision;
   specifier = formatSpecifier(specifier == null ? ",f" : specifier);
   switch (specifier.type) {
     case "s": {
-      var value = Math.max(Math.abs(start), Math.abs(stop));
+      const value = Math.max(Math.abs(start), Math.abs(stop));
       if (specifier.precision == null && !isNaN(precision = precisionPrefix(step, value))) specifier.precision = precision;
       return formatPrefix(specifier, value);
     }

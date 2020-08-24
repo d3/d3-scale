@@ -15,7 +15,8 @@ function transformSymexp(c) {
 }
 
 export function symlogish(transform) {
-  var c = 1, scale = transform(transformSymlog(c), transformSymexp(c));
+  let c = 1;
+  const scale = transform(transformSymlog(c), transformSymexp(c));
 
   scale.constant = function(_) {
     return arguments.length ? transform(transformSymlog(c = +_), transformSymexp(c)) : c;
@@ -25,7 +26,7 @@ export function symlogish(transform) {
 }
 
 export default function symlog() {
-  var scale = symlogish(transformer());
+  const scale = symlogish(transformer());
 
   scale.copy = function() {
     return copy(scale, symlog()).constant(scale.constant());

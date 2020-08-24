@@ -2,10 +2,10 @@ import {bisect} from "d3-array";
 import {initRange} from "./init.js";
 
 export default function threshold() {
-  var domain = [0.5],
-      range = [0, 1],
-      unknown,
-      n = 1;
+  let domain = [0.5];
+  let range = [0, 1];
+  let unknown;
+  let n = 1;
 
   function scale(x) {
     return x <= x ? range[bisect(domain, x, 0, n)] : unknown;
@@ -20,7 +20,7 @@ export default function threshold() {
   };
 
   scale.invertExtent = function(y) {
-    var i = range.indexOf(y);
+    const i = range.indexOf(y);
     return [domain[i - 1], domain[i]];
   };
 

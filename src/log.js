@@ -44,11 +44,11 @@ function reflect(f) {
 }
 
 export function loggish(transform) {
-  var scale = transform(transformLog, transformExp),
-      domain = scale.domain,
-      base = 10,
-      logs,
-      pows;
+  const scale = transform(transformLog, transformExp);
+  const domain = scale.domain;
+  let base = 10;
+  let logs;
+  let pows;
 
   function rescale() {
     logs = logp(base), pows = powp(base);
@@ -70,20 +70,20 @@ export function loggish(transform) {
   };
 
   scale.ticks = function(count) {
-    var d = domain(),
-        u = d[0],
-        v = d[d.length - 1],
-        r;
+    const d = domain();
+    let u = d[0];
+    let v = d[d.length - 1];
+    let r;
+    let t;
 
-    if (r = v < u) i = u, u = v, v = i;
+    if (r = v < u) t = u, u = v, v = t;
 
-    var i = logs(u),
-        j = logs(v),
-        p,
-        k,
-        t,
-        n = count == null ? 10 : +count,
-        z = [];
+    let i = logs(u);
+    let j = logs(v);
+    let p;
+    let k;
+    const n = count == null ? 10 : +count;
+    let z = [];
 
     if (!(base % 1) && j - i < n) {
       i = Math.floor(i), j = Math.ceil(j);
@@ -115,9 +115,9 @@ export function loggish(transform) {
     if (typeof specifier !== "function") specifier = format(specifier);
     if (count === Infinity) return specifier;
     if (count == null) count = 10;
-    var k = Math.max(1, base * count / scale.ticks().length); // TODO fast estimate?
+    const k = Math.max(1, base * count / scale.ticks().length); // TODO fast estimate?
     return function(d) {
-      var i = d / pows(Math.round(logs(d)));
+      let i = d / pows(Math.round(logs(d)));
       if (i * base < base - 0.5) i *= base;
       return i <= k ? specifier(d) : "";
     };
@@ -134,7 +134,7 @@ export function loggish(transform) {
 }
 
 export default function log() {
-  var scale = loggish(transformer()).domain([1, 10]);
+  const scale = loggish(transformer()).domain([1, 10]);
 
   scale.copy = function() {
     return copy(scale, log()).base(scale.base());
