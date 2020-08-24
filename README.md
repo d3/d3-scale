@@ -231,7 +231,7 @@ Nicing a scale only modifies the current domain; it does not automatically nice 
 
 Returns an exact copy of this scale. Changes to this scale will not affect the returned scale, and vice versa.
 
-<a name="tickFormat" href='#tickFormat'>#</a> d3.<b>tickFormat</b>(<i>start</i>, <i>stop</i>, <i>count</i>[, <i>specifier</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/tickFormat.js), [Examples](https://observablehq.com/@d3/scale-ticks)
+<a name="tickFormat" href="#tickFormat">#</a> d3.<b>tickFormat</b>(<i>start</i>, <i>stop</i>, <i>count</i>[, <i>specifier</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/tickFormat.js), [Examples](https://observablehq.com/@d3/scale-ticks)
 
 Returns a [number format](https://github.com/d3/d3-format) function suitable for displaying a tick value, automatically computing the appropriate precision based on the fixed interval between tick values, as determined by [d3.tickStep](https://github.com/d3/d3-array/blob/master/README.md#tickStep).
 
@@ -532,6 +532,10 @@ Extends the [domain](#time_domain) so that it starts and ends on nice round valu
 An optional tick *count* argument allows greater control over the step size used to extend the bounds, guaranteeing that the returned [ticks](#time_ticks) will exactly cover the domain. Alternatively, a [time *interval*](https://github.com/d3/d3-time/blob/master/README.md#intervals) may be specified to explicitly set the ticks. If an *interval* is specified, an optional *step* may also be specified to skip some ticks. For example, `time.nice(d3.timeSecond.every(10))` will extend the domain to an even ten seconds (0, 10, 20, <i>etc.</i>). See [*time*.ticks](#time_ticks) and [*interval*.every](https://github.com/d3/d3-time/blob/master/README.md#interval_every) for further detail.
 
 Nicing is useful if the domain is computed from data, say using [extent](https://github.com/d3/d3-array/blob/master/README.md#extent), and may be irregular. For example, for a domain of [2009-07-13T00:02, 2009-07-13T23:48], the nice domain is [2009-07-13, 2009-07-14]. If the domain has more than two values, nicing the domain only affects the first and last value.
+
+<a name="time_copy" href="#time_copy">#</a> <i>time</i>.<b>copy</b>() · [Source](https://github.com/d3/d3-scale/blob/master/src/time.js), [Examples](https://observablehq.com/@d3/d3-scaletime)
+
+See [*continuous*.copy](#continuous_copy).
 
 <a name="scaleUtc" href="#scaleUtc">#</a> d3.<b>scaleUtc</b>([[<i>domain</i>, ]<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/utcTime.js), [Examples](https://observablehq.com/@d3/d3-scaletime)
 
