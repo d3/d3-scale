@@ -1,4 +1,4 @@
-import {ascending, bisect, quantile as threshold} from "d3-array";
+import {ascending, bisect, quantileSorted as threshold} from "d3-array";
 import {initRange} from "./init.js";
 
 export default function quantile() {
