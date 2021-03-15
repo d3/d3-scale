@@ -1,29 +1,28 @@
 import {initRange} from "./init.js";
+import {InternMap} from "d3-array";
 
 export const implicit = Symbol("implicit");
 
 export default function ordinal() {
-  var index = new Map(),
+  var index = new InternMap(),
       domain = [],
       range = [],
       unknown = implicit;
 
   function scale(d) {
-    var key = d + "", i = index.get(key);
-    if (!i) {
+    if (!index.has(d)) {
       if (unknown !== implicit) return unknown;
-      index.set(key, i = domain.push(d));
+      index.set(d, domain.push(d));
     }
-    return range[(i - 1) % range.length];
+    return range[(index.get(d) - 1) % range.length];
   }
 
   scale.domain = function(_) {
     if (!arguments.length) return domain.slice();
-    domain = [], index = new Map();
+    domain = [], index = new InternMap();
     for (const value of _) {
-      const key = value + "";
-      if (index.has(key)) continue;
-      index.set(key, domain.push(value));
+      if (index.has(value)) continue;
+      index.set(value, domain.push(value));
     }
     return scale;
   };

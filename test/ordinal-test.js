@@ -11,16 +11,16 @@ it("scaleOrdinal() has the expected defaults", () => {
 });
 
 it("ordinal(x) maps a unique name x in the domain to the corresponding value y in the range", () => {
-  const s = scaleOrdinal().domain([0, 1]).range(["foo", "bar"]);
+  const s = scaleOrdinal().domain([0, 1]).range(["foo", "bar"]).unknown(undefined);
   assert.strictEqual(s(0), "foo");
   assert.strictEqual(s(1), "bar");
   s.range(["a", "b", "c"]);
   assert.strictEqual(s(0), "a");
-  assert.strictEqual(s("0"), "a");
-  assert.strictEqual(s([0]), "a");
+  assert.strictEqual(s("0"), undefined);
+  assert.strictEqual(s([0]), undefined);
   assert.strictEqual(s(1), "b");
-  assert.strictEqual(s(2.0), "c");
-  assert.strictEqual(s(new Number(2)), "c");
+  assert.strictEqual(s(new Number(1)), "b");
+  assert.strictEqual(s(2), undefined);
 });
 
 it("ordinal(x) implicitly extends the domain when a range is explicitly specified", () => {
@@ -59,16 +59,16 @@ it("ordinal.domain() replaces previous domain values", () => {
   assert.strictEqual(s(0), "bar");
   assert.deepStrictEqual(s.domain(), [1, 0]);
   s.domain(["0", "1"]);
-  assert.strictEqual(s(0), "foo"); // it changed!
-  assert.strictEqual(s(1), "bar");
+  assert.strictEqual(s("0"), "foo"); // it changed!
+  assert.strictEqual(s("1"), "bar");
   assert.deepStrictEqual(s.domain(), ["0", "1"]);
 });
 
-it("ordinal.domain() uniqueness is based on string coercion", () => {
+it("ordinal.domain() uniqueness is based on primitive coercion", () => {
   const s = scaleOrdinal().domain(["foo"]).range([42, 43, 44]);
   assert.strictEqual(s(new String("foo")), 42);
-  assert.strictEqual(s({toString: function() { return "foo"; }}), 42);
-  assert.strictEqual(s({toString: function() { return "bar"; }}), 43);
+  assert.strictEqual(s({valueOf: function() { return "foo"; }}), 42);
+  assert.strictEqual(s({valueOf: function() { return "bar"; }}), 43);
 });
 
 it("ordinal.domain() does not coerce domain values to strings", () => {
@@ -76,6 +76,34 @@ it("ordinal.domain() does not coerce domain values to strings", () => {
   assert.deepStrictEqual(s.domain(), [0, 1]);
   assert.strictEqual(typeof s.domain()[0], "number");
   assert.strictEqual(typeof s.domain()[1], "number");
+});
+
+it("ordinal.domain() does not barf on object built-ins", () => {
+  const s = scaleOrdinal().domain(["__proto__", "hasOwnProperty"]).range([42, 43]);
+  assert.strictEqual(s("__proto__"), 42);
+  assert.strictEqual(s("hasOwnProperty"), 43);
+  assert.deepStrictEqual(s.domain(), ["__proto__", "hasOwnProperty"]);
+});
+
+it("ordinal() accepts dates", () => {
+  const s = scaleOrdinal();
+  s(new Date(1970, 2, 1));
+  s(new Date(2001, 4, 13));
+  s(new Date(1970, 2, 1));
+  s(new Date(2001, 4, 13));
+  assert.deepStrictEqual(s.domain(), [new Date(1970, 2, 1), new Date(2001, 4, 13)]);
+});
+
+it("ordinal.domain() accepts dates", () => {
+  const s = scaleOrdinal().domain([
+    new Date(1970, 2, 1),
+    new Date(2001, 4, 13),
+    new Date(1970, 2, 1),
+    new Date(2001, 4, 13)
+  ]);
+  s(new Date(1970, 2, 1));
+  s(new Date(1999, 11, 31));
+  assert.deepStrictEqual(s.domain(), [new Date(1970, 2, 1), new Date(2001, 4, 13), new Date(1999, 11, 31)]);
 });
 
 it("ordinal.domain() does not barf on object built-ins", () => {
