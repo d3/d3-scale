@@ -385,9 +385,9 @@ If *constant* is specified, sets the symlog constant to the specified number and
 
 Identity scales are a special case of [linear scales](#linear-scales) where the domain and range are identical; the scale and its invert method are thus the identity function. These scales are occasionally useful when working with pixel coordinates, say in conjunction with an axis. Identity scales do not support [rangeRound](#continuous_rangeRound), [clamp](#continuous_clamp) or [interpolate](#continuous_interpolate).
 
-<a name="scaleIdentity" href="#scaleIdentity">#</a> d3.<b>scaleIdentity</b>([<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/identity.js), [Examples](https://observablehq.com/@d3/d3-scalelinear)
+<a name="scaleIdentity" href="#scaleIdentity">#</a> d3.<b>scaleIdentity</b>([<i>domain</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/identity.js), [Examples](https://observablehq.com/@d3/d3-scalelinear)
 
-Constructs a new identity scale with the specified [domain](#continuous_domain) and [range](#continuous_range). If *range* is not specified, it defaults to [0, 1].
+Constructs a new identity scale with the specified [domain](#continuous_domain) and [range](#continuous_range). If *domain* is not specified, it defaults to [0, 1].
 
 #### Radial Scales
 
