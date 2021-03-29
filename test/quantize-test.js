@@ -36,6 +36,14 @@ tape("quantize(value) clamps input values to the domain", function(test) {
   test.end();
 });
 
+tape("quantize.unknown(value) sets the return value for undefined, null, and NaN input", function(test) {
+  var s = scale.scaleQuantize().range([0, 1, 2]).unknown(-1);
+  test.equal(s(undefined), -1);
+  test.equal(s(null), -1);
+  test.equal(s(NaN), -1);
+  test.end();
+});
+
 tape("quantize.domain() coerces domain values to numbers", function(test) {
   var s = scale.scaleQuantize().domain(["-1.20", "2.40"]);
   test.deepEqual(s.domain(), [-1.2, 2.4]);

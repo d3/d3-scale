@@ -209,8 +209,9 @@ tape("linear.rangeRound(range) accepts an iterable", function(test) {
   test.end();
 });
 
-tape("linear.unknown(value) sets the return value for undefined and NaN input", function(test) {
+tape("linear.unknown(value) sets the return value for undefined, null, and NaN input", function(test) {
   var s = scale.scaleLinear().unknown(-1);
+  test.equal(s(null), -1);
   test.equal(s(undefined), -1);
   test.equal(s(NaN), -1);
   test.equal(s("N/A"), -1);
@@ -388,15 +389,12 @@ tape("linear.ticks(X) spans linear.nice(X).domain()", function(test) {
     var ticks = s.ticks(count);
     test.deepEqual([ticks[0], ticks[ticks.length - 1]], s.domain());
   }
-  
   check([1, 9], 2);
   check([1, 9], 3);
   check([1, 9], 4);
-
   check([8, 9], 2);
   check([8, 9], 3);
   check([8, 9], 4);
-
   check([1, 21], 2);
   check([2, 21], 2);
   check([3, 21], 2);
@@ -408,7 +406,6 @@ tape("linear.ticks(X) spans linear.nice(X).domain()", function(test) {
   check([9, 21], 2);
   check([10, 21], 2);
   check([11, 21], 2);
-
   test.end();
 })
 
