@@ -26,7 +26,7 @@ tape("threshold(x) returns undefined if the specified value x is not orderable",
   test.equal(x(), undefined);
   test.equal(x(undefined), undefined);
   test.equal(x(NaN), undefined);
-  test.equal(x(null), "a"); // null < 1/3
+  test.equal(x(null), undefined);
   test.end();
 });
 
