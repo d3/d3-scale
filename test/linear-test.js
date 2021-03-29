@@ -211,7 +211,7 @@ tape("linear.rangeRound(range) accepts an iterable", function(test) {
 
 tape("linear.unknown(value) sets the return value for undefined, null, and NaN input", function(test) {
   var s = scale.scaleLinear().unknown(-1);
-  test.equals(s(null), -1);
+  test.equal(s(null), -1);
   test.equal(s(undefined), -1);
   test.equal(s(NaN), -1);
   test.equal(s("N/A"), -1);

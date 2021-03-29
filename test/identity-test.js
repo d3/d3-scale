@@ -31,6 +31,16 @@ tape("identity(x) coerces input to a number", function(test) {
   test.end();
 });
 
+tape("identity(undefined) returns unknown", function(test) {
+  var s = scale.scaleIdentity().unknown(-1);
+  test.equal(s(undefined), -1);
+  test.equal(s(null), -1);
+  test.equal(s(NaN), -1);
+  test.equal(s("N/A"), -1);
+  test.equal(s(0.4), 0.4);
+  test.end();
+});
+
 tape("identity.invert(y) is the identity function", function(test) {
   var s = scale.scaleIdentity().domain([1, 2]);
   test.equal(s.invert(0.5), 0.5);
