@@ -42,9 +42,9 @@
   },
   "devDependencies": {
     "d3-color": "1 - 2",
-    "eslint": "6",
-    "rollup": "1",
-    "rollup-plugin-terser": "5",
+    "eslint": "7",
+    "rollup": "2",
+    "rollup-plugin-terser": "7",
     "tape": "4"
   }
 }
