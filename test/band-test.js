@@ -198,7 +198,7 @@ tape("band.round is ignored when the range is too small and the scale would coll
   test.end();
 });
 
-tape.only("band.roundingPrecision adjusts the rounding precision", function(test) {
+tape("band.roundingPrecision adjusts the rounding precision", function(test) {
   var domain = ["A", "B", "C", "D", "E", "F"];
   var s1 = scale.scaleBand().domain(domain).rangeRound([0, 5]).roundingPrecision(0.5);
   test.deepEqual(domain.map(s1), [ 1, 1.5, 2, 2.5, 3, 3.5 ]);

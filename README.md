@@ -902,7 +902,13 @@ Rounding is sometimes useful for avoiding antialiasing artifacts, though also co
 
 <a name="band_round" href="#band_round">#</a> <i>band</i>.<b>round</b>([<i>round</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/band.js), [Examples](https://observablehq.com/@d3/d3-scaleband)
 
-If *round* is specified, enables or disables rounding accordingly. If rounding is enabled, the start and stop of each band will be integers. Rounding is sometimes useful for avoiding antialiasing artifacts, though also consider the [shape-rendering](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering) “crispEdges” styles. Note that if the width of the domain is not a multiple of the cardinality of the range, there may be leftover unused space, even without padding! Use [*band*.align](#band_align) to specify how the leftover space is distributed.
+If *round* is specified, enables or disables rounding accordingly. If rounding is enabled, the start and stop of each band will be multiples of the rounding precision. Rounding is sometimes useful for avoiding antialiasing artifacts, though also consider the [shape-rendering](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering) “crispEdges” styles. Note that if the width of the domain is not a multiple of the cardinality of the range, there may be leftover unused space, even without padding! Use [*band*.align](#band_align) to specify how the leftover space is distributed.
+
+To avoid collapsing the scale, rounding is not applied when the range is smaller than the length of the domain times the rounding precision.
+
+<a name="band_roundingPrecision" href="#band_roundingPrecision">#</a> <i>band</i>.<b>roundingPrecision</b>([<i>precision</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/band.js)<!-- , [Examples](https://observablehq.com/@d3/d3-scaleband) -->
+
+Sets or reads the rounding precision. A precision of 0.5 is convenient to avoid aliasing artifacts on screens with a pixel density of 2.
 
 <a name="band_paddingInner" href="#band_paddingInner">#</a> <i>band</i>.<b>paddingInner</b>([<i>padding</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/band.js), [Examples](https://observablehq.com/@d3/d3-scaleband)
 
@@ -968,7 +974,13 @@ Rounding is sometimes useful for avoiding antialiasing artifacts, though also co
 
 <a name="point_round" href="#point_round">#</a> <i>point</i>.<b>round</b>([<i>round</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/band.js), [Examples](https://observablehq.com/@d3/d3-scalepoint)
 
-If *round* is specified, enables or disables rounding accordingly. If rounding is enabled, the position of each point will be integers. Rounding is sometimes useful for avoiding antialiasing artifacts, though also consider the [shape-rendering](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering) “crispEdges” styles. Note that if the width of the domain is not a multiple of the cardinality of the range, there may be leftover unused space, even without padding! Use [*point*.align](#point_align) to specify how the leftover space is distributed.
+If *round* is specified, enables or disables rounding accordingly. If rounding is enabled, the position of each point will be multiples of the rounding precision. Rounding is sometimes useful for avoiding antialiasing artifacts, though also consider the [shape-rendering](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering) “crispEdges” styles. Note that if the width of the domain is not a multiple of the cardinality of the range, there may be leftover unused space, even without padding! Use [*point*.align](#point_align) to specify how the leftover space is distributed.
+
+To avoid collapsing the scale, rounding is not applied when the range is smaller than the length of the domain times the rounding precision.
+
+<a name="point_roundingPrecision" href="#point_roundingPrecision">#</a> <i>point</i>.<b>roundingPrecision</b>([<i>precision</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/band.js)<!-- , [Examples](https://observablehq.com/@d3/d3-scalepoint) -->
+
+Sets or reads the rounding precision. A precision of 0.5 is convenient to avoid aliasing artifacts on screens with a pixel density of 2.
 
 <a name="point_padding" href="#point_padding">#</a> <i>point</i>.<b>padding</b>([<i>padding</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/band.js), [Examples](https://observablehq.com/@d3/d3-scalepoint)
 
