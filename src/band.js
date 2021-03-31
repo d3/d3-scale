@@ -23,10 +23,12 @@ export default function band() {
         start = reverse ? r1 : r0,
         stop = reverse ? r0 : r1;
     step = (stop - start) / Math.max(1, n - paddingInner + paddingOuter * 2);
-    if (round) step = Math.floor(step);
+    var r = round && step >= 1;
+    if (r) step = Math.floor(step);
     start += (stop - start - step * (n - paddingInner)) * align;
     bandwidth = step * (1 - paddingInner);
-    if (round) start = Math.round(start), bandwidth = Math.round(bandwidth);
+    if (round) start = Math.round(start);
+    if (r) bandwidth = Math.round(bandwidth);
     var values = sequence(n).map(function(i) { return start + step * i; });
     return ordinalRange(reverse ? values.reverse() : values);
   }
