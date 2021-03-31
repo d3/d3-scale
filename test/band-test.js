@@ -198,6 +198,14 @@ tape("band.round is ignored when the range is too small and the scale would coll
   test.end();
 });
 
+tape.only("band.roundingPrecision adjusts the rounding precision", function(test) {
+  var domain = ["A", "B", "C", "D", "E", "F"];
+  var s1 = scale.scaleBand().domain(domain).rangeRound([0, 5]).roundingPrecision(0.5);
+  test.deepEqual(domain.map(s1), [ 1, 1.5, 2, 2.5, 3, 3.5 ]);
+  test.equal(s1.bandwidth(), 0.5);
+  test.end();
+});
+
 tape("band.paddingInner(p) specifies the inner padding p", function(test) {
   var s = scale.scaleBand().domain(["a", "b", "c"]).range([120, 0]).paddingInner(0.1).round(true);
   test.deepEqual(s.domain().map(s), [83, 42, 1]);

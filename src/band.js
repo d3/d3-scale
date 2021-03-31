@@ -11,6 +11,7 @@ export default function band() {
       step,
       bandwidth,
       round = false,
+      roundingPrecision = 1,
       paddingInner = 0,
       paddingOuter = 0,
       align = 0.5;
@@ -23,12 +24,12 @@ export default function band() {
         start = reverse ? r1 : r0,
         stop = reverse ? r0 : r1;
     step = (stop - start) / Math.max(1, n - paddingInner + paddingOuter * 2);
-    var r = round && step >= 1;
-    if (r) step = Math.floor(step);
+    var r = round && step >= roundingPrecision;
+    if (r) step = roundingPrecision * Math.floor(step / roundingPrecision);
     start += (stop - start - step * (n - paddingInner)) * align;
     bandwidth = step * (1 - paddingInner);
-    if (round) start = Math.round(start);
-    if (r) bandwidth = Math.round(bandwidth);
+    if (round) start = roundingPrecision * Math.round(start / roundingPrecision);
+    if (r) bandwidth = roundingPrecision * Math.round(bandwidth / roundingPrecision);
     var values = sequence(n).map(function(i) { return start + step * i; });
     return ordinalRange(reverse ? values.reverse() : values);
   }
@@ -55,6 +56,10 @@ export default function band() {
 
   scale.round = function(_) {
     return arguments.length ? (round = !!_, rescale()) : round;
+  };
+
+  scale.roundingPrecision = function(_) {
+    return arguments.length ? (roundingPrecision = +_, rescale()) : roundingPrecision;
   };
 
   scale.padding = function(_) {
