@@ -37,7 +37,7 @@
     "d3-array": "^2.3.0",
     "d3-format": "1 - 2",
     "d3-interpolate": "1.2.0 - 2",
-    "d3-time": "1 - 2",
+    "d3-time": "^2.1.1",
     "d3-time-format": "2 - 3"
   },
   "devDependencies": {
