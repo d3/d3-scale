@@ -31,6 +31,20 @@ export default function band() {
     return ordinalRange(reverse ? values.reverse() : values);
   }
 
+  scale.invert = function(_) {
+    var domainIndex,
+        n = domain().length,
+        reverse = range[1] < range[0],
+        start = range[reverse - 0],
+        stop = range[1 - reverse];
+    
+    if (_ < start + paddingOuter * step) domainIndex = 0;
+    else if (_ > stop - paddingOuter * step) domainIndex = n - 1;
+    else domainIndex = Math.floor((_ - start - paddingOuter * step) / step);
+    
+    return domain()[domainIndex];
+  }
+
   scale.domain = function(_) {
     return arguments.length ? (domain(_), rescale()) : domain();
   };

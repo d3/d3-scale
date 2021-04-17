@@ -140,6 +140,29 @@ tape("band.range(values) can be descending", function(test) {
   test.end();
 });
 
+tape("band.invert() return correct domain values", function(test) {
+  var s = scale.scaleBand().domain(["a", "b", "c"]).range([20, 140]);
+  test.equal(s.invert(-10), "a");
+  test.equal(s.invert(20), "a");
+  test.equal(s.invert(32), "a");
+  test.equal(s.invert(74), "b");
+  test.equal(s.invert(128), "c");
+  test.equal(s.invert(150), "c");
+  s.paddingInner(0.2);
+  s.paddingOuter(0.2);
+  test.equal(s.invert(-10), "a");
+  test.equal(s.invert(0), "a");
+  test.equal(s.invert(12), "a");
+  test.equal(s.invert(20), "a");
+  test.equal(s.invert(55), "a");
+  test.equal(s.invert(75), "b");
+  test.equal(s.invert(100), "b");
+  test.equal(s.invert(110), "c");
+  test.equal(s.invert(135), "c");
+  test.equal(s.invert(150), "c");
+  test.end();
+});
+
 tape("band.range(values) makes a copy of the specified range values", function(test) {
   var range = [1, 2],
       s = scale.scaleBand().range(range);
