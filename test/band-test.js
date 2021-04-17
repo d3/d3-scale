@@ -181,6 +181,31 @@ tape("band.rangeRound(values) coerces values to numbers", function(test) {
   test.end();
 });
 
+tape("band.round is ignored when the range is too small and the scale would collapse", function(test) {
+  var domain = ["A", "B", "C", "D", "E", "F"];
+  var s1 = scale.scaleBand().domain(domain).rangeRound([0, 3]);
+  test.deepEqual(domain.map(s1), [ 0, 0.5, 1, 1.5, 2, 2.5 ]);
+  test.equal(s1.bandwidth(), 0.5);
+  var s2 = scale.scaleBand().domain(domain).rangeRound([0, 30]);
+  test.deepEqual(domain.map(s2), [ 0, 5, 10, 15, 20, 25 ]);
+  var s3 = scale.scaleBand().domain(domain).rangeRound([0, 10]);
+  test.deepEqual(domain.map(s3), [ 2, 3, 4, 5, 6, 7 ]);
+  var s4 = scale.scaleBand().domain(domain).range([0, 3]).round(true);
+  test.deepEqual(domain.map(s4), [ 0, 0.5, 1, 1.5, 2, 2.5 ]);
+  var s5 = scale.scaleBand().domain(domain).range([0, 1.5]).round(true);
+  test.deepEqual(domain.map(s5), [ 0, 0.25, 0.5, 0.75, 1, 1.25 ]);
+  test.equal(s5.bandwidth(), 0.25);
+  test.end();
+});
+
+tape("band.roundingPrecision adjusts the rounding precision", function(test) {
+  var domain = ["A", "B", "C", "D", "E", "F"];
+  var s1 = scale.scaleBand().domain(domain).rangeRound([0, 5]).roundingPrecision(0.5);
+  test.deepEqual(domain.map(s1), [ 1, 1.5, 2, 2.5, 3, 3.5 ]);
+  test.equal(s1.bandwidth(), 0.5);
+  test.end();
+});
+
 tape("band.paddingInner(p) specifies the inner padding p", function(test) {
   var s = scale.scaleBand().domain(["a", "b", "c"]).range([120, 0]).paddingInner(0.1).round(true);
   test.deepEqual(s.domain().map(s), [83, 42, 1]);
