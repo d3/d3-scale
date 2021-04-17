@@ -26,8 +26,18 @@ function transformer() {
     return isNaN(x = +x) ? unknown : (x = 0.5 + ((x = +transform(x)) - t1) * (s * x < s * t1 ? k10 : k21), interpolator(clamp ? Math.max(0, Math.min(1, x)) : x));
   }
 
-  scale.domain = function(_) {
-    return arguments.length ? ([x0, x1, x2] = _, t0 = transform(x0 = +x0), t1 = transform(x1 = +x1), t2 = transform(x2 = +x2), k10 = t0 === t1 ? 0 : 0.5 / (t1 - t0), k21 = t1 === t2 ? 0 : 0.5 / (t2 - t1), s = t1 < t0 ? -1 : 1, scale) : [x0, x1, x2];
+  function domainExtent(extent, pivot) {
+    extent = Array.from(extent);
+    if (extent.length >= 3) return extent;
+    const [x0, x1] = extent;
+    pivot = +pivot || 0;
+    return x1 > x0
+      ? [Math.min(pivot, x0), pivot, Math.max(pivot, x1)]
+      : [Math.max(pivot, x0), pivot, Math.min(pivot, x1)];
+  }
+
+  scale.domain = function(_, __) {
+    return arguments.length ? ([x0, x1, x2] = domainExtent(_, __), t0 = transform(x0 = +x0), t1 = transform(x1 = +x1), t2 = transform(x2 = +x2), k10 = t0 === t1 ? 0 : 0.5 / (t1 - t0), k21 = t1 === t2 ? 0 : 0.5 / (t2 - t1), s = t1 < t0 ? -1 : 1, scale) : [x0, x1, x2];
   };
 
   scale.clamp = function(_) {

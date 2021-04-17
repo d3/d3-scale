@@ -633,9 +633,11 @@ If *interpolator* is an array, it represents the scale’s three-element output 
 
 See [*continuous*](#_continuous).
 
-<a name="diverging_domain" href="#diverging_domain">#</a> <i>diverging</i>.<b>domain</b>([<i>domain</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/diverging.js), [Examples](https://observablehq.com/@d3/diverging-scales)
+<a name="diverging_domain" href="#diverging_domain">#</a> <i>diverging</i>.<b>domain</b>([<i>domain</i>][, <i>pivot</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/diverging.js), [Examples](https://observablehq.com/@d3/diverging-scales)
 
-See [*continuous*.domain](#continuous_domain). Note that a diverging scale’s domain must be numeric and must contain exactly three values. The default domain is [0, 0.5, 1].
+If *domain* is specified with three values [x0, pivot, x1], sets the scale’s domain to the specified array. If *domain* contains two elements [x0, x1], inserts the (optional) *pivot* in-between, and updates [x0, x1] to bracket the pivot. Usually [x0, x1] is the extent of the values, in ascending or descending order.
+
+The default domain is [0, 0.5, 1].
 
 <a name="diverging_clamp" href="#diverging_clamp">#</a> <i>diverging</i>.<b>clamp</b>([<i>clamp</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/diverging.js), [Examples](https://observablehq.com/@d3/diverging-scales)
 
