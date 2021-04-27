@@ -1,216 +1,195 @@
-var tape = require("tape"),
-    scale = require("../");
+import assert from "assert";
+import * as d3 from "../src/index.js";
 
-tape("scaleOrdinal() has the expected defaults", function(test) {
-  var s = scale.scaleOrdinal();
-  test.deepEqual(s.domain(), []);
-  test.deepEqual(s.range(), []);
-  test.equal(s(0), undefined);
-  test.equal(s.unknown(), scale.scaleImplicit);
-  test.deepEqual(s.domain(), [0]);
-  test.end();
+it("scaleOrdinal() has the expected defaults", () => {
+  const s = d3.scaleOrdinal();
+  assert.deepStrictEqual(s.domain(), []);
+  assert.deepStrictEqual(s.range(), []);
+  assert.strictEqual(s(0), undefined);
+  assert.strictEqual(s.unknown(), d3.scaleImplicit);
+  assert.deepStrictEqual(s.domain(), [0]);
 });
 
-tape("ordinal(x) maps a unique name x in the domain to the corresponding value y in the range", function(test) {
-  var s = scale.scaleOrdinal().domain([0, 1]).range(["foo", "bar"]);
-  test.equal(s(0), "foo");
-  test.equal(s(1), "bar");
+it("ordinal(x) maps a unique name x in the domain to the corresponding value y in the range", () => {
+  const s = d3.scaleOrdinal().domain([0, 1]).range(["foo", "bar"]);
+  assert.strictEqual(s(0), "foo");
+  assert.strictEqual(s(1), "bar");
   s.range(["a", "b", "c"]);
-  test.equal(s(0), "a");
-  test.equal(s("0"), "a");
-  test.equal(s([0]), "a");
-  test.equal(s(1), "b");
-  test.equal(s(2.0), "c");
-  test.equal(s(new Number(2)), "c");
-  test.end();
+  assert.strictEqual(s(0), "a");
+  assert.strictEqual(s("0"), "a");
+  assert.strictEqual(s([0]), "a");
+  assert.strictEqual(s(1), "b");
+  assert.strictEqual(s(2.0), "c");
+  assert.strictEqual(s(new Number(2)), "c");
 });
 
-tape("ordinal(x) implicitly extends the domain when a range is explicitly specified", function(test) {
-  var s = scale.scaleOrdinal().range(["foo", "bar"]);
-  test.deepEqual(s.domain(), []);
-  test.equal(s(0), "foo");
-  test.deepEqual(s.domain(), [0]);
-  test.equal(s(1), "bar");
-  test.deepEqual(s.domain(), [0, 1]);
-  test.equal(s(0), "foo");
-  test.deepEqual(s.domain(), [0, 1]);
-  test.end();
+it("ordinal(x) implicitly extends the domain when a range is explicitly specified", () => {
+  const s = d3.scaleOrdinal().range(["foo", "bar"]);
+  assert.deepStrictEqual(s.domain(), []);
+  assert.strictEqual(s(0), "foo");
+  assert.deepStrictEqual(s.domain(), [0]);
+  assert.strictEqual(s(1), "bar");
+  assert.deepStrictEqual(s.domain(), [0, 1]);
+  assert.strictEqual(s(0), "foo");
+  assert.deepStrictEqual(s.domain(), [0, 1]);
 });
 
-tape("ordinal.domain(x) makes a copy of the domain", function(test) {
-  var domain = ["red", "green"],
-      s = scale.scaleOrdinal().domain(domain);
+it("ordinal.domain(x) makes a copy of the domain", () => {
+  const domain = ["red", "green"],
+      s = d3.scaleOrdinal().domain(domain);
   domain.push("blue");
-  test.deepEqual(s.domain(), ["red", "green"]);
-  test.end();
+  assert.deepStrictEqual(s.domain(), ["red", "green"]);
 });
 
-tape("ordinal.domain() returns a copy of the domain", function(test) {
-  var s = scale.scaleOrdinal().domain(["red", "green"]),
+it("ordinal.domain() returns a copy of the domain", () => {
+  const s = d3.scaleOrdinal().domain(["red", "green"]),
       domain = s.domain();
   s("blue");
-  test.deepEqual(domain, ["red", "green"]);
-  test.end();
+  assert.deepStrictEqual(domain, ["red", "green"]);
 });
 
-tape("ordinal.domain() accepts an iterable", function(test) {
-  var s = scale.scaleOrdinal().domain(new Set(["red", "green"]));
-  test.deepEqual(s.domain(), ["red", "green"]);
-  test.end();
+it("ordinal.domain() accepts an iterable", () => {
+  const s = d3.scaleOrdinal().domain(new Set(["red", "green"]));
+  assert.deepStrictEqual(s.domain(), ["red", "green"]);
 });
 
-tape("ordinal.domain() replaces previous domain values", function(test) {
-  var s = scale.scaleOrdinal().range(["foo", "bar"]);
-  test.equal(s(1), "foo");
-  test.equal(s(0), "bar");
-  test.deepEqual(s.domain(), [1, 0]);
+it("ordinal.domain() replaces previous domain values", () => {
+  const s = d3.scaleOrdinal().range(["foo", "bar"]);
+  assert.strictEqual(s(1), "foo");
+  assert.strictEqual(s(0), "bar");
+  assert.deepStrictEqual(s.domain(), [1, 0]);
   s.domain(["0", "1"]);
-  test.equal(s(0), "foo"); // it changed!
-  test.equal(s(1), "bar");
-  test.deepEqual(s.domain(), ["0", "1"]);
-  test.end();
+  assert.strictEqual(s(0), "foo"); // it changed!
+  assert.strictEqual(s(1), "bar");
+  assert.deepStrictEqual(s.domain(), ["0", "1"]);
 });
 
-tape("ordinal.domain() uniqueness is based on string coercion", function(test) {
-  var s = scale.scaleOrdinal().domain(["foo"]).range([42, 43, 44]);
-  test.equal(s(new String("foo")), 42);
-  test.equal(s({toString: function() { return "foo"; }}), 42);
-  test.equal(s({toString: function() { return "bar"; }}), 43);
-  test.end();
+it("ordinal.domain() uniqueness is based on string coercion", () => {
+  const s = d3.scaleOrdinal().domain(["foo"]).range([42, 43, 44]);
+  assert.strictEqual(s(new String("foo")), 42);
+  assert.strictEqual(s({toString: function() { return "foo"; }}), 42);
+  assert.strictEqual(s({toString: function() { return "bar"; }}), 43);
 });
 
-tape("ordinal.domain() does not coerce domain values to strings", function(test) {
-  var s = scale.scaleOrdinal().domain([0, 1]);
-  test.deepEqual(s.domain(), [0, 1]);
-  test.equal(typeof s.domain()[0], "number");
-  test.equal(typeof s.domain()[1], "number");
-  test.end();
+it("ordinal.domain() does not coerce domain values to strings", () => {
+  const s = d3.scaleOrdinal().domain([0, 1]);
+  assert.deepStrictEqual(s.domain(), [0, 1]);
+  assert.strictEqual(typeof s.domain()[0], "number");
+  assert.strictEqual(typeof s.domain()[1], "number");
 });
 
-tape("ordinal.domain() does not barf on object built-ins", function(test) {
-  var s = scale.scaleOrdinal().domain(["__proto__", "hasOwnProperty"]).range([42, 43]);
-  test.equal(s("__proto__"), 42);
-  test.equal(s("hasOwnProperty"), 43);
-  test.deepEqual(s.domain(), ["__proto__", "hasOwnProperty"]);
-  test.end();
+it("ordinal.domain() does not barf on object built-ins", () => {
+  const s = d3.scaleOrdinal().domain(["__proto__", "hasOwnProperty"]).range([42, 43]);
+  assert.strictEqual(s("__proto__"), 42);
+  assert.strictEqual(s("hasOwnProperty"), 43);
+  assert.deepStrictEqual(s.domain(), ["__proto__", "hasOwnProperty"]);
 });
 
-tape("ordinal.domain() is ordered by appearance", function(test) {
-  var s = scale.scaleOrdinal();
+it("ordinal.domain() is ordered by appearance", () => {
+  const s = d3.scaleOrdinal();
   s("foo");
   s("bar");
   s("baz");
-  test.deepEqual(s.domain(), ["foo", "bar", "baz"]);
+  assert.deepStrictEqual(s.domain(), ["foo", "bar", "baz"]);
   s.domain(["baz", "bar"]);
   s("foo");
-  test.deepEqual(s.domain(), ["baz", "bar", "foo"]);
+  assert.deepStrictEqual(s.domain(), ["baz", "bar", "foo"]);
   s.domain(["baz", "foo"]);
-  test.deepEqual(s.domain(), ["baz", "foo"]);
+  assert.deepStrictEqual(s.domain(), ["baz", "foo"]);
   s.domain([]);
   s("foo");
   s("bar");
-  test.deepEqual(s.domain(), ["foo", "bar"]);
-  test.end();
+  assert.deepStrictEqual(s.domain(), ["foo", "bar"]);
 });
 
-tape("ordinal.range(x) makes a copy of the range", function(test) {
-  var range = ["red", "green"],
-      s = scale.scaleOrdinal().range(range);
+it("ordinal.range(x) makes a copy of the range", () => {
+  const range = ["red", "green"],
+      s = d3.scaleOrdinal().range(range);
   range.push("blue");
-  test.deepEqual(s.range(), ["red", "green"]);
-  test.end();
+  assert.deepStrictEqual(s.range(), ["red", "green"]);
 });
 
-tape("ordinal.range() accepts an iterable", function(test) {
-  var s = scale.scaleOrdinal().range(new Set(["red", "green"]));
-  test.deepEqual(s.range(), ["red", "green"]);
-  test.end();
+it("ordinal.range() accepts an iterable", () => {
+  const s = d3.scaleOrdinal().range(new Set(["red", "green"]));
+  assert.deepStrictEqual(s.range(), ["red", "green"]);
 });
 
-tape("ordinal.range() returns a copy of the range", function(test) {
-  var s = scale.scaleOrdinal().range(["red", "green"]),
+it("ordinal.range() returns a copy of the range", () => {
+  const s = d3.scaleOrdinal().range(["red", "green"]),
       range = s.range();
-  test.deepEqual(range, ["red", "green"]);
+  assert.deepStrictEqual(range, ["red", "green"]);
   range.push("blue");
-  test.deepEqual(s.range(), ["red", "green"]);
-  test.end();
+  assert.deepStrictEqual(s.range(), ["red", "green"]);
 });
 
-tape("ordinal.range(values) does not discard implicit domain associations", function(test) {
-  var s = scale.scaleOrdinal();
-  test.equal(s(0), undefined);
-  test.equal(s(1), undefined);
+it("ordinal.range(values) does not discard implicit domain associations", () => {
+  const s = d3.scaleOrdinal();
+  assert.strictEqual(s(0), undefined);
+  assert.strictEqual(s(1), undefined);
   s.range(["foo", "bar"]);
-  test.equal(s(1), "bar");
-  test.equal(s(0), "foo");
-  test.end();
+  assert.strictEqual(s(1), "bar");
+  assert.strictEqual(s(0), "foo");
 });
 
-tape("ordinal(value) recycles values when exhausted", function(test) {
-  var s = scale.scaleOrdinal().range(["a", "b", "c"]);
-  test.equal(s(0), "a");
-  test.equal(s(1), "b");
-  test.equal(s(2), "c");
-  test.equal(s(3), "a");
-  test.equal(s(4), "b");
-  test.equal(s(5), "c");
-  test.equal(s(2), "c");
-  test.equal(s(1), "b");
-  test.equal(s(0), "a");
-  test.end();
+it("ordinal(value) recycles values when exhausted", () => {
+  const s = d3.scaleOrdinal().range(["a", "b", "c"]);
+  assert.strictEqual(s(0), "a");
+  assert.strictEqual(s(1), "b");
+  assert.strictEqual(s(2), "c");
+  assert.strictEqual(s(3), "a");
+  assert.strictEqual(s(4), "b");
+  assert.strictEqual(s(5), "c");
+  assert.strictEqual(s(2), "c");
+  assert.strictEqual(s(1), "b");
+  assert.strictEqual(s(0), "a");
 });
 
-tape("ordinal.unknown(x) sets the output value for unknown inputs", function(test) {
-  var s = scale.scaleOrdinal().domain(["foo", "bar"]).unknown("gray").range(["red", "blue"]);
-  test.equal(s("foo"), "red");
-  test.equal(s("bar"), "blue");
-  test.equal(s("baz"), "gray");
-  test.equal(s("quux"), "gray");
-  test.end();
+it("ordinal.unknown(x) sets the output value for unknown inputs", () => {
+  const s = d3.scaleOrdinal().domain(["foo", "bar"]).unknown("gray").range(["red", "blue"]);
+  assert.strictEqual(s("foo"), "red");
+  assert.strictEqual(s("bar"), "blue");
+  assert.strictEqual(s("baz"), "gray");
+  assert.strictEqual(s("quux"), "gray");
 });
 
-tape("ordinal.unknown(x) prevents implicit domain extension if x is not implicit", function(test) {
-  var s = scale.scaleOrdinal().domain(["foo", "bar"]).unknown(undefined).range(["red", "blue"]);
-  test.equal(s("baz"), undefined);
-  test.deepEqual(s.domain(), ["foo", "bar"]);
-  test.end();
+it("ordinal.unknown(x) prevents implicit domain extension if x is not implicit", () => {
+  const s = d3.scaleOrdinal().domain(["foo", "bar"]).unknown(undefined).range(["red", "blue"]);
+  assert.strictEqual(s("baz"), undefined);
+  assert.deepStrictEqual(s.domain(), ["foo", "bar"]);
 });
 
-tape("ordinal.copy() copies all fields", function(test) {
-  var s1 = scale.scaleOrdinal().domain([1, 2]).range(["red", "green"]).unknown("gray"),
+it("ordinal.copy() copies all fields", () => {
+  const s1 = d3.scaleOrdinal().domain([1, 2]).range(["red", "green"]).unknown("gray"),
       s2 = s1.copy();
-  test.deepEqual(s2.domain(), s1.domain());
-  test.deepEqual(s2.range(), s1.range());
-  test.deepEqual(s2.unknown(), s1.unknown());
-  test.end();
+  assert.deepStrictEqual(s2.domain(), s1.domain());
+  assert.deepStrictEqual(s2.range(), s1.range());
+  assert.deepStrictEqual(s2.unknown(), s1.unknown());
 });
 
-tape("ordinal.copy() changes to the domain are isolated", function(test) {
-  var s1 = scale.scaleOrdinal().range(["foo", "bar"]),
+it("ordinal.copy() changes to the domain are isolated", () => {
+  const s1 = d3.scaleOrdinal().range(["foo", "bar"]),
       s2 = s1.copy();
   s1.domain([1, 2]);
-  test.deepEqual(s2.domain(), []);
-  test.equal(s1(1), "foo");
-  test.equal(s2(1), "foo");
+  assert.deepStrictEqual(s2.domain(), []);
+  assert.strictEqual(s1(1), "foo");
+  assert.strictEqual(s2(1), "foo");
   s2.domain([2, 3]);
-  test.equal(s1(2), "bar");
-  test.equal(s2(2), "foo");
-  test.deepEqual(s1.domain(), [1, 2]);
-  test.deepEqual(s2.domain(), [2, 3]);
-  test.end();
+  assert.strictEqual(s1(2), "bar");
+  assert.strictEqual(s2(2), "foo");
+  assert.deepStrictEqual(s1.domain(), [1, 2]);
+  assert.deepStrictEqual(s2.domain(), [2, 3]);
 });
 
-tape("ordinal.copy() changes to the range are isolated", function(test) {
-  var s1 = scale.scaleOrdinal().range(["foo", "bar"]),
+it("ordinal.copy() changes to the range are isolated", () => {
+  const s1 = d3.scaleOrdinal().range(["foo", "bar"]),
       s2 = s1.copy();
   s1.range(["bar", "foo"]);
-  test.equal(s1(1), "bar");
-  test.equal(s2(1), "foo");
-  test.deepEqual(s2.range(), ["foo", "bar"]);
+  assert.strictEqual(s1(1), "bar");
+  assert.strictEqual(s2(1), "foo");
+  assert.deepStrictEqual(s2.range(), ["foo", "bar"]);
   s2.range(["foo", "baz"]);
-  test.equal(s1(2), "foo");
-  test.equal(s2(2), "baz");
-  test.deepEqual(s1.range(), ["bar", "foo"]);
-  test.deepEqual(s2.range(), ["foo", "baz"]);
-  test.end();
+  assert.strictEqual(s1(2), "foo");
+  assert.strictEqual(s2(2), "baz");
+  assert.deepStrictEqual(s1.range(), ["bar", "foo"]);
+  assert.deepStrictEqual(s2.range(), ["foo", "baz"]);
 });

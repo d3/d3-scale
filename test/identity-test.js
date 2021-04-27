@@ -1,195 +1,178 @@
-var tape = require("tape"),
-    scale = require("../");
+import assert from "assert";
+import * as d3 from "../src/index.js";
 
-tape("scaleIdentity() has the expected defaults", function(test) {
-  var s = scale.scaleIdentity();
-  test.deepEqual(s.domain(), [0, 1]);
-  test.deepEqual(s.range(), [0, 1]);
-  test.end();
+it("scaleIdentity() has the expected defaults", () => {
+  const s = d3.scaleIdentity();
+  assert.deepStrictEqual(s.domain(), [0, 1]);
+  assert.deepStrictEqual(s.range(), [0, 1]);
 });
 
-tape("scaleIdentity(range) sets the domain and range", function(test) {
-  var s = scale.scaleIdentity([1, 2]);
-  test.deepEqual(s.domain(), [1, 2]);
-  test.deepEqual(s.range(), [1, 2]);
-  test.end();
+it("scaleIdentity(range) sets the domain and range", () => {
+  const s = d3.scaleIdentity([1, 2]);
+  assert.deepStrictEqual(s.domain(), [1, 2]);
+  assert.deepStrictEqual(s.range(), [1, 2]);
 });
 
-tape("identity(x) is the identity function", function(test) {
-  var s = scale.scaleIdentity().domain([1, 2]);
-  test.equal(s(0.5), 0.5);
-  test.equal(s(1), 1);
-  test.equal(s(1.5), 1.5);
-  test.equal(s(2), 2);
-  test.equal(s(2.5), 2.5);
-  test.end();
+it("identity(x) is the identity function", () => {
+  const s = d3.scaleIdentity().domain([1, 2]);
+  assert.strictEqual(s(0.5), 0.5);
+  assert.strictEqual(s(1), 1);
+  assert.strictEqual(s(1.5), 1.5);
+  assert.strictEqual(s(2), 2);
+  assert.strictEqual(s(2.5), 2.5);
 });
 
-tape("identity(x) coerces input to a number", function(test) {
-  var s = scale.scaleIdentity().domain([1, 2]);
-  test.equal(s("2"), 2);
-  test.end();
+it("identity(x) coerces input to a number", () => {
+  const s = d3.scaleIdentity().domain([1, 2]);
+  assert.strictEqual(s("2"), 2);
 });
 
-tape("identity(undefined) returns unknown", function(test) {
-  var s = scale.scaleIdentity().unknown(-1);
-  test.equal(s(undefined), -1);
-  test.equal(s(null), -1);
-  test.equal(s(NaN), -1);
-  test.equal(s("N/A"), -1);
-  test.equal(s(0.4), 0.4);
-  test.end();
+it("identity(undefined) returns unknown", () => {
+  const s = d3.scaleIdentity().unknown(-1);
+  assert.strictEqual(s(undefined), -1);
+  assert.strictEqual(s(null), -1);
+  assert.strictEqual(s(NaN), -1);
+  assert.strictEqual(s("N/A"), -1);
+  assert.strictEqual(s(0.4), 0.4);
 });
 
-tape("identity.invert(y) is the identity function", function(test) {
-  var s = scale.scaleIdentity().domain([1, 2]);
-  test.equal(s.invert(0.5), 0.5);
-  test.equal(s.invert(1), 1);
-  test.equal(s.invert(1.5), 1.5);
-  test.equal(s.invert(2), 2);
-  test.equal(s.invert(2.5), 2.5);
-  test.end();
+it("identity.invert(y) is the identity function", () => {
+  const s = d3.scaleIdentity().domain([1, 2]);
+  assert.strictEqual(s.invert(0.5), 0.5);
+  assert.strictEqual(s.invert(1), 1);
+  assert.strictEqual(s.invert(1.5), 1.5);
+  assert.strictEqual(s.invert(2), 2);
+  assert.strictEqual(s.invert(2.5), 2.5);
 });
 
-tape("identity.invert(y) coerces range value to numbers", function(test) {
-  var s = scale.scaleIdentity().range(["0", "2"]);
-  test.equal(s.invert("1"), 1);
+it("identity.invert(y) coerces range value to numbers", () => {
+  const s = d3.scaleIdentity().range(["0", "2"]);
+  assert.strictEqual(s.invert("1"), 1);
   s.range([new Date(1990, 0, 1), new Date(1991, 0, 1)]);
-  test.equal(s.invert(new Date(1990, 6, 2, 13)), +new Date(1990, 6, 2, 13));
+  assert.strictEqual(s.invert(new Date(1990, 6, 2, 13)), +new Date(1990, 6, 2, 13));
   s.range(["#000", "#fff"]);
-  test.ok(isNaN(s.invert("#999")));
-  test.end();
+  assert(isNaN(s.invert("#999")));
 });
 
-tape("identity.invert(y) coerces input to a number", function(test) {
-  var s = scale.scaleIdentity().domain([1, 2]);
-  test.equal(s.invert("2"), 2);
-  test.end();
+it("identity.invert(y) coerces input to a number", () => {
+  const s = d3.scaleIdentity().domain([1, 2]);
+  assert.strictEqual(s.invert("2"), 2);
 });
 
-tape("identity.domain() is an alias for scale.range()", function(test) {
-  var s = scale.scaleIdentity();
-  test.equal(s.domain, s.range);
-  test.deepEqual(s.domain(), s.range());
+it("identity.domain() is an alias for d3.range()", () => {
+  const s = d3.scaleIdentity();
+  assert.strictEqual(s.domain, s.range);
+  assert.deepStrictEqual(s.domain(), s.range());
   s.domain([-10, 0, 100]);
-  test.deepEqual(s.range(), [-10, 0, 100]);
+  assert.deepStrictEqual(s.range(), [-10, 0, 100]);
   s.range([-10, 0, 100]);
-  test.deepEqual(s.domain(), [-10, 0, 100]);
-  test.end();
+  assert.deepStrictEqual(s.domain(), [-10, 0, 100]);
 });
 
-tape("identity.domain() defaults to [0, 1]", function(test) {
-  var s = scale.scaleIdentity();
-  test.deepEqual(s.domain(), [0, 1]);
-  test.deepEqual(s.range(), [0, 1]);
-  test.equal(s(0.5), 0.5);
-  test.end();
+it("identity.domain() defaults to [0, 1]", () => {
+  const s = d3.scaleIdentity();
+  assert.deepStrictEqual(s.domain(), [0, 1]);
+  assert.deepStrictEqual(s.range(), [0, 1]);
+  assert.strictEqual(s(0.5), 0.5);
 });
 
-tape("identity.domain() coerces values to numbers", function(test) {
-  var s = scale.scaleIdentity().domain([new Date(1990, 0, 1), new Date(1991, 0, 1)]);
-  test.equal(typeof s.domain()[0], "number");
-  test.equal(typeof s.domain()[1], "number");
-  test.equal(s.domain()[0], +new Date(1990, 0, 1));
-  test.equal(s.domain()[1], +new Date(1991, 0, 1));
-  test.equal(typeof s(new Date(1989, 9, 20)), "number");
-  test.equal(s(new Date(1989, 9, 20)), +new Date(1989, 9, 20));
+it("identity.domain() coerces values to numbers", () => {
+  const s = d3.scaleIdentity().domain([new Date(1990, 0, 1), new Date(1991, 0, 1)]);
+  assert.strictEqual(typeof s.domain()[0], "number");
+  assert.strictEqual(typeof s.domain()[1], "number");
+  assert.strictEqual(s.domain()[0], +new Date(1990, 0, 1));
+  assert.strictEqual(s.domain()[1], +new Date(1991, 0, 1));
+  assert.strictEqual(typeof s(new Date(1989, 9, 20)), "number");
+  assert.strictEqual(s(new Date(1989, 9, 20)), +new Date(1989, 9, 20));
   s.domain(["0", "1"]);
-  test.equal(typeof s.domain()[0], "number");
-  test.equal(typeof s.domain()[1], "number");
-  test.equal(s(0.5), 0.5);
+  assert.strictEqual(typeof s.domain()[0], "number");
+  assert.strictEqual(typeof s.domain()[1], "number");
+  assert.strictEqual(s(0.5), 0.5);
   s.domain([new Number(0), new Number(1)]);
-  test.equal(typeof s.domain()[0], "number");
-  test.equal(typeof s.domain()[1], "number");
-  test.equal(s(0.5), 0.5);
+  assert.strictEqual(typeof s.domain()[0], "number");
+  assert.strictEqual(typeof s.domain()[1], "number");
+  assert.strictEqual(s(0.5), 0.5);
   s.range([new Date(1990, 0, 1), new Date(1991, 0, 1)]);
-  test.equal(typeof s.range()[0], "number");
-  test.equal(typeof s.range()[1], "number");
-  test.equal(s.range()[0], +new Date(1990, 0, 1));
-  test.equal(s.range()[1], +new Date(1991, 0, 1));
-  test.equal(typeof s(new Date(1989, 9, 20)), "number");
-  test.equal(s(new Date(1989, 9, 20)), +new Date(1989, 9, 20));
+  assert.strictEqual(typeof s.range()[0], "number");
+  assert.strictEqual(typeof s.range()[1], "number");
+  assert.strictEqual(s.range()[0], +new Date(1990, 0, 1));
+  assert.strictEqual(s.range()[1], +new Date(1991, 0, 1));
+  assert.strictEqual(typeof s(new Date(1989, 9, 20)), "number");
+  assert.strictEqual(s(new Date(1989, 9, 20)), +new Date(1989, 9, 20));
   s.range(["0", "1"]);
-  test.equal(typeof s.range()[0], "number");
-  test.equal(typeof s.range()[1], "number");
-  test.equal(s(0.5), 0.5);
+  assert.strictEqual(typeof s.range()[0], "number");
+  assert.strictEqual(typeof s.range()[1], "number");
+  assert.strictEqual(s(0.5), 0.5);
   s.range([new Number(0), new Number(1)]);
-  test.equal(typeof s.range()[0], "number");
-  test.equal(typeof s.range()[1], "number");
-  test.equal(s(0.5), 0.5);
-  test.end();
+  assert.strictEqual(typeof s.range()[0], "number");
+  assert.strictEqual(typeof s.range()[1], "number");
+  assert.strictEqual(s(0.5), 0.5);
 });
 
-tape("identity.domain() accepts an iterable", function(test) {
-  var s = scale.scaleIdentity().domain(new Set([1, 2]));
-  test.deepEqual(s.domain(), [1, 2]);
-  test.deepEqual(s.range(), [1, 2]);
-  test.end();
+it("identity.domain() accepts an iterable", () => {
+  const s = d3.scaleIdentity().domain(new Set([1, 2]));
+  assert.deepStrictEqual(s.domain(), [1, 2]);
+  assert.deepStrictEqual(s.range(), [1, 2]);
 });
 
-tape("identity.domain() can specify a polyidentity domain and range", function(test) {
-  var s = scale.scaleIdentity().domain([-10, 0, 100]);
-  test.deepEqual(s.domain(), [-10, 0, 100]);
-  test.equal(s(-5), -5);
-  test.equal(s(50), 50);
-  test.equal(s(75), 75);
+it("identity.domain() can specify a polyidentity domain and range", () => {
+  const s = d3.scaleIdentity().domain([-10, 0, 100]);
+  assert.deepStrictEqual(s.domain(), [-10, 0, 100]);
+  assert.strictEqual(s(-5), -5);
+  assert.strictEqual(s(50), 50);
+  assert.strictEqual(s(75), 75);
   s.range([-10, 0, 100]);
-  test.deepEqual(s.range(), [-10, 0, 100]);
-  test.equal(s(-5), -5);
-  test.equal(s(50), 50);
-  test.equal(s(75), 75);
-  test.end();
+  assert.deepStrictEqual(s.range(), [-10, 0, 100]);
+  assert.strictEqual(s(-5), -5);
+  assert.strictEqual(s(50), 50);
+  assert.strictEqual(s(75), 75);
 });
 
-tape("identity.domain() does not affect the identity function", function(test) {
-  var s = scale.scaleIdentity().domain([Infinity, NaN]);
-  test.equal(s(42), 42);
-  test.equal(s.invert(-42), -42);
-  test.end();
+it("identity.domain() does not affect the identity function", () => {
+  const s = d3.scaleIdentity().domain([Infinity, NaN]);
+  assert.strictEqual(s(42), 42);
+  assert.strictEqual(s.invert(-42), -42);
 });
 
-tape("identity.ticks(count) generates ticks of varying degree", function(test) {
-  var s = scale.scaleIdentity();
-  test.deepEqual(s.ticks(1).map(s.tickFormat(1)), ["0", "1"]);
-  test.deepEqual(s.ticks(2).map(s.tickFormat(2)), ["0.0", "0.5", "1.0"]);
-  test.deepEqual(s.ticks(5).map(s.tickFormat(5)), ["0.0", "0.2", "0.4", "0.6", "0.8", "1.0"]);
-  test.deepEqual(s.ticks(10).map(s.tickFormat(10)), ["0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"]);
+it("identity.ticks(count) generates ticks of varying degree", () => {
+  const s = d3.scaleIdentity();
+  assert.deepStrictEqual(s.ticks(1).map(s.tickFormat(1)), ["0", "1"]);
+  assert.deepStrictEqual(s.ticks(2).map(s.tickFormat(2)), ["0.0", "0.5", "1.0"]);
+  assert.deepStrictEqual(s.ticks(5).map(s.tickFormat(5)), ["0.0", "0.2", "0.4", "0.6", "0.8", "1.0"]);
+  assert.deepStrictEqual(s.ticks(10).map(s.tickFormat(10)), ["0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"]);
   s.domain([1, 0]);
-  test.deepEqual(s.ticks(1).map(s.tickFormat(1)), ["0", "1"].reverse());
-  test.deepEqual(s.ticks(2).map(s.tickFormat(2)), ["0.0", "0.5", "1.0"].reverse());
-  test.deepEqual(s.ticks(5).map(s.tickFormat(5)), ["0.0", "0.2", "0.4", "0.6", "0.8", "1.0"].reverse());
-  test.deepEqual(s.ticks(10).map(s.tickFormat(10)), ["0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"].reverse());
-  test.end();
+  assert.deepStrictEqual(s.ticks(1).map(s.tickFormat(1)), ["0", "1"].reverse());
+  assert.deepStrictEqual(s.ticks(2).map(s.tickFormat(2)), ["0.0", "0.5", "1.0"].reverse());
+  assert.deepStrictEqual(s.ticks(5).map(s.tickFormat(5)), ["0.0", "0.2", "0.4", "0.6", "0.8", "1.0"].reverse());
+  assert.deepStrictEqual(s.ticks(10).map(s.tickFormat(10)), ["0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"].reverse());
 });
 
-tape("identity.tickFormat(count) formats ticks with the appropriate precision", function(test) {
-  var s = scale.scaleIdentity().domain([0.123456789, 1.23456789]);
-  test.equal(s.tickFormat(1)(s.ticks(1)[0]), "1");
-  test.equal(s.tickFormat(2)(s.ticks(2)[0]), "0.5");
-  test.equal(s.tickFormat(4)(s.ticks(4)[0]), "0.2");
-  test.equal(s.tickFormat(8)(s.ticks(8)[0]), "0.2");
-  test.equal(s.tickFormat(16)(s.ticks(16)[0]), "0.15");
-  test.equal(s.tickFormat(32)(s.ticks(32)[0]), "0.15");
-  test.equal(s.tickFormat(64)(s.ticks(64)[0]), "0.14");
-  test.equal(s.tickFormat(128)(s.ticks(128)[0]), "0.13");
-  test.equal(s.tickFormat(256)(s.ticks(256)[0]), "0.125");
-  test.end();
+it("identity.tickFormat(count) formats ticks with the appropriate precision", () => {
+  const s = d3.scaleIdentity().domain([0.123456789, 1.23456789]);
+  assert.strictEqual(s.tickFormat(1)(s.ticks(1)[0]), "1");
+  assert.strictEqual(s.tickFormat(2)(s.ticks(2)[0]), "0.5");
+  assert.strictEqual(s.tickFormat(4)(s.ticks(4)[0]), "0.2");
+  assert.strictEqual(s.tickFormat(8)(s.ticks(8)[0]), "0.2");
+  assert.strictEqual(s.tickFormat(16)(s.ticks(16)[0]), "0.15");
+  assert.strictEqual(s.tickFormat(32)(s.ticks(32)[0]), "0.15");
+  assert.strictEqual(s.tickFormat(64)(s.ticks(64)[0]), "0.14");
+  assert.strictEqual(s.tickFormat(128)(s.ticks(128)[0]), "0.13");
+  assert.strictEqual(s.tickFormat(256)(s.ticks(256)[0]), "0.125");
 });
 
-tape("identity.copy() isolates changes to the domain or range", function(test) {
-  var s1 = scale.scaleIdentity(),
+it("identity.copy() isolates changes to the domain or range", () => {
+  const s1 = d3.scaleIdentity(),
       s2 = s1.copy(),
       s3 = s1.copy();
   s1.domain([1, 2]);
-  test.deepEqual(s2.domain(), [0, 1]);
+  assert.deepStrictEqual(s2.domain(), [0, 1]);
   s2.domain([2, 3]);
-  test.deepEqual(s1.domain(), [1, 2]);
-  test.deepEqual(s2.domain(), [2, 3]);
-  s2 = s3.copy();
+  assert.deepStrictEqual(s1.domain(), [1, 2]);
+  assert.deepStrictEqual(s2.domain(), [2, 3]);
+  const s4 = s3.copy();
   s3.range([1, 2]);
-  test.deepEqual(s2.range(), [0, 1]);
-  s2.range([2, 3]);
-  test.deepEqual(s3.range(), [1, 2]);
-  test.deepEqual(s2.range(), [2, 3]);
-  test.end();
+  assert.deepStrictEqual(s4.range(), [0, 1]);
+  s4.range([2, 3]);
+  assert.deepStrictEqual(s3.range(), [1, 2]);
+  assert.deepStrictEqual(s4.range(), [2, 3]);
 });

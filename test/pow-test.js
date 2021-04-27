@@ -1,7 +1,8 @@
-var tape = require("tape"),
-    scale = require("../"),
-    format = require("d3-format"),
-    roundEpsilon = require("./roundEpsilon");
+import assert from "assert";
+import * as d3 from "../src/index.js";
+import * as format from "d3-format";
+import {roundEpsilon} from "./roundEpsilon.js";
+import {assertInDelta} from "./asserts.js";
 
 format.formatDefaultLocale({
   decimal: ".",
@@ -11,497 +12,445 @@ format.formatDefaultLocale({
   minus: "-"
 });
 
-require("./inDelta");
-
-tape("scalePow() has the expected defaults", function(test) {
-  var s = scale.scalePow();
-  test.deepEqual(s.domain(), [0, 1]);
-  test.deepEqual(s.range(), [0, 1]);
-  test.equal(s.clamp(), false);
-  test.equal(s.exponent(), 1);
-  test.deepEqual(s.interpolate()({array: ["red"]}, {array: ["blue"]})(0.5), {array: ["rgb(128, 0, 128)"]});
-  test.end();
+it("scalePow() has the expected defaults", () => {
+  const s = d3.scalePow();
+  assert.deepStrictEqual(s.domain(), [0, 1]);
+  assert.deepStrictEqual(s.range(), [0, 1]);
+  assert.strictEqual(s.clamp(), false);
+  assert.strictEqual(s.exponent(), 1);
+  assert.deepStrictEqual(s.interpolate()({array: ["red"]}, {array: ["blue"]})(0.5), {array: ["rgb(128, 0, 128)"]});
 });
 
-tape("pow(x) maps a domain value x to a range value y", function(test) {
-  test.equal(scale.scalePow().exponent(0.5)(0.5), Math.SQRT1_2);
-  test.end();
+it("pow(x) maps a domain value x to a range value y", () => {
+  assert.strictEqual(d3.scalePow().exponent(0.5)(0.5), Math.SQRT1_2);
 });
 
-tape("pow(x) ignores extra range values if the domain is smaller than the range", function(test) {
-  test.equal(scale.scalePow().domain([-10, 0]).range(["red", "white", "green"]).clamp(true)(-5), "rgb(255, 128, 128)");
-  test.equal(scale.scalePow().domain([-10, 0]).range(["red", "white", "green"]).clamp(true)(50), "rgb(255, 255, 255)");
-  test.end();
+it("pow(x) ignores extra range values if the domain is smaller than the range", () => {
+  assert.strictEqual(d3.scalePow().domain([-10, 0]).range(["red", "white", "green"]).clamp(true)(-5), "rgb(255, 128, 128)");
+  assert.strictEqual(d3.scalePow().domain([-10, 0]).range(["red", "white", "green"]).clamp(true)(50), "rgb(255, 255, 255)");
 });
 
-tape("pow(x) ignores extra domain values if the range is smaller than the domain", function(test) {
-  test.equal(scale.scalePow().domain([-10, 0, 100]).range(["red", "white"]).clamp(true)(-5), "rgb(255, 128, 128)");
-  test.equal(scale.scalePow().domain([-10, 0, 100]).range(["red", "white"]).clamp(true)(50), "rgb(255, 255, 255)");
-  test.end();
+it("pow(x) ignores extra domain values if the range is smaller than the domain", () => {
+  assert.strictEqual(d3.scalePow().domain([-10, 0, 100]).range(["red", "white"]).clamp(true)(-5), "rgb(255, 128, 128)");
+  assert.strictEqual(d3.scalePow().domain([-10, 0, 100]).range(["red", "white"]).clamp(true)(50), "rgb(255, 255, 255)");
 });
 
-tape("pow(x) maps an empty domain to the middle of the range", function(test) {
-  test.equal(scale.scalePow().domain([0, 0]).range([1, 2])(0), 1.5);
-  test.equal(scale.scalePow().domain([0, 0]).range([2, 1])(1), 1.5);
-  test.end();
+it("pow(x) maps an empty domain to the middle of the range", () => {
+  assert.strictEqual(d3.scalePow().domain([0, 0]).range([1, 2])(0), 1.5);
+  assert.strictEqual(d3.scalePow().domain([0, 0]).range([2, 1])(1), 1.5);
 });
 
-tape("pow(x) can map a bipow domain with two values to the corresponding range", function(test) {
-  var s = scale.scalePow().domain([1, 2]);
-  test.deepEqual(s.domain(), [1, 2]);
-  test.equal(s(0.5), -0.5);
-  test.equal(s(1.0),  0.0);
-  test.equal(s(1.5),  0.5);
-  test.equal(s(2.0),  1.0);
-  test.equal(s(2.5),  1.5);
-  test.equal(s.invert(-0.5), 0.5);
-  test.equal(s.invert( 0.0), 1.0);
-  test.equal(s.invert( 0.5), 1.5);
-  test.equal(s.invert( 1.0), 2.0);
-  test.equal(s.invert( 1.5), 2.5);
-  test.end();
+it("pow(x) can map a bipow domain with two values to the corresponding range", () => {
+  const s = d3.scalePow().domain([1, 2]);
+  assert.deepStrictEqual(s.domain(), [1, 2]);
+  assert.strictEqual(s(0.5), -0.5);
+  assert.strictEqual(s(1.0),  0.0);
+  assert.strictEqual(s(1.5),  0.5);
+  assert.strictEqual(s(2.0),  1.0);
+  assert.strictEqual(s(2.5),  1.5);
+  assert.strictEqual(s.invert(-0.5), 0.5);
+  assert.strictEqual(s.invert( 0.0), 1.0);
+  assert.strictEqual(s.invert( 0.5), 1.5);
+  assert.strictEqual(s.invert( 1.0), 2.0);
+  assert.strictEqual(s.invert( 1.5), 2.5);
 });
 
-tape("pow(x) can map a polypow domain with more than two values to the corresponding range", function(test) {
-  var s = scale.scalePow().domain([-10, 0, 100]).range(["red", "white", "green"]);
-  test.deepEqual(s.domain(), [-10, 0, 100]);
-  test.equal(s(-5), "rgb(255, 128, 128)");
-  test.equal(s(50), "rgb(128, 192, 128)");
-  test.equal(s(75), "rgb(64, 160, 64)");
+it("pow(x) can map a polypow domain with more than two values to the corresponding range", () => {
+  const s = d3.scalePow().domain([-10, 0, 100]).range(["red", "white", "green"]);
+  assert.deepStrictEqual(s.domain(), [-10, 0, 100]);
+  assert.strictEqual(s(-5), "rgb(255, 128, 128)");
+  assert.strictEqual(s(50), "rgb(128, 192, 128)");
+  assert.strictEqual(s(75), "rgb(64, 160, 64)");
   s.domain([4, 2, 1]).range([1, 2, 4]);
-  test.equal(s(1.5), 3);
-  test.equal(s(3), 1.5);
-  test.equal(s.invert(1.5), 3);
-  test.equal(s.invert(3), 1.5);
+  assert.strictEqual(s(1.5), 3);
+  assert.strictEqual(s(3), 1.5);
+  assert.strictEqual(s.invert(1.5), 3);
+  assert.strictEqual(s.invert(3), 1.5);
   s.domain([1, 2, 4]).range([4, 2, 1]);
-  test.equal(s(1.5), 3);
-  test.equal(s(3), 1.5);
-  test.equal(s.invert(1.5), 3);
-  test.equal(s.invert(3), 1.5);
-  test.end();
+  assert.strictEqual(s(1.5), 3);
+  assert.strictEqual(s(3), 1.5);
+  assert.strictEqual(s.invert(1.5), 3);
+  assert.strictEqual(s.invert(3), 1.5);
 });
 
-tape("pow.invert(y) maps a range value y to a domain value x", function(test) {
-  test.equal(scale.scalePow().range([1, 2]).invert(1.5), 0.5);
-  test.end();
+it("pow.invert(y) maps a range value y to a domain value x", () => {
+  assert.strictEqual(d3.scalePow().range([1, 2]).invert(1.5), 0.5);
 });
 
-tape("pow.invert(y) maps an empty range to the middle of the domain", function(test) {
-  test.equal(scale.scalePow().domain([1, 2]).range([0, 0]).invert(0), 1.5);
-  test.equal(scale.scalePow().domain([2, 1]).range([0, 0]).invert(1), 1.5);
-  test.end();
+it("pow.invert(y) maps an empty range to the middle of the domain", () => {
+  assert.strictEqual(d3.scalePow().domain([1, 2]).range([0, 0]).invert(0), 1.5);
+  assert.strictEqual(d3.scalePow().domain([2, 1]).range([0, 0]).invert(1), 1.5);
 });
 
-tape("pow.invert(y) coerces range values to numbers", function(test) {
-  test.equal(scale.scalePow().range(["0", "2"]).invert("1"), 0.5);
-  test.equal(scale.scalePow().range([new Date(1990, 0, 1), new Date(1991, 0, 1)]).invert(new Date(1990, 6, 2, 13)), 0.5);
-  test.end();
+it("pow.invert(y) coerces range values to numbers", () => {
+  assert.strictEqual(d3.scalePow().range(["0", "2"]).invert("1"), 0.5);
+  assert.strictEqual(d3.scalePow().range([new Date(1990, 0, 1), new Date(1991, 0, 1)]).invert(new Date(1990, 6, 2, 13)), 0.5);
 });
 
-tape("pow.invert(y) returns NaN if the range is not coercible to number", function(test) {
-  test.ok(isNaN(scale.scalePow().range(["#000", "#fff"]).invert("#999")));
-  test.ok(isNaN(scale.scalePow().range([0, "#fff"]).invert("#999")));
-  test.end();
+it("pow.invert(y) returns NaN if the range is not coercible to number", () => {
+  assert(isNaN(d3.scalePow().range(["#000", "#fff"]).invert("#999")));
+  assert(isNaN(d3.scalePow().range([0, "#fff"]).invert("#999")));
 });
 
-tape("pow.exponent(exponent) sets the exponent to the specified value", function(test) {
-  var x = scale.scalePow().exponent(0.5).domain([1, 2]);
-  test.inDelta(x(1), 0, 1e-6);
-  test.inDelta(x(1.5), 0.5425821, 1e-6);
-  test.inDelta(x(2), 1, 1e-6);
-  test.equal(x.exponent(), 0.5);
+it("pow.exponent(exponent) sets the exponent to the specified value", () => {
+  const x = d3.scalePow().exponent(0.5).domain([1, 2]);
+  assertInDelta(x(1), 0, 1e-6);
+  assertInDelta(x(1.5), 0.5425821, 1e-6);
+  assertInDelta(x(2), 1, 1e-6);
+  assert.strictEqual(x.exponent(), 0.5);
   x.exponent(2).domain([1, 2]);
-  test.inDelta(x(1), 0, 1e-6);
-  test.inDelta(x(1.5), 0.41666667, 1e-6);
-  test.inDelta(x(2), 1, 1e-6);
-  test.equal(x.exponent(), 2);
+  assertInDelta(x(1), 0, 1e-6);
+  assertInDelta(x(1.5), 0.41666667, 1e-6);
+  assertInDelta(x(2), 1, 1e-6);
+  assert.strictEqual(x.exponent(), 2);
   x.exponent(-1).domain([1, 2]);
-  test.inDelta(x(1), 0, 1e-6);
-  test.inDelta(x(1.5), 0.6666667, 1e-6);
-  test.inDelta(x(2), 1, 1e-6);
-  test.equal(x.exponent(), -1);
-  test.end();
+  assertInDelta(x(1), 0, 1e-6);
+  assertInDelta(x(1.5), 0.6666667, 1e-6);
+  assertInDelta(x(2), 1, 1e-6);
+  assert.strictEqual(x.exponent(), -1);
 });
 
-tape("pow.exponent(exponent) changing the exponent does not change the domain or range", function(test) {
-  var x = scale.scalePow().domain([1, 2]).range([3, 4]);
+it("pow.exponent(exponent) changing the exponent does not change the domain or range", () => {
+  const x = d3.scalePow().domain([1, 2]).range([3, 4]);
   x.exponent(0.5);
-  test.deepEqual(x.domain(), [1, 2]);
-  test.deepEqual(x.range(), [3, 4]);
+  assert.deepStrictEqual(x.domain(), [1, 2]);
+  assert.deepStrictEqual(x.range(), [3, 4]);
   x.exponent(2);
-  test.deepEqual(x.domain(), [1, 2]);
-  test.deepEqual(x.range(), [3, 4]);
+  assert.deepStrictEqual(x.domain(), [1, 2]);
+  assert.deepStrictEqual(x.range(), [3, 4]);
   x.exponent(-1);
-  test.deepEqual(x.domain(), [1, 2]);
-  test.deepEqual(x.range(), [3, 4]);
-  test.end();
+  assert.deepStrictEqual(x.domain(), [1, 2]);
+  assert.deepStrictEqual(x.range(), [3, 4]);
 });
 
-tape("pow.domain(domain) accepts an array of numbers", function(test) {
-  test.deepEqual(scale.scalePow().domain([]).domain(), []);
-  test.deepEqual(scale.scalePow().domain([1, 0]).domain(), [1, 0]);
-  test.deepEqual(scale.scalePow().domain([1, 2, 3]).domain(), [1, 2, 3]);
-  test.end();
+it("pow.domain(domain) accepts an array of numbers", () => {
+  assert.deepStrictEqual(d3.scalePow().domain([]).domain(), []);
+  assert.deepStrictEqual(d3.scalePow().domain([1, 0]).domain(), [1, 0]);
+  assert.deepStrictEqual(d3.scalePow().domain([1, 2, 3]).domain(), [1, 2, 3]);
 });
 
-tape("pow.domain(domain) coerces domain values to numbers", function(test) {
-  test.deepEqual(scale.scalePow().domain([new Date(1990, 0, 1), new Date(1991, 0, 1)]).domain(), [631180800000, 662716800000]);
-  test.deepEqual(scale.scalePow().domain(["0.0", "1.0"]).domain(), [0, 1]);
-  test.deepEqual(scale.scalePow().domain([new Number(0), new Number(1)]).domain(), [0, 1]);
-  test.end();
+it("pow.domain(domain) coerces domain values to numbers", () => {
+  assert.deepStrictEqual(d3.scalePow().domain([new Date(1990, 0, 1), new Date(1991, 0, 1)]).domain(), [631180800000, 662716800000]);
+  assert.deepStrictEqual(d3.scalePow().domain(["0.0", "1.0"]).domain(), [0, 1]);
+  assert.deepStrictEqual(d3.scalePow().domain([new Number(0), new Number(1)]).domain(), [0, 1]);
 });
 
-tape("pow.domain(domain) makes a copy of domain values", function(test) {
-  var d = [1, 2], s = scale.scalePow().domain(d);
-  test.deepEqual(s.domain(), [1, 2]);
+it("pow.domain(domain) makes a copy of domain values", () => {
+  const d = [1, 2], s = d3.scalePow().domain(d);
+  assert.deepStrictEqual(s.domain(), [1, 2]);
   d.push(3);
-  test.deepEqual(s.domain(), [1, 2]);
-  test.deepEqual(d, [1, 2, 3]);
-  test.end();
+  assert.deepStrictEqual(s.domain(), [1, 2]);
+  assert.deepStrictEqual(d, [1, 2, 3]);
 });
 
-tape("pow.domain() returns a copy of domain values", function(test) {
-  var s = scale.scalePow(), d = s.domain();
-  test.deepEqual(d, [0, 1]);
+it("pow.domain() returns a copy of domain values", () => {
+  const s = d3.scalePow(), d = s.domain();
+  assert.deepStrictEqual(d, [0, 1]);
   d.push(3);
-  test.deepEqual(s.domain(), [0, 1]);
-  test.end();
+  assert.deepStrictEqual(s.domain(), [0, 1]);
 });
 
-tape("pow.range(range) does not coerce range to numbers", function(test) {
-  var s = scale.scalePow().range(["0px", "2px"]);
-  test.deepEqual(s.range(), ["0px", "2px"]);
-  test.equal(s(0.5), "1px");
-  test.end();
+it("pow.range(range) does not coerce range to numbers", () => {
+  const s = d3.scalePow().range(["0px", "2px"]);
+  assert.deepStrictEqual(s.range(), ["0px", "2px"]);
+  assert.strictEqual(s(0.5), "1px");
 });
 
-tape("pow.range(range) can accept range values as colors", function(test) {
-  test.equal(scale.scalePow().range(["red", "blue"])(0.5), "rgb(128, 0, 128)");
-  test.equal(scale.scalePow().range(["#ff0000", "#0000ff"])(0.5), "rgb(128, 0, 128)");
-  test.equal(scale.scalePow().range(["#f00", "#00f"])(0.5), "rgb(128, 0, 128)");
-  test.equal(scale.scalePow().range(["rgb(255,0,0)", "hsl(240,100%,50%)"])(0.5), "rgb(128, 0, 128)");
-  test.equal(scale.scalePow().range(["rgb(100%,0%,0%)", "hsl(240,100%,50%)"])(0.5), "rgb(128, 0, 128)");
-  test.equal(scale.scalePow().range(["hsl(0,100%,50%)", "hsl(240,100%,50%)"])(0.5), "rgb(128, 0, 128)");
-  test.end();
+it("pow.range(range) can accept range values as colors", () => {
+  assert.strictEqual(d3.scalePow().range(["red", "blue"])(0.5), "rgb(128, 0, 128)");
+  assert.strictEqual(d3.scalePow().range(["#ff0000", "#0000ff"])(0.5), "rgb(128, 0, 128)");
+  assert.strictEqual(d3.scalePow().range(["#f00", "#00f"])(0.5), "rgb(128, 0, 128)");
+  assert.strictEqual(d3.scalePow().range(["rgb(255,0,0)", "hsl(240,100%,50%)"])(0.5), "rgb(128, 0, 128)");
+  assert.strictEqual(d3.scalePow().range(["rgb(100%,0%,0%)", "hsl(240,100%,50%)"])(0.5), "rgb(128, 0, 128)");
+  assert.strictEqual(d3.scalePow().range(["hsl(0,100%,50%)", "hsl(240,100%,50%)"])(0.5), "rgb(128, 0, 128)");
 });
 
-tape("pow.range(range) can accept range values as arrays or objects", function(test) {
-  test.deepEqual(scale.scalePow().range([{color: "red"}, {color: "blue"}])(0.5), {color: "rgb(128, 0, 128)"});
-  test.deepEqual(scale.scalePow().range([["red"], ["blue"]])(0.5), ["rgb(128, 0, 128)"]);
-  test.end();
+it("pow.range(range) can accept range values as arrays or objects", () => {
+  assert.deepStrictEqual(d3.scalePow().range([{color: "red"}, {color: "blue"}])(0.5), {color: "rgb(128, 0, 128)"});
+  assert.deepStrictEqual(d3.scalePow().range([["red"], ["blue"]])(0.5), ["rgb(128, 0, 128)"]);
 });
 
-tape("pow.range(range) makes a copy of range values", function(test) {
-  var r = [1, 2], s = scale.scalePow().range(r);
-  test.deepEqual(s.range(), [1, 2]);
+it("pow.range(range) makes a copy of range values", () => {
+  const r = [1, 2], s = d3.scalePow().range(r);
+  assert.deepStrictEqual(s.range(), [1, 2]);
   r.push(3);
-  test.deepEqual(s.range(), [1, 2]);
-  test.deepEqual(r, [1, 2, 3]);
-  test.end();
+  assert.deepStrictEqual(s.range(), [1, 2]);
+  assert.deepStrictEqual(r, [1, 2, 3]);
 });
 
-tape("pow.range() returns a copy of range values", function(test) {
-  var s = scale.scalePow(), r = s.range();
-  test.deepEqual(r, [0, 1]);
+it("pow.range() returns a copy of range values", () => {
+  const s = d3.scalePow(), r = s.range();
+  assert.deepStrictEqual(r, [0, 1]);
   r.push(3);
-  test.deepEqual(s.range(), [0, 1]);
-  test.end();
+  assert.deepStrictEqual(s.range(), [0, 1]);
 });
 
-tape("pow.rangeRound(range) is an alias for pow.range(range).interpolate(interpolateRound)", function(test) {
-  test.equal(scale.scalePow().rangeRound([0, 10])(0.59), 6);
-  test.end();
+it("pow.rangeRound(range) is an alias for pow.range(range).interpolate(interpolateRound)", () => {
+  assert.strictEqual(d3.scalePow().rangeRound([0, 10])(0.59), 6);
 });
 
-tape("pow.clamp() is false by default", function(test) {
-  test.equal(scale.scalePow().clamp(), false);
-  test.equal(scale.scalePow().range([10, 20])(2), 30);
-  test.equal(scale.scalePow().range([10, 20])(-1), 0);
-  test.equal(scale.scalePow().range([10, 20]).invert(30), 2);
-  test.equal(scale.scalePow().range([10, 20]).invert(0), -1);
-  test.end();
+it("pow.clamp() is false by default", () => {
+  assert.strictEqual(d3.scalePow().clamp(), false);
+  assert.strictEqual(d3.scalePow().range([10, 20])(2), 30);
+  assert.strictEqual(d3.scalePow().range([10, 20])(-1), 0);
+  assert.strictEqual(d3.scalePow().range([10, 20]).invert(30), 2);
+  assert.strictEqual(d3.scalePow().range([10, 20]).invert(0), -1);
 });
 
-tape("pow.clamp(true) restricts output values to the range", function(test) {
-  test.equal(scale.scalePow().clamp(true).range([10, 20])(2), 20);
-  test.equal(scale.scalePow().clamp(true).range([10, 20])(-1), 10);
-  test.end();
+it("pow.clamp(true) restricts output values to the range", () => {
+  assert.strictEqual(d3.scalePow().clamp(true).range([10, 20])(2), 20);
+  assert.strictEqual(d3.scalePow().clamp(true).range([10, 20])(-1), 10);
 });
 
-tape("pow.clamp(true) restricts input values to the domain", function(test) {
-  test.equal(scale.scalePow().clamp(true).range([10, 20]).invert(30), 1);
-  test.equal(scale.scalePow().clamp(true).range([10, 20]).invert(0), 0);
-  test.end();
+it("pow.clamp(true) restricts input values to the domain", () => {
+  assert.strictEqual(d3.scalePow().clamp(true).range([10, 20]).invert(30), 1);
+  assert.strictEqual(d3.scalePow().clamp(true).range([10, 20]).invert(0), 0);
 });
 
-tape("pow.clamp(clamp) coerces the specified clamp value to a boolean", function(test) {
-  test.equal(scale.scalePow().clamp("true").clamp(), true);
-  test.equal(scale.scalePow().clamp(1).clamp(), true);
-  test.equal(scale.scalePow().clamp("").clamp(), false);
-  test.equal(scale.scalePow().clamp(0).clamp(), false);
-  test.end();
+it("pow.clamp(clamp) coerces the specified clamp value to a boolean", () => {
+  assert.strictEqual(d3.scalePow().clamp("true").clamp(), true);
+  assert.strictEqual(d3.scalePow().clamp(1).clamp(), true);
+  assert.strictEqual(d3.scalePow().clamp("").clamp(), false);
+  assert.strictEqual(d3.scalePow().clamp(0).clamp(), false);
 });
 
-tape("pow.interpolate(interpolate) takes a custom interpolator factory", function(test) {
+it("pow.interpolate(interpolate) takes a custom interpolator factory", () => {
   function interpolate(a, b) { return function(t) { return [a, b, t]; }; }
-  var s = scale.scalePow().domain([10, 20]).range(["a", "b"]).interpolate(interpolate);
-  test.equal(s.interpolate(), interpolate);
-  test.deepEqual(s(15), ["a", "b", 0.5]);
-  test.end();
+  const s = d3.scalePow().domain([10, 20]).range(["a", "b"]).interpolate(interpolate);
+  assert.strictEqual(s.interpolate(), interpolate);
+  assert.deepStrictEqual(s(15), ["a", "b", 0.5]);
 });
 
-tape("pow.nice() is an alias for pow.nice(10)", function(test) {
-  test.deepEqual(scale.scalePow().domain([0, 0.96]).nice().domain(), [0, 1]);
-  test.deepEqual(scale.scalePow().domain([0, 96]).nice().domain(), [0, 100]);
-  test.end();
+it("pow.nice() is an alias for pow.nice(10)", () => {
+  assert.deepStrictEqual(d3.scalePow().domain([0, 0.96]).nice().domain(), [0, 1]);
+  assert.deepStrictEqual(d3.scalePow().domain([0, 96]).nice().domain(), [0, 100]);
 });
 
-tape("pow.nice(count) extends the domain to match the desired ticks", function(test) {
-  test.deepEqual(scale.scalePow().domain([0, 0.96]).nice(10).domain(), [0, 1]);
-  test.deepEqual(scale.scalePow().domain([0, 96]).nice(10).domain(), [0, 100]);
-  test.deepEqual(scale.scalePow().domain([0.96, 0]).nice(10).domain(), [1, 0]);
-  test.deepEqual(scale.scalePow().domain([96, 0]).nice(10).domain(), [100, 0]);
-  test.deepEqual(scale.scalePow().domain([0, -0.96]).nice(10).domain(), [0, -1]);
-  test.deepEqual(scale.scalePow().domain([0, -96]).nice(10).domain(), [0, -100]);
-  test.deepEqual(scale.scalePow().domain([-0.96, 0]).nice(10).domain(), [-1, 0]);
-  test.deepEqual(scale.scalePow().domain([-96, 0]).nice(10).domain(), [-100, 0]);
-  test.end();
+it("pow.nice(count) extends the domain to match the desired ticks", () => {
+  assert.deepStrictEqual(d3.scalePow().domain([0, 0.96]).nice(10).domain(), [0, 1]);
+  assert.deepStrictEqual(d3.scalePow().domain([0, 96]).nice(10).domain(), [0, 100]);
+  assert.deepStrictEqual(d3.scalePow().domain([0.96, 0]).nice(10).domain(), [1, 0]);
+  assert.deepStrictEqual(d3.scalePow().domain([96, 0]).nice(10).domain(), [100, 0]);
+  assert.deepStrictEqual(d3.scalePow().domain([0, -0.96]).nice(10).domain(), [0, -1]);
+  assert.deepStrictEqual(d3.scalePow().domain([0, -96]).nice(10).domain(), [0, -100]);
+  assert.deepStrictEqual(d3.scalePow().domain([-0.96, 0]).nice(10).domain(), [-1, 0]);
+  assert.deepStrictEqual(d3.scalePow().domain([-96, 0]).nice(10).domain(), [-100, 0]);
 });
 
-tape("pow.nice(count) nices the domain, extending it to round numbers", function(test) {
-  test.deepEqual(scale.scalePow().domain([1.1, 10.9]).nice(10).domain(), [1, 11]);
-  test.deepEqual(scale.scalePow().domain([10.9, 1.1]).nice(10).domain(), [11, 1]);
-  test.deepEqual(scale.scalePow().domain([0.7, 11.001]).nice(10).domain(), [0, 12]);
-  test.deepEqual(scale.scalePow().domain([123.1, 6.7]).nice(10).domain(), [130, 0]);
-  test.deepEqual(scale.scalePow().domain([0, 0.49]).nice(10).domain(), [0, 0.5]);
-  test.end();
+it("pow.nice(count) nices the domain, extending it to round numbers", () => {
+  assert.deepStrictEqual(d3.scalePow().domain([1.1, 10.9]).nice(10).domain(), [1, 11]);
+  assert.deepStrictEqual(d3.scalePow().domain([10.9, 1.1]).nice(10).domain(), [11, 1]);
+  assert.deepStrictEqual(d3.scalePow().domain([0.7, 11.001]).nice(10).domain(), [0, 12]);
+  assert.deepStrictEqual(d3.scalePow().domain([123.1, 6.7]).nice(10).domain(), [130, 0]);
+  assert.deepStrictEqual(d3.scalePow().domain([0, 0.49]).nice(10).domain(), [0, 0.5]);
 });
 
-tape("pow.nice(count) has no effect on degenerate domains", function(test) {
-  test.deepEqual(scale.scalePow().domain([0, 0]).nice(10).domain(), [0, 0]);
-  test.deepEqual(scale.scalePow().domain([0.5, 0.5]).nice(10).domain(), [0.5, 0.5]);
-  test.end();
+it("pow.nice(count) has no effect on degenerate domains", () => {
+  assert.deepStrictEqual(d3.scalePow().domain([0, 0]).nice(10).domain(), [0, 0]);
+  assert.deepStrictEqual(d3.scalePow().domain([0.5, 0.5]).nice(10).domain(), [0.5, 0.5]);
 });
 
-tape("pow.nice(count) nicing a polypow domain only affects the extent", function(test) {
-  test.deepEqual(scale.scalePow().domain([1.1, 1, 2, 3, 10.9]).nice(10).domain(), [1, 1, 2, 3, 11]);
-  test.deepEqual(scale.scalePow().domain([123.1, 1, 2, 3, -0.9]).nice(10).domain(), [130, 1, 2, 3, -10]);
-  test.end();
+it("pow.nice(count) nicing a polypow domain only affects the extent", () => {
+  assert.deepStrictEqual(d3.scalePow().domain([1.1, 1, 2, 3, 10.9]).nice(10).domain(), [1, 1, 2, 3, 11]);
+  assert.deepStrictEqual(d3.scalePow().domain([123.1, 1, 2, 3, -0.9]).nice(10).domain(), [130, 1, 2, 3, -10]);
 });
 
-tape("pow.nice(count) accepts a tick count to control nicing step", function(test) {
-  test.deepEqual(scale.scalePow().domain([12, 87]).nice(5).domain(), [0, 100]);
-  test.deepEqual(scale.scalePow().domain([12, 87]).nice(10).domain(), [10, 90]);
-  test.deepEqual(scale.scalePow().domain([12, 87]).nice(100).domain(), [12, 87]);
-  test.end();
+it("pow.nice(count) accepts a tick count to control nicing step", () => {
+  assert.deepStrictEqual(d3.scalePow().domain([12, 87]).nice(5).domain(), [0, 100]);
+  assert.deepStrictEqual(d3.scalePow().domain([12, 87]).nice(10).domain(), [10, 90]);
+  assert.deepStrictEqual(d3.scalePow().domain([12, 87]).nice(100).domain(), [12, 87]);
 });
 
-tape("pow.ticks(count) returns the expected ticks for an ascending domain", function(test) {
-  var s = scale.scalePow();
-  test.deepEqual(s.ticks(10).map(roundEpsilon), [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
-  test.deepEqual(s.ticks(9).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
-  test.deepEqual(s.ticks(8).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
-  test.deepEqual(s.ticks(7).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
-  test.deepEqual(s.ticks(6).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
-  test.deepEqual(s.ticks(5).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
-  test.deepEqual(s.ticks(4).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
-  test.deepEqual(s.ticks(3).map(roundEpsilon),  [0.0,                     0.5,                     1.0]);
-  test.deepEqual(s.ticks(2).map(roundEpsilon),  [0.0,                     0.5,                     1.0]);
-  test.deepEqual(s.ticks(1).map(roundEpsilon),  [0.0,                                              1.0]);
+it("pow.ticks(count) returns the expected ticks for an ascending domain", () => {
+  const s = d3.scalePow();
+  assert.deepStrictEqual(s.ticks(10).map(roundEpsilon), [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
+  assert.deepStrictEqual(s.ticks(9).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
+  assert.deepStrictEqual(s.ticks(8).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
+  assert.deepStrictEqual(s.ticks(7).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  assert.deepStrictEqual(s.ticks(6).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  assert.deepStrictEqual(s.ticks(5).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  assert.deepStrictEqual(s.ticks(4).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  assert.deepStrictEqual(s.ticks(3).map(roundEpsilon),  [0.0,                     0.5,                     1.0]);
+  assert.deepStrictEqual(s.ticks(2).map(roundEpsilon),  [0.0,                     0.5,                     1.0]);
+  assert.deepStrictEqual(s.ticks(1).map(roundEpsilon),  [0.0,                                              1.0]);
   s.domain([-100, 100]);
-  test.deepEqual(s.ticks(10), [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
-  test.deepEqual(s.ticks(9),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
-  test.deepEqual(s.ticks(8),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
-  test.deepEqual(s.ticks(7),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
-  test.deepEqual(s.ticks(6),  [-100,           -50,           0,         50,         100]);
-  test.deepEqual(s.ticks(5),  [-100,           -50,           0,         50,         100]);
-  test.deepEqual(s.ticks(4),  [-100,           -50,           0,         50,         100]);
-  test.deepEqual(s.ticks(3),  [-100,           -50,           0,         50,         100]);
-  test.deepEqual(s.ticks(2),  [-100,                          0,                     100]);
-  test.deepEqual(s.ticks(1),  [                               0                         ]);
-  test.end();
+  assert.deepStrictEqual(s.ticks(10), [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
+  assert.deepStrictEqual(s.ticks(9),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
+  assert.deepStrictEqual(s.ticks(8),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
+  assert.deepStrictEqual(s.ticks(7),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
+  assert.deepStrictEqual(s.ticks(6),  [-100,           -50,           0,         50,         100]);
+  assert.deepStrictEqual(s.ticks(5),  [-100,           -50,           0,         50,         100]);
+  assert.deepStrictEqual(s.ticks(4),  [-100,           -50,           0,         50,         100]);
+  assert.deepStrictEqual(s.ticks(3),  [-100,           -50,           0,         50,         100]);
+  assert.deepStrictEqual(s.ticks(2),  [-100,                          0,                     100]);
+  assert.deepStrictEqual(s.ticks(1),  [                               0                         ]);
 });
 
-tape("pow.ticks(count) returns the expected ticks for a descending domain", function(test) {
-  var s = scale.scalePow().domain([1, 0]);
-  test.deepEqual(s.ticks(10).map(roundEpsilon), [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0].reverse());
-  test.deepEqual(s.ticks(9).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0].reverse());
-  test.deepEqual(s.ticks(8).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0].reverse());
-  test.deepEqual(s.ticks(7).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0].reverse());
-  test.deepEqual(s.ticks(6).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0].reverse());
-  test.deepEqual(s.ticks(5).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0].reverse());
-  test.deepEqual(s.ticks(4).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0].reverse());
-  test.deepEqual(s.ticks(3).map(roundEpsilon),  [0.0,                     0.5,                     1.0].reverse());
-  test.deepEqual(s.ticks(2).map(roundEpsilon),  [0.0,                     0.5,                     1.0].reverse());
-  test.deepEqual(s.ticks(1).map(roundEpsilon),  [0.0,                                              1.0].reverse());
+it("pow.ticks(count) returns the expected ticks for a descending domain", () => {
+  const s = d3.scalePow().domain([1, 0]);
+  assert.deepStrictEqual(s.ticks(10).map(roundEpsilon), [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0].reverse());
+  assert.deepStrictEqual(s.ticks(9).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0].reverse());
+  assert.deepStrictEqual(s.ticks(8).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0].reverse());
+  assert.deepStrictEqual(s.ticks(7).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0].reverse());
+  assert.deepStrictEqual(s.ticks(6).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0].reverse());
+  assert.deepStrictEqual(s.ticks(5).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0].reverse());
+  assert.deepStrictEqual(s.ticks(4).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0].reverse());
+  assert.deepStrictEqual(s.ticks(3).map(roundEpsilon),  [0.0,                     0.5,                     1.0].reverse());
+  assert.deepStrictEqual(s.ticks(2).map(roundEpsilon),  [0.0,                     0.5,                     1.0].reverse());
+  assert.deepStrictEqual(s.ticks(1).map(roundEpsilon),  [0.0,                                              1.0].reverse());
   s.domain([100, -100]);
-  test.deepEqual(s.ticks(10), [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100].reverse());
-  test.deepEqual(s.ticks(9),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100].reverse());
-  test.deepEqual(s.ticks(8),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100].reverse());
-  test.deepEqual(s.ticks(7),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100].reverse());
-  test.deepEqual(s.ticks(6),  [-100,           -50,           0,         50,         100].reverse());
-  test.deepEqual(s.ticks(5),  [-100,           -50,           0,         50,         100].reverse());
-  test.deepEqual(s.ticks(4),  [-100,           -50,           0,         50,         100].reverse());
-  test.deepEqual(s.ticks(3),  [-100,           -50,           0,         50,         100].reverse());
-  test.deepEqual(s.ticks(2),  [-100,                          0,                     100].reverse());
-  test.deepEqual(s.ticks(1),  [                               0                         ].reverse());
-  test.end();
+  assert.deepStrictEqual(s.ticks(10), [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100].reverse());
+  assert.deepStrictEqual(s.ticks(9),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100].reverse());
+  assert.deepStrictEqual(s.ticks(8),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100].reverse());
+  assert.deepStrictEqual(s.ticks(7),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100].reverse());
+  assert.deepStrictEqual(s.ticks(6),  [-100,           -50,           0,         50,         100].reverse());
+  assert.deepStrictEqual(s.ticks(5),  [-100,           -50,           0,         50,         100].reverse());
+  assert.deepStrictEqual(s.ticks(4),  [-100,           -50,           0,         50,         100].reverse());
+  assert.deepStrictEqual(s.ticks(3),  [-100,           -50,           0,         50,         100].reverse());
+  assert.deepStrictEqual(s.ticks(2),  [-100,                          0,                     100].reverse());
+  assert.deepStrictEqual(s.ticks(1),  [                               0                         ].reverse());
 });
 
-tape("pow.ticks(count) returns the expected ticks for a polypow domain", function(test) {
-  var s = scale.scalePow().domain([0, 0.25, 0.9, 1]);
-  test.deepEqual(s.ticks(10).map(roundEpsilon), [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
-  test.deepEqual(s.ticks(9).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
-  test.deepEqual(s.ticks(8).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
-  test.deepEqual(s.ticks(7).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
-  test.deepEqual(s.ticks(6).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
-  test.deepEqual(s.ticks(5).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
-  test.deepEqual(s.ticks(4).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
-  test.deepEqual(s.ticks(3).map(roundEpsilon),  [0.0,                     0.5,                     1.0]);
-  test.deepEqual(s.ticks(2).map(roundEpsilon),  [0.0,                     0.5,                     1.0]);
-  test.deepEqual(s.ticks(1).map(roundEpsilon),  [0.0,                                              1.0]);
+it("pow.ticks(count) returns the expected ticks for a polypow domain", () => {
+  const s = d3.scalePow().domain([0, 0.25, 0.9, 1]);
+  assert.deepStrictEqual(s.ticks(10).map(roundEpsilon), [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
+  assert.deepStrictEqual(s.ticks(9).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
+  assert.deepStrictEqual(s.ticks(8).map(roundEpsilon),  [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]);
+  assert.deepStrictEqual(s.ticks(7).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  assert.deepStrictEqual(s.ticks(6).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  assert.deepStrictEqual(s.ticks(5).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  assert.deepStrictEqual(s.ticks(4).map(roundEpsilon),  [0.0,      0.2,      0.4,      0.6,      0.8,      1.0]);
+  assert.deepStrictEqual(s.ticks(3).map(roundEpsilon),  [0.0,                     0.5,                     1.0]);
+  assert.deepStrictEqual(s.ticks(2).map(roundEpsilon),  [0.0,                     0.5,                     1.0]);
+  assert.deepStrictEqual(s.ticks(1).map(roundEpsilon),  [0.0,                                              1.0]);
   s.domain([-100, 0, 100]);
-  test.deepEqual(s.ticks(10), [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
-  test.deepEqual(s.ticks(9),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
-  test.deepEqual(s.ticks(8),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
-  test.deepEqual(s.ticks(7),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
-  test.deepEqual(s.ticks(6),  [-100,           -50,           0,         50,         100]);
-  test.deepEqual(s.ticks(5),  [-100,           -50,           0,         50,         100]);
-  test.deepEqual(s.ticks(4),  [-100,           -50,           0,         50,         100]);
-  test.deepEqual(s.ticks(3),  [-100,           -50,           0,         50,         100]);
-  test.deepEqual(s.ticks(2),  [-100,                          0,                     100]);
-  test.deepEqual(s.ticks(1),  [                               0                         ]);
-  test.end();
+  assert.deepStrictEqual(s.ticks(10), [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
+  assert.deepStrictEqual(s.ticks(9),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
+  assert.deepStrictEqual(s.ticks(8),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
+  assert.deepStrictEqual(s.ticks(7),  [-100, -80, -60,      -40, -20, 0, 20, 40,     60, 80, 100]);
+  assert.deepStrictEqual(s.ticks(6),  [-100,           -50,           0,         50,         100]);
+  assert.deepStrictEqual(s.ticks(5),  [-100,           -50,           0,         50,         100]);
+  assert.deepStrictEqual(s.ticks(4),  [-100,           -50,           0,         50,         100]);
+  assert.deepStrictEqual(s.ticks(3),  [-100,           -50,           0,         50,         100]);
+  assert.deepStrictEqual(s.ticks(2),  [-100,                          0,                     100]);
+  assert.deepStrictEqual(s.ticks(1),  [                               0                         ]);
 });
 
-tape("pow.ticks(count) returns the empty array if count is not a positive integer", function(test) {
-  var s = scale.scalePow();
-  test.deepEqual(s.ticks(NaN), []);
-  test.deepEqual(s.ticks(0), []);
-  test.deepEqual(s.ticks(-1), []);
-  test.deepEqual(s.ticks(Infinity), []);
-  test.end();
+it("pow.ticks(count) returns the empty array if count is not a positive integer", () => {
+  const s = d3.scalePow();
+  assert.deepStrictEqual(s.ticks(NaN), []);
+  assert.deepStrictEqual(s.ticks(0), []);
+  assert.deepStrictEqual(s.ticks(-1), []);
+  assert.deepStrictEqual(s.ticks(Infinity), []);
 });
 
-tape("pow.ticks() is an alias for pow.ticks(10)", function(test) {
-  var s = scale.scalePow();
-  test.deepEqual(s.ticks(), s.ticks(10));
-  test.end();
+it("pow.ticks() is an alias for pow.ticks(10)", () => {
+  const s = d3.scalePow();
+  assert.deepStrictEqual(s.ticks(), s.ticks(10));
 });
 
-tape("pow.tickFormat() is an alias for pow.tickFormat(10)", function(test) {
-  test.equal(scale.scalePow().tickFormat()(0.2), "0.2");
-  test.equal(scale.scalePow().domain([-100, 100]).tickFormat()(-20), "-20");
-  test.end();
+it("pow.tickFormat() is an alias for pow.tickFormat(10)", () => {
+  assert.strictEqual(d3.scalePow().tickFormat()(0.2), "0.2");
+  assert.strictEqual(d3.scalePow().domain([-100, 100]).tickFormat()(-20), "−20");
 });
 
-tape("pow.tickFormat(count) returns a format suitable for the ticks", function(test) {
-  test.equal(scale.scalePow().tickFormat(10)(0.2), "0.2");
-  test.equal(scale.scalePow().tickFormat(20)(0.2), "0.20");
-  test.equal(scale.scalePow().domain([-100, 100]).tickFormat(10)(-20), "-20");
-  test.end();
+it("pow.tickFormat(count) returns a format suitable for the ticks", () => {
+  assert.strictEqual(d3.scalePow().tickFormat(10)(0.2), "0.2");
+  assert.strictEqual(d3.scalePow().tickFormat(20)(0.2), "0.20");
+  assert.strictEqual(d3.scalePow().domain([-100, 100]).tickFormat(10)(-20), "−20");
 });
 
-tape("pow.tickFormat(count, specifier) sets the appropriate fixed precision if not specified", function(test) {
-  test.equal(scale.scalePow().tickFormat(10, "+f")(0.2), "+0.2");
-  test.equal(scale.scalePow().tickFormat(20, "+f")(0.2), "+0.20");
-  test.equal(scale.scalePow().tickFormat(10, "+%")(0.2), "+20%");
-  test.equal(scale.scalePow().domain([0.19, 0.21]).tickFormat(10, "+%")(0.2), "+20.0%");
-  test.end();
+it("pow.tickFormat(count, specifier) sets the appropriate fixed precision if not specified", () => {
+  assert.strictEqual(d3.scalePow().tickFormat(10, "+f")(0.2), "+0.2");
+  assert.strictEqual(d3.scalePow().tickFormat(20, "+f")(0.2), "+0.20");
+  assert.strictEqual(d3.scalePow().tickFormat(10, "+%")(0.2), "+20%");
+  assert.strictEqual(d3.scalePow().domain([0.19, 0.21]).tickFormat(10, "+%")(0.2), "+20.0%");
 });
 
-tape("pow.tickFormat(count, specifier) sets the appropriate round precision if not specified", function(test) {
-  test.equal(scale.scalePow().domain([0, 9]).tickFormat(10, "")(2.10), "2");
-  test.equal(scale.scalePow().domain([0, 9]).tickFormat(100, "")(2.01), "2");
-  test.equal(scale.scalePow().domain([0, 9]).tickFormat(100, "")(2.11), "2.1");
-  test.equal(scale.scalePow().domain([0, 9]).tickFormat(10, "e")(2.10), "2e+0");
-  test.equal(scale.scalePow().domain([0, 9]).tickFormat(100, "e")(2.01), "2.0e+0");
-  test.equal(scale.scalePow().domain([0, 9]).tickFormat(100, "e")(2.11), "2.1e+0");
-  test.equal(scale.scalePow().domain([0, 9]).tickFormat(10, "g")(2.10), "2");
-  test.equal(scale.scalePow().domain([0, 9]).tickFormat(100, "g")(2.01), "2.0");
-  test.equal(scale.scalePow().domain([0, 9]).tickFormat(100, "g")(2.11), "2.1");
-  test.equal(scale.scalePow().domain([0, 9]).tickFormat(10, "r")(2.10e6), "2000000");
-  test.equal(scale.scalePow().domain([0, 9]).tickFormat(100, "r")(2.01e6), "2000000");
-  test.equal(scale.scalePow().domain([0, 9]).tickFormat(100, "r")(2.11e6), "2100000");
-  test.equal(scale.scalePow().domain([0, 0.9]).tickFormat(10, "p")(0.210), "20%");
-  test.equal(scale.scalePow().domain([0.19, 0.21]).tickFormat(10, "p")(0.201), "20.1%");
-  test.end();
+it("pow.tickFormat(count, specifier) sets the appropriate round precision if not specified", () => {
+  assert.strictEqual(d3.scalePow().domain([0, 9]).tickFormat(10, "")(2.10), "2");
+  assert.strictEqual(d3.scalePow().domain([0, 9]).tickFormat(100, "")(2.01), "2");
+  assert.strictEqual(d3.scalePow().domain([0, 9]).tickFormat(100, "")(2.11), "2.1");
+  assert.strictEqual(d3.scalePow().domain([0, 9]).tickFormat(10, "e")(2.10), "2e+0");
+  assert.strictEqual(d3.scalePow().domain([0, 9]).tickFormat(100, "e")(2.01), "2.0e+0");
+  assert.strictEqual(d3.scalePow().domain([0, 9]).tickFormat(100, "e")(2.11), "2.1e+0");
+  assert.strictEqual(d3.scalePow().domain([0, 9]).tickFormat(10, "g")(2.10), "2");
+  assert.strictEqual(d3.scalePow().domain([0, 9]).tickFormat(100, "g")(2.01), "2.0");
+  assert.strictEqual(d3.scalePow().domain([0, 9]).tickFormat(100, "g")(2.11), "2.1");
+  assert.strictEqual(d3.scalePow().domain([0, 9]).tickFormat(10, "r")(2.10e6), "2000000");
+  assert.strictEqual(d3.scalePow().domain([0, 9]).tickFormat(100, "r")(2.01e6), "2000000");
+  assert.strictEqual(d3.scalePow().domain([0, 9]).tickFormat(100, "r")(2.11e6), "2100000");
+  assert.strictEqual(d3.scalePow().domain([0, 0.9]).tickFormat(10, "p")(0.210), "20%");
+  assert.strictEqual(d3.scalePow().domain([0.19, 0.21]).tickFormat(10, "p")(0.201), "20.1%");
 });
 
-tape("pow.tickFormat(count, specifier) sets the appropriate prefix precision if not specified", function(test) {
-  test.equal(scale.scalePow().domain([0, 1e6]).tickFormat(10, "$s")(0.51e6), "$0.5M");
-  test.equal(scale.scalePow().domain([0, 1e6]).tickFormat(100, "$s")(0.501e6), "$0.50M");
-  test.end();
+it("pow.tickFormat(count, specifier) sets the appropriate prefix precision if not specified", () => {
+  assert.strictEqual(d3.scalePow().domain([0, 1e6]).tickFormat(10, "$s")(0.51e6), "$0.5M");
+  assert.strictEqual(d3.scalePow().domain([0, 1e6]).tickFormat(100, "$s")(0.501e6), "$0.50M");
 });
 
-tape("pow.copy() returns a copy with changes to the domain are isolated", function(test) {
-  var x = scale.scalePow(), y = x.copy();
+it("pow.copy() returns a copy with changes to the domain are isolated", () => {
+  const x = d3.scalePow(), y = x.copy();
   x.domain([1, 2]);
-  test.deepEqual(y.domain(), [0, 1]);
-  test.equal(x(1), 0);
-  test.equal(y(1), 1);
+  assert.deepStrictEqual(y.domain(), [0, 1]);
+  assert.strictEqual(x(1), 0);
+  assert.strictEqual(y(1), 1);
   y.domain([2, 3]);
-  test.equal(x(2), 1);
-  test.equal(y(2), 0);
-  test.deepEqual(x.domain(), [1, 2]);
-  test.deepEqual(y.domain(), [2, 3]);
-  y = x.domain([1, 1.9]).copy();
+  assert.strictEqual(x(2), 1);
+  assert.strictEqual(y(2), 0);
+  assert.deepStrictEqual(x.domain(), [1, 2]);
+  assert.deepStrictEqual(y.domain(), [2, 3]);
+  const y2 = x.domain([1, 1.9]).copy();
   x.nice(5);
-  test.deepEqual(x.domain(), [1, 2]);
-  test.deepEqual(y.domain(), [1, 1.9]);
-  test.end();
+  assert.deepStrictEqual(x.domain(), [1, 2]);
+  assert.deepStrictEqual(y2.domain(), [1, 1.9]);
 });
 
-tape("pow.copy() returns a copy with changes to the range are isolated", function(test) {
-  var x = scale.scalePow(), y = x.copy();
+it("pow.copy() returns a copy with changes to the range are isolated", () => {
+  const x = d3.scalePow(), y = x.copy();
   x.range([1, 2]);
-  test.equal(x.invert(1), 0);
-  test.equal(y.invert(1), 1);
-  test.deepEqual(y.range(), [0, 1]);
+  assert.strictEqual(x.invert(1), 0);
+  assert.strictEqual(y.invert(1), 1);
+  assert.deepStrictEqual(y.range(), [0, 1]);
   y.range([2, 3]);
-  test.equal(x.invert(2), 1);
-  test.equal(y.invert(2), 0);
-  test.deepEqual(x.range(), [1, 2]);
-  test.deepEqual(y.range(), [2, 3]);
-  test.end();
+  assert.strictEqual(x.invert(2), 1);
+  assert.strictEqual(y.invert(2), 0);
+  assert.deepStrictEqual(x.range(), [1, 2]);
+  assert.deepStrictEqual(y.range(), [2, 3]);
 });
 
-tape("pow.copy() returns a copy with changes to the interpolator are isolated", function(test) {
-  var x = scale.scalePow().range(["red", "blue"]),
+it("pow.copy() returns a copy with changes to the interpolator are isolated", () => {
+  const x = d3.scalePow().range(["red", "blue"]),
       y = x.copy(),
       i0 = x.interpolate(),
       i1 = function(a, b) { return function() { return b; }; };
   x.interpolate(i1);
-  test.equal(y.interpolate(), i0);
-  test.equal(x(0.5), "blue");
-  test.equal(y(0.5), "rgb(128, 0, 128)");
-  test.end();
+  assert.strictEqual(y.interpolate(), i0);
+  assert.strictEqual(x(0.5), "blue");
+  assert.strictEqual(y(0.5), "rgb(128, 0, 128)");
 });
 
-tape("pow.copy() returns a copy with changes to clamping are isolated", function(test) {
-  var x = scale.scalePow().clamp(true), y = x.copy();
+it("pow.copy() returns a copy with changes to clamping are isolated", () => {
+  const x = d3.scalePow().clamp(true), y = x.copy();
   x.clamp(false);
-  test.equal(x(2), 2);
-  test.equal(y(2), 1);
-  test.equal(y.clamp(), true);
+  assert.strictEqual(x(2), 2);
+  assert.strictEqual(y(2), 1);
+  assert.strictEqual(y.clamp(), true);
   y.clamp(false);
-  test.equal(x(2), 2);
-  test.equal(y(2), 2);
-  test.equal(x.clamp(), false);
-  test.end();
+  assert.strictEqual(x(2), 2);
+  assert.strictEqual(y(2), 2);
+  assert.strictEqual(x.clamp(), false);
 });
 
-tape("pow().clamp(true).invert(x) cannot return a value outside the domain", function(test) {
-  var x = scale.scalePow().exponent(0.5).domain([1, 20]).clamp(true);
-  test.equal(x.invert(0), 1);
-  test.equal(x.invert(1), 20);
-  test.end();
+it("pow().clamp(true).invert(x) cannot return a value outside the domain", () => {
+  const x = d3.scalePow().exponent(0.5).domain([1, 20]).clamp(true);
+  assert.strictEqual(x.invert(0), 1);
+  assert.strictEqual(x.invert(1), 20);
 });
 
-tape("scaleSqrt() is an alias for pow().exponent(0.5)", function(test) {
-  var s = scale.scaleSqrt();
-  test.equal(s.exponent(), 0.5);
-  test.inDelta(s(0.5), Math.SQRT1_2, 1e-6);
-  test.inDelta(s.invert(Math.SQRT1_2), 0.5, 1e-6);
-  test.end();
+it("scaleSqrt() is an alias for pow().exponent(0.5)", () => {
+  const s = d3.scaleSqrt();
+  assert.strictEqual(s.exponent(), 0.5);
+  assertInDelta(s(0.5), Math.SQRT1_2, 1e-6);
+  assertInDelta(s.invert(Math.SQRT1_2), 0.5, 1e-6);
 });

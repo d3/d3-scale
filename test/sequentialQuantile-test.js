@@ -1,30 +1,26 @@
-var tape = require("tape"),
-    scale = require("../");
+import assert from "assert";
+import * as d3 from "../src/index.js";
 
-tape("sequentialQuantile() clamps", function(test) {
-  var s = scale.scaleSequentialQuantile().domain([0, 1, 2, 3, 10]);
-  test.equal(s(-1), 0);
-  test.equal(s(0), 0);
-  test.equal(s(1), 0.25);
-  test.equal(s(10), 1);
-  test.equal(s(20), 1);
-  test.end();
+it("sequentialQuantile() clamps", () => {
+  const s = d3.scaleSequentialQuantile().domain([0, 1, 2, 3, 10]);
+  assert.strictEqual(s(-1), 0);
+  assert.strictEqual(s(0), 0);
+  assert.strictEqual(s(1), 0.25);
+  assert.strictEqual(s(10), 1);
+  assert.strictEqual(s(20), 1);
 });
 
-tape("sequentialQuantile().domain() sorts the domain", function(test) {
-  var s = scale.scaleSequentialQuantile().domain([0, 2, 9, 0.1, 10]);
-  test.deepEqual(s.domain(), [0, 0.1, 2, 9, 10]);
-  test.end();
+it("sequentialQuantile().domain() sorts the domain", () => {
+  const s = d3.scaleSequentialQuantile().domain([0, 2, 9, 0.1, 10]);
+  assert.deepStrictEqual(s.domain(), [0, 0.1, 2, 9, 10]);
 });
 
-tape("sequentialQuantile().range() returns the computed range", function(test) {
-  var s = scale.scaleSequentialQuantile().domain([0, 2, 9, 0.1, 10]);
-  test.deepEqual(s.range(), [0 / 4, 1 / 4, 2 / 4, 3 / 4, 4 / 4]);
-  test.end();
+it("sequentialQuantile().range() returns the computed range", () => {
+  const s = d3.scaleSequentialQuantile().domain([0, 2, 9, 0.1, 10]);
+  assert.deepStrictEqual(s.range(), [0 / 4, 1 / 4, 2 / 4, 3 / 4, 4 / 4]);
 });
 
-tape("sequentialQuantile().quantiles(n) computes n + 1 quantiles", function(test) {
-  var s = scale.scaleSequentialQuantile().domain(Array.from({length: 2000}, (_, i) => 2 * i / 1999));
-  test.deepEqual(s.quantiles(4), [0, 0.5, 1, 1.5, 2]);
-  test.end();
+it("sequentialQuantile().quantiles(n) computes n + 1 quantiles", () => {
+  const s = d3.scaleSequentialQuantile().domain(Array.from({length: 2000}, (_, i) => 2 * i / 1999));
+  assert.deepStrictEqual(s.quantiles(4), [0, 0.5, 1, 1.5, 2]);
 });

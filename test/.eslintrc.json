@@ -3,5 +3,8 @@
   "parserOptions": {
     "sourceType": "module",
     "ecmaVersion": 8
+  },
+  "env": {
+    "mocha": true
   }
 }
