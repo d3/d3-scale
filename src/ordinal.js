@@ -10,11 +10,12 @@ export default function ordinal() {
       unknown = implicit;
 
   function scale(d) {
-    if (!index.has(d)) {
+    let i = index.get(d);
+    if (i === undefined) {
       if (unknown !== implicit) return unknown;
-      index.set(d, domain.push(d));
+      index.set(d, i = domain.push(d) - 1);
     }
-    return range[(index.get(d) - 1) % range.length];
+    return range[i % range.length];
   }
 
   scale.domain = function(_) {
@@ -22,7 +23,7 @@ export default function ordinal() {
     domain = [], index = new InternMap();
     for (const value of _) {
       if (index.has(value)) continue;
-      index.set(value, domain.push(value));
+      index.set(value, domain.push(value) - 1);
     }
     return scale;
   };
