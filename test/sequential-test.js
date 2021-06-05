@@ -1,8 +1,8 @@
 import assert from "assert";
-import * as d3 from "../src/index.js";
+import {scaleSequential} from "../src/index.js";
 
 it("scaleSequential() has the expected defaults", () => {
-  const s = d3.scaleSequential();
+  const s = scaleSequential();
   assert.deepStrictEqual(s.domain(), [0, 1]);
   assert.strictEqual(s.interpolator()(0.42), 0.42);
   assert.strictEqual(s.clamp(), false);
@@ -15,7 +15,7 @@ it("scaleSequential() has the expected defaults", () => {
 });
 
 it("sequential.clamp(true) enables clamping", () => {
-  const s = d3.scaleSequential().clamp(true);
+  const s = scaleSequential().clamp(true);
   assert.strictEqual(s.clamp(), true);
   assert.strictEqual(s(-0.5), 0.0);
   assert.strictEqual(s( 0.0), 0.0);
@@ -25,7 +25,7 @@ it("sequential.clamp(true) enables clamping", () => {
 });
 
 it("sequential.unknown(value) sets the return value for undefined and NaN input", () => {
-  const s = d3.scaleSequential().unknown(-1);
+  const s = scaleSequential().unknown(-1);
   assert.strictEqual(s.unknown(), -1);
   assert.strictEqual(s(undefined), -1);
   assert.strictEqual(s(NaN), -1);
@@ -34,7 +34,7 @@ it("sequential.unknown(value) sets the return value for undefined and NaN input"
 });
 
 it("sequential.domain() coerces domain values to numbers", () => {
-  const s = d3.scaleSequential().domain(["-1.20", "2.40"]);
+  const s = scaleSequential().domain(["-1.20", "2.40"]);
   assert.deepStrictEqual(s.domain(), [-1.2, 2.4]);
   assert.strictEqual(s(-1.2), 0.0);
   assert.strictEqual(s( 0.6), 0.5);
@@ -42,12 +42,12 @@ it("sequential.domain() coerces domain values to numbers", () => {
 });
 
 it("sequential.domain() accepts an iterable", () => {
-  const s = d3.scaleSequential().domain(new Set(["-1.20", "2.40"]));
+  const s = scaleSequential().domain(new Set(["-1.20", "2.40"]));
   assert.deepStrictEqual(s.domain(), [-1.2, 2.4]);
 });
 
 it("sequential.domain() handles a degenerate domain", () => {
-  const s = d3.scaleSequential().domain([2, 2]);
+  const s = scaleSequential().domain([2, 2]);
   assert.deepStrictEqual(s.domain(), [2, 2]);
   assert.strictEqual(s(-1.2), 0.5);
   assert.strictEqual(s( 0.6), 0.5);
@@ -55,7 +55,7 @@ it("sequential.domain() handles a degenerate domain", () => {
 });
 
 it("sequential.domain() handles a non-numeric domain", () => {
-  const s = d3.scaleSequential().domain([NaN, 2]);
+  const s = scaleSequential().domain([NaN, 2]);
   assert.strictEqual(isNaN(s.domain()[0]), true);
   assert.strictEqual(s.domain()[1], 2);
   assert.strictEqual(isNaN(s(-1.2)), true);
@@ -64,13 +64,13 @@ it("sequential.domain() handles a non-numeric domain", () => {
 });
 
 it("sequential.domain() only considers the first and second element of the domain", () => {
-  const s = d3.scaleSequential().domain([-1, 100, 200]);
+  const s = scaleSequential().domain([-1, 100, 200]);
   assert.deepStrictEqual(s.domain(), [-1, 100]);
 });
 
 it("sequential.copy() returns an isolated copy of the scale", () => {
-  const s1 = d3.scaleSequential().domain([1, 3]).clamp(true),
-      s2 = s1.copy();
+  const s1 = scaleSequential().domain([1, 3]).clamp(true);
+  const s2 = s1.copy();
   assert.deepStrictEqual(s2.domain(), [1, 3]);
   assert.strictEqual(s2.clamp(), true);
   s1.domain([-1, 2]);
@@ -84,9 +84,9 @@ it("sequential.copy() returns an isolated copy of the scale", () => {
 });
 
 it("sequential.interpolator(interpolator) sets the interpolator", () => {
-  const i0 = function(t) { return t; },
-      i1 = function(t) { return t * 2; },
-      s = d3.scaleSequential(i0);
+  const i0 = function(t) { return t; };
+  const i1 = function(t) { return t * 2; };
+  const s = scaleSequential(i0);
   assert.strictEqual(s.interpolator(), i0);
   assert.strictEqual(s.interpolator(i1), s);
   assert.strictEqual(s.interpolator(), i1);
@@ -96,24 +96,24 @@ it("sequential.interpolator(interpolator) sets the interpolator", () => {
 });
 
 it("sequential.range() returns the computed range", () => {
-  const s = d3.scaleSequential(function(t) { return t * 2 + 1; });
+  const s = scaleSequential(function(t) { return t * 2 + 1; });
   assert.deepStrictEqual(s.range(), [1, 3]);
 });
 
 it("sequential.range(range) sets the interpolator", () => {
-  const s = d3.scaleSequential().range([1, 3]);
+  const s = scaleSequential().range([1, 3]);
   assert.strictEqual(s.interpolator()(0.5), 2);
   assert.deepStrictEqual(s.range(), [1, 3]);
 });
 
 it("sequential.range(range) ignores additional values", () => {
-  const s = d3.scaleSequential().range([1, 3, 10]);
+  const s = scaleSequential().range([1, 3, 10]);
   assert.strictEqual(s.interpolator()(0.5), 2);
   assert.deepStrictEqual(s.range(), [1, 3]);
 });
 
 it("scaleSequential(range) sets the interpolator", () => {
-  const s = d3.scaleSequential([1, 3]);
+  const s = scaleSequential([1, 3]);
   assert.strictEqual(s.interpolator()(0.5), 2);
   assert.deepStrictEqual(s.range(), [1, 3]);
 });

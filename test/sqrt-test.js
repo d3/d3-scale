@@ -1,8 +1,8 @@
 import assert from "assert";
-import * as d3 from "../src/index.js";
+import {scaleSqrt} from "../src/index.js";
 
 it("scaleSqrt() has the expected defaults", () => {
-  const s = d3.scaleSqrt();
+  const s = scaleSqrt();
   assert.deepStrictEqual(s.domain(), [0, 1]);
   assert.deepStrictEqual(s.range(), [0, 1]);
   assert.strictEqual(s.clamp(), false);
@@ -11,5 +11,5 @@ it("scaleSqrt() has the expected defaults", () => {
 });
 
 it("sqrt(x) maps a domain value x to a range value y", () => {
-  assert.strictEqual(d3.scaleSqrt()(0.5), Math.SQRT1_2);
+  assert.strictEqual(scaleSqrt()(0.5), Math.SQRT1_2);
 });

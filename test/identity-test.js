@@ -1,20 +1,20 @@
 import assert from "assert";
-import * as d3 from "../src/index.js";
+import {scaleIdentity} from "../src/index.js";
 
 it("scaleIdentity() has the expected defaults", () => {
-  const s = d3.scaleIdentity();
+  const s = scaleIdentity();
   assert.deepStrictEqual(s.domain(), [0, 1]);
   assert.deepStrictEqual(s.range(), [0, 1]);
 });
 
 it("scaleIdentity(range) sets the domain and range", () => {
-  const s = d3.scaleIdentity([1, 2]);
+  const s = scaleIdentity([1, 2]);
   assert.deepStrictEqual(s.domain(), [1, 2]);
   assert.deepStrictEqual(s.range(), [1, 2]);
 });
 
 it("identity(x) is the identity function", () => {
-  const s = d3.scaleIdentity().domain([1, 2]);
+  const s = scaleIdentity().domain([1, 2]);
   assert.strictEqual(s(0.5), 0.5);
   assert.strictEqual(s(1), 1);
   assert.strictEqual(s(1.5), 1.5);
@@ -23,12 +23,12 @@ it("identity(x) is the identity function", () => {
 });
 
 it("identity(x) coerces input to a number", () => {
-  const s = d3.scaleIdentity().domain([1, 2]);
+  const s = scaleIdentity().domain([1, 2]);
   assert.strictEqual(s("2"), 2);
 });
 
 it("identity(undefined) returns unknown", () => {
-  const s = d3.scaleIdentity().unknown(-1);
+  const s = scaleIdentity().unknown(-1);
   assert.strictEqual(s(undefined), -1);
   assert.strictEqual(s(null), -1);
   assert.strictEqual(s(NaN), -1);
@@ -37,7 +37,7 @@ it("identity(undefined) returns unknown", () => {
 });
 
 it("identity.invert(y) is the identity function", () => {
-  const s = d3.scaleIdentity().domain([1, 2]);
+  const s = scaleIdentity().domain([1, 2]);
   assert.strictEqual(s.invert(0.5), 0.5);
   assert.strictEqual(s.invert(1), 1);
   assert.strictEqual(s.invert(1.5), 1.5);
@@ -46,7 +46,7 @@ it("identity.invert(y) is the identity function", () => {
 });
 
 it("identity.invert(y) coerces range value to numbers", () => {
-  const s = d3.scaleIdentity().range(["0", "2"]);
+  const s = scaleIdentity().range(["0", "2"]);
   assert.strictEqual(s.invert("1"), 1);
   s.range([new Date(1990, 0, 1), new Date(1991, 0, 1)]);
   assert.strictEqual(s.invert(new Date(1990, 6, 2, 13)), +new Date(1990, 6, 2, 13));
@@ -55,12 +55,12 @@ it("identity.invert(y) coerces range value to numbers", () => {
 });
 
 it("identity.invert(y) coerces input to a number", () => {
-  const s = d3.scaleIdentity().domain([1, 2]);
+  const s = scaleIdentity().domain([1, 2]);
   assert.strictEqual(s.invert("2"), 2);
 });
 
-it("identity.domain() is an alias for d3.range()", () => {
-  const s = d3.scaleIdentity();
+it("identity.domain() is an alias for range()", () => {
+  const s = scaleIdentity();
   assert.strictEqual(s.domain, s.range);
   assert.deepStrictEqual(s.domain(), s.range());
   s.domain([-10, 0, 100]);
@@ -70,14 +70,14 @@ it("identity.domain() is an alias for d3.range()", () => {
 });
 
 it("identity.domain() defaults to [0, 1]", () => {
-  const s = d3.scaleIdentity();
+  const s = scaleIdentity();
   assert.deepStrictEqual(s.domain(), [0, 1]);
   assert.deepStrictEqual(s.range(), [0, 1]);
   assert.strictEqual(s(0.5), 0.5);
 });
 
 it("identity.domain() coerces values to numbers", () => {
-  const s = d3.scaleIdentity().domain([new Date(1990, 0, 1), new Date(1991, 0, 1)]);
+  const s = scaleIdentity().domain([new Date(1990, 0, 1), new Date(1991, 0, 1)]);
   assert.strictEqual(typeof s.domain()[0], "number");
   assert.strictEqual(typeof s.domain()[1], "number");
   assert.strictEqual(s.domain()[0], +new Date(1990, 0, 1));
@@ -110,13 +110,13 @@ it("identity.domain() coerces values to numbers", () => {
 });
 
 it("identity.domain() accepts an iterable", () => {
-  const s = d3.scaleIdentity().domain(new Set([1, 2]));
+  const s = scaleIdentity().domain(new Set([1, 2]));
   assert.deepStrictEqual(s.domain(), [1, 2]);
   assert.deepStrictEqual(s.range(), [1, 2]);
 });
 
 it("identity.domain() can specify a polyidentity domain and range", () => {
-  const s = d3.scaleIdentity().domain([-10, 0, 100]);
+  const s = scaleIdentity().domain([-10, 0, 100]);
   assert.deepStrictEqual(s.domain(), [-10, 0, 100]);
   assert.strictEqual(s(-5), -5);
   assert.strictEqual(s(50), 50);
@@ -129,13 +129,13 @@ it("identity.domain() can specify a polyidentity domain and range", () => {
 });
 
 it("identity.domain() does not affect the identity function", () => {
-  const s = d3.scaleIdentity().domain([Infinity, NaN]);
+  const s = scaleIdentity().domain([Infinity, NaN]);
   assert.strictEqual(s(42), 42);
   assert.strictEqual(s.invert(-42), -42);
 });
 
 it("identity.ticks(count) generates ticks of varying degree", () => {
-  const s = d3.scaleIdentity();
+  const s = scaleIdentity();
   assert.deepStrictEqual(s.ticks(1).map(s.tickFormat(1)), ["0", "1"]);
   assert.deepStrictEqual(s.ticks(2).map(s.tickFormat(2)), ["0.0", "0.5", "1.0"]);
   assert.deepStrictEqual(s.ticks(5).map(s.tickFormat(5)), ["0.0", "0.2", "0.4", "0.6", "0.8", "1.0"]);
@@ -148,7 +148,7 @@ it("identity.ticks(count) generates ticks of varying degree", () => {
 });
 
 it("identity.tickFormat(count) formats ticks with the appropriate precision", () => {
-  const s = d3.scaleIdentity().domain([0.123456789, 1.23456789]);
+  const s = scaleIdentity().domain([0.123456789, 1.23456789]);
   assert.strictEqual(s.tickFormat(1)(s.ticks(1)[0]), "1");
   assert.strictEqual(s.tickFormat(2)(s.ticks(2)[0]), "0.5");
   assert.strictEqual(s.tickFormat(4)(s.ticks(4)[0]), "0.2");
@@ -161,9 +161,9 @@ it("identity.tickFormat(count) formats ticks with the appropriate precision", ()
 });
 
 it("identity.copy() isolates changes to the domain or range", () => {
-  const s1 = d3.scaleIdentity(),
-      s2 = s1.copy(),
-      s3 = s1.copy();
+  const s1 = scaleIdentity();
+  const s2 = s1.copy();
+  const s3 = s1.copy();
   s1.domain([1, 2]);
   assert.deepStrictEqual(s2.domain(), [0, 1]);
   s2.domain([2, 3]);
