@@ -1,5 +1,5 @@
-import {initRange} from "./init.js";
 import {InternMap} from "d3-array";
+import {initRange} from "./init.js";
 
 export const implicit = Symbol("implicit");
 
