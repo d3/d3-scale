@@ -1,16 +1,7 @@
 import assert from "assert";
 import * as d3 from "../src/index.js";
-import * as format from "d3-format";
 import {roundEpsilon} from "./roundEpsilon.js";
 import {assertInDelta} from "./asserts.js";
-
-format.formatDefaultLocale({
-  decimal: ".",
-  thousands: ",",
-  grouping: [3],
-  currency: ["$", ""],
-  minus: "-"
-});
 
 it("scalePow() has the expected defaults", () => {
   const s = d3.scalePow();

@@ -1,14 +1,5 @@
 import assert from "assert";
 import * as d3 from "../src/index.js";
-import * as format from "d3-format";
-
-format.formatDefaultLocale({
-  decimal: ".",
-  thousands: ",",
-  grouping: [3],
-  currency: ["$", ""],
-  minus: "-"
-});
 
 it("d3.tickFormat(start, stop, count) returns a format suitable for the ticks", () => {
   assert.strictEqual(d3.tickFormat(0, 1, 10)(0.2), "0.2");

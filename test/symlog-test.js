@@ -50,7 +50,7 @@ it("symlog.domain(domain) accepts an array of numbers", () => {
 });
 
 it("symlog.domain(domain) coerces domain values to numbers", () => {
-  assert.deepStrictEqual(d3.scaleSymlog().domain([new Date(1990, 0, 1), new Date(1991, 0, 1)]).domain(), [631180800000, 662684400000]);
+  assert.deepStrictEqual(d3.scaleSymlog().domain([new Date(Date.UTC(1990, 0, 1)), new Date(Date.UTC(1991, 0, 1))]).domain(), [631152000000, 662688000000]);
   assert.deepStrictEqual(d3.scaleSymlog().domain(["0.0", "1.0"]).domain(), [0, 1]);
   assert.deepStrictEqual(d3.scaleSymlog().domain([new Number(0), new Number(1)]).domain(), [0, 1]);
 });

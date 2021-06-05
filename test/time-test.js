@@ -1,6 +1,5 @@
 import assert from "assert";
 import * as d3 from "../src/index.js";
-import * as format from "d3-format";
 import * as time from "d3-time";
 import * as interpolate from "d3-interpolate";
 import * as date from "./date.js";
