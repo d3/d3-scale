@@ -1,9 +1,7 @@
 import assert from "assert";
 
-export function assertInDelta(actual, expected, delta) {
-  delta = delta || 1e-6;
-  assert(inDelta(actual, expected, delta),
-    `${actual} should be within ${delta} of ${expected}`);
+export function assertInDelta(actual, expected, delta = 1e-6) {
+  assert(inDelta(actual, expected, delta), `${actual} should be within ${delta} of ${expected}`);
 }
 
 function inDelta(actual, expected, delta) {
