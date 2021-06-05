@@ -1,51 +1,46 @@
-var tape = require("tape"),
-    scale = require("../");
+import assert from "assert";
+import {scaleBand, scalePoint} from "../src/index.js";
 
-tape("scalePoint() has the expected defaults", function(test) {
-  var s = scale.scalePoint();
-  test.deepEqual(s.domain(), []);
-  test.deepEqual(s.range(), [0, 1]);
-  test.equal(s.bandwidth(), 0);
-  test.equal(s.step(), 1);
-  test.equal(s.round(), false);
-  test.equal(s.padding(), 0);
-  test.equal(s.align(), 0.5);
-  test.end();
+it("scalePoint() has the expected defaults", () => {
+  const s = scalePoint();
+  assert.deepStrictEqual(s.domain(), []);
+  assert.deepStrictEqual(s.range(), [0, 1]);
+  assert.strictEqual(s.bandwidth(), 0);
+  assert.strictEqual(s.step(), 1);
+  assert.strictEqual(s.round(), false);
+  assert.strictEqual(s.padding(), 0);
+  assert.strictEqual(s.align(), 0.5);
 });
 
-tape("scalePoint() does not expose paddingInner and paddingOuter", function(test) {
-  var s = scale.scalePoint();
-  test.equal(s.paddingInner, undefined);
-  test.equal(s.paddingOuter, undefined);
-  test.end();
+it("scalePoint() does not expose paddingInner and paddingOuter", () => {
+  const s = scalePoint();
+  assert.strictEqual(s.paddingInner, undefined);
+  assert.strictEqual(s.paddingOuter, undefined);
 });
 
-tape("scalePoint() is similar to scaleBand().paddingInner(1)", function(test) {
-  var p = scale.scalePoint().domain(["foo", "bar"]).range([0, 960]),
-      b = scale.scaleBand().domain(["foo", "bar"]).range([0, 960]).paddingInner(1);
-  test.deepEqual(p.domain().map(p), b.domain().map(b));
-  test.equal(p.bandwidth(), b.bandwidth());
-  test.equal(p.step(), b.step());
-  test.end();
+it("scalePoint() is similar to scaleBand().paddingInner(1)", () => {
+  const p = scalePoint().domain(["foo", "bar"]).range([0, 960]);
+  const b = scaleBand().domain(["foo", "bar"]).range([0, 960]).paddingInner(1);
+  assert.deepStrictEqual(p.domain().map(p), b.domain().map(b));
+  assert.strictEqual(p.bandwidth(), b.bandwidth());
+  assert.strictEqual(p.step(), b.step());
 });
 
-tape("point.padding(p) sets the band outer padding to p", function(test) {
-  var p = scale.scalePoint().domain(["foo", "bar"]).range([0, 960]).padding(0.5),
-      b = scale.scaleBand().domain(["foo", "bar"]).range([0, 960]).paddingInner(1).paddingOuter(0.5);
-  test.deepEqual(p.domain().map(p), b.domain().map(b));
-  test.equal(p.bandwidth(), b.bandwidth());
-  test.equal(p.step(), b.step());
-  test.end();
+it("point.padding(p) sets the band outer padding to p", () => {
+  const p = scalePoint().domain(["foo", "bar"]).range([0, 960]).padding(0.5);
+  const b = scaleBand().domain(["foo", "bar"]).range([0, 960]).paddingInner(1).paddingOuter(0.5);
+  assert.deepStrictEqual(p.domain().map(p), b.domain().map(b));
+  assert.strictEqual(p.bandwidth(), b.bandwidth());
+  assert.strictEqual(p.step(), b.step());
 });
 
-tape("point.copy() returns a copy", function(test) {
-  var s = scale.scalePoint();
-  test.deepEqual(s.domain(), []);
-  test.deepEqual(s.range(), [0, 1]);
-  test.equal(s.bandwidth(), 0);
-  test.equal(s.step(), 1);
-  test.equal(s.round(), false);
-  test.equal(s.padding(), 0);
-  test.equal(s.align(), 0.5);
-  test.end();
+it("point.copy() returns a copy", () => {
+  const s = scalePoint();
+  assert.deepStrictEqual(s.domain(), []);
+  assert.deepStrictEqual(s.range(), [0, 1]);
+  assert.strictEqual(s.bandwidth(), 0);
+  assert.strictEqual(s.step(), 1);
+  assert.strictEqual(s.round(), false);
+  assert.strictEqual(s.padding(), 0);
+  assert.strictEqual(s.align(), 0.5);
 });

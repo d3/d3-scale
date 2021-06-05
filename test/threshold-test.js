@@ -1,73 +1,65 @@
-var tape = require("tape"),
-    scale = require("../");
+import assert from "assert";
+import {scaleThreshold} from "../src/index.js";
 
-tape("scaleThreshold() has the expected defaults", function(test) {
-  var x = scale.scaleThreshold();
-  test.deepEqual(x.domain(), [0.5]);
-  test.deepEqual(x.range(), [0, 1]);
-  test.equal(x(0.50), 1);
-  test.equal(x(0.49), 0);
-  test.end();
+it("scaleThreshold() has the expected defaults", () => {
+  const x = scaleThreshold();
+  assert.deepStrictEqual(x.domain(), [0.5]);
+  assert.deepStrictEqual(x.range(), [0, 1]);
+  assert.strictEqual(x(0.50), 1);
+  assert.strictEqual(x(0.49), 0);
 });
 
-tape("threshold(x) maps a number to a discrete value in the range", function(test) {
-  var x = scale.scaleThreshold().domain([1/3, 2/3]).range(["a", "b", "c"]);
-  test.equal(x(0), "a");
-  test.equal(x(0.2), "a");
-  test.equal(x(0.4), "b");
-  test.equal(x(0.6), "b");
-  test.equal(x(0.8), "c");
-  test.equal(x(1), "c");
-  test.end();
+it("threshold(x) maps a number to a discrete value in the range", () => {
+  const x = scaleThreshold().domain([1/3, 2/3]).range(["a", "b", "c"]);
+  assert.strictEqual(x(0), "a");
+  assert.strictEqual(x(0.2), "a");
+  assert.strictEqual(x(0.4), "b");
+  assert.strictEqual(x(0.6), "b");
+  assert.strictEqual(x(0.8), "c");
+  assert.strictEqual(x(1), "c");
 });
 
-tape("threshold(x) returns undefined if the specified value x is not orderable", function(test) {
-  var x = scale.scaleThreshold().domain([1/3, 2/3]).range(["a", "b", "c"]);
-  test.equal(x(), undefined);
-  test.equal(x(undefined), undefined);
-  test.equal(x(NaN), undefined);
-  test.equal(x(null), undefined);
-  test.end();
+it("threshold(x) returns undefined if the specified value x is not orderable", () => {
+  const x = scaleThreshold().domain([1/3, 2/3]).range(["a", "b", "c"]);
+  assert.strictEqual(x(), undefined);
+  assert.strictEqual(x(undefined), undefined);
+  assert.strictEqual(x(NaN), undefined);
+  assert.strictEqual(x(null), undefined);
 });
 
-tape("threshold.domain(…) supports arbitrary orderable values", function(test) {
-  var x = scale.scaleThreshold().domain(["10", "2"]).range([0, 1, 2]);
-  test.strictEqual(x.domain()[0], "10");
-  test.strictEqual(x.domain()[1], "2");
-  test.equal(x("0"), 0);
-  test.equal(x("12"), 1);
-  test.equal(x("3"), 2);
-  test.end();
+it("threshold.domain(…) supports arbitrary orderable values", () => {
+  const x = scaleThreshold().domain(["10", "2"]).range([0, 1, 2]);
+  assert.strictEqual(x.domain()[0], "10");
+  assert.strictEqual(x.domain()[1], "2");
+  assert.strictEqual(x("0"), 0);
+  assert.strictEqual(x("12"), 1);
+  assert.strictEqual(x("3"), 2);
 });
 
-tape("threshold.domain(…) accepts an iterable", function(test) {
-  var x = scale.scaleThreshold().domain(new Set(["10", "2"])).range([0, 1, 2]);
-  test.deepEqual(x.domain(), ["10", "2"]);
-  test.end();
+it("threshold.domain(…) accepts an iterable", () => {
+  const x = scaleThreshold().domain(new Set(["10", "2"])).range([0, 1, 2]);
+  assert.deepStrictEqual(x.domain(), ["10", "2"]);
 });
 
-tape("threshold.range(…) supports arbitrary values", function(test) {
-  var a = {}, b = {}, c = {}, x = scale.scaleThreshold().domain([1/3, 2/3]).range([a, b, c]);
-  test.equal(x(0), a);
-  test.equal(x(0.2), a);
-  test.equal(x(0.4), b);
-  test.equal(x(0.6), b);
-  test.equal(x(0.8), c);
-  test.equal(x(1), c);
-  test.end();
+it("threshold.range(…) supports arbitrary values", () => {
+  const a = {}, b = {}, c = {}, x = scaleThreshold().domain([1/3, 2/3]).range([a, b, c]);
+  assert.strictEqual(x(0), a);
+  assert.strictEqual(x(0.2), a);
+  assert.strictEqual(x(0.4), b);
+  assert.strictEqual(x(0.6), b);
+  assert.strictEqual(x(0.8), c);
+  assert.strictEqual(x(1), c);
 });
 
-tape("threshold.range(…) accepts an iterable", function(test) {
-  var x = scale.scaleThreshold().domain(["10", "2"]).range(new Set([0, 1, 2]));
-  test.deepEqual(x.range(), [0, 1, 2]);
-  test.end();
+it("threshold.range(…) accepts an iterable", () => {
+  const x = scaleThreshold().domain(["10", "2"]).range(new Set([0, 1, 2]));
+  assert.deepStrictEqual(x.range(), [0, 1, 2]);
 });
 
-tape("threshold.invertExtent(y) returns the domain extent for the specified range value", function(test) {
-  var a = {}, b = {}, c = {}, x = scale.scaleThreshold().domain([1/3, 2/3]).range([a, b, c]);
-  test.deepEqual(x.invertExtent(a), [undefined, 1/3]);
-  test.deepEqual(x.invertExtent(b), [1/3, 2/3]);
-  test.deepEqual(x.invertExtent(c), [2/3, undefined]);
-  test.deepEqual(x.invertExtent({}), [undefined, undefined]);
-  test.end();
+it("threshold.invertExtent(y) returns the domain extent for the specified range value", () => {
+  const a = {}, b = {}, c = {}, x = scaleThreshold().domain([1/3, 2/3]).range([a, b, c]);
+  assert.deepStrictEqual(x.invertExtent(a), [undefined, 1/3]);
+  assert.deepStrictEqual(x.invertExtent(b), [1/3, 2/3]);
+  assert.deepStrictEqual(x.invertExtent(c), [2/3, undefined]);
+  assert.deepStrictEqual(x.invertExtent({}), [undefined, undefined]);
 });
