@@ -268,7 +268,7 @@ cross-spawn@^7.0.2:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
-"d3-array@2 - 3", "d3-array@2.3.0 - 3":
+"d3-array@2 - 3", "d3-array@2.10.0 - 3":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/d3-array/-/d3-array-3.0.1.tgz#ca45c263f5bb780ab5a34a6e1d3d5883fe4a8d14"
   integrity sha512-l3Bh5o8RSoC3SBm5ix6ogaFW+J6rOUm42yOtZ2sQPCEvCqUMepeX7zgrlLLGIemxgOyo9s2CsWEidnLv5PwwRw==
