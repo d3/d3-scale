@@ -24,9 +24,11 @@ If you use npm, `npm install d3-scale`. You can also download the [latest releas
 
 ```html
 <script type="module">
+
 import {scaleLinear} from "https://cdn.skypack.dev/d3-scale@4";
 
 const x = scaleLinear();
+
 </script>
 ```
 
@@ -38,7 +40,7 @@ For legacy environments, you can load d3-scale’s UMD bundle from an npm-based 
 <script src="https://cdn.jsdelivr.net/npm/d3-format@3"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3-interpolate@3"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3-time@3"></script>
-<script src="https://cdn.jsdelivr.net/npm/d3-time-format@3"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-time-format@4"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3-scale@4"></script>
 <script>
 
