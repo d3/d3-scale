@@ -6,5 +6,8 @@
   },
   "env": {
     "mocha": true
+  },
+  "rules": {
+    "no-sparse-arrays": 0
   }
 }
