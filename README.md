@@ -858,7 +858,7 @@ Given a *value* in the input [domain](#ordinal_domain), returns the correspondin
 
 <a name="ordinal_domain" href="#ordinal_domain">#</a> <i>ordinal</i>.<b>domain</b>([<i>domain</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/ordinal.js), [Examples](https://observablehq.com/@d3/d3-scaleordinal)
 
-If *domain* is specified, sets the domain to the specified array of values. The first element in *domain* will be mapped to the first element in the range, the second domain value to the second range value, and so on. Domain values are stored internally in a map from stringified value to index; the resulting index is then used to retrieve a value from the range. Thus, an ordinal scale’s values must be coercible to a string, and the stringified version of the domain value uniquely identifies the corresponding range value. If *domain* is not specified, this method returns the current domain.
+If *domain* is specified, sets the domain to the specified array of values. The first element in *domain* will be mapped to the first element in the range, the second domain value to the second range value, and so on. Domain values are stored internally in an [InternMap](https://github.com/mbostock/internmap) from primitive value to index; the resulting index is then used to retrieve a value from the range. Thus, an ordinal scale’s values must be coercible to a primitive value, and the primitive domain value uniquely identifies the corresponding range value. If *domain* is not specified, this method returns the current domain.
 
 Setting the domain on an ordinal scale is optional if the [unknown value](#ordinal_unknown) is [implicit](#scaleImplicit) (the default). In this case, the domain will be inferred implicitly from usage by assigning each unique value passed to the scale a new value from the range. Note that an explicit domain is recommended to ensure deterministic behavior, as inferring the domain from usage will be dependent on ordering.
 
@@ -894,7 +894,7 @@ Given a *value* in the input [domain](#band_domain), returns the start of the co
 
 <a name="band_domain" href="#band_domain">#</a> <i>band</i>.<b>domain</b>([<i>domain</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/band.js), [Examples](https://observablehq.com/@d3/d3-scaleband)
 
-If *domain* is specified, sets the domain to the specified array of values. The first element in *domain* will be mapped to the first band, the second domain value to the second band, and so on. Domain values are stored internally in a map from stringified value to index; the resulting index is then used to determine the band. Thus, a band scale’s values must be coercible to a string, and the stringified version of the domain value uniquely identifies the corresponding band. If *domain* is not specified, this method returns the current domain.
+If *domain* is specified, sets the domain to the specified array of values. The first element in *domain* will be mapped to the first band, the second domain value to the second band, and so on. Domain values are stored internally in an [InternMap](https://github.com/mbostock/internmap) from primitive value to index; the resulting index is then used to determine the band. Thus, a band scale’s values must be coercible to a primitive value, and the primitive domain value uniquely identifies the corresponding band. If *domain* is not specified, this method returns the current domain.
 
 <a name="band_range" href="#band_range">#</a> <i>band</i>.<b>range</b>([<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/band.js), [Examples](https://observablehq.com/@d3/d3-scaleband)
 
@@ -960,7 +960,7 @@ Given a *value* in the input [domain](#point_domain), returns the corresponding 
 
 <a name="point_domain" href="#point_domain">#</a> <i>point</i>.<b>domain</b>([<i>domain</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/band.js), [Examples](https://observablehq.com/@d3/d3-scalepoint)
 
-If *domain* is specified, sets the domain to the specified array of values. The first element in *domain* will be mapped to the first point, the second domain value to the second point, and so on. Domain values are stored internally in a map from stringified value to index; the resulting index is then used to determine the point. Thus, a point scale’s values must be coercible to a string, and the stringified version of the domain value uniquely identifies the corresponding point. If *domain* is not specified, this method returns the current domain.
+If *domain* is specified, sets the domain to the specified array of values. The first element in *domain* will be mapped to the first point, the second domain value to the second point, and so on. Domain values are stored internally in an [InternMap](https://github.com/mbostock/internmap) from primitive value to index; the resulting index is then used to determine the point. Thus, a point scale’s values must be coercible to a primitive value, and the primitive domain value uniquely identifies the corresponding point. If *domain* is not specified, this method returns the current domain.
 
 <a name="point_range" href="#point_range">#</a> <i>point</i>.<b>range</b>([<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/band.js), [Examples](https://observablehq.com/@d3/d3-scalepoint)
 
