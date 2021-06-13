@@ -481,3 +481,9 @@ it("linear.copy() returns a copy with changes to the unknown value are isolated"
   assert.strictEqual(y(NaN), 3);
   assert.strictEqual(x.unknown(), 2);
 });
+
+tape("padLinear returns a padded domain array", function(test) {
+  test.deepEqual(scale.padLinear([0, 8], 0.5), [-2, 10])
+  test.deepEqual(scale.padLinear([0, 8], 0.25), [-1, 9])
+  test.end();
+});
