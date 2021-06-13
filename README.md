@@ -591,6 +591,10 @@ See [*continuous*.clamp](#continuous_clamp).
 
 If *interpolator* is specified, sets the scale’s interpolator to the specified function. If *interpolator* is not specified, returns the scale’s current interpolator.
 
+<a name="sequential_invert" href="#sequential_invert">#</a> <i>sequential</i>.<b>invert</b>(<i>fraction</i>) · [Source](https://github.com/d3/d3-scale/blob/master/src/sequential.js)
+
+Inverts the given interpolation *fraction* and returns the corresponding domain value. This method does not invert the output of the interpolator function (which may be non-invertible), but rather inverts fractional values that serve as input to the interpolator.
+
 <a name="sequential_range" href="#sequential_range">#</a> <i>sequential</i>.<b>range</b>([<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/sequential.js), [Examples](https://observablehq.com/@d3/sequential-scales)
 
 See [*continuous*.range](#continuous_range). If *range* is specified, the given two-element array is converted to an interpolator function using [d3.interpolate](https://github.com/d3/d3-interpolate/blob/master/README.md#interpolate).
@@ -656,6 +660,10 @@ See [*continuous*.clamp](#continuous_clamp).
 <a name="diverging_interpolator" href="#diverging_interpolator">#</a> <i>diverging</i>.<b>interpolator</b>([<i>interpolator</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/diverging.js), [Examples](https://observablehq.com/@d3/diverging-scales)
 
 If *interpolator* is specified, sets the scale’s interpolator to the specified function. If *interpolator* is not specified, returns the scale’s current interpolator.
+
+<a name="diverging_invert" href="#diverging_invert">#</a> <i>diverging</i>.<b>invert</b>(<i>fraction</i>) · [Source](https://github.com/d3/d3-scale/blob/master/src/diverging.js)
+
+Inverts the given interpolation *fraction* and returns the corresponding domain value. This method does not invert the output of the interpolator function (which may be non-invertible), but rather inverts fractional values that serve as input to the interpolator.
 
 <a name="diverging_range" href="#diverging_range">#</a> <i>diverging</i>.<b>range</b>([<i>range</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/diverging.js), [Examples](https://observablehq.com/@d3/diverging-scales)
 
