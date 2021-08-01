@@ -16,7 +16,7 @@ For a longer introduction, see these recommended tutorials:
 
 * Chapter 7. Scales of [*Interactive Data Visualization for the Web*](http://alignedleft.com/work/d3-book) by Scott Murray
 
-* [d3: scales, and color.](http://www.jeromecukier.net/2011/08/11/d3-scales-and-color/) by Jérôme Cukier
+* [d3: scales, and color.](https://jckr.github.io/blog/2011/08/11/d3-scales-and-color/) by Jérôme Cukier
 
 ## Installing
 
