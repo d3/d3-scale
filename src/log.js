@@ -20,31 +20,33 @@ function transformExpn(x) {
   return -Math.exp(-x);
 }
 
-function pow10(x) {
-  return isFinite(x) ? +("1e" + x) : x < 0 ? 0 : x;
+function pow10(x, k) {
+  return isFinite(x) ? +(k + "e" + x) : x < 0 ? 0 : x;
+}
+
+function exp(x, k) {
+  return Math.exp(x) * k;
 }
 
 function powp(base) {
   return base === 10 ? pow10
-      : base === Math.E ? Math.exp
-      : function(x) { return Math.pow(base, x); };
+      : base === Math.E ? exp
+      : (x, k) => Math.pow(base, x) * k;
 }
 
 function logp(base) {
   return base === Math.E ? Math.log
       : base === 10 && Math.log10
       || base === 2 && Math.log2
-      || (base = Math.log(base), function(x) { return Math.log(x) / base; });
+      || (base = Math.log(base), (x) => Math.log(x) / base);
 }
 
 function reflect(f) {
-  return function(x) {
-    return -f(-x);
-  };
+  return (x, k) => -f(-x, k);
 }
 
 export function loggish(transform) {
-  var scale = transform(transformLog, transformExp),
+  let scale = transform(transformLog, transformExp),
       domain = scale.domain,
       base = 10,
       logs,
@@ -69,17 +71,16 @@ export function loggish(transform) {
     return arguments.length ? (domain(_), rescale()) : domain();
   };
 
-  scale.ticks = function(count) {
-    var d = domain(),
+  scale.ticks = count => {
+    let d = domain(),
         u = d[0],
         v = d[d.length - 1],
-        r;
+        r = v < u;
 
-    if (r = v < u) i = u, u = v, v = i;
+    if (r) ([u, v] = [v, u]);
 
-    var i = logs(u),
+    let i = logs(u),
         j = logs(v),
-        p,
         k,
         t,
         n = count == null ? 10 : +count,
@@ -88,15 +89,15 @@ export function loggish(transform) {
     if (!(base % 1) && j - i < n) {
       i = Math.floor(i), j = Math.ceil(j);
       if (u > 0) for (; i <= j; ++i) {
-        for (k = 1, p = pows(i); k < base; ++k) {
-          t = p * k;
+        for (k = 1; k < base; ++k) {
+          t = pows(i, k);
           if (t < u) continue;
           if (t > v) break;
           z.push(t);
         }
       } else for (; i <= j; ++i) {
-        for (k = base - 1, p = pows(i); k >= 1; --k) {
-          t = p * k;
+        for (k = base - 1; k >= 1; --k) {
+          t = pows(i, k);
           if (t < u) continue;
           if (t > v) break;
           z.push(t);
@@ -104,13 +105,13 @@ export function loggish(transform) {
       }
       if (z.length * 2 < n) z = ticks(u, v, n);
     } else {
-      z = ticks(i, j, Math.min(j - i, n)).map(pows);
+      z = ticks(i, j, Math.min(j - i, n)).map(i => pows(i, 1));
     }
 
     return r ? z.reverse() : z;
   };
 
-  scale.tickFormat = function(count, specifier) {
+  scale.tickFormat = (count, specifier) => {
     if (count == null) count = 10;
     if (specifier == null) specifier = base === 10 ? ".0e" : ",";
     if (typeof specifier !== "function") {
@@ -118,18 +119,18 @@ export function loggish(transform) {
       specifier = format(specifier);
     }
     if (count === Infinity) return specifier;
-    var k = Math.max(1, base * count / scale.ticks().length); // TODO fast estimate?
-    return function(d) {
-      var i = d / pows(Math.round(logs(d)));
+    let k = Math.max(1, base * count / scale.ticks().length); // TODO fast estimate?
+    return d => {
+      let i = d / pows(Math.round(logs(d)), 1);
       if (i * base < base - 0.5) i *= base;
       return i <= k ? specifier(d) : "";
     };
   };
 
-  scale.nice = function() {
+  scale.nice = () => {
     return domain(nice(domain(), {
-      floor: function(x) { return pows(Math.floor(logs(x))); },
-      ceil: function(x) { return pows(Math.ceil(logs(x))); }
+      floor: x => pows(Math.floor(logs(x)), 1),
+      ceil: x => pows(Math.ceil(logs(x)), 1)
     }));
   };
 
@@ -137,13 +138,8 @@ export function loggish(transform) {
 }
 
 export default function log() {
-  var scale = loggish(transformer()).domain([1, 10]);
-
-  scale.copy = function() {
-    return copy(scale, log()).base(scale.base());
-  };
-
+  const scale = loggish(transformer()).domain([1, 10]);
+  scale.copy = () => copy(scale, log()).base(scale.base());
   initRange.apply(scale, arguments);
-
   return scale;
 }
