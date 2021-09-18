@@ -1,5 +1,5 @@
 import {ticks} from "d3-array";
-import {format} from "d3-format";
+import {format, formatSpecifier} from "d3-format";
 import nice from "./nice.js";
 import {copy, transformer} from "./continuous.js";
 import {initRange} from "./init.js";
@@ -111,10 +111,13 @@ export function loggish(transform) {
   };
 
   scale.tickFormat = function(count, specifier) {
-    if (specifier == null) specifier = base === 10 ? ".0e" : ",";
-    if (typeof specifier !== "function") specifier = format(specifier);
-    if (count === Infinity) return specifier;
     if (count == null) count = 10;
+    if (specifier == null) specifier = base === 10 ? ".0e" : ",";
+    if (typeof specifier !== "function") {
+      if (!(base % 1) && (specifier = formatSpecifier(specifier)).precision == null) specifier.trim = true;
+      specifier = format(specifier);
+    }
+    if (count === Infinity) return specifier;
     var k = Math.max(1, base * count / scale.ticks().length); // TODO fast estimate?
     return function(d) {
       var i = d / pows(Math.round(logs(d)));

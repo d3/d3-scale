@@ -401,11 +401,40 @@ it("log.tickFormat(count, format) returns a filtered format", () => {
 
 it("log.tickFormat(count, specifier) returns a filtered format", () => {
   const x = scaleLog().domain([1000.1, 1]);
-  assert.deepStrictEqual(x.ticks().map(x.tickFormat(10, ".1s")), [
+  assert.deepStrictEqual(x.ticks().map(x.tickFormat(10, "s")), [
     "1k",
     "", "", "", "", "", "", "300", "200", "100",
     "", "", "", "", "", "", "30", "20", "10",
     "", "", "", "", "", "", "3", "2", "1"
+  ]);
+});
+
+it("log.tickFormat(count, specifier) trims trailing zeroes by default", () => {
+  const x = scaleLog().domain([100.1, 0.02]);
+  assert.deepStrictEqual(x.ticks().map(x.tickFormat(10, "f")), [
+    "100",
+    "", "", "", "", "", "", "", "20", "10",
+    "", "", "", "", "", "", "", "2", "1",
+    "", "", "", "", "", "", "", "0.2", "0.1",
+    "", "", "", "", "", "", "", "0.02"
+  ]);
+});
+
+it("log.tickFormat(count, specifier) with base two trims trailing zeroes by default", () => {
+  const x = scaleLog().base(2).domain([100.1, 0.02]);
+  assert.deepStrictEqual(x.ticks().map(x.tickFormat(10, "f")), [
+    "64", "32", "16", "8", "4", "2", "1", "0.5", "0.25", "0.125", "0.0625", "0.03125"
+  ]);
+});
+
+it("log.tickFormat(count, specifier) preserves trailing zeroes if needed", () => {
+  const x = scaleLog().domain([100.1, 0.02]);
+  assert.deepStrictEqual(x.ticks().map(x.tickFormat(10, ".1f")), [
+    "100.0",
+    "", "", "", "", "", "", "", "20.0", "10.0",
+    "", "", "", "", "", "", "", "2.0", "1.0",
+    "", "", "", "", "", "", "", "0.2", "0.1",
+    "", "", "", "", "", "", "", "0.0"
   ]);
 });
 
