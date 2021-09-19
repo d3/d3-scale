@@ -20,25 +20,21 @@ function transformExpn(x) {
   return -Math.exp(-x);
 }
 
-function pow10(x, k) {
-  return isFinite(x) ? +(k + "e" + x) : x < 0 ? 0 : x;
-}
-
-function exp(x, k) {
-  return Math.exp(x) * k;
+function pow10(x) {
+  return isFinite(x) ? +("1e" + x) : x < 0 ? 0 : x;
 }
 
 function powp(base) {
   return base === 10 ? pow10
-      : base === Math.E ? exp
-      : (x, k) => Math.pow(base, x) * k;
+      : base === Math.E ? Math.exp
+      : x => Math.pow(base, x);
 }
 
 function logp(base) {
   return base === Math.E ? Math.log
       : base === 10 && Math.log10
       || base === 2 && Math.log2
-      || (base = Math.log(base), (x) => Math.log(x) / base);
+      || (base = Math.log(base), x => Math.log(x) / base);
 }
 
 function reflect(f) {
@@ -90,14 +86,14 @@ export function loggish(transform) {
       i = Math.floor(i), j = Math.ceil(j);
       if (u > 0) for (; i <= j; ++i) {
         for (k = 1; k < base; ++k) {
-          t = pows(i, k);
+          t = i < 0 ? k / pows(-i) : k * pows(i);
           if (t < u) continue;
           if (t > v) break;
           z.push(t);
         }
       } else for (; i <= j; ++i) {
         for (k = base - 1; k >= 1; --k) {
-          t = pows(i, k);
+          t = i > 0 ? k / pows(-i) : k * pows(i);
           if (t < u) continue;
           if (t > v) break;
           z.push(t);
@@ -105,9 +101,8 @@ export function loggish(transform) {
       }
       if (z.length * 2 < n) z = ticks(u, v, n);
     } else {
-      z = ticks(i, j, Math.min(j - i, n)).map(i => pows(i, 1));
+      z = ticks(i, j, Math.min(j - i, n)).map(pows);
     }
-
     return r ? z.reverse() : z;
   };
 
@@ -121,7 +116,7 @@ export function loggish(transform) {
     if (count === Infinity) return specifier;
     const k = Math.max(1, base * count / scale.ticks().length); // TODO fast estimate?
     return d => {
-      let i = d / pows(Math.round(logs(d)), 1);
+      let i = d / pows(Math.round(logs(d)));
       if (i * base < base - 0.5) i *= base;
       return i <= k ? specifier(d) : "";
     };
@@ -129,8 +124,8 @@ export function loggish(transform) {
 
   scale.nice = () => {
     return domain(nice(domain(), {
-      floor: x => pows(Math.floor(logs(x)), 1),
-      ceil: x => pows(Math.ceil(logs(x)), 1)
+      floor: x => pows(Math.floor(logs(x))),
+      ceil: x => pows(Math.ceil(logs(x)))
     }));
   };
 
