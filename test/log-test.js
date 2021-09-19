@@ -61,6 +61,13 @@ it("log.domain(…) preserves specified domain exactly, with no floating point e
   assert.deepStrictEqual(x.domain(), [0.1, 1000]);
 });
 
+it("log.ticks(…) returns exact ticks, with no floating point error", () => {
+  assert.deepStrictEqual(scaleLog().domain([0.15, 0.68]).ticks(), [0.2, 0.3, 0.4, 0.5, 0.6]);
+  assert.deepStrictEqual(scaleLog().domain([0.68, 0.15]).ticks(), [0.6, 0.5, 0.4, 0.3, 0.2]);
+  assert.deepStrictEqual(scaleLog().domain([-0.15, -0.68]).ticks(), [-0.2, -0.3, -0.4, -0.5, -0.6]);
+  assert.deepStrictEqual(scaleLog().domain([-0.68, -0.15]).ticks(), [-0.6, -0.5, -0.4, -0.3, -0.2]);
+});
+
 it("log.range(…) does not coerce values to numbers", () => {
   const x = scaleLog().range(["0", "2"]);
   assert.strictEqual(typeof x.range()[0], "string");
