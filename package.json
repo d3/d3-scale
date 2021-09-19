@@ -1,6 +1,6 @@
 {
   "name": "d3-scale",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Encodings that map abstract data to visual representation.",
   "homepage": "https://d3js.org/d3-scale/",
   "repository": {
