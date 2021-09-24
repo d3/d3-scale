@@ -108,7 +108,7 @@ export function loggish(transform) {
 
   scale.tickFormat = (count, specifier) => {
     if (count == null) count = 10;
-    if (specifier == null) specifier = base === 10 ? ".0e" : ",";
+    if (specifier == null) specifier = base === 10 ? "s" : ",";
     if (typeof specifier !== "function") {
       if (!(base % 1) && (specifier = formatSpecifier(specifier)).precision == null) specifier.trim = true;
       specifier = format(specifier);

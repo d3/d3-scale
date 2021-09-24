@@ -42,9 +42,9 @@ it("log.domain(…) coerces values to numbers", () => {
 it("log.domain(…) can take negative values", () => {
   const x = scaleLog().domain([-100, -1]);
   assert.deepStrictEqual(x.ticks().map(x.tickFormat(Infinity)), [
-    "−1e+2",
-    "−9e+1", "−8e+1", "−7e+1", "−6e+1", "−5e+1", "−4e+1", "−3e+1", "−2e+1", "−1e+1",
-    "−9e+0", "−8e+0", "−7e+0", "−6e+0", "−5e+0", "−4e+0", "−3e+0", "−2e+0", "−1e+0"
+    "−100",
+    "−90", "−80", "−70", "−60", "−50", "−40", "−30", "−20", "−10",
+    "−9", "−8", "−7", "−6", "−5", "−4", "−3", "−2", "−1"
   ]);
   assertInDelta(x(-50), 0.150515);
 });
@@ -297,15 +297,15 @@ it("log.base(base).ticks() generates the expected power-of-base ticks", () => {
 
 it("log.tickFormat() is equivalent to log.tickFormat(10)", () => {
   const s = scaleLog();
-  assert.deepStrictEqual(s.domain([1e-1, 1e1]).ticks().map(s.tickFormat()), ["1e-1", "2e-1", "3e-1", "4e-1", "5e-1", "", "", "", "", "1e+0", "2e+0", "3e+0", "4e+0", "5e+0", "", "", "", "", "1e+1"]);
+  assert.deepStrictEqual(s.domain([1e-1, 1e1]).ticks().map(s.tickFormat()), ["100m", "200m", "300m", "400m", "500m", "", "", "", "", "1", "2", "3", "4", "5", "", "", "", "", "10"]);
 });
 
-it("log.tickFormat(count) returns a filtered \".0e\" format", () => {
+it("log.tickFormat(count) returns a filtered \"s\" format", () => {
   const s = scaleLog(), t = s.domain([1e-1, 1e1]).ticks();
-  assert.deepStrictEqual(t.map(s.tickFormat(10)), ["1e-1", "2e-1", "3e-1", "4e-1", "5e-1",     "",     "",     "",     "", "1e+0", "2e+0", "3e+0", "4e+0", "5e+0",     "",     "",     "",     "", "1e+1"]);
-  assert.deepStrictEqual(t.map(s.tickFormat(5)),  ["1e-1", "2e-1",     "",     "",     "",     "",     "",     "",     "", "1e+0", "2e+0",     "",     "",     "",     "",     "",     "",     "", "1e+1"]);
-  assert.deepStrictEqual(t.map(s.tickFormat(1)),  ["1e-1",     "",     "",     "",     "",     "",     "",     "",     "", "1e+0",     "",     "",     "",     "",     "",     "",     "",     "", "1e+1"]);
-  assert.deepStrictEqual(t.map(s.tickFormat(0)),  ["1e-1",     "",     "",     "",     "",     "",     "",     "",     "", "1e+0",     "",     "",     "",     "",     "",     "",     "",     "", "1e+1"]);
+  assert.deepStrictEqual(t.map(s.tickFormat(10)), ["100m", "200m", "300m", "400m", "500m", "", "", "", "", "1", "2", "3", "4", "5", "", "", "", "", "10"]);
+ assert.deepStrictEqual(t.map(s.tickFormat(5)), ["100m", "200m", "", "", "", "", "", "", "", "1", "2", "", "", "", "", "", "", "", "10"]);
+ assert.deepStrictEqual(t.map(s.tickFormat(1)), ["100m", "", "", "", "", "", "", "", "", "1", "", "", "", "", "", "", "", "", "10"]);
+ assert.deepStrictEqual(t.map(s.tickFormat(0)), ["100m", "", "", "", "", "", "", "", "", "1", "", "", "", "", "", "", "", "", "10"]);
 });
 
 it("log.tickFormat(count, format) returns the specified format, filtered", () => {
@@ -328,71 +328,71 @@ it("log.base(base).tickFormat(count) returns a filtered \",\" format", () => {
 it("log.ticks() generates log ticks", () => {
   const x = scaleLog();
   assert.deepStrictEqual(x.ticks().map(x.tickFormat(Infinity)), [
-    "1e+0", "2e+0", "3e+0", "4e+0", "5e+0", "6e+0", "7e+0", "8e+0", "9e+0",
-    "1e+1"
+    "1", "2", "3", "4", "5", "6", "7", "8", "9",
+    "10"
   ]);
   x.domain([100, 1]);
   assert.deepStrictEqual(x.ticks().map(x.tickFormat(Infinity)), [
-    "1e+2",
-    "9e+1", "8e+1", "7e+1", "6e+1", "5e+1", "4e+1", "3e+1", "2e+1", "1e+1",
-    "9e+0", "8e+0", "7e+0", "6e+0", "5e+0", "4e+0", "3e+0", "2e+0", "1e+0"
+    "100",
+    "90", "80", "70", "60", "50", "40", "30", "20", "10",
+    "9", "8", "7", "6", "5", "4", "3", "2", "1"
   ]);
   x.domain([0.49999, 0.006029505943610648]);
   assert.deepStrictEqual(x.ticks().map(x.tickFormat(Infinity)), [
-    "4e-1", "3e-1", "2e-1", "1e-1",
-    "9e-2", "8e-2", "7e-2", "6e-2", "5e-2", "4e-2", "3e-2", "2e-2", "1e-2",
-    "9e-3", "8e-3", "7e-3"
+    "400m", "300m", "200m", "100m",
+    "90m", "80m", "70m", "60m", "50m", "40m", "30m", "20m", "10m",
+    "9m", "8m", "7m"
   ]);
   x.domain([0.95, 1.05e8]);
   assert.deepStrictEqual(x.ticks().map(x.tickFormat(8)).filter(String), [
-    "1e+0", "1e+1", "1e+2", "1e+3", "1e+4", "1e+5", "1e+6", "1e+7", "1e+8"
+    "1", "10", "100", "1k", "10k", "100k", "1M", "10M", "100M"
   ]);
 });
 
 it("log.tickFormat(count) filters ticks to about count", () => {
   const x = scaleLog();
   assert.deepStrictEqual(x.ticks().map(x.tickFormat(5)), [
-    "1e+0", "2e+0", "3e+0", "4e+0", "5e+0", "", "", "", "",
-    "1e+1"
+    "1", "2", "3", "4", "5", "", "", "", "",
+    "10"
   ]);
   x.domain([100, 1]);
   assert.deepStrictEqual(x.ticks().map(x.tickFormat(10)), [
-    "1e+2",
-    "", "", "", "", "5e+1", "4e+1", "3e+1", "2e+1", "1e+1",
-    "", "", "", "", "5e+0", "4e+0", "3e+0", "2e+0", "1e+0"
+    "100",
+    "", "", "", "", "50", "40", "30", "20", "10",
+    "", "", "", "", "5", "4", "3", "2", "1"
   ]);
 });
 
 it("log.ticks(count) filters powers-of-ten ticks for huge domains", () => {
   const x = scaleLog().domain([1e10, 1]);
-  assert.deepStrictEqual(x.ticks().map(x.tickFormat()), ["1e+10", "1e+9", "1e+8", "1e+7", "1e+6", "1e+5", "1e+4", "1e+3", "1e+2", "1e+1", "1e+0"]);
+  assert.deepStrictEqual(x.ticks().map(x.tickFormat()), ["10G", "1G", "100M", "10M", "1M", "100k", "10k", "1k", "100", "10", "1"]);
   x.domain([1e-29, 1e-1]);
-  assert.deepStrictEqual(x.ticks().map(x.tickFormat()), ["1e-28", "1e-26", "1e-24", "1e-22", "1e-20", "1e-18", "1e-16", "1e-14", "1e-12", "1e-10", "1e-8", "1e-6", "1e-4", "1e-2"]);
+  assert.deepStrictEqual(x.ticks().map(x.tickFormat()), ["0.0001y", "0.01y", "1y", "100y", "10z", "1a", "100a", "10f", "1p", "100p", "10n", "1µ", "100µ", "10m"]);
 });
 
 it("log.ticks() generates ticks that cover the domain", () => {
   const x = scaleLog().domain([0.01, 10000]);
   assert.deepStrictEqual(x.ticks(20).map(x.tickFormat(20)), [
-    "1e-2", "2e-2", "3e-2", "", "", "", "", "", "",
-    "1e-1", "2e-1", "3e-1", "", "", "", "", "", "",
-    "1e+0", "2e+0", "3e+0", "", "", "", "", "", "",
-    "1e+1", "2e+1", "3e+1", "", "", "", "", "", "",
-    "1e+2", "2e+2", "3e+2", "", "", "", "", "", "",
-    "1e+3", "2e+3", "3e+3", "", "", "", "", "", "",
-    "1e+4"
+    "10m", "20m", "30m", "", "", "", "", "", "",
+    "100m", "200m", "300m", "", "", "", "", "", "",
+    "1", "2", "3", "", "", "", "", "", "",
+    "10", "20", "30", "", "", "", "", "", "",
+    "100", "200", "300", "", "", "", "", "", "",
+    "1k", "2k", "3k", "", "", "", "", "", "",
+    "10k"
   ]);
 });
 
 it("log.ticks() generates ticks that cover the niced domain", () => {
   const x = scaleLog().domain([0.0124123, 1230.4]).nice();
   assert.deepStrictEqual(x.ticks(20).map(x.tickFormat(20)), [
-    "1e-2", "2e-2", "3e-2", "", "", "", "", "", "",
-    "1e-1", "2e-1", "3e-1", "", "", "", "", "", "",
-    "1e+0", "2e+0", "3e+0", "", "", "", "", "", "",
-    "1e+1", "2e+1", "3e+1", "", "", "", "", "", "",
-    "1e+2", "2e+2", "3e+2", "", "", "", "", "", "",
-    "1e+3", "2e+3", "3e+3", "", "", "", "", "", "",
-    "1e+4"
+    "10m", "20m", "30m", "", "", "", "", "", "",
+    "100m", "200m", "300m", "", "", "", "", "", "",
+    "1", "2", "3", "", "", "", "", "", "",
+    "10", "20", "30", "", "", "", "", "", "",
+    "100", "200", "300", "", "", "", "", "", "",
+    "1k", "2k", "3k", "", "", "", "", "", "",
+    "10k"
   ]);
 });
 
