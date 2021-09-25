@@ -19,12 +19,19 @@ function transformer() {
       k21,
       interpolator = identity,
       transform,
+      untransform,
       clamp = false,
       unknown;
 
   function scale(x) {
     return isNaN(x = +x) ? unknown : (x = 0.5 + ((x = +transform(x)) - t1) * (s * x < s * t1 ? k10 : k21), interpolator(clamp ? Math.max(0, Math.min(1, x)) : x));
   }
+
+  scale.invert = function(_) {
+    _ = clamp ? Math.max(0, Math.min(1, _)) : _;
+    return _ === 0 ? x0 : _ === 1 ? x2 : _ === 0.5 ? x1
+      : untransform((_ - 0.5) / (_ < 0.5 ? k10 : k21) + t1);
+  };
 
   scale.domain = function(_) {
     return arguments.length ? ([x0, x1, x2] = _, t0 = transform(x0 = +x0), t1 = transform(x1 = +x1), t2 = transform(x2 = +x2), k10 = t0 === t1 ? 0 : 0.5 / (t1 - t0), k21 = t1 === t2 ? 0 : 0.5 / (t2 - t1), s = t1 < t0 ? -1 : 1, scale) : [x0, x1, x2];
@@ -53,14 +60,14 @@ function transformer() {
     return arguments.length ? (unknown = _, scale) : unknown;
   };
 
-  return function(t) {
-    transform = t, t0 = t(x0), t1 = t(x1), t2 = t(x2), k10 = t0 === t1 ? 0 : 0.5 / (t1 - t0), k21 = t1 === t2 ? 0 : 0.5 / (t2 - t1), s = t1 < t0 ? -1 : 1;
+  return function(t, u) {
+    transform = t, t0 = t(x0), t1 = t(x1), t2 = t(x2), k10 = t0 === t1 ? 0 : 0.5 / (t1 - t0), k21 = t1 === t2 ? 0 : 0.5 / (t2 - t1), s = t1 < t0 ? -1 : 1, untransform = u;
     return scale;
   };
 }
 
 export default function diverging() {
-  var scale = linearish(transformer()(identity));
+  var scale = linearish(transformer()(identity, identity));
 
   scale.copy = function() {
     return copy(scale, diverging());

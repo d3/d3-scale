@@ -146,3 +146,28 @@ it("scaleDiverging(range) sets the interpolator", () => {
   assert.strictEqual(s.interpolator()(0.5), 3);
   assert.deepStrictEqual(s.range(), [1, 3, 10]);
 });
+
+tape("scaleDiverging.invert(value) inverts interpolation fractions", function(test) {
+  var s = scale.scaleDiverging().domain([1,2,4]);
+  test.equal(s.invert(0), 1);
+  test.equal(s.invert(0.25), 1.5);
+  test.equal(s.invert(0.50), 2);
+  test.equal(s.invert(0.75), 3);
+  test.equal(s.invert(1), 4);
+  test.equal(s.invert(-0.5), 0);
+  test.equal(s.invert(1.5), 6);
+  test.end();
+});
+
+tape("scaleDivergingLog.invert(value) inverts interpolation fractions", function(test) {
+  var d = [1, 20, 100];
+  var s = scale.scaleDivergingLog().domain(d);
+  test.equal(s.invert(0), d[0]);
+  test.equal(s.invert(0.25), Math.exp(Math.log(d[0]) + 0.5 * (Math.log(d[1]) - Math.log(d[0]))));
+  test.equal(s.invert(0.50), d[1]);
+  test.equal(s.invert(0.75), Math.exp(Math.log(d[1]) + 0.5 * (Math.log(d[2]) - Math.log(d[1]))));
+  test.equal(s.invert(1), d[2]);
+  test.inDelta(s.invert(-0.5), Math.exp(Math.log(d[0]) - 1 * (Math.log(d[1]) - Math.log(d[0]))));
+  test.inDelta(s.invert(1.5), Math.exp(Math.log(d[1]) + 2 * (Math.log(d[2]) - Math.log(d[1]))));
+  test.end();
+});

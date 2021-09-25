@@ -13,6 +13,7 @@ function transformer() {
       t1,
       k10,
       transform,
+      untransform,
       interpolator = identity,
       clamp = false,
       unknown;
@@ -20,6 +21,11 @@ function transformer() {
   function scale(x) {
     return x == null || isNaN(x = +x) ? unknown : interpolator(k10 === 0 ? 0.5 : (x = (transform(x) - t0) * k10, clamp ? Math.max(0, Math.min(1, x)) : x));
   }
+
+  scale.invert = function(_) {
+    _ = clamp ? Math.max(0, Math.min(1, _)) : _;
+    return _ === 0 ? x0 : _ === 1 ? x1 : untransform(_ / k10 + t0);
+  };
 
   scale.domain = function(_) {
     return arguments.length ? ([x0, x1] = _, t0 = transform(x0 = +x0), t1 = transform(x1 = +x1), k10 = t0 === t1 ? 0 : 1 / (t1 - t0), scale) : [x0, x1];
@@ -48,8 +54,8 @@ function transformer() {
     return arguments.length ? (unknown = _, scale) : unknown;
   };
 
-  return function(t) {
-    transform = t, t0 = t(x0), t1 = t(x1), k10 = t0 === t1 ? 0 : 1 / (t1 - t0);
+  return function(t, u) {
+    transform = t, t0 = t(x0), t1 = t(x1), k10 = t0 === t1 ? 0 : 1 / (t1 - t0), untransform = u;
     return scale;
   };
 }
@@ -63,7 +69,7 @@ export function copy(source, target) {
 }
 
 export default function sequential() {
-  var scale = linearish(transformer()(identity));
+  var scale = linearish(transformer()(identity, identity));
 
   scale.copy = function() {
     return copy(scale, sequential());
