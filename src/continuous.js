@@ -67,7 +67,7 @@ export function transformer() {
       high,
       min,
       max,
-      clamp = identity,
+      clamp,
       piecewise,
       output,
       input;
@@ -77,14 +77,14 @@ export function transformer() {
     min = domain[0];
     max = domain[n - 1];
     if (max < min) ([min, max] = [max, min]);
-    if (clamp !== identity) clamp = x => x < min ? min : x > max ? max : x;
+    if (clamp) clamp = x => x < min ? min : x > max ? max : x;
     piecewise = n > 2 ? polymap : bimap;
     output = input = null;
     return scale;
   }
 
   function scale(x) {
-    const tr = clamp !== identity ? x => transform(clamp(x)) : transform;
+    const tr = clamp ? x => transform(clamp(x)) : transform;
     return x == null || isNaN(x = +x) ? unknown
       : low !== undefined && x < min ? low
       : high !== undefined && x > max ? high
@@ -92,7 +92,8 @@ export function transformer() {
   }
 
   scale.invert = function(y) {
-    return clamp(untransform((input || (input = piecewise(range, domain.map(transform), interpolateNumber)))(y)));
+    const x = untransform((input || (input = piecewise(range, domain.map(transform), interpolateNumber)))(y));
+    return clamp ? clamp(x) : x;
   };
 
   scale.domain = function(_) {
@@ -108,7 +109,7 @@ export function transformer() {
   };
 
   scale.clamp = function(_) {
-    return arguments.length ? (clamp = _ ? true : identity, rescale()) : clamp !== identity;
+    return arguments.length ? (clamp = !!_, rescale()) : !!clamp;
   };
 
   scale.interpolate = function(_) {
