@@ -165,6 +165,14 @@ x.invert(-160); // 10, clamped to domain
 
 If *clamp* is not specified, returns whether or not the scale currently clamps values to within the range.
 
+<a name="continuous_low" href="#continuous_low">#</a> <i>continuous</i>.<b>low</b>([<i>value</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/continuous.js), [Examples](https://observablehq.com/@d3/continuous-scales)
+
+If *value* is specified, sets the output value for values lower than the lower bound of the domain and returns this scale. If *value* is undefined, interpolation or clamping may happen. If *value* is not specified, returns the current low value, which defaults to undefined.
+
+<a name="continuous_high" href="#continuous_high">#</a> <i>continuous</i>.<b>high</b>([<i>value</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/continuous.js), [Examples](https://observablehq.com/@d3/continuous-scales)
+
+If *value* is specified, sets the output value for values higher than the upper bound of the domain and returns this scale. If *value* is undefined, interpolation or clamping may happen. If *value* is not specified, returns the current high value, which defaults to undefined.
+
 <a name="continuous_unknown" href="#continuous_unknown">#</a> <i>continuous</i>.<b>unknown</b>([<i>value</i>]) · [Source](https://github.com/d3/d3-scale/blob/master/src/continuous.js), [Examples](https://observablehq.com/@d3/continuous-scales)
 
 If *value* is specified, sets the output value of the scale for undefined (or NaN) input values and returns this scale. If *value* is not specified, returns the current unknown value, which defaults to undefined.

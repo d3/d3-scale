@@ -15,12 +15,6 @@ function normalize(a, b) {
       : constant(isNaN(b) ? NaN : 0.5);
 }
 
-function clamper(a, b) {
-  var t;
-  if (a > b) t = a, a = b, b = t;
-  return function(x) { return Math.max(a, Math.min(b, x)); };
-}
-
 // normalize(a, b)(x) takes a domain value x in [a,b] and returns the corresponding parameter t in [0,1].
 // interpolate(a, b)(t) takes a parameter t in [0,1] and returns the corresponding range value x in [a,b].
 function bimap(domain, range, interpolate) {
@@ -69,25 +63,37 @@ export function transformer() {
       transform,
       untransform,
       unknown,
-      clamp = identity,
+      low,
+      high,
+      min,
+      max,
+      clamp,
       piecewise,
       output,
       input;
 
   function rescale() {
     var n = Math.min(domain.length, range.length);
-    if (clamp !== identity) clamp = clamper(domain[0], domain[n - 1]);
+    min = domain[0];
+    max = domain[n - 1];
+    if (max < min) ([min, max] = [max, min]);
+    if (clamp) clamp = x => x < min ? min : x > max ? max : x;
     piecewise = n > 2 ? polymap : bimap;
     output = input = null;
     return scale;
   }
 
   function scale(x) {
-    return x == null || isNaN(x = +x) ? unknown : (output || (output = piecewise(domain.map(transform), range, interpolate)))(transform(clamp(x)));
+    const tr = clamp ? x => transform(clamp(x)) : transform;
+    return x == null || isNaN(x = +x) ? unknown
+      : low !== undefined && x < min ? low
+      : high !== undefined && x > max ? high
+      : (output || (output = piecewise(domain.map(transform), range, interpolate)))(tr(x));
   }
 
   scale.invert = function(y) {
-    return clamp(untransform((input || (input = piecewise(range, domain.map(transform), interpolateNumber)))(y)));
+    const x = untransform((input || (input = piecewise(range, domain.map(transform), interpolateNumber)))(y));
+    return clamp ? clamp(x) : x;
   };
 
   scale.domain = function(_) {
@@ -103,7 +109,7 @@ export function transformer() {
   };
 
   scale.clamp = function(_) {
-    return arguments.length ? (clamp = _ ? true : identity, rescale()) : clamp !== identity;
+    return arguments.length ? (clamp = !!_, rescale()) : !!clamp;
   };
 
   scale.interpolate = function(_) {
@@ -112,6 +118,14 @@ export function transformer() {
 
   scale.unknown = function(_) {
     return arguments.length ? (unknown = _, scale) : unknown;
+  };
+
+  scale.low = function(_) {
+    return arguments.length ? (low = _, scale) : low;
+  };
+
+  scale.high = function(_) {
+    return arguments.length ? (high = _, scale) : high;
   };
 
   return function(t, u) {
