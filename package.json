@@ -29,7 +29,8 @@
   "unpkg": "dist/d3-scale.min.js",
   "exports": {
     "umd": "./dist/d3-scale.min.js",
-    "default": "./src/index.js"
+    "default": "./src/index.js",
+    "./package.json": "./package.json"
   },
   "sideEffects": false,
   "dependencies": {
