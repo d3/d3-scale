@@ -8,6 +8,7 @@ it("scaleSqrt() has the expected defaults", () => {
   assert.strictEqual(s.clamp(), false);
   assert.strictEqual(s.exponent(), 0.5);
   assert.deepStrictEqual(s.interpolate()({array: ["red"]}, {array: ["blue"]})(0.5), {array: ["rgb(128, 0, 128)"]});
+  assert.strictEqual(s.type, 'sqrt');
 });
 
 it("sqrt(x) maps a domain value x to a range value y", () => {

@@ -7,6 +7,7 @@ it("scaleRadial() has the expected defaults", () => {
   assert.deepStrictEqual(s.range(), [0, 1]);
   assert.strictEqual(s.clamp(), false);
   assert.strictEqual(s.round(), false);
+  assert.strictEqual(s.type, 'radial');
 });
 
 it("scaleRadial(range) sets the range", () => {

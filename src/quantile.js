@@ -53,5 +53,7 @@ export default function quantile() {
         .unknown(unknown);
   };
 
-  return initRange.apply(scale, arguments);
+  const s = initRange.apply(scale, arguments);
+  s.type = 'quantile';
+  return s;
 }

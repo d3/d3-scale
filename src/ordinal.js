@@ -42,5 +42,7 @@ export default function ordinal() {
 
   initRange.apply(scale, arguments);
 
+  scale.type= 'ordinal';
+
   return scale;
 }

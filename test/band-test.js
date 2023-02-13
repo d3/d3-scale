@@ -11,6 +11,7 @@ it("scaleBand() has the expected defaults", () => {
   assert.strictEqual(s.paddingInner(), 0);
   assert.strictEqual(s.paddingOuter(), 0);
   assert.strictEqual(s.align(), 0.5);
+  assert.strictEqual(s.type, 'band');
 });
 
 it("band(value) computes discrete bands in a continuous range", () => {

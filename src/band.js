@@ -15,6 +15,8 @@ export default function band() {
       paddingOuter = 0,
       align = 0.5;
 
+  scale.type= 'band';
+
   delete scale.unknown;
 
   function rescale() {
@@ -97,5 +99,7 @@ function pointish(scale) {
 }
 
 export function point() {
-  return pointish(band.apply(null, arguments).paddingInner(1));
+  const s = pointish(band.apply(null, arguments).paddingInner(1));
+  s.type = 'point';
+  return s;
 }

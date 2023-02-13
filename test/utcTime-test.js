@@ -7,6 +7,7 @@ import {utc} from "./date.js";
 it("scaleUtc.nice() is an alias for scaleUtc.nice(10)", () => {
   const x = scaleUtc().domain([utc(2009, 0, 1, 0, 17), utc(2009, 0, 1, 23, 42)]);
   assert.deepStrictEqual(x.nice().domain(), [utc(2009, 0, 1), utc(2009, 0, 2)]);
+  assert.strictEqual(x.type, 'utc');
 });
 
 it("scaleUtc.nice() can nice sub-second domains", () => {

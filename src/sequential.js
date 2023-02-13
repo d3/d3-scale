@@ -69,7 +69,9 @@ export default function sequential() {
     return copy(scale, sequential());
   };
 
-  return initInterpolator.apply(scale, arguments);
+  const s = initInterpolator.apply(scale, arguments);
+  s.type = 'sequential';
+  return s;
 }
 
 export function sequentialLog() {
@@ -79,7 +81,9 @@ export function sequentialLog() {
     return copy(scale, sequentialLog()).base(scale.base());
   };
 
-  return initInterpolator.apply(scale, arguments);
+  const s = initInterpolator.apply(scale, arguments);
+  s.type = 'sequentialLog';
+  return s;
 }
 
 export function sequentialSymlog() {
@@ -89,7 +93,9 @@ export function sequentialSymlog() {
     return copy(scale, sequentialSymlog()).constant(scale.constant());
   };
 
-  return initInterpolator.apply(scale, arguments);
+  const s = initInterpolator.apply(scale, arguments);
+  s.type = 'sequentialSymlog';
+  return s;
 }
 
 export function sequentialPow() {
@@ -99,9 +105,13 @@ export function sequentialPow() {
     return copy(scale, sequentialPow()).exponent(scale.exponent());
   };
 
-  return initInterpolator.apply(scale, arguments);
+  const s = initInterpolator.apply(scale, arguments);
+  s.type = 'sequentialPow';
+  return s;
 }
 
 export function sequentialSqrt() {
-  return sequentialPow.apply(null, arguments).exponent(0.5);
+  const s = sequentialPow.apply(null, arguments).exponent(0.5);
+  s.type = 'sequentialSqrt';
+  return s;
 }

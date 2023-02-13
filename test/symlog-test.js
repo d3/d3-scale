@@ -8,6 +8,7 @@ it("scaleSymlog() has the expected defaults", () => {
   assert.deepStrictEqual(s.range(), [0, 1]);
   assert.strictEqual(s.clamp(), false);
   assert.strictEqual(s.constant(), 1);
+  assert.strictEqual(s.type, 'symlog');
 });
 
 it("symlog(x) maps a domain value x to a range value y", () => {

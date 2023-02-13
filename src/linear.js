@@ -32,7 +32,7 @@ export function linearish(scale) {
       step = start, start = stop, stop = step;
       step = i0, i0 = i1, i1 = step;
     }
-    
+
     while (maxIter-- > 0) {
       step = tickIncrement(start, stop, count);
       if (step === prestep) {
@@ -66,5 +66,7 @@ export default function linear() {
 
   initRange.apply(scale, arguments);
 
-  return linearish(scale);
+  const s = linearish(scale);
+  s.type = 'linear';
+  return s;
 }

@@ -10,6 +10,7 @@ it("scalePow() has the expected defaults", () => {
   assert.strictEqual(s.clamp(), false);
   assert.strictEqual(s.exponent(), 1);
   assert.deepStrictEqual(s.interpolate()({array: ["red"]}, {array: ["blue"]})(0.5), {array: ["rgb(128, 0, 128)"]});
+  assert.strictEqual(s.type, 'pow');
 });
 
 it("pow(x) maps a domain value x to a range value y", () => {

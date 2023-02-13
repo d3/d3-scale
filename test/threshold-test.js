@@ -7,6 +7,7 @@ it("scaleThreshold() has the expected defaults", () => {
   assert.deepStrictEqual(x.range(), [0, 1]);
   assert.strictEqual(x(0.50), 1);
   assert.strictEqual(x(0.49), 0);
+  assert.strictEqual(x.type, 'threshold');
 });
 
 it("threshold(x) maps a number to a discrete value in the range", () => {

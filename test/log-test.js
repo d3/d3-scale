@@ -17,6 +17,7 @@ it("scaleLog() has the expected defaults", () => {
   assertInDelta(x.invert(0.69897), 5);
   assertInDelta(x(3.162278), 0.5);
   assertInDelta(x.invert(0.5), 3.162278);
+  assert.strictEqual(x.type, 'log');
 });
 
 it("log.domain(…) coerces values to numbers", () => {

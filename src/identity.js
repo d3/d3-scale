@@ -24,5 +24,7 @@ export default function identity(domain) {
 
   domain = arguments.length ? Array.from(domain, number) : [0, 1];
 
-  return linearish(scale);
+  const s = linearish(scale);
+  s.type = 'identity';
+  return s;
 }

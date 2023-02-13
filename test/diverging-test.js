@@ -11,6 +11,7 @@ it("scaleDiverging() has the expected defaults", () => {
   assert.strictEqual(s( 0.5),  0.5);
   assert.strictEqual(s( 1.0),  1.0);
   assert.strictEqual(s( 1.5),  1.5);
+  assert.strictEqual(s.type, 'diverging');
 });
 
 it("diverging.clamp(true) enables clamping", () => {

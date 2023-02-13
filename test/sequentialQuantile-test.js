@@ -8,6 +8,7 @@ it("sequentialQuantile() clamps", () => {
   assert.strictEqual(s(1), 0.25);
   assert.strictEqual(s(10), 1);
   assert.strictEqual(s(20), 1);
+  assert.strictEqual(s.type, 'sequentialQuantile');
 });
 
 it("sequentialQuantile().domain() sorts the domain", () => {

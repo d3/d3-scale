@@ -10,6 +10,7 @@ it("scaleQuantize() has the expected defaults", () => {
   assert.deepStrictEqual(s.thresholds(), [0.5]);
   assert.strictEqual(s(0.25), 0);
   assert.strictEqual(s(0.75), 1);
+  assert.strictEqual(s.type, 'quantize');
 });
 
 it("quantize(value) maps a number to a discrete value in the range", () => {

@@ -59,5 +59,7 @@ export default function radial() {
 
   initRange.apply(scale, arguments);
 
-  return linearish(scale);
+  const s = linearish(scale);
+  s.type = 'radial';
+  return s;
 }

@@ -6,6 +6,7 @@ it("scaleQuantile() has the expected default", () => {
   assert.deepStrictEqual(s.domain(), []);
   assert.deepStrictEqual(s.range(), []);
   assert.strictEqual(s.unknown(), undefined);
+  assert.strictEqual(s.type, 'quantile');
 });
 
 it("quantile(x) uses the R-7 algorithm to compute quantiles", () => {

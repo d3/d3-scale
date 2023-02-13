@@ -136,5 +136,6 @@ export default function log() {
   const scale = loggish(transformer()).domain([1, 10]);
   scale.copy = () => copy(scale, log()).base(scale.base());
   initRange.apply(scale, arguments);
+  scale.type= 'log';
   return scale;
 }

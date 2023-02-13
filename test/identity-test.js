@@ -5,6 +5,7 @@ it("scaleIdentity() has the expected defaults", () => {
   const s = scaleIdentity();
   assert.deepStrictEqual(s.domain(), [0, 1]);
   assert.deepStrictEqual(s.range(), [0, 1]);
+  assert.strictEqual(s.type, 'identity');
 });
 
 it("scaleIdentity(range) sets the domain and range", () => {

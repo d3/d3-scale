@@ -66,7 +66,9 @@ export default function diverging() {
     return copy(scale, diverging());
   };
 
-  return initInterpolator.apply(scale, arguments);
+  const s = initInterpolator.apply(scale, arguments);
+  s.type = 'diverging';
+  return s;
 }
 
 export function divergingLog() {

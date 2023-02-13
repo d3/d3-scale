@@ -52,5 +52,7 @@ export default function quantize() {
         .unknown(unknown);
   };
 
-  return initRange.apply(linearish(scale), arguments);
+  const s = initRange.apply(linearish(scale), arguments);
+  s.type = 'quantize';
+  return s;
 }

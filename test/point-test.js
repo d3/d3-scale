@@ -10,6 +10,7 @@ it("scalePoint() has the expected defaults", () => {
   assert.strictEqual(s.round(), false);
   assert.strictEqual(s.padding(), 0);
   assert.strictEqual(s.align(), 0.5);
+  assert.strictEqual(s.type, 'point');
 });
 
 it("scalePoint() does not expose paddingInner and paddingOuter", () => {

@@ -42,9 +42,12 @@ export default function pow() {
 
   initRange.apply(scale, arguments);
 
+  scale.type= 'pow';
   return scale;
 }
 
 export function sqrt() {
-  return pow.apply(null, arguments).exponent(0.5);
+  const s = pow.apply(null, arguments).exponent(0.5);
+  s.type = 'sqrt';
+  return s;
 }

@@ -34,5 +34,7 @@ export default function sequentialQuantile() {
     return sequentialQuantile(interpolator).domain(domain);
   };
 
-  return initInterpolator.apply(scale, arguments);
+  const s = initInterpolator.apply(scale, arguments);
+  s.type = 'sequentialQuantile';
+  return s;
 }

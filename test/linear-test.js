@@ -9,6 +9,7 @@ it("scaleLinear() has the expected defaults", () => {
   assert.strictEqual(s.clamp(), false);
   assert.strictEqual(s.unknown(), undefined);
   assert.deepStrictEqual(s.interpolate()({array: ["red"]}, {array: ["blue"]})(0.5), {array: ["rgb(128, 0, 128)"]});
+  assert.strictEqual(s.type, 'linear');
 });
 
 it("scaleLinear(range) sets the range", () => {

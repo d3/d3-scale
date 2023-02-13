@@ -9,6 +9,7 @@ it("time.domain([-1e50, 1e50]) is equivalent to time.domain([NaN, NaN])", () => 
   assert.strictEqual(isNaN(x.domain()[0]), true); // Note: also coerced on retrieval, so insufficient test!
   assert.strictEqual(isNaN(x.domain()[1]), true);
   assert.deepStrictEqual(x.ticks(10), []);
+  assert.strictEqual(x.type, 'time');
 });
 
 it("time.domain(domain) accepts an iterable", () => {

@@ -8,6 +8,7 @@ it("scaleOrdinal() has the expected defaults", () => {
   assert.strictEqual(s(0), undefined);
   assert.strictEqual(s.unknown(), scaleImplicit);
   assert.deepStrictEqual(s.domain(), [0]);
+  assert.strictEqual(s.type, 'ordinal');
 });
 
 it("ordinal(x) maps a unique name x in the domain to the corresponding value y in the range", () => {

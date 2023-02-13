@@ -31,5 +31,7 @@ export default function symlog() {
     return copy(scale, symlog()).constant(scale.constant());
   };
 
-  return initRange.apply(scale, arguments);
+  const s = initRange.apply(scale, arguments);
+  s.type = 'symlog';
+  return s;
 }
