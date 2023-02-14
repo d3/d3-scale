@@ -78,7 +78,9 @@ export function divergingLog() {
     return copy(scale, divergingLog()).base(scale.base());
   };
 
-  return initInterpolator.apply(scale, arguments);
+  const s = initInterpolator.apply(scale, arguments);
+  s.type = 'divergingLog';
+  return s;
 }
 
 export function divergingSymlog() {
@@ -88,7 +90,9 @@ export function divergingSymlog() {
     return copy(scale, divergingSymlog()).constant(scale.constant());
   };
 
-  return initInterpolator.apply(scale, arguments);
+  const s = initInterpolator.apply(scale, arguments);
+  s.type = 'divergingSymlog';
+  return s;
 }
 
 export function divergingPow() {
@@ -98,9 +102,13 @@ export function divergingPow() {
     return copy(scale, divergingPow()).exponent(scale.exponent());
   };
 
-  return initInterpolator.apply(scale, arguments);
+  const s = initInterpolator.apply(scale, arguments);
+  s.type = 'divergingPow';
+  return s;
 }
 
 export function divergingSqrt() {
-  return divergingPow.apply(null, arguments).exponent(0.5);
+  const s = divergingPow.apply(null, arguments).exponent(0.5);
+  s.type = 'divergingSqrt';
+  return s;
 }
