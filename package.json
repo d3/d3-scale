@@ -38,7 +38,7 @@
   "dependencies": {
     "d3-array": "2.10.0 - 3",
     "d3-format": "1 - 3",
-    "d3-interpolate": "1.2.0 - 3",
+    "d3-interpolate": "git+https://github.com/diegodorado/d3-interpolate.git#14f11375a0485b67d9e1e012521c090113cf9c9a",
     "d3-time": "2.1.1 - 3",
     "d3-time-format": "2 - 4"
   },
