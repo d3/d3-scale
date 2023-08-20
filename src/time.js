@@ -9,7 +9,7 @@ function date(t) {
 }
 
 function number(t) {
-  return t instanceof Date ? +t : +new Date(+t);
+  return t instanceof Date ? +t : Math.round(t);
 }
 
 export function calendar(ticks, tickInterval, year, month, week, day, hour, minute, second, format) {
@@ -37,7 +37,7 @@ export function calendar(ticks, tickInterval, year, month, week, day, hour, minu
   }
 
   scale.invert = function(y) {
-    return new Date(invert(y));
+    return new Date(Math.round(invert(y)));
   };
 
   scale.domain = function(_) {
