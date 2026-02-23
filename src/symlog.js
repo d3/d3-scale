@@ -69,7 +69,16 @@ function niceTicks(scale, start, stop, n, span) {
     const v = scale.invert(pi);
     const step = Math.abs(scale.invert(pi + h) - scale.invert(pi - h));
     const s = tickStep(0, step / 2, 2);
-    ticks.add(s ? Math.round(v / s) * s : v);
+    if (s) {
+      if (s < 1 && Number.isInteger(1 / s)) {
+        const n = 1 / s;
+        ticks.add(Math.round(v * n) / n);
+      } else {
+        ticks.add(Math.round(v / s) * s);
+      }
+    } else {
+      ticks.add(v);
+    }
   }
   ticks.delete(0);
   return [...ticks];

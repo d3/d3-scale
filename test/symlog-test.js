@@ -221,6 +221,11 @@ it("symlog.ticks() allocates ticks proportionally for asymmetric domains", () =>
 it("symlog.ticks() works when zero is not in the domain", () => {
   assert.deepStrictEqual(scaleSymlog().domain([100, 1e6]).ticks(10), [100, 250, 600, 1500, 4000, 10000, 25000, 60000, 150000, 400000, 1000000]);
   assert.deepStrictEqual(scaleSymlog().domain([1e6, 100]).ticks(10), [1000000, 400000, 150000, 60000, 25000, 10000, 4000, 1500, 600, 250, 100]);
+  assert.deepStrictEqual(scaleSymlog().domain([10, 20]).ticks(10), [10, 10.8, 11.6, 12.4, 13.2, 14.2, 15.2, 16.2, 17.4, 18.5, 20]);
+});
+
+it("symlog.ticks() works for a small positive domain", () => {
+  assert.deepStrictEqual(scaleSymlog().domain([0, 80]).ticks(10), [0, 0.6, 1.4, 2.5, 5, 8, 12, 20, 35, 50, 80]);
 });
 
 it("symlog.ticks() handles edge cases", () => {
