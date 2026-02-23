@@ -169,6 +169,73 @@ it("symlog().clamp(true).invert(x) cannot return a value outside the domain", ()
   assert.strictEqual(x.invert(1), 20);
 });
 
+it("symlog.ticks() generates nice ticks across orders of magnitude", () => {
+  assert.deepStrictEqual(scaleSymlog().domain([0, 1e6]).ticks(10), [0, 2, 15, 60, 300, 1000, 4000, 15000, 60000, 300000, 1000000]);
+});
+
+it("symlog.ticks() respects the requested count", () => {
+  assert.deepStrictEqual(scaleSymlog().domain([0, 1e6]).ticks(5), [0, 15, 300, 4000, 60000, 1000000]);
+  assert.deepStrictEqual(scaleSymlog().domain([0, 1e6]).ticks(20), [0, 1, 3, 7, 14, 30, 60, 120, 250, 500, 1000, 2000, 4000, 8000, 16000, 30000, 60000, 120000, 250000, 500000, 1000000]);
+});
+
+it("symlog.ticks() handles low counts", () => {
+  assert.deepStrictEqual(scaleSymlog().domain([0, 1e6]).ticks(1), [0, 1000000]);
+  assert.deepStrictEqual(scaleSymlog().domain([0, 1e6]).ticks(2), [0, 1000, 1000000]);
+  assert.deepStrictEqual(scaleSymlog().domain([0, 1e6]).ticks(3), [0, 100, 10000, 1000000]);
+});
+
+it("symlog.ticks() generates symmetric ticks for symmetric domains", () => {
+  const t = scaleSymlog().domain([-1e6, 1e6]).ticks(10);
+  assert.deepStrictEqual(t, [-1000000, -50000, -5000, -200, -20, 0, 20, 200, 5000, 50000, 1000000]);
+});
+
+it("symlog.ticks() generates symmetric ticks for smaller domains", () => {
+  assert.deepStrictEqual(scaleSymlog().domain([-100, 100]).ticks(10), [-100, -40, -15, -6, -1.5, 0, 1.5, 6, 15, 40, 100]);
+});
+
+it("symlog.ticks() is independent of the range", () => {
+  const a = scaleSymlog().domain([0, 1e6]).range([0, 1]).ticks(10);
+  const b = scaleSymlog().domain([0, 1e6]).range([0, 640]).ticks(10);
+  assert.deepStrictEqual(a, b);
+});
+
+it("symlog.ticks() handles reversed domains", () => {
+  assert.deepStrictEqual(scaleSymlog().domain([1e6, 0]).ticks(10), [1000000, 300000, 60000, 15000, 4000, 1000, 300, 60, 15, 2, 0]);
+});
+
+it("symlog.ticks() adapts to the constant", () => {
+  assert.deepStrictEqual(scaleSymlog().domain([0, 1e6]).constant(1000).ticks(10), [0, 1000, 3000, 7000, 14000, 30000, 60000, 120000, 250000, 500000, 1000000]);
+});
+
+it("symlog.ticks() always includes zero when it is in the domain", () => {
+  assert.ok(scaleSymlog().domain([0, 1e6]).ticks(10).includes(0));
+  assert.ok(scaleSymlog().domain([-1e6, 0]).ticks(10).includes(0));
+  assert.ok(scaleSymlog().domain([-1e6, 1e6]).ticks(10).includes(0));
+  assert.ok(scaleSymlog().domain([-1e6, 1e3]).ticks(10).includes(0));
+});
+
+it("symlog.ticks() allocates ticks proportionally for asymmetric domains", () => {
+  assert.deepStrictEqual(scaleSymlog().domain([-1e6, 1e3]).ticks(10), [-1000000, -100000, -20000, -2000, -400, -60, -5, 0, 10, 100, 1000]);
+});
+
+it("symlog.ticks() works when zero is not in the domain", () => {
+  assert.deepStrictEqual(scaleSymlog().domain([100, 1e6]).ticks(10), [100, 250, 600, 1500, 4000, 10000, 25000, 60000, 150000, 400000, 1000000]);
+  assert.deepStrictEqual(scaleSymlog().domain([1e6, 100]).ticks(10), [1000000, 400000, 150000, 60000, 25000, 10000, 4000, 1500, 600, 250, 100]);
+});
+
+it("symlog.ticks() handles edge cases", () => {
+  assert.deepStrictEqual(scaleSymlog().domain([0, 1e6]).ticks(0), []);
+  assert.deepStrictEqual(scaleSymlog().domain([5, 5]).ticks(10), [5]);
+});
+
+it("symlog.ticks() on a copy is isolated", () => {
+  const s1 = scaleSymlog().domain([0, 1e6]);
+  const s2 = s1.copy();
+  assert.deepStrictEqual(s2.ticks(10), [0, 2, 15, 60, 300, 1000, 4000, 15000, 60000, 300000, 1000000]);
+  s1.domain([0, 100]);
+  assert.deepStrictEqual(s2.ticks(10), [0, 2, 15, 60, 300, 1000, 4000, 15000, 60000, 300000, 1000000]);
+});
+
 it("symlog.tickFormat() defaults to SI prefix format, computed per tick", () => {
   const s = scaleSymlog().domain([0, 1e6]);
   const f = s.tickFormat();
