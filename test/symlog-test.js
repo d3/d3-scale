@@ -168,3 +168,25 @@ it("symlog().clamp(true).invert(x) cannot return a value outside the domain", ()
   assert.strictEqual(x.invert(0), 1);
   assert.strictEqual(x.invert(1), 20);
 });
+
+it("symlog.tickFormat() defaults to SI prefix format, computed per tick", () => {
+  const s = scaleSymlog().domain([0, 1e6]);
+  const f = s.tickFormat();
+  assert.strictEqual(f(0), "0");
+  assert.strictEqual(f(0.01), "10m");
+  assert.strictEqual(f(0.1), "100m");
+  assert.strictEqual(f(1000), "1k");
+  assert.strictEqual(f(500000), "500k");
+  assert.strictEqual(f(1e6), "1M");
+});
+
+it("symlog.tickFormat(count, specifier) accepts a format specifier", () => {
+  const s = scaleSymlog().domain([0, 100]);
+  assert.strictEqual(s.tickFormat(10, ",.0f")(50), "50");
+  assert.strictEqual(s.tickFormat(10, "+f")(50), "+50");
+});
+
+it("symlog.tickFormat(count, specifier) accepts a function specifier", () => {
+  const s = scaleSymlog().domain([0, 100]);
+  assert.strictEqual(s.tickFormat(10, (x) => `${x}a`)(42), "42a");
+});

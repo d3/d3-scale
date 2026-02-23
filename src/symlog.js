@@ -1,3 +1,4 @@
+import {format, formatSpecifier} from "d3-format";
 import {linearish} from "./linear.js";
 import {copy, transformer} from "./continuous.js";
 import {initRange} from "./init.js";
@@ -21,7 +22,19 @@ export function symlogish(transform) {
     return arguments.length ? transform(transformSymlog(c = +_), transformSymexp(c)) : c;
   };
 
-  return linearish(scale);
+  linearish(scale);
+
+  scale.tickFormat = function(count, specifier) {
+    if (specifier == null) specifier = "s";
+    if (typeof specifier !== "function") {
+      specifier = formatSpecifier(specifier);
+      if (specifier.precision == null) specifier.trim = true;
+      specifier = format(specifier);
+    }
+    return specifier;
+  };
+
+  return scale;
 }
 
 export default function symlog() {
