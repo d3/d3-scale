@@ -146,3 +146,12 @@ it("scaleDiverging(range) sets the interpolator", () => {
   assert.strictEqual(s.interpolator()(0.5), 3);
   assert.deepStrictEqual(s.range(), [1, 3, 10]);
 });
+
+it("diverging.unknown(value) sets the return value for undefined, null, and NaN input", () => {
+  const s = scaleDiverging().unknown(-1);
+  assert.strictEqual(s(null), -1);
+  assert.strictEqual(s(undefined), -1);
+  assert.strictEqual(s(NaN), -1);
+  assert.strictEqual(s("N/A"), -1);
+  assert.strictEqual(s(0.4), 0.4);
+});
