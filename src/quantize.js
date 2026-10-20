@@ -38,7 +38,7 @@ export default function quantize() {
   };
 
   scale.unknown = function(_) {
-    return arguments.length ? (unknown = _, scale) : scale;
+    return arguments.length ? (unknown = _, scale) : unknown;
   };
 
   scale.thresholds = function() {
