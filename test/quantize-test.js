@@ -69,6 +69,17 @@ it("quantize.range() cardinality determines the degree of quantization", () => {
   assertInDelta(s.range(range(1))(1/3), 0, 1e-6);
 });
 
+it("quantize.unknown() returns the configured unknown value", () => {
+  const s = scaleQuantize();
+  assert.strictEqual(s.unknown(), undefined);
+  for (const value of [null, 0, false, "missing", {}]) {
+    assert.strictEqual(s.unknown(value), s);
+    assert.strictEqual(s.unknown(), value);
+    assert.strictEqual(s(NaN), value);
+    assert.strictEqual(s.copy().unknown(), value);
+  }
+});
+
 it("quantize.range() values are arbitrary", () => {
   const a = {};
   const b = {};
