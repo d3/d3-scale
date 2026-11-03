@@ -2,7 +2,7 @@ import assert from "node:assert";
 import {it} from "vitest";
 import {interpolateHsl} from "d3-interpolate";
 import {timeDay, timeMinute, timeMonth, timeWeek, timeYear} from "d3-time";
-import {scaleTime} from "../src/index.js";
+import {scaleTime} from "d3-scale";
 import {local} from "./date.js";
 
 it("time.domain([-1e50, 1e50]) is equivalent to time.domain([NaN, NaN])", () => {

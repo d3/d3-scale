@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import {it} from "vitest";
-import {scaleSqrt} from "../src/index.js";
+import {scaleSqrt} from "d3-scale";
 
 it("scaleSqrt() has the expected defaults", () => {
   const s = scaleSqrt();

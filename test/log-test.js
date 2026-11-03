@@ -3,7 +3,7 @@ import {it} from "vitest";
 import {hsl, rgb} from "d3-color";
 import {interpolate, interpolateHsl} from "d3-interpolate";
 import {format} from "d3-format";
-import {scaleLog} from "../src/index.js";
+import {scaleLog} from "d3-scale";
 import {assertInDelta} from "./asserts.js";
 
 it("scaleLog() has the expected defaults", () => {

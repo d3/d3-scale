@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import {it} from "vitest";
-import {scaleBand, scalePoint} from "../src/index.js";
+import {scaleBand, scalePoint} from "d3-scale";
 
 it("scalePoint() has the expected defaults", () => {
   const s = scalePoint();

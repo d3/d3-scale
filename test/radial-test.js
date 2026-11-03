@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import {it} from "vitest";
-import {scaleRadial} from "../src/index.js";
+import {scaleRadial} from "d3-scale";
 
 it("scaleRadial() has the expected defaults", () => {
   const s = scaleRadial();

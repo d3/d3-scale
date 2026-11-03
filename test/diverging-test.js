@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import {it} from "vitest";
-import {scaleDiverging, scaleDivergingLog} from "../src/index.js";
+import {scaleDiverging, scaleDivergingLog} from "d3-scale";
 
 it("scaleDiverging() has the expected defaults", () => {
   const s = scaleDiverging();

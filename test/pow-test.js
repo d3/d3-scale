@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import {it} from "vitest";
-import {scalePow, scaleSqrt} from "../src/index.js";
+import {scalePow, scaleSqrt} from "d3-scale";
 import {roundEpsilon} from "./roundEpsilon.js";
 import {assertInDelta} from "./asserts.js";
 

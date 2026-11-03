@@ -1,7 +1,7 @@
 import assert from "node:assert";
 import {it} from "vitest";
 import {range} from "d3-array";
-import {scaleQuantize} from "../src/index.js";
+import {scaleQuantize} from "d3-scale";
 import {assertInDelta} from "./asserts.js";
 
 it("scaleQuantize() has the expected defaults", () => {

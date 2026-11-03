@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import {it} from "vitest";
-import {scaleImplicit, scaleOrdinal} from "../src/index.js";
+import {scaleImplicit, scaleOrdinal} from "d3-scale";
 
 it("scaleOrdinal() has the expected defaults", () => {
   const s = scaleOrdinal();

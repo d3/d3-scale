@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import {it} from "vitest";
-import {scaleLinear} from "../src/index.js";
+import {scaleLinear} from "d3-scale";
 import {roundEpsilon} from "./roundEpsilon.js";
 
 it("scaleLinear() has the expected defaults", () => {

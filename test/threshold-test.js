@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import {it} from "vitest";
-import {scaleThreshold} from "../src/index.js";
+import {scaleThreshold} from "d3-scale";
 
 it("scaleThreshold() has the expected defaults", () => {
   const x = scaleThreshold();

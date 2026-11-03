@@ -2,7 +2,7 @@ import assert from "node:assert";
 import {it} from "vitest";
 import {interpolateHsl} from "d3-interpolate";
 import {utcDay, utcMinute, utcMonth, utcWeek, utcYear} from "d3-time";
-import {scaleUtc} from "../src/index.js";
+import {scaleUtc} from "d3-scale";
 import {utc} from "./date.js";
 
 it("scaleUtc.nice() is an alias for scaleUtc.nice(10)", () => {
