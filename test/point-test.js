@@ -1,5 +1,5 @@
+import assert from "node:assert";
 import {it} from "vitest";
-import assert from "assert";
 import {scaleBand, scalePoint} from "../src/index.js";
 
 it("scalePoint() has the expected defaults", () => {

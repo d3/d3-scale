@@ -1,5 +1,5 @@
+import assert from "node:assert";
 import {it} from "vitest";
-import assert from "assert";
 import {range} from "d3-array";
 import {scaleQuantize} from "../src/index.js";
 import {assertInDelta} from "./asserts.js";

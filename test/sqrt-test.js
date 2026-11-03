@@ -1,5 +1,5 @@
+import assert from "node:assert";
 import {it} from "vitest";
-import assert from "assert";
 import {scaleSqrt} from "../src/index.js";
 
 it("scaleSqrt() has the expected defaults", () => {

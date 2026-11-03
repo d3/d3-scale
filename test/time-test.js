@@ -1,5 +1,5 @@
+import assert from "node:assert";
 import {it} from "vitest";
-import assert from "assert";
 import {interpolateHsl} from "d3-interpolate";
 import {timeDay, timeMinute, timeMonth, timeWeek, timeYear} from "d3-time";
 import {scaleTime} from "../src/index.js";

@@ -1,5 +1,5 @@
+import assert from "node:assert";
 import {it} from "vitest";
-import assert from "assert";
 import {scaleSequential} from "../src/index.js";
 
 it("scaleSequential() has the expected defaults", () => {

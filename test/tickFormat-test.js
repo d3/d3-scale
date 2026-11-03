@@ -1,5 +1,5 @@
+import assert from "node:assert";
 import {it} from "vitest";
-import assert from "assert";
 import {tickFormat} from "../src/index.js";
 
 it("tickFormat(start, stop, count) returns a format suitable for the ticks", () => {

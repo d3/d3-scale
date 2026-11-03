@@ -1,5 +1,5 @@
+import assert from "node:assert";
 import {it} from "vitest";
-import assert from "assert";
 import {scaleRadial} from "../src/index.js";
 
 it("scaleRadial() has the expected defaults", () => {

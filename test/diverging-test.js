@@ -1,5 +1,5 @@
+import assert from "node:assert";
 import {it} from "vitest";
-import assert from "assert";
 import {scaleDiverging, scaleDivergingLog} from "../src/index.js";
 
 it("scaleDiverging() has the expected defaults", () => {

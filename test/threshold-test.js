@@ -1,5 +1,5 @@
+import assert from "node:assert";
 import {it} from "vitest";
-import assert from "assert";
 import {scaleThreshold} from "../src/index.js";
 
 it("scaleThreshold() has the expected defaults", () => {

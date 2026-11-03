@@ -1,5 +1,5 @@
+import assert from "node:assert";
 import {it} from "vitest";
-import assert from "assert";
 import {scaleSymlog} from "../src/index.js";
 import {assertInDelta} from "./asserts.js";
 

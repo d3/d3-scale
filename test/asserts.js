@@ -1,4 +1,4 @@
-import assert from "assert";
+import assert from "node:assert";
 
 export function assertInDelta(actual, expected, delta = 1e-6) {
   assert(inDelta(actual, expected, delta), `${actual} should be within ${delta} of ${expected}`);

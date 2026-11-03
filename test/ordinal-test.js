@@ -1,5 +1,5 @@
+import assert from "node:assert";
 import {it} from "vitest";
-import assert from "assert";
 import {scaleImplicit, scaleOrdinal} from "../src/index.js";
 
 it("scaleOrdinal() has the expected defaults", () => {

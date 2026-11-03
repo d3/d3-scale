@@ -1,5 +1,5 @@
+import assert from "node:assert";
 import {it} from "vitest";
-import assert from "assert";
 import {scaleIdentity} from "../src/index.js";
 
 it("scaleIdentity() has the expected defaults", () => {
