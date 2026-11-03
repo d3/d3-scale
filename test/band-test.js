@@ -1,7 +1,8 @@
+import {test} from "vitest";
 import assert from "assert";
 import {scaleBand} from "../src/index.js";
 
-it("scaleBand() has the expected defaults", () => {
+test("scaleBand() has the expected defaults", () => {
   const s = scaleBand();
   assert.deepStrictEqual(s.domain(), []);
   assert.deepStrictEqual(s.range(), [0, 1]);
@@ -13,7 +14,7 @@ it("scaleBand() has the expected defaults", () => {
   assert.strictEqual(s.align(), 0.5);
 });
 
-it("band(value) computes discrete bands in a continuous range", () => {
+test("band(value) computes discrete bands in a continuous range", () => {
   const s = scaleBand([0, 960]);
   assert.strictEqual(s("foo"), undefined);
   s.domain(["foo", "bar"]);
@@ -27,21 +28,21 @@ it("band(value) computes discrete bands in a continuous range", () => {
   assert.strictEqual(s.bandwidth(), 30);
 });
 
-it("band(value) returns undefined for values outside the domain", () => {
+test("band(value) returns undefined for values outside the domain", () => {
   const s = scaleBand(["a", "b", "c"], [0, 1]);
   assert.strictEqual(s("d"), undefined);
   assert.strictEqual(s("e"), undefined);
   assert.strictEqual(s("f"), undefined);
 });
 
-it("band(value) does not implicitly add values to the domain", () => {
+test("band(value) does not implicitly add values to the domain", () => {
   const s = scaleBand(["a", "b", "c"], [0, 1]);
   s("d");
   s("e");
   assert.deepStrictEqual(s.domain(), ["a", "b", "c"]);
 });
 
-it("band.step() returns the distance between the starts of adjacent bands", () => {
+test("band.step() returns the distance between the starts of adjacent bands", () => {
   const s = scaleBand([0, 960]);
   assert.strictEqual(s.domain(["foo"]).step(), 960);
   assert.strictEqual(s.domain(["foo", "bar"]).step(), 480);
@@ -51,7 +52,7 @@ it("band.step() returns the distance between the starts of adjacent bands", () =
   assert.strictEqual(s.domain(["foo", "bar"]).step(), 384);
 });
 
-it("band.bandwidth() returns the width of the band", () => {
+test("band.bandwidth() returns the width of the band", () => {
   const s = scaleBand([0, 960]);
   assert.strictEqual(s.domain([]).bandwidth(), 960);
   assert.strictEqual(s.domain(["foo"]).bandwidth(), 960);
@@ -63,7 +64,7 @@ it("band.bandwidth() returns the width of the band", () => {
   assert.strictEqual(s.domain(["foo", "bar"]).bandwidth(), 192);
 });
 
-it("band.domain([]) computes reasonable band and step values", () => {
+test("band.domain([]) computes reasonable band and step values", () => {
   const s = scaleBand([0, 960]).domain([]);
   assert.strictEqual(s.step(), 960);
   assert.strictEqual(s.bandwidth(), 960);
@@ -75,7 +76,7 @@ it("band.domain([]) computes reasonable band and step values", () => {
   assert.strictEqual(s.bandwidth(), 0);
 });
 
-it("band.domain([value]) computes a reasonable singleton band, even with padding", () => {
+test("band.domain([value]) computes a reasonable singleton band, even with padding", () => {
   const s = scaleBand([0, 960]).domain(["foo"]);
   assert.strictEqual(s("foo"), 0);
   assert.strictEqual(s.step(), 960);
@@ -90,7 +91,7 @@ it("band.domain([value]) computes a reasonable singleton band, even with padding
   assert.strictEqual(s.bandwidth(), 0);
 });
 
-it("band.domain(values) recomputes the bands", () => {
+test("band.domain(values) recomputes the bands", () => {
   const s = scaleBand().domain(["a", "b", "c"]).rangeRound([0, 100]);
   assert.deepStrictEqual(s.domain().map(s), [1, 34, 67]);
   assert.strictEqual(s.bandwidth(), 33);
@@ -99,18 +100,18 @@ it("band.domain(values) recomputes the bands", () => {
   assert.strictEqual(s.bandwidth(), 25);
 });
 
-it("band.domain(domain) accepts an iterable", () => {
+test("band.domain(domain) accepts an iterable", () => {
   assert.deepStrictEqual(scaleBand().domain(new Set(["a", "b", "c"])).domain(), ["a", "b", "c"]);
 });
 
-it("band.domain(values) makes a copy of the specified domain values", () => {
+test("band.domain(values) makes a copy of the specified domain values", () => {
   const domain = ["red", "green"];
   const s = scaleBand().domain(domain);
   domain.push("blue");
   assert.deepStrictEqual(s.domain(), ["red", "green"]);
 });
 
-it("band.domain() returns a copy of the domain", () => {
+test("band.domain() returns a copy of the domain", () => {
   const s = scaleBand().domain(["red", "green"]);
   const domain = s.domain();
   assert.deepStrictEqual(domain, ["red", "green"]);
@@ -118,7 +119,7 @@ it("band.domain() returns a copy of the domain", () => {
   assert.deepStrictEqual(s.domain(), ["red", "green"]);
 });
 
-it("band.range(values) can be descending", () => {
+test("band.range(values) can be descending", () => {
   const s = scaleBand().domain(["a", "b", "c"]).range([120, 0]);
   assert.deepStrictEqual(s.domain().map(s), [80, 40, 0]);
   assert.strictEqual(s.bandwidth(), 40);
@@ -127,14 +128,14 @@ it("band.range(values) can be descending", () => {
   assert.strictEqual(s.bandwidth(), 30);
 });
 
-it("band.range(values) makes a copy of the specified range values", () => {
+test("band.range(values) makes a copy of the specified range values", () => {
   const range = [1, 2];
   const s = scaleBand().range(range);
   range.push("blue");
   assert.deepStrictEqual(s.range(), [1, 2]);
 });
 
-it("band.range() returns a copy of the range", () => {
+test("band.range() returns a copy of the range", () => {
   const s = scaleBand().range([1, 2]);
   const range = s.range();
   assert.deepStrictEqual(range, [1, 2]);
@@ -142,27 +143,27 @@ it("band.range() returns a copy of the range", () => {
   assert.deepStrictEqual(s.range(), [1, 2]);
 });
 
-it("band.range(values) accepts an iterable", () => {
+test("band.range(values) accepts an iterable", () => {
   const s = scaleBand().range(new Set([1, 2]));
   assert.deepStrictEqual(s.range(), [1, 2]);
 });
 
-it("band.rangeRound(values) accepts an iterable", () => {
+test("band.rangeRound(values) accepts an iterable", () => {
   const s = scaleBand().rangeRound(new Set([1, 2]));
   assert.deepStrictEqual(s.range(), [1, 2]);
 });
 
-it("band.range(values) coerces values to numbers", () => {
+test("band.range(values) coerces values to numbers", () => {
   const s = scaleBand().range(["1.0", "2.0"]);
   assert.deepStrictEqual(s.range(), [1, 2]);
 });
 
-it("band.rangeRound(values) coerces values to numbers", () => {
+test("band.rangeRound(values) coerces values to numbers", () => {
   const s = scaleBand().rangeRound(["1.0", "2.0"]);
   assert.deepStrictEqual(s.range(), [1, 2]);
 });
 
-it("band.paddingInner(p) specifies the inner padding p", () => {
+test("band.paddingInner(p) specifies the inner padding p", () => {
   const s = scaleBand().domain(["a", "b", "c"]).range([120, 0]).paddingInner(0.1).round(true);
   assert.deepStrictEqual(s.domain().map(s), [83, 42, 1]);
   assert.strictEqual(s.bandwidth(), 37);
@@ -171,7 +172,7 @@ it("band.paddingInner(p) specifies the inner padding p", () => {
   assert.strictEqual(s.bandwidth(), 34);
 });
 
-it("band.paddingInner(p) coerces p to a number <= 1", () => {
+test("band.paddingInner(p) coerces p to a number <= 1", () => {
   const s = scaleBand();
   assert.strictEqual(s.paddingInner("1.0").paddingInner(), 1);
   assert.strictEqual(s.paddingInner("-1.0").paddingInner(), -1);
@@ -179,7 +180,7 @@ it("band.paddingInner(p) coerces p to a number <= 1", () => {
   assert(Number.isNaN(s.paddingInner(NaN).paddingInner()));
 });
 
-it("band.paddingOuter(p) specifies the outer padding p", () => {
+test("band.paddingOuter(p) specifies the outer padding p", () => {
   const s = scaleBand().domain(["a", "b", "c"]).range([120, 0]).paddingInner(0.2).paddingOuter(0.1);
   assert.deepStrictEqual(s.domain().map(s), [84, 44, 4]);
   assert.strictEqual(s.bandwidth(), 32);
@@ -188,7 +189,7 @@ it("band.paddingOuter(p) specifies the outer padding p", () => {
   assert.strictEqual(s.bandwidth(), 20);
 });
 
-it("band.paddingOuter(p) coerces p to a number", () => {
+test("band.paddingOuter(p) coerces p to a number", () => {
   const s = scaleBand();
   assert.strictEqual(s.paddingOuter("1.0").paddingOuter(), 1);
   assert.strictEqual(s.paddingOuter("-1.0").paddingOuter(), -1);
@@ -196,13 +197,13 @@ it("band.paddingOuter(p) coerces p to a number", () => {
   assert(Number.isNaN(s.paddingOuter(NaN).paddingOuter()));
 });
 
-it("band.rangeRound(values) is an alias for band.range(values).round(true)", () => {
+test("band.rangeRound(values) is an alias for band.range(values).round(true)", () => {
   const s = scaleBand().domain(["a", "b", "c"]).rangeRound([0, 100]);
   assert.deepStrictEqual(s.range(), [0, 100]);
   assert.strictEqual(s.round(), true);
 });
 
-it("band.round(true) computes discrete rounded bands in a continuous range", () => {
+test("band.round(true) computes discrete rounded bands in a continuous range", () => {
   const s = scaleBand().domain(["a", "b", "c"]).range([0, 100]).round(true);
   assert.deepStrictEqual(s.domain().map(s), [1, 34, 67]);
   assert.strictEqual(s.bandwidth(), 33);
@@ -211,7 +212,7 @@ it("band.round(true) computes discrete rounded bands in a continuous range", () 
   assert.strictEqual(s.bandwidth(), 25);
 });
 
-it("band.copy() copies all fields", () => {
+test("band.copy() copies all fields", () => {
   const s1 = scaleBand().domain(["red", "green"]).range([1, 2]).round(true).paddingInner(0.1).paddingOuter(0.2);
   const s2 = s1.copy();
   assert.deepStrictEqual(s2.domain(), s1.domain());
@@ -221,7 +222,7 @@ it("band.copy() copies all fields", () => {
   assert.strictEqual(s2.paddingOuter(), s1.paddingOuter());
 });
 
-it("band.copy() isolates changes to the domain", () => {
+test("band.copy() isolates changes to the domain", () => {
   const s1 = scaleBand().domain(["foo", "bar"]).range([0, 2]);
   const s2 = s1.copy();
   s1.domain(["red", "blue"]);
@@ -234,7 +235,7 @@ it("band.copy() isolates changes to the domain", () => {
   assert.deepStrictEqual(s2.domain().map(s2), [0, 1]);
 });
 
-it("band.copy() isolates changes to the range", () => {
+test("band.copy() isolates changes to the range", () => {
   const s1 = scaleBand().domain(["foo", "bar"]).range([0, 2]);
   const s2 = s1.copy();
   s1.range([3, 5]);

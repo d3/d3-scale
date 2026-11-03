@@ -1,7 +1,8 @@
+import {test} from "vitest";
 import assert from "assert";
 import {scaleDiverging, scaleDivergingLog} from "../src/index.js";
 
-it("scaleDiverging() has the expected defaults", () => {
+test("scaleDiverging() has the expected defaults", () => {
   const s = scaleDiverging();
   assert.deepStrictEqual(s.domain(), [0, 0.5, 1]);
   assert.strictEqual(s.interpolator()(0.42), 0.42);
@@ -13,7 +14,7 @@ it("scaleDiverging() has the expected defaults", () => {
   assert.strictEqual(s( 1.5),  1.5);
 });
 
-it("diverging.clamp(true) enables clamping", () => {
+test("diverging.clamp(true) enables clamping", () => {
   const s = scaleDiverging().clamp(true);
   assert.strictEqual(s.clamp(), true);
   assert.strictEqual(s(-0.5), 0.0);
@@ -23,7 +24,7 @@ it("diverging.clamp(true) enables clamping", () => {
   assert.strictEqual(s( 1.5), 1.0);
 });
 
-it("diverging.domain() coerces domain values to numbers", () => {
+test("diverging.domain() coerces domain values to numbers", () => {
   const s = scaleDiverging().domain(["-1.20", " 0", "2.40"]);
   assert.deepStrictEqual(s.domain(), [-1.2, 0, 2.4]);
   assert.strictEqual(s(-1.2), 0.000);
@@ -31,12 +32,12 @@ it("diverging.domain() coerces domain values to numbers", () => {
   assert.strictEqual(s( 2.4), 1.000);
 });
 
-it("diverging.domain() accepts an iterable", () => {
+test("diverging.domain() accepts an iterable", () => {
   const s = scaleDiverging().domain(new Set([-1.2, 0, 2.4]));
   assert.deepStrictEqual(s.domain(), [-1.2, 0, 2.4]);
 });
 
-it("diverging.domain() handles a degenerate domain", () => {
+test("diverging.domain() handles a degenerate domain", () => {
   const s = scaleDiverging().domain([2, 2, 3]);
   assert.deepStrictEqual(s.domain(), [2, 2, 3]);
   assert.strictEqual(s(-1.2), 0.5);
@@ -52,7 +53,7 @@ it("diverging.domain() handles a degenerate domain", () => {
   assert.strictEqual(s( 2.4), 0.5);
 });
 
-it("diverging.domain() handles a descending domain", () => {
+test("diverging.domain() handles a descending domain", () => {
   const s = scaleDiverging().domain([4, 2, 1]);
   assert.deepStrictEqual(s.domain(), [4, 2, 1]);
   assert.strictEqual(s(1.2), 0.9);
@@ -60,7 +61,7 @@ it("diverging.domain() handles a descending domain", () => {
   assert.strictEqual(s(3.0), 0.25);
 });
 
-it("divergingLog.domain() handles a descending domain", () => {
+test("divergingLog.domain() handles a descending domain", () => {
   const s = scaleDivergingLog().domain([3, 2, 1]);
   assert.deepStrictEqual(s.domain(), [3, 2, 1]);
   assert.strictEqual(s(1.2), 1 - 0.1315172029168969);
@@ -68,7 +69,7 @@ it("divergingLog.domain() handles a descending domain", () => {
   assert.strictEqual(s(2.8), 1 - 0.9149213210862197);
 });
 
-it("divergingLog.domain() handles a descending negative domain", () => {
+test("divergingLog.domain() handles a descending negative domain", () => {
   const s = scaleDivergingLog().domain([-1, -2, -3]);
   assert.deepStrictEqual(s.domain(), [-1, -2, -3]);
   assert.strictEqual(s(-1.2), 0.1315172029168969);
@@ -76,7 +77,7 @@ it("divergingLog.domain() handles a descending negative domain", () => {
   assert.strictEqual(s(-2.8), 0.9149213210862197);
 });
 
-it("diverging.domain() handles a non-numeric domain", () => {
+test("diverging.domain() handles a non-numeric domain", () => {
   const s = scaleDiverging().domain([NaN, 2, 3]);
   assert.strictEqual(isNaN(s.domain()[0]), true);
   assert.strictEqual(isNaN(s(-1.2)), true);
@@ -92,12 +93,12 @@ it("diverging.domain() handles a non-numeric domain", () => {
   assert.strictEqual(isNaN(s( 2.4)), true);
 });
 
-it("diverging.domain() only considers the first three elements of the domain", () => {
+test("diverging.domain() only considers the first three elements of the domain", () => {
   const s = scaleDiverging().domain([-1, 100, 200, 3]);
   assert.deepStrictEqual(s.domain(), [-1, 100, 200]);
 });
 
-it("diverging.copy() returns an isolated copy of the scale", () => {
+test("diverging.copy() returns an isolated copy of the scale", () => {
   const s1 = scaleDiverging().domain([1, 2, 3]).clamp(true);
   const s2 = s1.copy();
   assert.deepStrictEqual(s2.domain(), [1, 2, 3]);
@@ -112,12 +113,12 @@ it("diverging.copy() returns an isolated copy of the scale", () => {
   assert.deepStrictEqual(s1.clamp(), false);
 });
 
-it("diverging.range() returns the computed range", () => {
+test("diverging.range() returns the computed range", () => {
   const s = scaleDiverging(function(t) { return t * 2 + 1; });
   assert.deepStrictEqual(s.range(), [1, 2, 3]);
 });
 
-it("diverging.interpolator(interpolator) sets the interpolator", () => {
+test("diverging.interpolator(interpolator) sets the interpolator", () => {
   const i0 = function(t) { return t; };
   const i1 = function(t) { return t * 2; };
   const s = scaleDiverging(i0);
@@ -129,19 +130,19 @@ it("diverging.interpolator(interpolator) sets the interpolator", () => {
   assert.strictEqual(s( 0.5),  1.0);
 });
 
-it("diverging.range(range) sets the interpolator", () => {
+test("diverging.range(range) sets the interpolator", () => {
   const s = scaleDiverging().range([1, 3, 10]);
   assert.strictEqual(s.interpolator()(0.5), 3);
   assert.deepStrictEqual(s.range(), [1, 3, 10]);
 });
 
-it("diverging.range(range) ignores additional values", () => {
+test("diverging.range(range) ignores additional values", () => {
   const s = scaleDiverging().range([1, 3, 10, 20]);
   assert.strictEqual(s.interpolator()(0.5), 3);
   assert.deepStrictEqual(s.range(), [1, 3, 10]);
 });
 
-it("scaleDiverging(range) sets the interpolator", () => {
+test("scaleDiverging(range) sets the interpolator", () => {
   const s = scaleDiverging([1, 3, 10]);
   assert.strictEqual(s.interpolator()(0.5), 3);
   assert.deepStrictEqual(s.range(), [1, 3, 10]);
