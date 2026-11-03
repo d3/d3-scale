@@ -1,5 +1,6 @@
-import assert from "assert";
-import {tickFormat} from "../src/index.js";
+import assert from "node:assert";
+import {it} from "vitest";
+import {tickFormat} from "d3-scale";
 
 it("tickFormat(start, stop, count) returns a format suitable for the ticks", () => {
   assert.strictEqual(tickFormat(0, 1, 10)(0.2), "0.2");

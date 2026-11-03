@@ -1,5 +1,6 @@
-import assert from "assert";
-import {scaleDiverging, scaleDivergingLog, scaleDivergingPow, scaleDivergingSymlog} from "../src/index.js";
+import assert from "node:assert";
+import {it} from "vitest";
+import {scaleDiverging, scaleDivergingLog, scaleDivergingPow, scaleDivergingSymlog} from "d3-scale";
 
 it("scaleDiverging() has the expected defaults", () => {
   const s = scaleDiverging();
@@ -184,4 +185,13 @@ it("scaleDiverging(range) sets the interpolator", () => {
   const s = scaleDiverging([1, 3, 10]);
   assert.strictEqual(s.interpolator()(0.5), 3);
   assert.deepStrictEqual(s.range(), [1, 3, 10]);
+});
+
+it("diverging.unknown(value) sets the return value for undefined, null, and NaN input", () => {
+  const s = scaleDiverging().unknown(-1);
+  assert.strictEqual(s(null), -1);
+  assert.strictEqual(s(undefined), -1);
+  assert.strictEqual(s(NaN), -1);
+  assert.strictEqual(s("N/A"), -1);
+  assert.strictEqual(s(0.4), 0.4);
 });

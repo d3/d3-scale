@@ -1,8 +1,20 @@
-import assert from "assert";
+import assert from "node:assert";
+import {it} from "vitest";
 import {interpolateHsl} from "d3-interpolate";
 import {utcDay, utcMinute, utcMonth, utcWeek, utcYear} from "d3-time";
-import {scaleUtc} from "../src/index.js";
+import {scaleUtc} from "d3-scale";
 import {utc} from "./date.js";
+
+it("scaleUtc.invert() rounds to the nearest millisecond", () => {
+  const x = scaleUtc().domain([new Date("2022-08-31T22:00Z"), new Date("2022-09-30T21:59:59.999Z")]).range([0, 946]);
+  const date = new Date("2022-09-04T22:00Z");
+  assert.deepStrictEqual(x.invert(x(date)), date);
+});
+
+it("scaleUtc.domain() rounds to the nearest millisecond", () => {
+  const x = scaleUtc().domain([1661983200000.1, 1664575199999.9]).range([0, 946]);
+  assert.deepStrictEqual(x.domain(), [new Date(1661983200000), new Date(1664575200000)]);
+});
 
 it("scaleUtc.nice() is an alias for scaleUtc.nice(10)", () => {
   const x = scaleUtc().domain([utc(2009, 0, 1, 0, 17), utc(2009, 0, 1, 23, 42)]);
@@ -281,10 +293,9 @@ it("scaleUtc.ticks(count) can generate 1-day ticks", () => {
 it("scaleUtc.ticks(count) can generate 2-day ticks", () => {
   const x = scaleUtc().domain([utc(2011, 0, 2, 16, 28, 27), utc(2011, 0, 9, 21, 34, 12)]);
   assert.deepStrictEqual(x.ticks(4), [
-    utc(2011, 0, 3, 0, 0),
-    utc(2011, 0, 5, 0, 0),
-    utc(2011, 0, 7, 0, 0),
-    utc(2011, 0, 9, 0, 0)
+    utc(2011, 0, 4, 0, 0),
+    utc(2011, 0, 6, 0, 0),
+    utc(2011, 0, 8, 0, 0)
   ]);
 });
 

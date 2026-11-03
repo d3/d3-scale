@@ -1,5 +1,6 @@
-import assert from "assert";
-import {scaleIdentity} from "../src/index.js";
+import assert from "node:assert";
+import {it} from "vitest";
+import {scaleIdentity} from "d3-scale";
 
 it("scaleIdentity() has the expected defaults", () => {
   const s = scaleIdentity();

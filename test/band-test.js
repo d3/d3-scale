@@ -1,5 +1,6 @@
-import assert from "assert";
-import {scaleBand} from "../src/index.js";
+import assert from "node:assert";
+import {it} from "vitest";
+import {scaleBand} from "d3-scale";
 
 it("scaleBand() has the expected defaults", () => {
   const s = scaleBand();

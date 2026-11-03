@@ -1,5 +1,6 @@
-import assert from "assert";
-import {scaleQuantile} from "../src/index.js";
+import assert from "node:assert";
+import {it} from "vitest";
+import {scaleQuantile} from "d3-scale";
 
 it("scaleQuantile() has the expected default", () => {
   const s = scaleQuantile();

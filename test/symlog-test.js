@@ -1,5 +1,6 @@
-import assert from "assert";
-import {scaleSymlog} from "../src/index.js";
+import assert from "node:assert";
+import {it} from "vitest";
+import {scaleSymlog} from "d3-scale";
 import {assertInDelta} from "./asserts.js";
 
 it("scaleSymlog() has the expected defaults", () => {
