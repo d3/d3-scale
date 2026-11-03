@@ -1,5 +1,6 @@
-import assert from "assert";
-import {scaleSequentialQuantile} from "../src/index.js";
+import assert from "node:assert";
+import {it} from "vitest";
+import {scaleSequentialQuantile} from "d3-scale";
 
 it("sequentialQuantile() clamps", () => {
   const s = scaleSequentialQuantile().domain([0, 1, 2, 3, 10]);
