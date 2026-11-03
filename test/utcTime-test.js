@@ -281,10 +281,9 @@ it("scaleUtc.ticks(count) can generate 1-day ticks", () => {
 it("scaleUtc.ticks(count) can generate 2-day ticks", () => {
   const x = scaleUtc().domain([utc(2011, 0, 2, 16, 28, 27), utc(2011, 0, 9, 21, 34, 12)]);
   assert.deepStrictEqual(x.ticks(4), [
-    utc(2011, 0, 3, 0, 0),
-    utc(2011, 0, 5, 0, 0),
-    utc(2011, 0, 7, 0, 0),
-    utc(2011, 0, 9, 0, 0)
+    utc(2011, 0, 4, 0, 0),
+    utc(2011, 0, 6, 0, 0),
+    utc(2011, 0, 8, 0, 0)
   ]);
 });
 

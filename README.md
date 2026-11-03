@@ -7,6 +7,6 @@ Scales map a dimension of abstract data to a visual representation. Although mos
 ## Resources
 
 - [Documentation](https://d3js.org/d3-scale)
-- [Examples](https://observablehq.com/collection/@d3/d3-scale)
+- [Examples](https://observablehq.com/@d3/-/collection/d3-scale)
 - [Releases](https://github.com/d3/d3-scale/releases)
 - [Getting help](https://d3js.org/community)
