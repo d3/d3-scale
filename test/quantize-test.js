@@ -1,10 +1,10 @@
-import {test} from "vitest";
+import {it} from "vitest";
 import assert from "assert";
 import {range} from "d3-array";
 import {scaleQuantize} from "../src/index.js";
 import {assertInDelta} from "./asserts.js";
 
-test("scaleQuantize() has the expected defaults", () => {
+it("scaleQuantize() has the expected defaults", () => {
   const s = scaleQuantize();
   assert.deepStrictEqual(s.domain(), [0, 1]);
   assert.deepStrictEqual(s.range(), [0, 1]);
@@ -13,7 +13,7 @@ test("scaleQuantize() has the expected defaults", () => {
   assert.strictEqual(s(0.75), 1);
 });
 
-test("quantize(value) maps a number to a discrete value in the range", () => {
+it("quantize(value) maps a number to a discrete value in the range", () => {
   const s = scaleQuantize().range([0, 1, 2]);
   assert.deepStrictEqual(s.thresholds(), [1 / 3, 2 / 3]);
   assert.strictEqual(s(0.0), 0);
@@ -24,7 +24,7 @@ test("quantize(value) maps a number to a discrete value in the range", () => {
   assert.strictEqual(s(1.0), 2);
 });
 
-test("quantize(value) clamps input values to the domain", () => {
+it("quantize(value) clamps input values to the domain", () => {
   const a = {};
   const b = {};
   const c = {};
@@ -33,14 +33,14 @@ test("quantize(value) clamps input values to the domain", () => {
   assert.strictEqual(s(+1.5), c);
 });
 
-test("quantize.unknown(value) sets the return value for undefined, null, and NaN input", () => {
+it("quantize.unknown(value) sets the return value for undefined, null, and NaN input", () => {
   const s = scaleQuantize().range([0, 1, 2]).unknown(-1);
   assert.strictEqual(s(undefined), -1);
   assert.strictEqual(s(null), -1);
   assert.strictEqual(s(NaN), -1);
 });
 
-test("quantize.domain() coerces domain values to numbers", () => {
+it("quantize.domain() coerces domain values to numbers", () => {
   const s = scaleQuantize().domain(["-1.20", "2.40"]);
   assert.deepStrictEqual(s.domain(), [-1.2, 2.4]);
   assert.strictEqual(s(-1.2), 0);
@@ -49,17 +49,17 @@ test("quantize.domain() coerces domain values to numbers", () => {
   assert.strictEqual(s( 2.4), 1);
 });
 
-test("quantize.domain() accepts an iterable", () => {
+it("quantize.domain() accepts an iterable", () => {
   const s = scaleQuantize().domain(new Set([1, 2]));
   assert.deepStrictEqual(s.domain(), [1, 2]);
 });
 
-test("quantize.domain() only considers the first and second element of the domain", () => {
+it("quantize.domain() only considers the first and second element of the domain", () => {
   const s = scaleQuantize().domain([-1, 100, 200]);
   assert.deepStrictEqual(s.domain(), [-1, 100]);
 });
 
-test("quantize.range() cardinality determines the degree of quantization", () => {
+it("quantize.range() cardinality determines the degree of quantization", () => {
   const s = scaleQuantize();
   assertInDelta(s.range(range(0, 1.001, 0.001))(1/3), 0.333, 1e-6);
   assertInDelta(s.range(range(0, 1.010, 0.010))(1/3), 0.330, 1e-6);
@@ -70,7 +70,7 @@ test("quantize.range() cardinality determines the degree of quantization", () =>
   assertInDelta(s.range(range(1))(1/3), 0, 1e-6);
 });
 
-test("quantize.range() values are arbitrary", () => {
+it("quantize.range() values are arbitrary", () => {
   const a = {};
   const b = {};
   const c = {};
@@ -83,7 +83,7 @@ test("quantize.range() values are arbitrary", () => {
   assert.strictEqual(s(1.0), c);
 });
 
-test("quantize.invertExtent() maps a value in the range to a domain extent", () => {
+it("quantize.invertExtent() maps a value in the range to a domain extent", () => {
   const s = scaleQuantize().range([0, 1, 2, 3]);
   assert.deepStrictEqual(s.invertExtent(0), [0.00, 0.25]);
   assert.deepStrictEqual(s.invertExtent(1), [0.25, 0.50]);
@@ -91,7 +91,7 @@ test("quantize.invertExtent() maps a value in the range to a domain extent", () 
   assert.deepStrictEqual(s.invertExtent(3), [0.75, 1.00]);
 });
 
-test("quantize.invertExtent() allows arbitrary range values", () => {
+it("quantize.invertExtent() allows arbitrary range values", () => {
   const a = {};
   const b = {};
   const s = scaleQuantize().range([a, b]);
@@ -99,7 +99,7 @@ test("quantize.invertExtent() allows arbitrary range values", () => {
   assert.deepStrictEqual(s.invertExtent(b), [0.5, 1.0]);
 });
 
-test("quantize.invertExtent() returns [NaN, NaN] when the given value is not in the range", () => {
+it("quantize.invertExtent() returns [NaN, NaN] when the given value is not in the range", () => {
   const s = scaleQuantize();
   assert(s.invertExtent(-1).every(Number.isNaN));
   assert(s.invertExtent(0.5).every(Number.isNaN));
@@ -107,13 +107,13 @@ test("quantize.invertExtent() returns [NaN, NaN] when the given value is not in 
   assert(s.invertExtent("a").every(Number.isNaN));
 });
 
-test("quantize.invertExtent() returns the first match if duplicate values exist in the range", () => {
+it("quantize.invertExtent() returns the first match if duplicate values exist in the range", () => {
   const s = scaleQuantize().range([0, 1, 2, 0]);
   assert.deepStrictEqual(s.invertExtent(0), [0.00, 0.25]);
   assert.deepStrictEqual(s.invertExtent(1), [0.25, 0.50]);
 });
 
-test("quantize.invertExtent(y) is exactly consistent with quantize(x)", () => {
+it("quantize.invertExtent(y) is exactly consistent with quantize(x)", () => {
   const s = scaleQuantize().domain([4.2, 6.2]).range(range(10));
   s.range().forEach(function(y) {
     const e = s.invertExtent(y);

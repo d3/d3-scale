@@ -1,15 +1,15 @@
-import {test} from "vitest";
+import {it} from "vitest";
 import assert from "assert";
 import {scaleQuantile} from "../src/index.js";
 
-test("scaleQuantile() has the expected default", () => {
+it("scaleQuantile() has the expected default", () => {
   const s = scaleQuantile();
   assert.deepStrictEqual(s.domain(), []);
   assert.deepStrictEqual(s.range(), []);
   assert.strictEqual(s.unknown(), undefined);
 });
 
-test("quantile(x) uses the R-7 algorithm to compute quantiles", () => {
+it("quantile(x) uses the R-7 algorithm to compute quantiles", () => {
   const s = scaleQuantile().domain([3, 6, 7, 8, 8, 10, 13, 15, 16, 20]).range([0, 1, 2, 3]);
   assert.deepStrictEqual([3, 6, 6.9, 7, 7.1].map(s), [0, 0, 0, 0, 0]);
   assert.deepStrictEqual([8, 8.9].map(s), [1, 1]);
@@ -22,44 +22,44 @@ test("quantile(x) uses the R-7 algorithm to compute quantiles", () => {
   assert.deepStrictEqual([14.9, 15, 15.1, 16, 20].map(s), [3, 3, 3, 3, 3]);
 });
 
-test("quantile(x) returns undefined if the input value is NaN", () => {
+it("quantile(x) returns undefined if the input value is NaN", () => {
   const s = scaleQuantile().domain([3, 6, 7, 8, 8, 10, 13, 15, 16, 20]).range([0, 1, 2, 3]);
   assert.strictEqual(s(NaN), undefined);
 });
 
-test("quantile.domain() values are sorted in ascending order", () => {
+it("quantile.domain() values are sorted in ascending order", () => {
   const s = scaleQuantile().domain([6, 3, 7, 8, 8, 13, 20, 15, 16, 10]);
   assert.deepStrictEqual(s.domain(), [3, 6, 7, 8, 8, 10, 13, 15, 16, 20]);
 });
 
-test("quantile.domain() values are coerced to numbers", () => {
+it("quantile.domain() values are coerced to numbers", () => {
   const s = scaleQuantile().domain(["6", "13", "20"]);
   assert.deepStrictEqual(s.domain(), [6, 13, 20]);
 });
 
-test("quantile.domain() accepts an iterable", () => {
+it("quantile.domain() accepts an iterable", () => {
   const s = scaleQuantile().domain(new Set([6, 13, 20]));
   assert.deepStrictEqual(s.domain(), [6, 13, 20]);
 });
 
-test("quantile.domain() values are allowed to be zero", () => {
+it("quantile.domain() values are allowed to be zero", () => {
   const s = scaleQuantile().domain([1, 2, 0, 0, null]);
   assert.deepStrictEqual(s.domain(), [0, 0, 1, 2]);
 });
 
-test("quantile.domain() non-numeric values are ignored", () => {
+it("quantile.domain() non-numeric values are ignored", () => {
   const s = scaleQuantile().domain([6, 3, NaN, undefined, 7, 8, 8, 13, null, 20, 15, 16, 10, NaN]);
   assert.deepStrictEqual(s.domain(), [3, 6, 7, 8, 8, 10, 13, 15, 16, 20]);
 });
 
-test("quantile.quantiles() returns the inner thresholds", () => {
+it("quantile.quantiles() returns the inner thresholds", () => {
   const s = scaleQuantile().domain([3, 6, 7, 8, 8, 10, 13, 15, 16, 20]).range([0, 1, 2, 3]);
   assert.deepStrictEqual(s.quantiles(), [7.25, 9, 14.5]);
   s.domain([3, 6, 7, 8, 8, 9, 10, 13, 15, 16, 20]).range([0, 1, 2, 3]);
   assert.deepStrictEqual(s.quantiles(), [7.5, 9, 14]);
 });
 
-test("quantile.range() cardinality determines the number of quantiles", () => {
+it("quantile.range() cardinality determines the number of quantiles", () => {
   const s = scaleQuantile().domain([3, 6, 7, 8, 8, 10, 13, 15, 16, 20]);
   assert.deepStrictEqual(s.range([0, 1, 2, 3]).quantiles(), [7.25, 9, 14.5]);
   assert.deepStrictEqual(s.range([0, 1]).quantiles(), [9]);
@@ -67,12 +67,12 @@ test("quantile.range() cardinality determines the number of quantiles", () => {
   assert.deepStrictEqual(s.range([,,,,,,]).quantiles(), [6.5, 8, 9, 13, 15.5]);
 });
 
-test("quantile.range() accepts an iterable", () => {
+it("quantile.range() accepts an iterable", () => {
   const s = scaleQuantile().domain([3, 6, 7, 8, 8, 10, 13, 15, 16, 20]).range(new Set([0, 1, 2, 3]));
   assert.deepStrictEqual(s.range(), [0, 1, 2, 3]);
 });
 
-test("quantile.range() values are arbitrary", () => {
+it("quantile.range() values are arbitrary", () => {
   const a = {};
   const b = {};
   const c = {};
@@ -83,7 +83,7 @@ test("quantile.range() values are arbitrary", () => {
   assert.deepStrictEqual([14.9, 15, 15.1, 16, 20].map(s), [a, a, a, a, a]);
 });
 
-test("quantile.invertExtent() maps a value in the range to a domain extent", () => {
+it("quantile.invertExtent() maps a value in the range to a domain extent", () => {
   const s = scaleQuantile().domain([3, 6, 7, 8, 8, 10, 13, 15, 16, 20]).range([0, 1, 2, 3]);
   assert.deepStrictEqual(s.invertExtent(0), [3, 7.25]);
   assert.deepStrictEqual(s.invertExtent(1), [7.25, 9]);
@@ -91,7 +91,7 @@ test("quantile.invertExtent() maps a value in the range to a domain extent", () 
   assert.deepStrictEqual(s.invertExtent(3), [14.5, 20]);
 });
 
-test("quantile.invertExtent() allows arbitrary range values", () => {
+it("quantile.invertExtent() allows arbitrary range values", () => {
   const a = {};
   const b = {};
   const s = scaleQuantile().domain([3, 6, 7, 8, 8, 10, 13, 15, 16, 20]).range([a, b]);
@@ -99,7 +99,7 @@ test("quantile.invertExtent() allows arbitrary range values", () => {
   assert.deepStrictEqual(s.invertExtent(b), [9, 20]);
 });
 
-test("quantile.invertExtent() returns [NaN, NaN] when the given value is not in the range", () => {
+it("quantile.invertExtent() returns [NaN, NaN] when the given value is not in the range", () => {
   const s = scaleQuantile().domain([3, 6, 7, 8, 8, 10, 13, 15, 16, 20]);
   assert(s.invertExtent(-1).every(isNaN));
   assert(s.invertExtent(0.5).every(isNaN));
@@ -107,14 +107,14 @@ test("quantile.invertExtent() returns [NaN, NaN] when the given value is not in 
   assert(s.invertExtent('a').every(isNaN));
 });
 
-test("quantile.invertExtent() returns the first match if duplicate values exist in the range", () => {
+it("quantile.invertExtent() returns the first match if duplicate values exist in the range", () => {
   const s = scaleQuantile().domain([3, 6, 7, 8, 8, 10, 13, 15, 16, 20]).range([0, 1, 2, 0]);
   assert.deepStrictEqual(s.invertExtent(0), [3, 7.25]);
   assert.deepStrictEqual(s.invertExtent(1), [7.25, 9]);
   assert.deepStrictEqual(s.invertExtent(2), [9, 14.5]);
 });
 
-test("quantile.unknown(value) sets the return value for undefined, null, and NaN input", () => {
+it("quantile.unknown(value) sets the return value for undefined, null, and NaN input", () => {
   const s = scaleQuantile().domain([3, 6, 7, 8, 8, 10, 13, 15, 16, 20]).range([0, 1, 2, 3]).unknown(-1);
   assert.strictEqual(s(undefined), -1);
   assert.strictEqual(s(null), -1);

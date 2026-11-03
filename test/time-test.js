@@ -1,49 +1,49 @@
-import {test} from "vitest";
+import {it} from "vitest";
 import assert from "assert";
 import {interpolateHsl} from "d3-interpolate";
 import {timeDay, timeMinute, timeMonth, timeWeek, timeYear} from "d3-time";
 import {scaleTime} from "../src/index.js";
 import {local} from "./date.js";
 
-test("time.domain([-1e50, 1e50]) is equivalent to time.domain([NaN, NaN])", () => {
+it("time.domain([-1e50, 1e50]) is equivalent to time.domain([NaN, NaN])", () => {
   const x = scaleTime().domain([-1e50, 1e50]);
   assert.strictEqual(isNaN(x.domain()[0]), true); // Note: also coerced on retrieval, so insufficient test!
   assert.strictEqual(isNaN(x.domain()[1]), true);
   assert.deepStrictEqual(x.ticks(10), []);
 });
 
-test("time.domain(domain) accepts an iterable", () => {
+it("time.domain(domain) accepts an iterable", () => {
   const x = scaleTime().domain(new Set([local(2009), local(2010)]));
   assert.deepStrictEqual(x.domain(), [local(2009), local(2010)]);
 });
 
-test("time.nice() is an alias for time.nice(10)", () => {
+it("time.nice() is an alias for time.nice(10)", () => {
   const x = scaleTime().domain([local(2009, 0, 1, 0, 17), local(2009, 0, 1, 23, 42)]);
   assert.deepStrictEqual(x.nice().domain(), [local(2009, 0, 1), local(2009, 0, 2)]);
 });
 
-test("time.nice() can nice sub-second domains", () => {
+it("time.nice() can nice sub-second domains", () => {
   const x = scaleTime().domain([local(2013, 0, 1, 12, 0, 0, 0), local(2013, 0, 1, 12, 0, 0, 128)]);
   assert.deepStrictEqual(x.nice().domain(), [local(2013, 0, 1, 12, 0, 0, 0), local(2013, 0, 1, 12, 0, 0, 130)]);
 });
 
-test("time.nice() can nice multi-year domains", () => {
+it("time.nice() can nice multi-year domains", () => {
   const x = scaleTime().domain([local(2001, 0, 1), local(2138, 0, 1)]);
   assert.deepStrictEqual(x.nice().domain(), [local(2000, 0, 1), local(2140, 0, 1)]);
 });
 
-test("time.nice() can nice empty domains", () => {
+it("time.nice() can nice empty domains", () => {
   const x = scaleTime().domain([local(2009, 0, 1, 0, 12), local(2009, 0, 1, 0, 12)]);
   assert.deepStrictEqual(x.nice().domain(), [local(2009, 0, 1, 0, 12), local(2009, 0, 1, 0, 12)]);
 });
 
-test("time.nice(count) nices using the specified tick count", () => {
+it("time.nice(count) nices using the specified tick count", () => {
   const x = scaleTime().domain([local(2009, 0, 1, 0, 17), local(2009, 0, 1, 23, 42)]);
   assert.deepStrictEqual(x.nice(100).domain(), [local(2009, 0, 1, 0, 15), local(2009, 0, 1, 23, 45)]);
   assert.deepStrictEqual(x.nice(10).domain(), [local(2009, 0, 1), local(2009, 0, 2)]);
 });
 
-test("time.nice(interval) nices using the specified time interval", () => {
+it("time.nice(interval) nices using the specified time interval", () => {
   const x = scaleTime().domain([local(2009, 0, 1, 0, 12), local(2009, 0, 1, 23, 48)]);
   assert.deepStrictEqual(x.nice(timeDay).domain(), [local(2009, 0, 1), local(2009, 0, 2)]);
   assert.deepStrictEqual(x.nice(timeWeek).domain(), [local(2008, 11, 28), local(2009, 0, 4)]);
@@ -51,17 +51,17 @@ test("time.nice(interval) nices using the specified time interval", () => {
   assert.deepStrictEqual(x.nice(timeYear).domain(), [local(2008, 0, 1), local(2010, 0, 1)]);
 });
 
-test("time.nice(interval) can nice empty domains", () => {
+it("time.nice(interval) can nice empty domains", () => {
   const x = scaleTime().domain([local(2009, 0, 1, 0, 12), local(2009, 0, 1, 0, 12)]);
   assert.deepStrictEqual(x.nice(timeDay).domain(), [local(2009, 0, 1), local(2009, 0, 2)]);
 });
 
-test("time.nice(interval) can nice a polylinear domain, only affecting its extent", () => {
+it("time.nice(interval) can nice a polylinear domain, only affecting its extent", () => {
   const x = scaleTime().domain([local(2009, 0, 1, 0, 12), local(2009, 0, 1, 23, 48), local(2009, 0, 2, 23, 48)]).nice(timeDay);
   assert.deepStrictEqual(x.domain(), [local(2009, 0, 1), local(2009, 0, 1, 23, 48), local(2009, 0, 3)]);
 });
 
-test("time.nice(interval.every(step)) nices using the specified time interval and step", () => {
+it("time.nice(interval.every(step)) nices using the specified time interval and step", () => {
   const x = scaleTime().domain([local(2009, 0, 1, 0, 12), local(2009, 0, 1, 23, 48)]);
   assert.deepStrictEqual(x.nice(timeDay.every(3)).domain(), [local(2009, 0, 1), local(2009, 0, 4)]);
   assert.deepStrictEqual(x.nice(timeWeek.every(2)).domain(), [local(2008, 11, 21), local(2009, 0, 4)]);
@@ -69,7 +69,7 @@ test("time.nice(interval.every(step)) nices using the specified time interval an
   assert.deepStrictEqual(x.nice(timeYear.every(10)).domain(), [local(2000, 0, 1), local(2010, 0, 1)]);
 });
 
-test("time.copy() isolates changes to the domain", () => {
+it("time.copy() isolates changes to the domain", () => {
   const x = scaleTime().domain([local(2009, 0, 1), local(2010, 0, 1)]), y = x.copy();
   x.domain([local(2010, 0, 1), local(2011, 0, 1)]);
   assert.deepStrictEqual(y.domain(), [local(2009, 0, 1), local(2010, 0, 1)]);
@@ -82,7 +82,7 @@ test("time.copy() isolates changes to the domain", () => {
   assert.deepStrictEqual(y.domain(), [local(2011, 0, 1), local(2012, 0, 1)]);
 });
 
-test("time.copy() isolates changes to the range", () => {
+it("time.copy() isolates changes to the range", () => {
   const x = scaleTime().domain([local(2009, 0, 1), local(2010, 0, 1)]), y = x.copy();
   x.range([1, 2]);
   assert.deepStrictEqual(x.invert(1), local(2009, 0, 1));
@@ -95,7 +95,7 @@ test("time.copy() isolates changes to the range", () => {
   assert.deepStrictEqual(y.range(), [2, 3]);
 });
 
-test("time.copy() isolates changes to the interpolator", () => {
+it("time.copy() isolates changes to the interpolator", () => {
   const x = scaleTime().domain([local(2009, 0, 1), local(2010, 0, 1)]).range(["red", "blue"]),
       i = x.interpolate(),
       y = x.copy();
@@ -105,7 +105,7 @@ test("time.copy() isolates changes to the interpolator", () => {
   assert.strictEqual(y.interpolate(), i);
 });
 
-test("time.copy() isolates changes to clamping", () => {
+it("time.copy() isolates changes to clamping", () => {
   const x = scaleTime().domain([local(2009, 0, 1), local(2010, 0, 1)]).clamp(true), y = x.copy();
   x.clamp(false);
   assert.strictEqual(x(local(2011, 0, 1)), 2);
@@ -117,7 +117,7 @@ test("time.copy() isolates changes to clamping", () => {
   assert.strictEqual(x.clamp(), false);
 });
 
-test("time.clamp(true).invert(value) never returns a value outside the domain", () => {
+it("time.clamp(true).invert(value) never returns a value outside the domain", () => {
   const x = scaleTime().clamp(true);
   assert(x.invert(0) instanceof Date);
   assert(x.invert(0) !== x.invert(0)); // returns a distinct copy
@@ -127,7 +127,7 @@ test("time.clamp(true).invert(value) never returns a value outside the domain", 
   assert.strictEqual(+x.invert(2), +x.domain()[1]);
 });
 
-test("time.ticks(interval) observes the specified tick interval", () => {
+it("time.ticks(interval) observes the specified tick interval", () => {
   const x = scaleTime().domain([local(2011, 0, 1, 12, 1, 0), local(2011, 0, 1, 12, 4, 4)]);
   assert.deepStrictEqual(x.ticks(timeMinute), [
     local(2011, 0, 1, 12, 1),
@@ -137,7 +137,7 @@ test("time.ticks(interval) observes the specified tick interval", () => {
   ]);
 });
 
-test("time.ticks(interval.every(step)) observes the specified tick interval and step", () => {
+it("time.ticks(interval.every(step)) observes the specified tick interval and step", () => {
   const x = scaleTime().domain([local(2011, 0, 1, 12, 0, 0), local(2011, 0, 1, 12, 33, 4)]);
   assert.deepStrictEqual(x.ticks(timeMinute.every(10)), [
     local(2011, 0, 1, 12, 0),
@@ -147,7 +147,7 @@ test("time.ticks(interval.every(step)) observes the specified tick interval and 
   ]);
 });
 
-test("time.ticks(count) can generate sub-second ticks", () => {
+it("time.ticks(count) can generate sub-second ticks", () => {
   const x = scaleTime().domain([local(2011, 0, 1, 12, 0, 0), local(2011, 0, 1, 12, 0, 1)]);
   assert.deepStrictEqual(x.ticks(4), [
     local(2011, 0, 1, 12, 0, 0,   0),
@@ -159,7 +159,7 @@ test("time.ticks(count) can generate sub-second ticks", () => {
   ]);
 });
 
-test("time.ticks(count) can generate 1-second ticks", () => {
+it("time.ticks(count) can generate 1-second ticks", () => {
   const x = scaleTime().domain([local(2011, 0, 1, 12, 0, 0), local(2011, 0, 1, 12, 0, 4)]);
   assert.deepStrictEqual(x.ticks(4), [
     local(2011, 0, 1, 12, 0, 0),
@@ -170,7 +170,7 @@ test("time.ticks(count) can generate 1-second ticks", () => {
   ]);
 });
 
-test("time.ticks(count) can generate 5-second ticks", () => {
+it("time.ticks(count) can generate 5-second ticks", () => {
   const x = scaleTime().domain([local(2011, 0, 1, 12, 0, 0), local(2011, 0, 1, 12, 0, 20)]);
   assert.deepStrictEqual(x.ticks(4), [
     local(2011, 0, 1, 12, 0, 0),
@@ -181,7 +181,7 @@ test("time.ticks(count) can generate 5-second ticks", () => {
   ]);
 });
 
-test("time.ticks(count) can generate 15-second ticks", () => {
+it("time.ticks(count) can generate 15-second ticks", () => {
   const x = scaleTime().domain([local(2011, 0, 1, 12, 0, 0), local(2011, 0, 1, 12, 0, 50)]);
   assert.deepStrictEqual(x.ticks(4), [
     local(2011, 0, 1, 12, 0, 0),
@@ -191,7 +191,7 @@ test("time.ticks(count) can generate 15-second ticks", () => {
   ]);
 });
 
-test("time.ticks(count) can generate 30-second ticks", () => {
+it("time.ticks(count) can generate 30-second ticks", () => {
   const x = scaleTime().domain([local(2011, 0, 1, 12, 0, 0), local(2011, 0, 1, 12, 1, 50)]);
   assert.deepStrictEqual(x.ticks(4), [
     local(2011, 0, 1, 12, 0, 0),
@@ -201,7 +201,7 @@ test("time.ticks(count) can generate 30-second ticks", () => {
   ]);
 });
 
-test("time.ticks(count) can generate 1-minute ticks", () => {
+it("time.ticks(count) can generate 1-minute ticks", () => {
   const x = scaleTime().domain([local(2011, 0, 1, 12, 0, 27), local(2011, 0, 1, 12, 4, 12)]);
   assert.deepStrictEqual(x.ticks(4), [
     local(2011, 0, 1, 12, 1),
@@ -211,7 +211,7 @@ test("time.ticks(count) can generate 1-minute ticks", () => {
   ]);
 });
 
-test("time.ticks(count) can generate 5-minute ticks", () => {
+it("time.ticks(count) can generate 5-minute ticks", () => {
   const x = scaleTime().domain([local(2011, 0, 1, 12, 3, 27), local(2011, 0, 1, 12, 21, 12)]);
   assert.deepStrictEqual(x.ticks(4), [
     local(2011, 0, 1, 12, 5),
@@ -221,7 +221,7 @@ test("time.ticks(count) can generate 5-minute ticks", () => {
   ]);
 });
 
-test("time.ticks(count) can generate 15-minute ticks", () => {
+it("time.ticks(count) can generate 15-minute ticks", () => {
   const x = scaleTime().domain([local(2011, 0, 1, 12, 8, 27), local(2011, 0, 1, 13, 4, 12)]);
   assert.deepStrictEqual(x.ticks(4), [
     local(2011, 0, 1, 12, 15),
@@ -231,7 +231,7 @@ test("time.ticks(count) can generate 15-minute ticks", () => {
   ]);
 });
 
-test("time.ticks(count) can generate 30-minute ticks", () => {
+it("time.ticks(count) can generate 30-minute ticks", () => {
   const x = scaleTime().domain([local(2011, 0, 1, 12, 28, 27), local(2011, 0, 1, 14, 4, 12)]);
   assert.deepStrictEqual(x.ticks(4), [
     local(2011, 0, 1, 12, 30),
@@ -241,7 +241,7 @@ test("time.ticks(count) can generate 30-minute ticks", () => {
   ]);
 });
 
-test("time.ticks(count) can generate 1-hour ticks", () => {
+it("time.ticks(count) can generate 1-hour ticks", () => {
   const x = scaleTime().domain([local(2011, 0, 1, 12, 28, 27), local(2011, 0, 1, 16, 34, 12)]);
   assert.deepStrictEqual(x.ticks(4), [
     local(2011, 0, 1, 13, 0),
@@ -251,7 +251,7 @@ test("time.ticks(count) can generate 1-hour ticks", () => {
   ]);
 });
 
-test("time.ticks(count) can generate 3-hour ticks", () => {
+it("time.ticks(count) can generate 3-hour ticks", () => {
   const x = scaleTime().domain([local(2011, 0, 1, 14, 28, 27), local(2011, 0, 2, 1, 34, 12)]);
   assert.deepStrictEqual(x.ticks(4), [
     local(2011, 0, 1, 15, 0),
@@ -261,7 +261,7 @@ test("time.ticks(count) can generate 3-hour ticks", () => {
   ]);
 });
 
-test("time.ticks(count) can generate 6-hour ticks", () => {
+it("time.ticks(count) can generate 6-hour ticks", () => {
   const x = scaleTime().domain([local(2011, 0, 1, 16, 28, 27), local(2011, 0, 2, 14, 34, 12)]);
   assert.deepStrictEqual(x.ticks(4), [
     local(2011, 0, 1, 18, 0),
@@ -271,7 +271,7 @@ test("time.ticks(count) can generate 6-hour ticks", () => {
   ]);
 });
 
-test("time.ticks(count) can generate 12-hour ticks", () => {
+it("time.ticks(count) can generate 12-hour ticks", () => {
   const x = scaleTime().domain([local(2011, 0, 1, 16, 28, 27), local(2011, 0, 3, 21, 34, 12)]);
   assert.deepStrictEqual(x.ticks(4), [
     local(2011, 0, 2, 0, 0),
@@ -281,7 +281,7 @@ test("time.ticks(count) can generate 12-hour ticks", () => {
   ]);
 });
 
-test("time.ticks(count) can generate 1-day ticks", () => {
+it("time.ticks(count) can generate 1-day ticks", () => {
   const x = scaleTime().domain([local(2011, 0, 1, 16, 28, 27), local(2011, 0, 5, 21, 34, 12)]);
   assert.deepStrictEqual(x.ticks(4), [
     local(2011, 0, 2, 0, 0),
@@ -291,7 +291,7 @@ test("time.ticks(count) can generate 1-day ticks", () => {
   ]);
 });
 
-test("time.ticks(count) can generate 2-day ticks", () => {
+it("time.ticks(count) can generate 2-day ticks", () => {
   const x = scaleTime().domain([local(2011, 0, 2, 16, 28, 27), local(2011, 0, 9, 21, 34, 12)]);
   assert.deepStrictEqual(x.ticks(4), [
     local(2011, 0, 3, 0, 0),
@@ -301,7 +301,7 @@ test("time.ticks(count) can generate 2-day ticks", () => {
   ]);
 });
 
-test("time.ticks(count) can generate 1-week ticks", () => {
+it("time.ticks(count) can generate 1-week ticks", () => {
   const x = scaleTime().domain([local(2011, 0, 1, 16, 28, 27), local(2011, 0, 23, 21, 34, 12)]);
   assert.deepStrictEqual(x.ticks(4), [
     local(2011, 0, 2, 0, 0),
@@ -311,7 +311,7 @@ test("time.ticks(count) can generate 1-week ticks", () => {
   ]);
 });
 
-test("time.ticks(count) can generate 1-month ticks", () => {
+it("time.ticks(count) can generate 1-month ticks", () => {
   const x = scaleTime().domain([local(2011, 0, 18), local(2011, 4, 2)]);
   assert.deepStrictEqual(x.ticks(4), [
     local(2011, 1, 1, 0, 0),
@@ -321,7 +321,7 @@ test("time.ticks(count) can generate 1-month ticks", () => {
   ]);
 });
 
-test("time.ticks(count) can generate 3-month ticks", () => {
+it("time.ticks(count) can generate 3-month ticks", () => {
   const x = scaleTime().domain([local(2010, 11, 18), local(2011, 10, 2)]);
   assert.deepStrictEqual(x.ticks(4), [
     local(2011, 0, 1, 0, 0),
@@ -331,7 +331,7 @@ test("time.ticks(count) can generate 3-month ticks", () => {
   ]);
 });
 
-test("time.ticks(count) can generate 1-year ticks", () => {
+it("time.ticks(count) can generate 1-year ticks", () => {
   const x = scaleTime().domain([local(2010, 11, 18), local(2014, 2, 2)]);
   assert.deepStrictEqual(x.ticks(4), [
     local(2011, 0, 1, 0, 0),
@@ -341,7 +341,7 @@ test("time.ticks(count) can generate 1-year ticks", () => {
   ]);
 });
 
-test("time.ticks(count) can generate multi-year ticks", () => {
+it("time.ticks(count) can generate multi-year ticks", () => {
   const x = scaleTime().domain([local(0, 11, 18), local(2014, 2, 2)]);
   assert.deepStrictEqual(x.ticks(6), [
     local( 500, 0, 1, 0, 0),
@@ -351,67 +351,67 @@ test("time.ticks(count) can generate multi-year ticks", () => {
   ]);
 });
 
-test("time.ticks(count) returns one tick for an empty domain", () => {
+it("time.ticks(count) returns one tick for an empty domain", () => {
   const x = scaleTime().domain([local(2014, 2, 2), local(2014, 2, 2)]);
   assert.deepStrictEqual(x.ticks(6), [local(2014, 2, 2)]);
 });
 
-test("time.ticks() returns descending ticks for a descending domain", () => {
+it("time.ticks() returns descending ticks for a descending domain", () => {
   const x = scaleTime();
   assert.deepStrictEqual(x.domain([local(2014, 2, 2), local(2010, 11, 18)]).ticks(4), [local(2014, 0, 1, 0, 0), local(2013, 0, 1, 0, 0), local(2012, 0, 1, 0, 0), local(2011, 0, 1, 0, 0)]);
   assert.deepStrictEqual(x.domain([local(2011, 10, 2), local(2010, 11, 18)]).ticks(4), [local(2011, 9, 1, 0, 0), local(2011, 6, 1, 0, 0), local(2011, 3, 1, 0, 0), local(2011, 0, 1, 0, 0)]);
 });
 
-test("time.tickFormat()(date) formats year on New Year's", () => {
+it("time.tickFormat()(date) formats year on New Year's", () => {
   const f = scaleTime().tickFormat();
   assert.strictEqual(f(local(2011, 0, 1)), "2011");
   assert.strictEqual(f(local(2012, 0, 1)), "2012");
   assert.strictEqual(f(local(2013, 0, 1)), "2013");
 });
 
-test("time.tickFormat()(date) formats month on the 1st of each month", () => {
+it("time.tickFormat()(date) formats month on the 1st of each month", () => {
   const f = scaleTime().tickFormat();
   assert.strictEqual(f(local(2011, 1, 1)), "February");
   assert.strictEqual(f(local(2011, 2, 1)), "March");
   assert.strictEqual(f(local(2011, 3, 1)), "April");
 });
 
-test("time.tickFormat()(date) formats week on Sunday midnight", () => {
+it("time.tickFormat()(date) formats week on Sunday midnight", () => {
   const f = scaleTime().tickFormat();
   assert.strictEqual(f(local(2011, 1, 6)), "Feb 06");
   assert.strictEqual(f(local(2011, 1, 13)), "Feb 13");
   assert.strictEqual(f(local(2011, 1, 20)), "Feb 20");
 });
 
-test("time.tickFormat()(date) formats date on midnight", () => {
+it("time.tickFormat()(date) formats date on midnight", () => {
   const f = scaleTime().tickFormat();
   assert.strictEqual(f(local(2011, 1, 2)), "Wed 02");
   assert.strictEqual(f(local(2011, 1, 3)), "Thu 03");
   assert.strictEqual(f(local(2011, 1, 4)), "Fri 04");
 });
 
-test("time.tickFormat()(date) formats hour on minute zero", () => {
+it("time.tickFormat()(date) formats hour on minute zero", () => {
   const f = scaleTime().tickFormat();
   assert.strictEqual(f(local(2011, 1, 2, 11)), "11 AM");
   assert.strictEqual(f(local(2011, 1, 2, 12)), "12 PM");
   assert.strictEqual(f(local(2011, 1, 2, 13)), "01 PM");
 });
 
-test("time.tickFormat()(date) formats minute on second zero", () => {
+it("time.tickFormat()(date) formats minute on second zero", () => {
   const f = scaleTime().tickFormat();
   assert.strictEqual(f(local(2011, 1, 2, 11, 59)), "11:59");
   assert.strictEqual(f(local(2011, 1, 2, 12,  1)), "12:01");
   assert.strictEqual(f(local(2011, 1, 2, 12,  2)), "12:02");
 });
 
-test("time.tickFormat()(date) otherwise, formats second", () => {
+it("time.tickFormat()(date) otherwise, formats second", () => {
   const f = scaleTime().tickFormat();
   assert.strictEqual(f(local(2011, 1, 2, 12,  1,  9)), ":09");
   assert.strictEqual(f(local(2011, 1, 2, 12,  1, 10)), ":10");
   assert.strictEqual(f(local(2011, 1, 2, 12,  1, 11)), ":11");
 });
 
-test("time.tickFormat(count, specifier) returns a time format for the specified specifier", () => {
+it("time.tickFormat(count, specifier) returns a time format for the specified specifier", () => {
   const f = scaleTime().tickFormat(10, "%c");
   assert.strictEqual(f(local(2011, 1, 2, 12)), "2/2/2011, 12:00:00 PM");
 });
