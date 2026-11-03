@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import {it} from "vitest";
-import {scaleDiverging, scaleDivergingLog} from "d3-scale";
+import {scaleDiverging, scaleDivergingLog, scaleDivergingPow, scaleDivergingSymlog} from "d3-scale";
 
 it("scaleDiverging() has the expected defaults", () => {
   const s = scaleDiverging();
@@ -59,6 +59,45 @@ it("diverging.domain() handles a descending domain", () => {
   assert.strictEqual(s(1.2), 0.9);
   assert.strictEqual(s(2.0), 0.5);
   assert.strictEqual(s(3.0), 0.25);
+});
+
+it("diverging.domain() handles a degenerate descending domain", () => {
+  const s = scaleDiverging().domain([1, 1, 0]);
+  assert.deepStrictEqual([-0.5, 0, 0.25, 0.5, 0.75, 1, 1.5].map(s), [1.25, 1, 0.875, 0.75, 0.625, 0.5, 0.5]);
+  assert.strictEqual(s.copy()(0.5), 0.75);
+  s.clamp(true);
+  assert.strictEqual(s(-0.5), 1);
+  assert.strictEqual(s(1.5), 0.5);
+  s.domain([1, 0, 0]);
+  assert.strictEqual(s(0.5), 0.25);
+  assert.strictEqual(s(-0.5), 0.5);
+});
+
+it("divergingPow.exponent() preserves a degenerate descending domain", () => {
+  const s = scaleDivergingPow().domain([2, 2, 0]).exponent(2);
+  assert.strictEqual(s(0), 1);
+  assert.strictEqual(s(1), 0.875);
+  assert.strictEqual(s(2), 0.5);
+  assert.strictEqual(s.copy()(1), 0.875);
+});
+
+it("divergingSymlog.constant() preserves a degenerate descending domain", () => {
+  const s = scaleDivergingSymlog().domain([2, 2, 0]).constant(2);
+  assert.strictEqual(s(0), 1);
+  assert.strictEqual(s(2), 0.5);
+  assert.strictEqual(s(6), 0.5);
+});
+
+it("divergingLog.domain() handles a degenerate descending domain", () => {
+  const s = scaleDivergingLog().domain([4, 4, 1]);
+  assert.strictEqual(s(1), 1);
+  assert.strictEqual(s(2), 0.75);
+  assert.strictEqual(s(4), 0.5);
+  assert.strictEqual(s(8), 0.5);
+  s.domain([-1, -1, -4]);
+  assert.strictEqual(s(-1), 0.5);
+  assert.strictEqual(s(-2), 0.75);
+  assert.strictEqual(s(-4), 1);
 });
 
 it("divergingLog.domain() handles a descending domain", () => {
