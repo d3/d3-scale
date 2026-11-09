@@ -243,6 +243,15 @@ it("linear.nice(count) nices the domain, extending it to round numbers", () => {
   assert.deepStrictEqual(scaleLinear().domain([0, 15]).nice(5).domain(), [0, 20]);
 });
 
+it("linear.nice(count) handles small steps precisely", () => {
+  assert.deepStrictEqual(scaleLinear().domain([1.1, 1.1 + 0.3]).nice().domain(), [1.1, 1.45]);
+  assert.deepStrictEqual(scaleLinear().domain([-(1.1 + 0.3), -1.1]).nice().domain(), [-1.45, -1.1]);
+});
+
+it.skip("linear.nice(count) handles small counts", () => { // See d3-array #299.
+  assert.deepStrictEqual(scaleLinear().domain([-1, 5]).nice(1).domain(), [-10, 10]);
+});
+
 it("linear.nice(count) has no effect on degenerate domains", () => {
   assert.deepStrictEqual(scaleLinear().domain([0, 0]).nice(10).domain(), [0, 0]);
   assert.deepStrictEqual(scaleLinear().domain([0.5, 0.5]).nice(10).domain(), [0.5, 0.5]);
