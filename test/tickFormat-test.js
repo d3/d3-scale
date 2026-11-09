@@ -41,4 +41,19 @@ it("tickFormat(start, stop, count) uses the default precision when the domain is
   const f = tickFormat(0, NaN, 10);
   assert.strictEqual(f + "", " >-,f");
   assert.strictEqual(f(0.12), "0.120000");
+
+  const f2 = tickFormat(0.12, NaN, 10);
+  assert.strictEqual(f2 + "", " >-,f");
+  assert.strictEqual(f2(0.12), "0.120000");
+});
+
+it("tickFormat(start, stop, count) uses the default precision with trimming when the domain is collapsed", () => {
+  const f = tickFormat(5.5, 5.5, 10);
+  assert.strictEqual(f + "", " >-,~f");
+  assert.strictEqual(f(0), "0");
+  assert.strictEqual(f(5.5), "5.5");
+  assert.strictEqual(f(Math.PI), "3.141593");
+  assert.strictEqual(f(-Math.PI), "−3.141593");
+  assert.strictEqual(f(Math.PI * 1e7), "31,415,926.535898");
+  assert.strictEqual(f(-Math.PI * 1e7), "−31,415,926.535898");
 });
