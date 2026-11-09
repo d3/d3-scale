@@ -37,8 +37,30 @@ it("tickFormat(start, stop, count, specifier) sets the appropriate prefix precis
   assert.strictEqual(tickFormat(0, 1e6, 100, "$s")(0.501e6), "$0.50M");
 });
 
-it("tickFormat(start, stop, count) uses the default precision when the domain is invalid", () => {
+it("tickFormat(start, stop, count) trims the default precision when the domain is invalid", () => {
   const f = tickFormat(0, NaN, 10);
-  assert.strictEqual(f + "", " >-,f");
-  assert.strictEqual(f(0.12), "0.120000");
+  assert.strictEqual(f + "", " >-,~f");
+  assert.strictEqual(f(0.12), "0.12");
+  assert.strictEqual(f(Math.PI), "3.141593");
+});
+
+it("tickFormat(start, stop, count, specifier) trims trailing zeros when no precision can be derived", () => {
+  assert.strictEqual(tickFormat(0, 0, 10)(0), "0");
+  assert.strictEqual(tickFormat(0.5, 0.5, 10)(0.5), "0.5");
+  assert.strictEqual(tickFormat(5, 5, 10)(5), "5");
+  assert.strictEqual(tickFormat(-1.5, -1.5, 10)(-1.5), "−1.5");
+  assert.strictEqual(tickFormat(0.5, 0.5, 10, "%")(0.5), "50%");
+  assert.strictEqual(tickFormat(1.2, 1.2, 10, "r")(1.2), "1.2");
+  assert.strictEqual(tickFormat(0.5, 0.5, 10, "e")(0.5), "5e-1");
+  assert.strictEqual(tickFormat(1500, 1500, 10, "s")(1500), "1.5k");
+  assert.strictEqual(tickFormat(-1, 1, 2, "r")(1), "1");
+  assert.strictEqual(tickFormat(0, 1, 1, "p")(1), "100%");
+  assert.strictEqual(tickFormat(0.5, 0.5, 10, ".2f")(0.5), "0.50");
+  assert.strictEqual(tickFormat(Math.PI, Math.PI, 10)(Math.PI), "3.141593");
+  assert.strictEqual(tickFormat(Math.PI, Math.PI, 10)(-Math.PI), "−3.141593");
+  assert.strictEqual(tickFormat(Math.PI, Math.PI, 10)(Math.PI * 1e7), "31,415,926.535898");
+  assert.strictEqual(tickFormat(Math.PI, Math.PI, 10, "r")(Math.PI), "3.14159");
+  assert.strictEqual(tickFormat(Math.PI, Math.PI, 10, "e")(Math.PI), "3.141593e+0");
+  assert.strictEqual(tickFormat(Math.PI, Math.PI, 10, "%")(Math.PI / 100), "3.141593%");
+  assert.strictEqual(tickFormat(Math.PI * 1e3, Math.PI * 1e3, 10, "s")(Math.PI * 1e3), "3.141593k");
 });
