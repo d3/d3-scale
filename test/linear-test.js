@@ -412,10 +412,10 @@ it("linear.tickFormat(count, specifier) sets the appropriate prefix precision if
   assert.strictEqual(scaleLinear().domain([0, 1e6]).tickFormat(100, "$s")(0.501e6), "$0.50M");
 });
 
-it("linear.tickFormat() uses the default precision when the domain is invalid", () => {
+it("linear.tickFormat() trims the default precision when the domain is invalid", () => {
   const f = scaleLinear().domain([0, NaN]).tickFormat();
-  assert.strictEqual(f + "", " >-,f");
-  assert.strictEqual(f(0.12), "0.120000");
+  assert.strictEqual(f + "", " >-,~f");
+  assert.strictEqual(f(0.12), "0.12");
 });
 
 it("linear.copy() returns a copy with changes to the domain are isolated", () => {
