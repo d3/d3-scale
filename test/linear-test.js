@@ -248,7 +248,7 @@ it("linear.nice(count) handles small steps precisely", () => {
   assert.deepStrictEqual(scaleLinear().domain([-(1.1 + 0.3), -1.1]).nice().domain(), [-1.45, -1.1]);
 });
 
-it("linear.nice(count) handles small counts", () => {
+it.skip("linear.nice(count) handles small counts", () => { // See d3-array #299.
   assert.deepStrictEqual(scaleLinear().domain([-1, 5]).nice(1).domain(), [-10, 10]);
 });
 
