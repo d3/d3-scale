@@ -16,6 +16,10 @@ export {
 } from "./log.js";
 
 export {
+  default as scaleLogit
+} from "./logit.js"
+
+export {
   default as scaleSymlog
 } from "./symlog.js";
 
