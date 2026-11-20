@@ -8,7 +8,8 @@ export {
 } from "./identity.js";
 
 export {
-  default as scaleLinear
+  default as scaleLinear,
+  pad as padLinear
 } from "./linear.js";
 
 export {
