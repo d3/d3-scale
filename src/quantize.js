@@ -32,9 +32,7 @@ export default function quantize() {
   scale.invertExtent = function(y) {
     var i = range.indexOf(y);
     return i < 0 ? [NaN, NaN]
-        : i < 1 ? [x0, domain[0]]
-        : i >= n ? [domain[n - 1], x1]
-        : [domain[i - 1], domain[i]];
+        : [i > 0 ? domain[i - 1] : x0, i < n ? domain[i] : x1];
   };
 
   scale.unknown = function(_) {
