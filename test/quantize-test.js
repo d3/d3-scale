@@ -121,3 +121,10 @@ it("quantize.invertExtent(y) is exactly consistent with quantize(x)", () => {
     assert.strictEqual(s(e[1]), y < 9 ? y + 1 : y);
   });
 });
+
+it("quantize.invertExtent() returns the domain for the only range value", () => {
+  const s = scaleQuantize().domain([-4, 12]).range(["blue"]);
+  assert.strictEqual(s(-4), "blue");
+  assert.strictEqual(s(12), "blue");
+  assert.deepStrictEqual(s.invertExtent("blue"), [-4, 12]);
+});
